@@ -25,39 +25,48 @@ import {
 import { DocumentCollapse } from "./DocumentCollapse";
 import { Logo } from "./Logo";
 import { SidebarButton } from "./SidebarButton";
+import { CampainCollaspe } from "./CampainCollaspe";
+import { BsMegaphone, BsPatchQuestion } from "react-icons/bs";
 
-export const SidebarWithCollapsable = () => (
-  <Flex as="section" minH="100vh">
+export const SidebarWithCollapsable = ({ ...props }) => (
+  <Flex as="section" minH="100vh" {...props}>
     <Stack
       flex="1"
+      minH="100vh"
       maxW={{ base: "full", sm: "xs" }}
-      py={{ base: "6", sm: "8" }}
+      py={{ base: "16", md: "12" }}
       px={{ base: "4", sm: "6" }}
       bg="bg.surface"
       borderRightWidth="1px"
       justifyContent="space-between"
     >
       <Stack spacing="8">
-        <Logo alignSelf="start" />
-        <InputGroup>
-          <InputLeftElement>
-            <Icon as={FiSearch} color="fg.muted" fontSize="lg" />
-          </InputLeftElement>
-          <Input placeholder="Search" />
-        </InputGroup>
         <Stack spacing="1">
-          <SidebarButton leftIcon={<FiGrid />}>Dashboard</SidebarButton>
-          <SidebarButton leftIcon={<FiPieChart />}>Analysis</SidebarButton>
-          <DocumentCollapse />
+          <CampainCollaspe setItem={(index: string) => props.setItem(index)} />
+          <DocumentCollapse setItem={(index: string) => props.setItem(index)} />
+
+          {/* <SidebarButton leftIcon={<FiPieChart />}>Analysis</SidebarButton>
           <SidebarButton leftIcon={<FiClock />}>History</SidebarButton>
-          <SidebarButton leftIcon={<FiBookmark />}>Favorites</SidebarButton>
+          <SidebarButton leftIcon={<FiBookmark />}>Favorites</SidebarButton> */}
         </Stack>
       </Stack>
       <Stack spacing="4" divider={<StackDivider />}>
         <Box />
         <Stack spacing="1">
-          <SidebarButton leftIcon={<FiHelpCircle />}>Help Center</SidebarButton>
-          <SidebarButton leftIcon={<FiSettings />}>Settings</SidebarButton>
+          <SidebarButton
+            leftIcon={<BsMegaphone />}
+            onClick={() => props.setItem("공지사항")}
+          >
+            공지사항
+          </SidebarButton>
+          <SidebarButton
+            leftIcon={<BsPatchQuestion />}
+            onClick={() =>
+              (window.location.href = "https://pf.kakao.com/_xbxnxnyxj")
+            }
+          >
+            카카오톡 채널
+          </SidebarButton>
         </Stack>
         <HStack spacing="3" justify="space-between">
           <HStack spacing="3">

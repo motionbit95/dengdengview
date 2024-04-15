@@ -10,16 +10,44 @@ import {
   InputGroup,
   InputLeftElement,
 } from "@chakra-ui/react";
-import { FiBell, FiSearch } from "react-icons/fi";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { FiBell, FiMenu, FiSearch } from "react-icons/fi";
 import { Logo } from "./Logo";
+import { useState } from "react";
+import { SidebarWithCollapsable } from "../../Sidebars/SidebarWithCollapsable/App";
 
-export const NavbarWithCenteredSearch = () => (
-  <Box as="section" minH="md">
-    <Box borderBottomWidth="1px" bg="bg.surface">
-      <Container py="4">
-        <HStack justify="space-between">
-          <Logo />
-          <InputGroup
+export const NavbarWithCenteredSearch = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <Box as="section">
+      <Drawer size={"xs"} placement={"left"} onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <SidebarWithCollapsable setItem={(index: string) => {}} />
+        </DrawerContent>
+      </Drawer>
+      <Box borderBottomWidth="1px" bg="bg.surface">
+        <Container py="4">
+          <HStack justify="space-between">
+            <IconButton
+              onClick={onOpen}
+              variant="unstyled"
+              aria-label="Open Menu"
+              icon={<FiMenu />}
+              display={{ base: "inline-flex", md: "none" }}
+            />
+            <Logo />
+            {/* <InputGroup
             maxW={{ md: "sm", lg: "md" }}
             display={{ base: "none", md: "inline-flex" }}
           >
@@ -27,25 +55,33 @@ export const NavbarWithCenteredSearch = () => (
               <Icon as={FiSearch} color="fg.muted" fontSize="lg" />
             </InputLeftElement>
             <Input placeholder="Search" />
-          </InputGroup>
-          <HStack spacing={{ base: "2", md: "4" }}>
-            <ButtonGroup variant="tertiary" spacing="1">
-              <IconButton
-                icon={<FiSearch />}
-                aria-label="Serach"
-                display={{ base: "flex", md: "none" }}
-                isRound
+          </InputGroup> */}
+            <HStack spacing={{ base: "2", md: "4" }}>
+              <ButtonGroup variant="tertiary" spacing="1">
+                <IconButton
+                  icon={<FiSearch />}
+                  aria-label="Serach"
+                  display={{ base: "flex", md: "none" }}
+                  isRound
+                />
+                <IconButton
+                  icon={<FiBell />}
+                  aria-label="Show notification"
+                  isRound
+                />
+              </ButtonGroup>
+              <Avatar
+                onClick={() => {
+                  window.location.href = "/mypage";
+                }}
+                _hover={{ cursor: "pointer" }}
+                boxSize="10"
+                src="https://i.pravatar.cc/300"
               />
-              <IconButton
-                icon={<FiBell />}
-                aria-label="Show notification"
-                isRound
-              />
-            </ButtonGroup>
-            <Avatar boxSize="10" src="https://i.pravatar.cc/300" />
+            </HStack>
           </HStack>
-        </HStack>
-      </Container>
+        </Container>
+      </Box>
     </Box>
-  </Box>
-);
+  );
+};

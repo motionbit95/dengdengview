@@ -8,10 +8,10 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { BsPersonCircle } from "react-icons/bs";
+import { BsMegaphone } from "react-icons/bs";
 import { FiChevronDown, FiFile } from "react-icons/fi";
 
-export const DocumentCollapse = ({ ...props }) => {
+export const CampainCollaspe = ({ ...props }) => {
   const { isOpen, onToggle } = useDisclosure();
   return (
     <Box>
@@ -22,14 +22,19 @@ export const DocumentCollapse = ({ ...props }) => {
         width="full"
       >
         <HStack spacing="3">
-          <Icon as={BsPersonCircle} />
-          <Text as="span">내정보 수정</Text>
+          <Icon as={BsMegaphone} />
+          <Text as="span">나의 체험단</Text>
         </HStack>
         <PopoverIcon isOpen={isOpen} />
       </Button>
       <Collapse in={isOpen} animateOpacity>
         <Stack spacing="1" alignItems="stretch" ps="8" py="1">
-          {["기본정보 수정", "상세정보 수정", "비밀번호 변경"].map((item) => (
+          {[
+            "신청한 체험단",
+            "선정된 체험단",
+            "리뷰한 체험단",
+            "취소한 체험단",
+          ].map((item, index) => (
             <Button
               key={item}
               variant="tertiary"

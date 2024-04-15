@@ -2,83 +2,68 @@ import {
   AspectRatio,
   Box,
   HStack,
-  Icon,
   Image,
   Skeleton,
   Stack,
+  Tag,
   Text,
   useColorModeValue,
-} from '@chakra-ui/react'
-import { FiEye, FiHeart } from 'react-icons/fi'
-import { PriceTag } from './PriceTag'
-import { Rating } from './Rating'
-import { ProductCardButton } from './ProductCardButton'
-import { Product } from './_data'
+} from "@chakra-ui/react";
+import { Campain, calculateDday, campains } from "./_data";
 
 interface Props {
-  product: Product
+  campain: Campain;
 }
 
 export const ProductCard = (props: Props) => {
-  const { product } = props
+  const { campain } = props;
   return (
-    <Stack spacing="4">
+    <Stack spacing="4" _hover={{ opacity: 0.7, cursor: "pointer" }}>
       <Box position="relative" className="group">
-        <AspectRatio ratio={3 / 4}>
+        <AspectRatio ratio={1}>
           <Image
-            src={product.imageUrl}
-            alt={product.name}
+            src={campain.imageUrl}
+            alt={campain.name}
             draggable="false"
             fallback={<Skeleton />}
             borderRadius="md"
           />
         </AspectRatio>
-        <Box
-          opacity={0}
-          transition="opacity 0.1s"
-          position="absolute"
-          className="container"
-          bottom="3"
-          left="3"
-          _groupHover={{ opacity: 1 }}
-        >
-          <HStack spacing="3">
-            <ProductCardButton
-              aria-label="Add to favourite"
-              icon={<Icon as={FiHeart} boxSize="5" />}
-            />
-            <ProductCardButton aria-label="View details" icon={<Icon as={FiEye} boxSize="5" />} />
-          </HStack>
-        </Box>
+        <Tag size={"sm"} position="absolute" top="2" left="2">
+          #{campain.id}
+        </Tag>
       </Box>
       <Stack spacing="1">
-        <HStack justifyContent="space-between">
+        <Stack justifyContent="space-between">
           <Text
-            color={useColorModeValue('black', 'white')}
+            textOverflow={"ellipsis"}
+            overflow="hidden"
+            wordBreak={"break-word"}
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+            }}
+            color={useColorModeValue("black", "white")}
             fontSize="sm"
             fontWeight="semibold"
             letterSpacing="wider"
             textTransform="uppercase"
           >
-            {product.name}
+            {campain.name}
           </Text>
-          <PriceTag
-            currency={product.currency}
-            price={product.price}
-            priceProps={{
-              fontSize: 'sm',
-              fontWeight: 'semibold',
-              color: useColorModeValue('black', 'white'),
-            }}
-          />
-        </HStack>
-        <HStack>
-          <Rating defaultValue={product.rating} size="sm" />
-          <Text fontWeight="medium" fontSize="sm" color={useColorModeValue('gray.500', 'gray.200')}>
-            ({product.ratingCount})
-          </Text>
+        </Stack>
+        <HStack spacing={2}>
+          <Tag
+            colorScheme={calculateDday(campain.expireDate) > 3 ? "gray" : "red"}
+          >
+            {calculateDday(campain.expireDate) > 0
+              ? calculateDday(campain.expireDate) + "일 남음"
+              : "일 지남"}
+          </Tag>
+          <Tag colorScheme={"teal"}>{campain.type}</Tag>
         </HStack>
       </Stack>
     </Stack>
-  )
-}
+  );
+};

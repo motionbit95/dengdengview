@@ -10,7 +10,7 @@ import "@fontsource-variable/inter";
 
 const proTheme = extendTheme(theme);
 const extenstion = {
-  colors: { ...proTheme.colors, brand: proTheme.colors.teal },
+  colors: { ...proTheme.colors, brand: proTheme.colors.cyan },
   fonts: {
     heading: "'Inter Variable', -apple-system, system-ui, sans-serif",
     body: "'Inter Variable', -apple-system, system-ui, sans-serif",

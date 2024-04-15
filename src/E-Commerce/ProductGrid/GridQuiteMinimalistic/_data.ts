@@ -1,40 +1,36 @@
-export const products = [
-  {
-    id: '1',
-    name: 'Pattern Mini-dress',
-    price: 48.99,
-    currency: 'USD',
-    imageUrl:
-      'https://images.unsplash.com/photo-1630759072462-d5348e577ee8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=872&q=80',
-    rating: 4,
-    ratingCount: 20,
-  },
-  {
-    id: '2',
-    name: 'Midi Skater Dress',
-    price: 199.99,
-    currency: 'USD',
-    imageUrl:
-      'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=892&q=80',
-    rating: 4,
-    ratingCount: 15,
-  },
-  {
-    id: '3',
-    name: 'Off-shoulder top',
-    price: 49.99,
-    currency: 'USD',
-    imageUrl:
-      'https://images.unsplash.com/photo-1581044777550-4cfa60707c03?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=772&q=80',
-    rating: 4,
-    ratingCount: 9,
-  },
-]
+export const bucketAddress =
+  "https://firebasestorage.googleapis.com/v0/b/motionbit-dangdangview.appspot.com/o";
 
-export type ElementType<T extends ReadonlyArray<unknown>> = T extends ReadonlyArray<
-  infer ElementType
->
-  ? ElementType
-  : never
+export function calculateDday(targetDate: string) {
+  var today = new Date();
+  today.setHours(0, 0, 0, 0); // 오늘 날짜의 시간을 00:00:00으로 설정
+  var target = new Date(targetDate);
+  target.setHours(0, 0, 0, 0); // 대상 날짜의 시간을 00:00:00으로 설정
 
-export type Product = ElementType<typeof products>
+  var difference = target.valueOf() - today.valueOf();
+  var daysDifference = Math.ceil(difference / (1000 * 60 * 60 * 24)); // 일 단위로 차이 계산
+
+  return daysDifference;
+}
+
+export const campains = [
+  {
+    id: "q1w2e3r4",
+    name: "[체험단]우리家제약 펫튼 종합 영양제, 강아지 고양이 체험단 모집",
+    imageUrl: bucketAddress + "/demo%2Fdemo1.png?alt=media",
+    expireDate: "2024-04-18", // 댕댕뷰에서 모든 날짜 형식 이대로 통일
+    type: "배송",
+  },
+  {
+    id: "p0o9i8u7",
+    name: "[체험단]펫루션 유산균 영양제, 강아지 체험단 모집",
+    imageUrl: bucketAddress + "/demo%2Fdemo2.png?alt=media",
+    expireDate: "2024-04-20",
+    type: "배송",
+  },
+];
+
+export type ElementType<T extends ReadonlyArray<unknown>> =
+  T extends ReadonlyArray<infer ElementType> ? ElementType : never;
+
+export type Campain = ElementType<typeof campains>;
