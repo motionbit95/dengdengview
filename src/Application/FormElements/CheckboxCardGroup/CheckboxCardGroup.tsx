@@ -60,6 +60,7 @@ export const CheckboxCard = (props: RadioCardProps) => {
 
   return (
     <Box
+      w={"full"}
       as="label"
       cursor="pointer"
       {...getLabelProps()}

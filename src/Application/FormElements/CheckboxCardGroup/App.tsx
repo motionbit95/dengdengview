@@ -8,7 +8,11 @@ export const CheckboxCardGroupContainer = (props: any) => (
     // py={{ base: "4", md: "8" }}
     w={"full"}
   >
-    <CheckboxCardGroup spacing="3">
+    <CheckboxCardGroup
+      spacing="3"
+      onChange={(value: any) => props.onChange(value)}
+      defaultValue={props?.defaultValue}
+    >
       {props?.list?.map((option: any) => (
         <CheckboxCard key={option} value={option}>
           <Text color="fg.emphasized" fontWeight="medium" fontSize="sm">

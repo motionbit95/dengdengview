@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./Pages/Login";
@@ -18,12 +18,30 @@ import { NavbarWithCenteredSearch } from "./Application/Navbars/NavbarWithCenter
 import Profile from "./Pages/Profile";
 import { BannerWithLink } from "./Application/Banners/Banner2";
 import { BannerWithSignUp } from "./Application/Banners/Banner3";
+import { auth, db } from "./Firebase/Config";
+import { getUserInfo } from "./Firebase/Auth";
+import { doc, onSnapshot } from "firebase/firestore";
 
 function App() {
+  const [userInfo, setUserInfo] = React.useState(null);
+  useEffect(() => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        console.log("============> ", user);
+        getUserInfo(user.uid).then(async (response) => {
+          setUserInfo(response.data);
+        });
+
+        onSnapshot(doc(db, "User", user.uid), (doc) => {
+          setUserInfo(doc.data());
+        });
+      }
+    });
+  }, []);
   return (
     <>
       <BannerWithSignUp />
-      <NavbarWithCenteredSearch />
+      <NavbarWithCenteredSearch userInfo={userInfo} />
       <BrowserRouter>
         <Routes>
           <Route path="/banner" element={<Banner />} />

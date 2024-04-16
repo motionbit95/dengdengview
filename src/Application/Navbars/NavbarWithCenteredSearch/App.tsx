@@ -25,16 +25,10 @@ import { Logo } from "./Logo";
 import { useState } from "react";
 import { SidebarWithCollapsable } from "../../Sidebars/SidebarWithCollapsable/App";
 
-export const NavbarWithCenteredSearch = () => {
+export const NavbarWithCenteredSearch = ({ ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box
-      as="section"
-      position={"sticky"}
-      top={0}
-      bgColor={"bg.surface"}
-      zIndex={"tooltip"}
-    >
+    <Box as="section" position={"sticky"} top={0} zIndex={"tooltip"}>
       <Drawer size={"xs"} placement={"left"} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
@@ -84,7 +78,8 @@ export const NavbarWithCenteredSearch = () => {
                 }}
                 _hover={{ cursor: "pointer" }}
                 boxSize="10"
-                src="https://i.pravatar.cc/300"
+                src={props.userInfo?.image}
+                // name={props.userInfo?.name}
               />
             </HStack>
           </HStack>

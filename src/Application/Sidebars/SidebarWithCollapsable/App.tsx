@@ -30,8 +30,10 @@ import { CampainCollaspe } from "./CampainCollaspe";
 import { BsMegaphone, BsPatchQuestion } from "react-icons/bs";
 
 export const SidebarWithCollapsable = ({ ...props }) => {
+  console.log(props.userInfo);
   const handleLogout = () => {
     localStorage.clear();
+    sessionStorage.clear();
     window.location.href = "/login";
   };
 
@@ -85,13 +87,13 @@ export const SidebarWithCollapsable = ({ ...props }) => {
           </Stack>
           <HStack spacing="3" justify="space-between">
             <HStack spacing="3">
-              <Avatar boxSize="10" src="https://i.pravatar.cc/300" />
+              <Avatar boxSize="10" src={props.userInfo?.image} />
               <Box>
                 <Text textStyle="sm" fontWeight="medium">
-                  John Doe
+                  {props.userInfo?.name}
                 </Text>
                 <Text textStyle="sm" color="fg.muted">
-                  john@chakra-ui.com
+                  {props.userInfo?.email}
                 </Text>
               </Box>
             </HStack>

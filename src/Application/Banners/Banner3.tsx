@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 import { FiX } from "react-icons/fi";
 
-export const BannerWithSignUp = () => {
+export const BannerWithSignUp = ({ ...props }) => {
   const [close, setClose] = useState(false);
   return (
     <>

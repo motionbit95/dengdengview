@@ -19,6 +19,7 @@ import {
 
 interface RadioButtonGroupProps<T>
   extends Omit<ButtonGroupProps, "onChange" | "variant" | "isAttached"> {
+  ref?: any;
   name?: string;
   value?: T;
   defaultValue?: string;
@@ -28,7 +29,7 @@ interface RadioButtonGroupProps<T>
 export const RadioButtonGroup = <T extends string>(
   props: RadioButtonGroupProps<T>
 ) => {
-  const { children, name, defaultValue, value, onChange, ...rest } = props;
+  const { ref, children, name, defaultValue, value, onChange, ...rest } = props;
   const { getRootProps, getRadioProps } = useRadioGroup({
     name,
     defaultValue,

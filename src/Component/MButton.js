@@ -1,6 +1,9 @@
 import { useToast, Box, Image, Button } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getUserInfo } from "../Firebase/Auth";
+import { debug } from "../Firebase/Util";
+import { createDoc } from "../Firebase/Database";
 
 export const naverBtnImg = require("../Assets/img/btnG_완성형.png");
 
@@ -39,16 +42,19 @@ export const NaverLogin = (props) => {
               // 없으면 회원가입 화면으로 이동하여 가입을 진행,
               // 있으면 홈으로 이동
 
-              toast({
-                title:
-                  (naverLogin.user.name
-                    ? naverLogin.user.name
-                    : naverLogin.user.email.split("@")[0]) + "님 환영합니다.",
-                status: "success",
-                duration: 2000,
-                isClosable: true,
+              getUserInfo(naverLogin.user.id).then((data) => {
+                if (data.code === "error") {
+                  createDoc("User", {
+                    id: naverLogin.user.id,
+                    channel: "naver",
+                    email: naverLogin.user.email ? naverLogin.user.email : "",
+                    name: naverLogin.user.name ? naverLogin.user.name : "",
+                  });
+                }
               });
-              //   navigate("/");
+
+              localStorage.setItem("naver_id", naverLogin.user.id);
+              // navigate("/");
             }
           });
         }
