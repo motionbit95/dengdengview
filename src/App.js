@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import "./App.css";
+import "./Component/Calendar.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./Pages/Login";
-import Banner from "./Pages/Banner";
 import Cards from "./Pages/Card";
 import Chat from "./Pages/Chat";
 import Form from "./Pages/Form";
@@ -22,6 +22,8 @@ import { getUserInfo } from "./Firebase/Auth";
 import { doc, onSnapshot } from "firebase/firestore";
 import { FooterWithFourColumnsOnAccent } from "./Marketing/Footers/FooterWithFourColumnsOnAccent/App";
 import Terms from "./Pages/Terms";
+import AdminLogin from "./Pages/AdminLogin";
+import AdminDashboard from "./Pages/AdminDashboard";
 
 function App() {
   const [userInfo, setUserInfo] = React.useState(null);
@@ -40,29 +42,40 @@ function App() {
   }, []);
   return (
     <>
-      <BannerWithSignUp />
-      <NavbarWithCenteredSearch userInfo={userInfo} />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/banner" element={<Banner />} />
-          <Route path="/card" element={<Cards />} />
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/form" element={<Form />} />
-          <Route path="/list" element={<List />} />
-          <Route path="/page" element={<Page />} />
-          <Route path="/showcase" element={<ShowCase />} />
-          <Route path="/checkout" element={<CheckOutPages />} />
-          <Route path="/filter" element={<Filter />} />
-          <Route path="/product" element={<Product />} />
-          <Route path="/cart" element={<Cart />} />
+      {window.location.pathname.includes("/admin") ? (
+        <BrowserRouter>
+          <Routes>
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          </Routes>
+        </BrowserRouter>
+      ) : (
+        <>
+          <BannerWithSignUp />
+          <NavbarWithCenteredSearch userInfo={userInfo} />
+          <BrowserRouter>
+            <Routes>
+              {/* <Route path="/banner" element={<Banner />} /> */}
+              <Route path="/card" element={<Cards />} />
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/form" element={<Form />} />
+              <Route path="/list" element={<List />} />
+              <Route path="/page" element={<Page />} />
+              <Route path="/showcase" element={<ShowCase />} />
+              <Route path="/checkout" element={<CheckOutPages />} />
+              <Route path="/filter" element={<Filter />} />
+              <Route path="/product" element={<Product />} />
+              <Route path="/cart" element={<Cart />} />
 
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUpForm />} />
-          <Route path="/mypage/*" element={<Profile />} />
-          <Route path="/terms" element={<Terms />} />
-        </Routes>
-      </BrowserRouter>
-      <FooterWithFourColumnsOnAccent />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUpForm />} />
+              <Route path="/mypage/*" element={<Profile />} />
+              <Route path="/terms" element={<Terms />} />
+            </Routes>
+          </BrowserRouter>
+          <FooterWithFourColumnsOnAccent />
+        </>
+      )}
     </>
   );
 }

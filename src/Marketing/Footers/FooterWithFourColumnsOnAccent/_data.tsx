@@ -10,7 +10,7 @@ export const links = [
   {
     title: "광고주",
     links: [
-      { label: "광고주 페이지", href: "#" },
+      { label: "광고주 페이지", href: "/admin/login" },
       { label: "광고 제휴 문의", href: "#" },
     ],
   },

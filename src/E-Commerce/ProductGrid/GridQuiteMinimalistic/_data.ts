@@ -15,11 +15,12 @@ export function calculateDday(targetDate: string) {
 
 export const campains = [
   {
-    id: "q1w2e3r4",
-    name: "[체험단]우리家제약 펫튼 종합 영양제, 강아지 고양이 체험단 모집",
-    imageUrl: bucketAddress + "/demo%2Fdemo1.png?alt=media",
-    expireDate: "2024-04-18", // 댕댕뷰에서 모든 날짜 형식 이대로 통일
+    id: "p0o9i8u7",
+    name: "[체험단]펫루션 유산균 영양제, 강아지 체험단 모집",
+    imageUrl: bucketAddress + "/demo%2Fdemo2.png?alt=media",
+    expireDate: "2024-04-20",
     type: "배송",
+    views: 200,
   },
   {
     id: "p0o9i8u7",
@@ -27,6 +28,71 @@ export const campains = [
     imageUrl: bucketAddress + "/demo%2Fdemo2.png?alt=media",
     expireDate: "2024-04-20",
     type: "배송",
+    views: 200,
+  },
+  {
+    id: "p0o9i8u7",
+    name: "[체험단]펫루션 유산균 영양제, 강아지 체험단 모집",
+    imageUrl: bucketAddress + "/demo%2Fdemo2.png?alt=media",
+    expireDate: "2024-04-20",
+    type: "배송",
+    views: 200,
+  },
+  {
+    id: "p0o9i8u7",
+    name: "[체험단]펫루션 유산균 영양제, 강아지 체험단 모집",
+    imageUrl: bucketAddress + "/demo%2Fdemo2.png?alt=media",
+    expireDate: "2024-04-20",
+    type: "배송",
+    views: 200,
+  },
+  {
+    id: "p0o9i8u7",
+    name: "[체험단]펫루션 유산균 영양제, 강아지 체험단 모집",
+    imageUrl: bucketAddress + "/demo%2Fdemo2.png?alt=media",
+    expireDate: "2024-04-20",
+    type: "배송",
+    views: 200,
+  },
+  {
+    id: "p0o9i8u7",
+    name: "[체험단]펫루션 유산균 영양제, 강아지 체험단 모집",
+    imageUrl: bucketAddress + "/demo%2Fdemo2.png?alt=media",
+    expireDate: "2024-04-20",
+    type: "배송",
+    views: 200,
+  },
+  {
+    id: "p0o9i8u7",
+    name: "[체험단]펫루션 유산균 영양제, 강아지 체험단 모집",
+    imageUrl: bucketAddress + "/demo%2Fdemo2.png?alt=media",
+    expireDate: "2024-04-20",
+    type: "배송",
+    views: 124,
+  },
+  {
+    id: "p0o9i8u7",
+    name: "[체험단]펫루션 유산균 영양제, 강아지 체험단 모집",
+    imageUrl: bucketAddress + "/demo%2Fdemo2.png?alt=media",
+    expireDate: "2024-04-20",
+    type: "배송",
+    views: 98,
+  },
+  {
+    id: "p0o9i8u7",
+    name: "[체험단]펫루션 유산균 영양제, 강아지 체험단 모집",
+    imageUrl: bucketAddress + "/demo%2Fdemo2.png?alt=media",
+    expireDate: "2024-04-20",
+    type: "배송",
+    views: 25,
+  },
+  {
+    id: "p0o9i8u7",
+    name: "[체험단]펫루션 유산균 영양제, 강아지 체험단 모집",
+    imageUrl: bucketAddress + "/demo%2Fdemo2.png?alt=media",
+    expireDate: "2024-04-20",
+    type: "배송",
+    views: 777,
   },
 ];
 

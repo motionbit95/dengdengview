@@ -15,7 +15,15 @@ deleteUser: 유저를 삭제합니다.
 signInUser : 로그인 합니다.
 signOutUser: 로그아웃 합니다.
 getUserInfo: 유저 정보를 가지고 옵니다.
+
+adminLogin : 관리자 계정 로그인입니다.
+adminLogout : 관리자 계정 로그아웃입니다.
 */
+
+export const supervisor = {
+  email: "admin@dangdangview.com",
+  password: "dengdeng1234!",
+};
 
 export const createUser = async (data) => {
   debug(data);
@@ -72,4 +80,31 @@ export const getUserInfo = async (uid) => {
     response.message = "data not found";
   }
   return response;
+};
+
+export const adminLogin = async (data) => {
+  debug(data);
+  let response = { code: "error", message: "error" };
+  if (
+    data.email === supervisor.email &&
+    data.password === supervisor.password
+  ) {
+    response.code = "success";
+    response.message = "success";
+    // 페이지에 응답을 전달하고 로컬 변수에 로그인 정보를 저장합니다.
+    localStorage.setItem("dang_admin_id", data.email);
+    localStorage.setItem("dang_admin_pw", data.password);
+  } else {
+    response.code = "error";
+    response.message = "계정을 다시 확인해주세요.";
+  }
+  return response;
+};
+
+export const adminLogout = () => {
+  // 로컬 데이터를 지우고 로그인 화면으로 이동
+  // 테스트용 #TODO 나중에 지워야함
+  // localStorage.removeItem("dang_admin_id");
+  // localStorage.removeItem("dang_admin_pw");
+  window.location.href = "/admin/login";
 };
