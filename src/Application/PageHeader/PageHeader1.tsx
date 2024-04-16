@@ -3,7 +3,7 @@ import { Box, Container, Heading, Stack, Text } from "@chakra-ui/react";
 export const PageHeader1 = ({ ...props }) => (
   <Box
     as="section"
-    bg="bg.surface"
+    // bg="bg.surface"
     pt={{ base: "4", md: "8" }}
     // pb={{ base: "12", md: "24" }}
   >
@@ -12,7 +12,9 @@ export const PageHeader1 = ({ ...props }) => (
         <Heading size={{ base: "xs", md: "sm" }} fontWeight="medium">
           {props.title}
         </Heading>
-        <Text color="fg.muted">{props.description}</Text>
+        {props.description.includes("체험단") && (
+          <Text color="fg.muted">{props.description}</Text>
+        )}
       </Stack>
     </Container>
   </Box>

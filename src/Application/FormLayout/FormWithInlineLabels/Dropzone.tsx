@@ -1,5 +1,14 @@
-import { Button, Center, CenterProps, HStack, Icon, Square, Text, VStack } from '@chakra-ui/react'
-import { FiUploadCloud } from 'react-icons/fi'
+import {
+  Button,
+  Center,
+  CenterProps,
+  HStack,
+  Icon,
+  Square,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import { FiUploadCloud } from "react-icons/fi";
 
 export const Dropzone = (props: CenterProps) => (
   <Center borderWidth="1px" borderRadius="lg" px="6" py="4" {...props}>
@@ -10,16 +19,13 @@ export const Dropzone = (props: CenterProps) => (
       <VStack spacing="1">
         <HStack spacing="1" whiteSpace="nowrap">
           <Button variant="text" colorScheme="blue" size="sm">
-            Click to upload
+            클릭하여 이미지를 선택
           </Button>
-          <Text textStyle="sm" color="fg.muted">
-            or drag and drop
-          </Text>
         </HStack>
         <Text textStyle="xs" color="fg.muted">
-          PNG, JPG or GIF up to 2MB
+          2MB이하로 파일를 선택하십시오.
         </Text>
       </VStack>
     </VStack>
   </Center>
-)
+);

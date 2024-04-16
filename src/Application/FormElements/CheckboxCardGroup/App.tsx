@@ -1,21 +1,24 @@
 import { Box, Container, Text } from "@chakra-ui/react";
 import { CheckboxCard, CheckboxCardGroup } from "./CheckboxCardGroup";
 
-export const CheckboxCardGroupContainer = () => (
-  <Box as="section" bg="bg.surface" py={{ base: "4", md: "8" }}>
-    <Container maxW="lg">
-      <CheckboxCardGroup defaultValue={["one", "two"]} spacing="3">
-        {["one", "two", "three"].map((option) => (
-          <CheckboxCard key={option} value={option}>
-            <Text color="fg.emphasized" fontWeight="medium" fontSize="sm">
-              Option {option}
-            </Text>
-            <Text color="fg.muted" textStyle="sm">
-              Jelly biscuit muffin icing dessert powder macaroon.
-            </Text>
-          </CheckboxCard>
-        ))}
-      </CheckboxCardGroup>
-    </Container>
+export const CheckboxCardGroupContainer = (props: any) => (
+  <Box
+    as="section"
+    bg="bg.surface"
+    // py={{ base: "4", md: "8" }}
+    w={"full"}
+  >
+    <CheckboxCardGroup spacing="3">
+      {props?.list?.map((option: any) => (
+        <CheckboxCard key={option} value={option}>
+          <Text color="fg.emphasized" fontWeight="medium" fontSize="sm">
+            {option.title}
+          </Text>
+          <Text color="fg.muted" textStyle="sm">
+            {option.description}
+          </Text>
+        </CheckboxCard>
+      ))}
+    </CheckboxCardGroup>
   </Box>
 );

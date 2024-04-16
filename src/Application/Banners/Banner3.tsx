@@ -14,7 +14,7 @@ export const BannerWithSignUp = () => {
   return (
     <>
       {!close && (
-        <Box as="section">
+        <Box as="section" position={"sticky"} top={0}>
           <Box
             borderBottomWidth="1px"
             // bg="bg.surface"

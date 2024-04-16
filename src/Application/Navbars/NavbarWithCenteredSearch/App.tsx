@@ -28,7 +28,13 @@ import { SidebarWithCollapsable } from "../../Sidebars/SidebarWithCollapsable/Ap
 export const NavbarWithCenteredSearch = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box as="section">
+    <Box
+      as="section"
+      position={"sticky"}
+      top={0}
+      bgColor={"bg.surface"}
+      zIndex={"tooltip"}
+    >
       <Drawer size={"xs"} placement={"left"} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
@@ -46,7 +52,9 @@ export const NavbarWithCenteredSearch = () => {
               icon={<FiMenu />}
               display={{ base: "inline-flex", md: "none" }}
             />
-            <Logo />
+            <Box onClick={() => (window.location.href = "/")}>
+              <Logo />
+            </Box>
             {/* <InputGroup
             maxW={{ md: "sm", lg: "md" }}
             display={{ base: "none", md: "inline-flex" }}
@@ -64,11 +72,11 @@ export const NavbarWithCenteredSearch = () => {
                   display={{ base: "flex", md: "none" }}
                   isRound
                 />
-                <IconButton
+                {/* <IconButton
                   icon={<FiBell />}
                   aria-label="Show notification"
                   isRound
-                />
+                /> */}
               </ButtonGroup>
               <Avatar
                 onClick={() => {

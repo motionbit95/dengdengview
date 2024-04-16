@@ -41,8 +41,8 @@ export const NaverLogin = (props) => {
 
               toast({
                 title:
-                  (naverLogin.user.nickname
-                    ? naverLogin.user.nickname
+                  (naverLogin.user.name
+                    ? naverLogin.user.name
                     : naverLogin.user.email.split("@")[0]) + "님 환영합니다.",
                 status: "success",
                 duration: 2000,

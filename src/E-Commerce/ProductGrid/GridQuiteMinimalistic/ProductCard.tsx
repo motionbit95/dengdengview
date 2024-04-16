@@ -55,13 +55,16 @@ export const ProductCard = (props: Props) => {
         </Stack>
         <HStack spacing={2}>
           <Tag
+            size={{ base: "sm", md: "md" }}
             colorScheme={calculateDday(campain.expireDate) > 3 ? "gray" : "red"}
           >
             {calculateDday(campain.expireDate) > 0
               ? calculateDday(campain.expireDate) + "일 남음"
               : "일 지남"}
           </Tag>
-          <Tag colorScheme={"teal"}>{campain.type}</Tag>
+          <Tag size={{ base: "sm", md: "md" }} colorScheme={"teal"}>
+            {campain.type}
+          </Tag>
         </HStack>
       </Stack>
     </Stack>
