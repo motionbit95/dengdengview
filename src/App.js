@@ -16,18 +16,18 @@ import Cart from "./Pages/Cart";
 import { SignUpForm } from "./Application/Authentication/Login9/App";
 import { NavbarWithCenteredSearch } from "./Application/Navbars/NavbarWithCenteredSearch/App";
 import Profile from "./Pages/Profile";
-import { BannerWithLink } from "./Application/Banners/Banner2";
 import { BannerWithSignUp } from "./Application/Banners/Banner3";
 import { auth, db } from "./Firebase/Config";
 import { getUserInfo } from "./Firebase/Auth";
 import { doc, onSnapshot } from "firebase/firestore";
+import { FooterWithFourColumnsOnAccent } from "./Marketing/Footers/FooterWithFourColumnsOnAccent/App";
+import Terms from "./Pages/Terms";
 
 function App() {
   const [userInfo, setUserInfo] = React.useState(null);
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
-        console.log("============> ", user);
         getUserInfo(user.uid).then(async (response) => {
           setUserInfo(response.data);
         });
@@ -59,8 +59,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUpForm />} />
           <Route path="/mypage/*" element={<Profile />} />
+          <Route path="/terms" element={<Terms />} />
         </Routes>
       </BrowserRouter>
+      <FooterWithFourColumnsOnAccent />
     </>
   );
 }

@@ -11,7 +11,14 @@ function Mypage({ ...props }) {
     setUserInfo(props.userInfo);
   }, [props.userInfo]);
   return (
-    <Flex minH={"100vh"} top={"0"} height={"100%"} w={"100%"} {...props}>
+    <Flex
+      pb={{ base: "12", md: "24" }}
+      minH={"100vh"}
+      top={"0"}
+      height={"100%"}
+      w={"100%"}
+      {...props}
+    >
       <Stack flex={"1"} w={"100%"} minH={"100vh"} spacing={"8"} {...props}>
         <PageHeader1 title={props.title} description={props.description} />
         <FormWithInlineLabels userInfo={userInfo} />
