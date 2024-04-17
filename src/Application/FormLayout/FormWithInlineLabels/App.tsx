@@ -61,8 +61,8 @@ export const FormWithInlineLabels = (props: UserData) => {
     console.log(userInfo);
     setFormData(userInfo);
 
-    setProfileImage(userInfo.image);
-    setGender(userInfo.gender);
+    setProfileImage(userInfo?.image);
+    setGender(userInfo?.gender);
   }, [userInfo]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,7 +72,7 @@ export const FormWithInlineLabels = (props: UserData) => {
 
   const submit = () => {
     console.log(formData);
-    updateDoc("User", userInfo.id, formData).then(() => {
+    updateDoc("User", userInfo?.id, formData).then(() => {
       toast({
         title: "프로필이 수정 되었습니다.",
         status: "success",
@@ -155,7 +155,7 @@ export const FormWithInlineLabels = (props: UserData) => {
               <Input
                 maxW={{ md: "3xl" }}
                 placeholder="실명 입력"
-                defaultValue={userInfo.name}
+                defaultValue={userInfo?.name}
                 isDisabled
               />
             </Stack>
@@ -171,7 +171,7 @@ export const FormWithInlineLabels = (props: UserData) => {
                 name="nickname"
                 maxW={{ md: "3xl" }}
                 placeholder="닉네임 입력"
-                defaultValue={userInfo.nickname}
+                defaultValue={userInfo?.nickname}
                 onChange={handleChange}
               />
             </Stack>
@@ -186,7 +186,7 @@ export const FormWithInlineLabels = (props: UserData) => {
               {/* <RadioGroup
                 name="gender"
                 colorScheme="brand"
-                defaultValue={userInfo.gender}
+                defaultValue={userInfo?.gender}
                 onChange={(value: string) => {
                   setFormData({ ...formData, gender: value });
                 }}
@@ -245,7 +245,7 @@ export const FormWithInlineLabels = (props: UserData) => {
                   maxW={{ md: "3xl" }}
                   type="tel"
                   placeholder="전화번호 입력"
-                  defaultValue={userInfo.phone}
+                  defaultValue={userInfo?.phone}
                   name="phone"
                   onChange={handleChange}
                 />
@@ -276,7 +276,7 @@ export const FormWithInlineLabels = (props: UserData) => {
                 type="email"
                 maxW={{ md: "3xl" }}
                 placeholder="이메일 입력"
-                defaultValue={userInfo.email}
+                defaultValue={userInfo?.email}
                 isDisabled
                 name="email"
                 onChange={handleChange}
@@ -293,7 +293,7 @@ export const FormWithInlineLabels = (props: UserData) => {
               <InputGroup maxW={{ md: "3xl" }}>
                 <InputLeftAddon>https://blog.naver.com/</InputLeftAddon>
                 <Input
-                  defaultValue={userInfo.blog}
+                  defaultValue={userInfo?.blog}
                   placeholder="네이버 아이디 입력"
                   name="blog"
                   onChange={handleChange}
@@ -315,9 +315,9 @@ export const FormWithInlineLabels = (props: UserData) => {
                     ...{ zonecode: address.zonecode, street: address.street },
                   });
                 }}
-                street={userInfo.street}
-                zonecode={userInfo.zonecode}
-                address={userInfo.address}
+                street={userInfo?.street}
+                zonecode={userInfo?.zonecode}
+                address={userInfo?.address}
               />
             </Stack>
           </FormControl>
@@ -331,7 +331,7 @@ export const FormWithInlineLabels = (props: UserData) => {
               <FormLabel variant="inline">마케팅 수신동의</FormLabel>
               <CheckboxCard
                 value={"agree"}
-                checkboxProps={{ isChecked: userInfo.agree }}
+                checkboxProps={{ isChecked: userInfo?.agree }}
               >
                 <Text color="fg.emphasized" fontWeight="medium" fontSize="sm">
                   {
