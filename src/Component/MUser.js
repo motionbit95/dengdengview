@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import { PageHeader2 } from "../Application/PageHeader/PageHeader2";
 import { Box } from "@chakra-ui/react";
 import { fetchDocuments, getCollection } from "../Firebase/Database";
-import { TableWithSearch } from "../Application/Tables/TableWithSearch/App";
 import { UserTable } from "../Application/Tables/UserTable/App";
 
 function User(props) {
