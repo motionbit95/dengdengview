@@ -2,7 +2,6 @@ import {
   Avatar,
   Box,
   Button,
-  Center,
   Container,
   Divider,
   Flex,
@@ -11,18 +10,13 @@ import {
   FormLabel,
   HStack,
   Icon,
-  Image,
   Input,
   InputGroup,
   InputLeftAddon,
-  Radio,
-  RadioGroup,
   Select,
-  Skeleton,
   Stack,
   StackDivider,
   Text,
-  Textarea,
   useToast,
 } from "@chakra-ui/react";
 import { Dropzone } from "./Dropzone";
@@ -43,7 +37,6 @@ interface UserData {
     name: string;
     email: string;
     phone: string;
-    password: string;
     nickname: string;
     gender: string;
     image: string;
@@ -246,12 +239,12 @@ export const FormWithInlineLabels = (props: UserData) => {
               spacing={{ base: "1.5", md: "4" }}
               justify="space-between"
             >
-              <FormLabel variant="inline">휴대폰번호</FormLabel>
+              <FormLabel variant="inline">전화번호</FormLabel>
               <Stack w={"full"} maxW={{ md: "3xl" }} spacing={0}>
                 <Input
                   maxW={{ md: "3xl" }}
                   type="tel"
-                  placeholder="휴대폰번호 입력"
+                  placeholder="전화번호 입력"
                   defaultValue={userInfo.phone}
                   name="phone"
                   onChange={handleChange}
@@ -337,7 +330,7 @@ export const FormWithInlineLabels = (props: UserData) => {
             >
               <FormLabel variant="inline">마케팅 수신동의</FormLabel>
               <CheckboxCard
-                value={"marketing"}
+                value={"agree"}
                 checkboxProps={{ isChecked: userInfo.agree }}
               >
                 <Text color="fg.emphasized" fontWeight="medium" fontSize="sm">

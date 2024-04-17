@@ -25,3 +25,8 @@ export const trError = (errorCode) => {
       break;
   }
 };
+
+// 현재 페이지를 계산하는 함수
+export function getCurrentPageNumber(startIndex, pageSize) {
+  return Math.floor(startIndex / pageSize) + 1;
+}

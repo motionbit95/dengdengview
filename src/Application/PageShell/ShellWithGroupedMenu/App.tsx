@@ -37,9 +37,12 @@ import { AiFillPicture } from "react-icons/ai";
 import { adminLogout } from "../../../Firebase/Auth";
 import { useState } from "react";
 import Dashboard from "../../../Component/MDashboard";
+import User from "../../../Component/MUser";
 
 export const ShellWithGroupedMenu = () => {
-  const [menu, setMenu] = useState(0);
+  const [menu, setMenu] = useState(
+    Number(localStorage.getItem("ad_menu")) || 0
+  );
   return (
     <Box height="100vh" minW={"3xl"} overflow="hidden" position="relative">
       <Flex h="full" id="app-container">
@@ -48,34 +51,49 @@ export const ShellWithGroupedMenu = () => {
             <Stack spacing="8" flex="1" overflow="auto" mb={4}>
               <NavGroup label="기본관리">
                 <NavItem
-                  active={menu === 0}
+                  active={menu === 0 || localStorage.getItem("ad_menu") === "0"}
                   icon={<BiHome />}
                   label="대시보드"
-                  onClick={() => setMenu(0)}
+                  onClick={() => {
+                    setMenu(0);
+                    localStorage.setItem("ad_menu", "0");
+                  }}
                 />
                 <NavItem
-                  active={menu === 1}
+                  active={menu === 1 || localStorage.getItem("ad_menu") === "1"}
                   icon={<BiCommentAdd />}
                   label="광고문의"
-                  onClick={() => setMenu(1)}
+                  onClick={() => {
+                    setMenu(1);
+                    localStorage.setItem("ad_menu", "1");
+                  }}
                 />
                 <NavItem
-                  active={menu === 2}
+                  active={menu === 2 || localStorage.getItem("ad_menu") === "2"}
                   icon={<BiUserCircle />}
                   label="회원관리"
-                  onClick={() => setMenu(2)}
+                  onClick={() => {
+                    setMenu(2);
+                    localStorage.setItem("ad_menu", "2");
+                  }}
                 />
                 <NavItem
-                  active={menu === 3}
+                  active={menu === 3 || localStorage.getItem("ad_menu") === "3"}
                   icon={<BiCreditCard />}
                   label="체험단관리"
-                  onClick={() => setMenu(3)}
+                  onClick={() => {
+                    setMenu(3);
+                    localStorage.setItem("ad_menu", "3");
+                  }}
                 />
                 <NavItem
-                  active={menu === 4}
+                  active={menu === 4 || localStorage.getItem("ad_menu") === "4"}
                   icon={<BiNotification />}
                   label="공지관리"
-                  onClick={() => setMenu(4)}
+                  onClick={() => {
+                    setMenu(4);
+                    localStorage.setItem("ad_menu", "4");
+                  }}
                 />
               </NavGroup>
 
@@ -125,6 +143,7 @@ export const ShellWithGroupedMenu = () => {
             borderColor={mode("gray.200", "gray.700")}
           >
             {menu === 0 && <Dashboard />}
+            {menu === 2 && <User />}
           </Box>
         </Box>
       </Flex>

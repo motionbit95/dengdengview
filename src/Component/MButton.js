@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getUserInfo } from "../Firebase/Auth";
 import { debug } from "../Firebase/Util";
 import { createDoc } from "../Firebase/Database";
+import { serverTimestamp } from "firebase/firestore";
 
 export const naverBtnImg = require("../Assets/img/btnG_완성형.png");
 
@@ -49,12 +50,13 @@ export const NaverLogin = (props) => {
                     channel: "naver",
                     email: naverLogin.user.email ? naverLogin.user.email : "",
                     name: naverLogin.user.name ? naverLogin.user.name : "",
+                    createdAt: new Date().toISOString(),
                   });
                 }
               });
 
               localStorage.setItem("naver_id", naverLogin.user.id);
-              // navigate("/");
+              navigate("/");
             }
           });
         }
