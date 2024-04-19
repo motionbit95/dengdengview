@@ -5,8 +5,17 @@ import { PageHeader1 } from "../Application/PageHeader/PageHeader1";
 
 function Campain({ ...props }) {
   return (
-    <Stack flex={"1"} w={"100%"} minH={"100vh"} spacing={"8"} {...props}>
-      <PageHeader1 title={props.title} description={props.description} />
+    <Stack
+      // flex={"1"}
+      w={"100%"}
+      minH={"100vh"}
+      spacing={"8"}
+      pb={{ base: "12", md: "24" }}
+      {...props}
+    >
+      {props.title && (
+        <PageHeader1 title={props.title} description={props.description} />
+      )}
       <GridQuiteMinimalistic />
     </Stack>
   );

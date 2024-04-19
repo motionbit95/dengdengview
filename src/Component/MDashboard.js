@@ -86,20 +86,7 @@ export const Ranking = () => {
       <CardBody py={0}>
         <Stack spacing={1}>
           {ranking.map((item, index) => (
-            <Stack
-              rounded={"lg"}
-              spacing={0}
-              bgColor={
-                index === 0
-                  ? "yellow.100"
-                  : index === 1
-                  ? "gray.100"
-                  : index === 2
-                  ? "orange.100"
-                  : "transparent"
-              }
-              key={index}
-            >
+            <Stack rounded={"lg"} spacing={0} key={index}>
               <HStack spacing={4} justify="space-between" p={3}>
                 <Text noOfLines={1}>
                   {index + 1}. {item.name}

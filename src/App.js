@@ -24,6 +24,9 @@ import { FooterWithFourColumnsOnAccent } from "./Marketing/Footers/FooterWithFou
 import Terms from "./Pages/Terms";
 import AdminLogin from "./Pages/AdminLogin";
 import AdminDashboard from "./Pages/AdminDashboard";
+import Campain from "./Pages/Campain";
+import Home from "./Pages/Home";
+import Detail from "./Pages/Detail";
 
 function App() {
   const [userInfo, setUserInfo] = React.useState(null);
@@ -67,6 +70,8 @@ function App() {
               <Route path="/product" element={<Product />} />
               <Route path="/cart" element={<Cart />} />
 
+              <Route path="/" element={<Home />} />
+              <Route path="/campain/*" element={<Detail />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUpForm />} />
               <Route path="/mypage/*" element={<Profile />} />

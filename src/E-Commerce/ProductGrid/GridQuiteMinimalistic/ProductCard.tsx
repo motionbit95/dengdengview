@@ -10,6 +10,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { Campain, calculateDday, campains } from "./_data";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   campain: Campain;
@@ -17,8 +18,15 @@ interface Props {
 
 export const ProductCard = (props: Props) => {
   const { campain } = props;
+  const navigate = useNavigate();
   return (
-    <Stack spacing="4" _hover={{ opacity: 0.7, cursor: "pointer" }}>
+    <Stack
+      spacing="4"
+      _hover={{ opacity: 0.7, cursor: "pointer" }}
+      onClick={() => {
+        navigate(`/campain/${campain.id}`, { state: campain });
+      }}
+    >
       <Box position="relative" className="group">
         <AspectRatio ratio={1}>
           <Image
