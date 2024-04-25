@@ -2,7 +2,7 @@ import { Box, Container, SimpleGrid } from "@chakra-ui/react";
 import { ProductCard } from "./ProductCard";
 import { campains } from "./_data";
 
-export const GridQuiteMinimalistic = () => (
+export const GridQuiteMinimalistic = (props: any) => (
   <Container>
     <Box
     // maxW="5xl"
@@ -14,7 +14,7 @@ export const GridQuiteMinimalistic = () => (
         columns={{ base: 2, sm: 3, lg: 4 }}
         gap={{ base: "8", lg: "12" }}
       >
-        {campains.map((campain) => (
+        {props?.campains?.map((campain: any) => (
           <ProductCard key={campain.id} campain={campain} />
         ))}
       </SimpleGrid>

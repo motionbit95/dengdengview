@@ -38,6 +38,7 @@ import { adminLogout } from "../../../Firebase/Auth";
 import { useState } from "react";
 import Dashboard from "../../../Component/MDashboard";
 import User from "../../../Component/MUser";
+import Campain from "../../../Component/MCampain";
 
 export const ShellWithGroupedMenu = () => {
   const [menu, setMenu] = useState(
@@ -144,6 +145,7 @@ export const ShellWithGroupedMenu = () => {
           >
             {menu === 0 && <Dashboard />}
             {menu === 2 && <User />}
+            {menu === 3 && <Campain />}
           </Box>
         </Box>
       </Flex>

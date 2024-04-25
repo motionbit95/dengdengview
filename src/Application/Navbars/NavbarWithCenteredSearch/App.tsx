@@ -60,12 +60,12 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
           </InputGroup> */}
             <HStack spacing={{ base: "2", md: "4" }}>
               <ButtonGroup variant="tertiary" spacing="1">
-                <IconButton
+                {/* <IconButton
                   icon={<FiSearch />}
                   aria-label="Serach"
                   display={{ base: "flex", md: "none" }}
                   isRound
-                />
+                /> */}
                 {/* <IconButton
                   icon={<FiBell />}
                   aria-label="Show notification"
