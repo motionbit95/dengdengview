@@ -7,7 +7,6 @@ import BlogCrawler from "../Component/BlogCrawler";
 function Home(props) {
   return (
     <Stack>
-      <BlogCrawler />
       <Tabs1 />
       <Campain />
     </Stack>

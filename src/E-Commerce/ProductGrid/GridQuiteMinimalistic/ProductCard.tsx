@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { Campain, calculateDday, campains } from "./_data";
 import { useNavigate } from "react-router-dom";
+import { bucketAddress, getImage } from "../../../Firebase/Util";
 
 interface Props {
   campain: Campain;
@@ -30,7 +31,7 @@ export const ProductCard = (props: Props) => {
       <Box position="relative" className="group">
         <AspectRatio ratio={1}>
           <Image
-            src={campain.imageUrl}
+            src={getImage(campain.imageUrl)}
             alt={campain.name}
             draggable="false"
             fallback={<Skeleton />}
@@ -68,7 +69,7 @@ export const ProductCard = (props: Props) => {
           >
             {calculateDday(campain.expireDate) > 0
               ? calculateDday(campain.expireDate) + "일 남음"
-              : "일 지남"}
+              : Math.abs(calculateDday(campain.expireDate)) + "일 지남"}
           </Tag>
           <Tag size={{ base: "sm", md: "md" }} colorScheme={"teal"}>
             {campain.type}

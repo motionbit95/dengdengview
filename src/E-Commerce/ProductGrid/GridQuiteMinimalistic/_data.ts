@@ -42,7 +42,7 @@ export const campains = [
       "고양이이벤트",
       "체험단",
     ],
-    mission: ["키워드 필수", "영상 1개", "배너 필수", "링크 필수", "800자↑"],
+    mission: ["키워드 필수", "배너 필수", "링크 필수", "800자↑"],
     mission_description: `○업체 인스타계정 태그필수:
 @meditamin_kr
 

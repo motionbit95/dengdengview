@@ -1,3 +1,6 @@
+export const bucketAddress =
+  "https://firebasestorage.googleapis.com/v0/b/motionbit-dangdangview.appspot.com/o";
+
 export const debug = (...args) => {
   if (process.env.NODE_ENV === "development") {
     console.log(...args);
@@ -29,4 +32,8 @@ export const trError = (errorCode) => {
 // 현재 페이지를 계산하는 함수
 export function getCurrentPageNumber(startIndex, pageSize) {
   return Math.floor(startIndex / pageSize) + 1;
+}
+
+export function getImage(url) {
+  return bucketAddress + url + "?alt=media";
 }

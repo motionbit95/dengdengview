@@ -11,7 +11,6 @@ import Page from "./Pages/Page";
 import ShowCase from "./Pages/ShowCase";
 import { CheckOutPages } from "./E-Commerce/CheckOutPages/App";
 import Filter from "./Pages/Filter";
-import Product from "./Pages/Product";
 import Cart from "./Pages/Cart";
 import { SignUpForm } from "./Application/Authentication/Login9/App";
 import { NavbarWithCenteredSearch } from "./Application/Navbars/NavbarWithCenteredSearch/App";
@@ -24,7 +23,6 @@ import { FooterWithFourColumnsOnAccent } from "./Marketing/Footers/FooterWithFou
 import Terms from "./Pages/Terms";
 import AdminLogin from "./Pages/AdminLogin";
 import AdminDashboard from "./Pages/AdminDashboard";
-import Campain from "./Pages/Campain";
 import Home from "./Pages/Home";
 import Detail from "./Pages/Detail";
 
@@ -67,7 +65,6 @@ function App() {
               <Route path="/showcase" element={<ShowCase />} />
               <Route path="/checkout" element={<CheckOutPages />} />
               <Route path="/filter" element={<Filter />} />
-              <Route path="/product" element={<Product />} />
               <Route path="/cart" element={<Cart />} />
 
               <Route path="/" element={<Home />} />
