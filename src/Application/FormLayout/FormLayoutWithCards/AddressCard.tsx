@@ -19,13 +19,23 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
 } from "@chakra-ui/react";
+import { formattedDate } from "../../../Firebase/Util";
 
-export const PersonalInfoCard = (props: BoxProps) => {
-  const [date, setDate] = useState(new Date());
+export const PersonalInfoCard = ({ ...props }) => {
+  const { campain } = props;
+  const [date, setDate] = useState(
+    campain?.openDate ? new Date(campain?.openDate) : new Date()
+  );
   const [selectedDates, setSelectedDates] = useState<Date[]>([
-    new Date(),
-    new Date(),
+    campain?.startDate ? new Date(campain?.startDate) : new Date(),
+    campain?.endDate ? new Date(campain?.endDate) : new Date(),
   ]);
+
+  const [reviewDates, setReviewDates] = useState<Date[]>([
+    campain?.reviewStart ? new Date(campain?.reviewStart) : new Date(),
+    campain?.reviewEnd ? new Date(campain?.reviewEnd) : new Date(),
+  ]);
+
   return (
     <Box
       w={"full"}
@@ -33,7 +43,7 @@ export const PersonalInfoCard = (props: BoxProps) => {
       bg="bg.surface"
       boxShadow="sm"
       borderRadius="lg"
-      {...props}
+      // {...props}
     >
       <Stack
         spacing="5"
@@ -41,13 +51,18 @@ export const PersonalInfoCard = (props: BoxProps) => {
         py={{ base: "5", md: "6" }}
       >
         <Stack spacing="6" direction={{ base: "column", md: "row" }}>
-          <FormControl id="name">
+          <FormControl id="name" isRequired>
             <FormLabel>체험단명</FormLabel>
-            <Input placeholder="체험단명을 입력해주세요." />
+            <Input
+              name="name"
+              onChange={(e) => props.onChange({ name: e.target.value })}
+              placeholder="체험단명을 입력해주세요."
+              defaultValue={campain?.name}
+            />
           </FormControl>
         </Stack>
         <Stack spacing="6">
-          <FormControl id="street">
+          <FormControl id="street" isRequired>
             <FormLabel>모집일정</FormLabel>
             <RangeDatepicker
               configs={{
@@ -61,10 +76,16 @@ export const PersonalInfoCard = (props: BoxProps) => {
               }}
               propsConfigs={propsConfigs}
               selectedDates={selectedDates}
-              onDateChange={setSelectedDates}
+              onDateChange={(dates) => {
+                setSelectedDates(dates);
+                props.onChange({
+                  startDate: formattedDate(dates[0]),
+                  endDate: formattedDate(dates[1]),
+                });
+              }}
             />
           </FormControl>
-          <FormControl id="city">
+          <FormControl id="city" isRequired>
             <FormLabel>발표일</FormLabel>
             <SingleDatepicker
               name="date-input"
@@ -79,10 +100,13 @@ export const PersonalInfoCard = (props: BoxProps) => {
               }}
               propsConfigs={propsConfigs}
               date={date}
-              onDateChange={setDate}
+              onDateChange={(date) => {
+                setDate(date);
+                props.onChange({ openDate: formattedDate(date) });
+              }}
             />
           </FormControl>
-          <FormControl id="street">
+          <FormControl id="street" isRequired>
             <FormLabel>리뷰일정</FormLabel>
             <RangeDatepicker
               configs={{
@@ -95,15 +119,25 @@ export const PersonalInfoCard = (props: BoxProps) => {
                 firstDayOfWeek: 0, // default is 0, the dayNames[0], which is Sunday if you don't specify your own dayNames,
               }}
               propsConfigs={propsConfigs}
-              selectedDates={selectedDates}
-              onDateChange={setSelectedDates}
+              selectedDates={reviewDates}
+              onDateChange={(dates) => {
+                setReviewDates(dates);
+                props.onChange({
+                  reviewStart: formattedDate(dates[0]),
+                  reviewEnd: formattedDate(dates[1]),
+                });
+              }}
             />
           </FormControl>
         </Stack>
-        <FormControl id="city">
+        <FormControl id="city" isRequired>
           <FormLabel>모집인원</FormLabel>
-          <NumberInput defaultValue={0}>
-            <NumberInputField placeholder="모집인원를 입력해주세요." />
+          <NumberInput defaultValue={campain?.targetCnt}>
+            <NumberInputField
+              name="targetCnt"
+              onChange={(e) => props.onChange({ targetCnt: e.target.value })}
+              placeholder="모집인원를 입력해주세요."
+            />
             <NumberInputStepper>
               <NumberIncrementStepper />
               <NumberDecrementStepper />
@@ -111,9 +145,14 @@ export const PersonalInfoCard = (props: BoxProps) => {
           </NumberInput>
         </FormControl>
 
-        <FormControl id="country">
+        <FormControl id="country" isRequired>
           <FormLabel>모집구분</FormLabel>
-          <Select placeholder="선택">
+          <Select
+            name="type"
+            onChange={(e) => props.onChange({ type: e.target.value })}
+            placeholder="선택"
+            defaultValue={campain?.type}
+          >
             <option value="배송">배송</option>
             <option value="방문">방문</option>
           </Select>

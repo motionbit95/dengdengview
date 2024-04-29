@@ -18,27 +18,75 @@ import {
   Input,
   Button,
   Select,
+  useDisclosure,
 } from "@chakra-ui/react";
+
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import { IoArrowDown } from "react-icons/io5";
 import { Naver } from "./Logo";
 import React from "react";
 import { updateDoc } from "../../../Firebase/Database";
 // import { members } from "./data";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
+import { FormLayoutWithCards } from "../../FormLayout/FormLayoutWithCards/App";
+import ConfirmBox from "../../../Component/ConfirmBox";
+
+function ModifierButton(campain: any) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <>
+      <Button
+        colorScheme="gray"
+        variant="ghost"
+        aria-label="Edit"
+        onClick={onOpen}
+      >
+        {<FiEdit2 />}
+      </Button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size={{ base: "full", md: "6xl" }}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>체험단 수정</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <FormLayoutWithCards
+              campain={campain}
+              onCancel={onClose}
+              onSave={(data: any) => {
+                console.log(data);
+                onClose();
+              }}
+            />
+          </ModalBody>
+
+          {/* <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button variant="ghost">Secondary Action</Button>
+          </ModalFooter> */}
+        </ModalContent>
+      </Modal>
+    </>
+  );
+}
 
 export const TesterTable = (props: any) => {
   const { members } = props;
   const [uid, setUid] = React.useState("");
-
-  const updateUser = (member: any) => {
-    console.log(member);
-
-    if (window.confirm("유저 정보를 수정하시겠습니까?")) {
-      updateDoc("User", member.id, member).then(() => {});
-    } else {
-      window.location.reload();
-    }
-  };
 
   return (
     <Table {...props} size={"sm"}>
@@ -88,12 +136,19 @@ export const TesterTable = (props: any) => {
             <Td>{campain.views}</Td>
             <Td>
               <HStack spacing="1">
-                <IconButton
-                  icon={<FiTrash2 />}
-                  variant="tertiary"
+                <ConfirmBox
+                  colorScheme="gray"
+                  variant="ghost"
                   aria-label="Delete member"
-                />
-                <IconButton
+                  onConfirm={() => {}}
+                  title="삭제"
+                  discription="체험단를 삭제하시겠습니까?"
+                  buttonText="삭제"
+                >
+                  <FiTrash2 />
+                </ConfirmBox>
+                <ModifierButton campain={campain} />
+                {/* <IconButton
                   onClick={() => {
                     if (uid === "") {
                       setUid(campain.id);
@@ -107,7 +162,7 @@ export const TesterTable = (props: any) => {
                   icon={<FiEdit2 />}
                   variant="tertiary"
                   aria-label="Edit member"
-                />
+                /> */}
               </HStack>
             </Td>
           </Tr>

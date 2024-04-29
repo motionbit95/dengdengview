@@ -21,7 +21,8 @@ import { useState } from "react";
 import { ListWithDraggableElements } from "../../List/ListWithDraggableElements/App";
 import { ListCampainImages } from "../../List/ListCampainImages/App";
 
-export const ProfileCard = (props: BoxProps) => {
+export const ProfileCard = ({ ...props }) => {
+  const { campain } = props;
   const [url, setUrl] = useState<string>("");
   return (
     <Box
@@ -30,7 +31,7 @@ export const ProfileCard = (props: BoxProps) => {
       boxShadow="sm"
       borderRadius="lg"
       flex="1"
-      {...props}
+      // {...props}
     >
       <Stack
         spacing="5"
@@ -63,24 +64,41 @@ export const ProfileCard = (props: BoxProps) => {
           </Stack>
         </FormControl> */}
 
-        <FormControl id="website">
+        <FormControl id="website" isRequired>
           <FormLabel>상세 이미지</FormLabel>
-          <ListCampainImages />
+          <ListCampainImages
+            onChange={(value: any) => props.onChange({ images: value })}
+            defaultImages={campain?.images}
+          />
           <FormHelperText color="fg.subtle">
             첫번째 이미지가 썸네일로 표시됩니다.
           </FormHelperText>
         </FormControl>
-        <FormControl id="bio">
+        <FormControl id="bio" isRequired>
           <FormLabel>제품 설명</FormLabel>
-          <Textarea rows={3} resize="none" />
+          <Textarea
+            fontSize={"sm"}
+            defaultValue={campain?.product}
+            onChange={(e) => props.onChange({ product: e.target.value })}
+            rows={3}
+            resize="none"
+          />
           <FormHelperText color="fg.subtle">
             제품 설명을 작성해주세요.
           </FormHelperText>
         </FormControl>
 
-        <FormControl id="bio">
+        <FormControl id="bio" isRequired>
           <FormLabel>리뷰어 미션</FormLabel>
-          <Textarea rows={3} resize="none" />
+          <Textarea
+            fontSize={"sm"}
+            defaultValue={campain?.mission_description}
+            onChange={(e) =>
+              props.onChange({ mission_description: e.target.value })
+            }
+            rows={3}
+            resize="none"
+          />
           <FormHelperText color="fg.subtle">
             리뷰어가 수행해야하는 미션을 작성해주세요.
           </FormHelperText>

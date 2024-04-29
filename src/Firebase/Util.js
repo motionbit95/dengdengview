@@ -37,3 +37,27 @@ export function getCurrentPageNumber(startIndex, pageSize) {
 export function getImage(url) {
   return bucketAddress + url + "?alt=media";
 }
+
+export function formattedDate(date) {
+  // 현재 날짜와 시간을 나타내는 Date 객체 생성
+  var currentDate = date ? date : new Date();
+
+  // 연도, 월, 일 추출
+  var year = currentDate.getFullYear();
+  var month = ("0" + (currentDate.getMonth() + 1)).slice(-2); // 월은 0부터 시작하므로 1을 더하고 두 자리로 표시
+  var day = ("0" + currentDate.getDate()).slice(-2); // 일도 두 자리로 표시
+
+  // YYYY-MM-DD 형식으로 조합
+  var formattedDate = year + "-" + month + "-" + day;
+
+  return formattedDate; // 예시 출력: "2024-04-29"
+}
+
+export function formattedDateTime(date) {
+  date.setHours(date.getHours() + 9); // 오늘 날짜의 시간을 00:00:00으로 설정
+  return date.toISOString(); // 예시 출력: "2024-04-29"
+}
+
+export function isExist(property, object) {
+  return property in object;
+}

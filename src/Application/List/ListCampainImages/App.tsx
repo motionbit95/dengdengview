@@ -15,9 +15,12 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Dropzone } from "../../FormLayout/FormLayoutWithCards/Dropzone";
+import { bucketAddress } from "../../../Firebase/Util";
 
-export const ListCampainImages = () => {
-  const [order, setOrder] = useState<string[]>([]);
+export const ListCampainImages = ({ ...props }) => {
+  const [order, setOrder] = useState<string[]>(
+    props.defaultImages ? props.defaultImages : []
+  );
 
   return (
     <Center w={"full"} mx="auto">
@@ -38,7 +41,12 @@ export const ListCampainImages = () => {
             ))}
           </SimpleGrid>
         </Flex>
-        <Dropzone setUrl={(url: string) => setOrder([...order, url])} />
+        <Dropzone
+          setUrl={(url: string) => {
+            props.onChange([...order, url]);
+            setOrder([...order, url]);
+          }}
+        />
       </Stack>
     </Center>
   );

@@ -9,9 +9,11 @@ import {
   startAfter,
   orderBy,
   query,
+  serverTimestamp,
+  addDoc,
 } from "firebase/firestore";
 import { db } from "./Config";
-import { debug } from "./Util";
+import { debug, formattedDateTime, isExist } from "./Util";
 //#############################################################
 // 전체적인 데이터 베이스 CRUD를 담당합니다.
 /* 아래는 간략한 함수 설명입니다.
@@ -24,9 +26,21 @@ deleteDoc : id 문서를 삭제합니다.
 */
 
 export const createDoc = async (collectionName, data) => {
-  await setDoc(doc(db, collectionName, data.id), data).then(() => {
-    debug("문서 저장 성공 : ", collectionName, " > ", data.id);
-  });
+  if (isExist("id", data)) {
+    await setDoc(doc(db, collectionName, data.id), {
+      ...data,
+      createdAt: formattedDateTime(new Date()),
+    }).then(() => {
+      debug("문서 저장 성공 : ", collectionName, " > ", data.id);
+    });
+  } else {
+    addDoc(collection(db, collectionName), {
+      ...data,
+      createdAt: formattedDateTime(new Date()),
+    }).then(() => {
+      debug("문서 저장 성공 : ", collectionName);
+    });
+  }
 };
 
 export const getCollection = async (collectionName) => {

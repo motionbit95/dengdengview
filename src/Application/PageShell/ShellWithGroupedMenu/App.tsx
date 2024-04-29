@@ -60,7 +60,7 @@ export const ShellWithGroupedMenu = () => {
                     localStorage.setItem("ad_menu", "0");
                   }}
                 />
-                <NavItem
+                {/* <NavItem
                   active={menu === 1 || localStorage.getItem("ad_menu") === "1"}
                   icon={<BiCommentAdd />}
                   label="광고문의"
@@ -68,7 +68,7 @@ export const ShellWithGroupedMenu = () => {
                     setMenu(1);
                     localStorage.setItem("ad_menu", "1");
                   }}
-                />
+                /> */}
                 <NavItem
                   active={menu === 2 || localStorage.getItem("ad_menu") === "2"}
                   icon={<BiUserCircle />}
@@ -87,7 +87,7 @@ export const ShellWithGroupedMenu = () => {
                     localStorage.setItem("ad_menu", "3");
                   }}
                 />
-                <NavItem
+                {/* <NavItem
                   active={menu === 4 || localStorage.getItem("ad_menu") === "4"}
                   icon={<BiNotification />}
                   label="공지관리"
@@ -95,7 +95,7 @@ export const ShellWithGroupedMenu = () => {
                     setMenu(4);
                     localStorage.setItem("ad_menu", "4");
                   }}
-                />
+                /> */}
               </NavGroup>
 
               <NavGroup label="광고주관리">

@@ -72,7 +72,7 @@ export const CampainTable = (props: any) => {
                 다음
               </Button>
             </ButtonGroup>
-            <Button>등록</Button>
+            <Button onClick={() => props.onRegister()}>등록</Button>
           </HStack>
         </Box>
       </Stack>
