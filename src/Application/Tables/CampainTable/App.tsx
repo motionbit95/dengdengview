@@ -19,6 +19,7 @@ import { TesterTable } from "./CampainTable";
 export const CampainTable = (props: any) => {
   const [startIndex, setStartIndex] = React.useState(0);
   const isMobile = useBreakpointValue({ base: true, md: false });
+
   return (
     // <Container py={{ base: "4", md: "8" }} px={{ base: "0", md: 8 }}>
     <Box
@@ -71,6 +72,7 @@ export const CampainTable = (props: any) => {
                 다음
               </Button>
             </ButtonGroup>
+            <Button>등록</Button>
           </HStack>
         </Box>
       </Stack>

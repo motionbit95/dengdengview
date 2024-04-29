@@ -4,6 +4,7 @@ import { Box } from "@chakra-ui/react";
 import { fetchDocuments, getCollection } from "../Firebase/Database";
 import { UserTable } from "../Application/Tables/UserTable/App";
 import { CampainTable } from "../Application/Tables/CampainTable/App";
+import { FormLayoutWithCards } from "../Application/FormLayout/FormLayoutWithCards/App";
 
 function Campain(props) {
   const [page, setPage] = useState(1);
@@ -11,11 +12,13 @@ function Campain(props) {
   const [lastVisible, setLastVisible] = useState();
   useEffect(() => {
     // 전체 유저 정보를 받아옵니다.
-    fetchDocuments("User", "createdAt", lastVisible, "initial").then((data) => {
-      console.log(data);
-      setmembers(data.list);
-      setLastVisible(data.lastVisible);
-    });
+    fetchDocuments("Campain", "createdAt", lastVisible, "initial").then(
+      (data) => {
+        console.log(data);
+        setmembers(data.list);
+        setLastVisible(data.lastVisible);
+      }
+    );
   }, []);
   return (
     <Box as="section" p={{ base: "4", md: "8" }}>
@@ -44,6 +47,7 @@ function Campain(props) {
           );
         }}
       />
+      <FormLayoutWithCards />
     </Box>
   );
 }
