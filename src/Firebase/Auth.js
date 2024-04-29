@@ -7,6 +7,7 @@ import { auth, db } from "./Config";
 import { createDoc } from "./Database";
 import { debug, trError } from "./Util";
 import { doc, getDoc, serverTimestamp } from "firebase/firestore";
+import { useEffect, useState } from "react";
 //#############################################################
 // 전체적인 계정 CRUD를 담당합니다.
 /* 아래는 간략한 함수 설명입니다.

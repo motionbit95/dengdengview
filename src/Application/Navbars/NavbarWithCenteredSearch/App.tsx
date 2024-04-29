@@ -28,7 +28,13 @@ import { SidebarWithCollapsable } from "../../Sidebars/SidebarWithCollapsable/Ap
 export const NavbarWithCenteredSearch = ({ ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box as="section" position={"sticky"} top={0} zIndex={"tooltip"}>
+    <Box
+      as="section"
+      position={"sticky"}
+      top={0}
+      bgColor={"white"}
+      zIndex={"sticky"}
+    >
       <Drawer size={"xs"} placement={"left"} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>

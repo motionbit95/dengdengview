@@ -37,6 +37,7 @@ export function AddressInput(props) {
     <Stack w={"100%"}>
       <HStack w={"100%"}>
         <Input
+          size={props.size ? props.size : "md"}
           name="zonecode"
           placeholder="우편번호"
           value={zonecode}
@@ -46,11 +47,16 @@ export function AddressInput(props) {
           }}
           ref={zonecodeRef}
         />
-        <Button onClick={openKakaoPostPopup} w={"100px"}>
+        <Button
+          onClick={openKakaoPostPopup}
+          w={"100px"}
+          size={props.size ? props.size : "md"}
+        >
           검색
         </Button>
       </HStack>
       <Input
+        size={props.size ? props.size : "md"}
         name="street"
         placeholder="도로명주소"
         value={street}
@@ -62,12 +68,17 @@ export function AddressInput(props) {
       />
       <HStack>
         <Input
+          size={props.size ? props.size : "md"}
           name="address"
           placeholder="상세주소"
           value={address}
           defaultValue={address}
           onChange={(e) => {
-            props.onChange(e);
+            props.onChange({
+              zonecode: zonecodeRef.current.value,
+              street: streetRef.current.value,
+              address: e.target.value,
+            });
           }}
         />
       </HStack>
