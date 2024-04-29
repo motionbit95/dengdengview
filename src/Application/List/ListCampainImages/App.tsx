@@ -15,7 +15,6 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Dropzone } from "../../FormLayout/FormLayoutWithCards/Dropzone";
-import { bucketAddress } from "../../../Firebase/Util";
 
 export const ListCampainImages = ({ ...props }) => {
   const [order, setOrder] = useState<string[]>(

@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 
 import { Box, HStack, Heading, IconButton, Stack } from "@chakra-ui/react";
-import { createDoc, fetchDocuments, getCollection } from "../Firebase/Database";
+import {
+  createDoc,
+  fetchDocuments,
+  getCollection,
+  tableCount,
+} from "../Firebase/Database";
 import { UserTable } from "../Application/Tables/UserTable/App";
 import { CampainTable } from "../Application/Tables/CampainTable/App";
 import { FormLayoutWithCards } from "../Application/FormLayout/FormLayoutWithCards/App";
@@ -14,7 +19,12 @@ function Campain(props) {
   const [page, setPage] = useState(1);
   const [members, setmembers] = useState([]);
   const [lastVisible, setLastVisible] = useState();
+  const [totalCount, setTotalCount] = useState(0);
   useEffect(() => {
+    getCollection("Campain").then((data) => {
+      setTotalCount(data.length);
+    });
+
     // 전체 유저 정보를 받아옵니다.
     fetchDocuments("Campain", "createdAt", lastVisible, "initial").then(
       (data) => {
@@ -31,21 +41,27 @@ function Campain(props) {
           onRegister={() => {
             setIsRegister(!isRegister);
           }}
-          isNextDisabled={members.length < 10}
+          isNextDisabled={
+            members.length < tableCount ||
+            (page - 1) * tableCount + members.length >= totalCount
+          }
           isPrevDisabled={page === 1}
           members={members}
           onPrev={() =>
-            fetchDocuments("User", "createdAt", lastVisible, "previous").then(
-              (data) => {
-                console.log(data);
-                setPage(page - 1);
-                setmembers(data.list);
-                setLastVisible(data.lastVisible);
-              }
-            )
+            fetchDocuments(
+              "Campain",
+              "createdAt",
+              lastVisible,
+              "previous"
+            ).then((data) => {
+              console.log(data);
+              setPage(page - 1);
+              setmembers(data.list);
+              setLastVisible(data.lastVisible);
+            })
           }
           onNext={() => {
-            fetchDocuments("User", "createdAt", lastVisible, "next").then(
+            fetchDocuments("Campain", "createdAt", lastVisible, "next").then(
               (data) => {
                 console.log(data);
                 setPage(page + 1);

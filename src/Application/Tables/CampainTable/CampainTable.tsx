@@ -25,7 +25,7 @@ import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import { IoArrowDown } from "react-icons/io5";
 import { Naver } from "./Logo";
 import React from "react";
-import { updateDoc } from "../../../Firebase/Database";
+import { deleteDocument, updateDoc } from "../../../Firebase/Database";
 // import { members } from "./data";
 import {
   Modal,
@@ -87,7 +87,6 @@ function ModifierButton(campain: any) {
 export const TesterTable = (props: any) => {
   const { members } = props;
   const [uid, setUid] = React.useState("");
-
   return (
     <Table {...props} size={"sm"}>
       <Thead>
@@ -122,14 +121,12 @@ export const TesterTable = (props: any) => {
             <Td>{campain.name}</Td>
             <Td>{campain.createdAt.split("T")[0]}</Td>
             <Td>
-              {campain.startDate.split("T")[0]} ~{"\n"}
-              {campain.endDate.split("T")[0]}
+              {campain.startDate} ~ {campain.endDate}
             </Td>
 
-            <Td>{campain.openDate.split("T")[0]}</Td>
+            <Td>{campain.openDate}</Td>
             <Td>
-              {campain.reviewStart.split("T")[0]} ~{" "}
-              {campain.reviewEnd.split("T")[0]}
+              {campain.reviewStart} ~ {campain.reviewEnd}
             </Td>
             <Td>{campain.targetCnt}</Td>
             <Td>{campain.type}</Td>
@@ -140,7 +137,11 @@ export const TesterTable = (props: any) => {
                   colorScheme="gray"
                   variant="ghost"
                   aria-label="Delete member"
-                  onConfirm={() => {}}
+                  onConfirm={() => {
+                    deleteDocument("Campain", campain.doc_id).then(() => {
+                      window.location.reload();
+                    });
+                  }}
                   title="삭제"
                   discription="체험단를 삭제하시겠습니까?"
                   buttonText="삭제"

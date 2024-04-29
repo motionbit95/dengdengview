@@ -13,7 +13,7 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { FiSearch } from "react-icons/fi";
-import React from "react";
+import React, { useEffect } from "react";
 import { TesterTable } from "./CampainTable";
 
 export const CampainTable = (props: any) => {

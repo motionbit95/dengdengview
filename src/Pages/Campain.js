@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Stack } from "@chakra-ui/react";
 import { GridQuiteMinimalistic } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/App";
 import { PageHeader1 } from "../Application/PageHeader/PageHeader1";
-import { fetchDocuments } from "../Firebase/Database";
+import { fetchDocuments, getCollection } from "../Firebase/Database";
 
 function Campain({ ...props }) {
   const [page, setPage] = useState(1);
@@ -11,13 +11,10 @@ function Campain({ ...props }) {
 
   useEffect(() => {
     // 전체 유저 정보를 받아옵니다.
-    fetchDocuments("Campain", "createdAt", lastVisible, "initial").then(
-      (data) => {
-        console.log(data);
-        setCampains(data.list);
-        setLastVisible(data.lastVisible);
-      }
-    );
+    getCollection("Campain").then((data) => {
+      console.log(data);
+      setCampains(data);
+    });
   }, []);
   return (
     <Stack

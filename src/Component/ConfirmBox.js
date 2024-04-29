@@ -19,11 +19,11 @@ function ConfirmBox({ ...props }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Button {...props} onClick={props.onClick}>
+      <Button {...props} onClick={props.onClick ? props.onClick : onOpen}>
         {props.children}
       </Button>
 
-      <Modal isCentered isOpen={props.isOpen} onClose={onClose}>
+      <Modal isCentered isOpen={props.isOpen ? true : isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>

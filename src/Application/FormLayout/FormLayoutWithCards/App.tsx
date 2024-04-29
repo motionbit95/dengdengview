@@ -125,7 +125,7 @@ export const FormLayoutWithCards = ({ ...props }) => {
               console.log(value);
               handleChange(value);
             }}
-            campain={formData}
+            campain={campain}
             maxW={{ lg: "3xl" }}
           />
         </Stack>

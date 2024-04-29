@@ -15,7 +15,7 @@ export function calculateDday(targetDate: string) {
 
 export const campains = [
   {
-    id: "p0o9i8u7",
+    doc_id: "p0o9i8u7",
     name: "[체험단]펫루션 유산균 영양제, 강아지 체험단 모집",
     product:
       "팔라티노스,이소말트,무수결정포도당 등등 불필요한 당대체재 NO ZERO슈가\n1일 300억 고함량 유산균\n국내산 단호박을 사용해 기호성 만랩",

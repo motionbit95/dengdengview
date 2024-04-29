@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 import { Campain, calculateDday, campains } from "./_data";
 import { useNavigate } from "react-router-dom";
-import { bucketAddress, getImage } from "../../../Firebase/Util";
 
 interface Props {
   campain: Campain;
@@ -25,13 +24,13 @@ export const ProductCard = (props: Props) => {
       spacing="4"
       _hover={{ opacity: 0.7, cursor: "pointer" }}
       onClick={() => {
-        navigate(`/campain/${campain.id}`, { state: campain });
+        navigate(`/campain/${campain.doc_id}`, { state: campain });
       }}
     >
       <Box position="relative" className="group">
         <AspectRatio ratio={1}>
           <Image
-            src={getImage(campain.imageUrl)}
+            src={campain.images[0]}
             alt={campain.name}
             draggable="false"
             fallback={<Skeleton />}
@@ -39,7 +38,7 @@ export const ProductCard = (props: Props) => {
           />
         </AspectRatio>
         <Tag size={"sm"} position="absolute" top="2" left="2">
-          #{campain.id}
+          #{campain.doc_id.substring(0, 8)}
         </Tag>
       </Box>
       <Stack spacing="1">
@@ -65,11 +64,11 @@ export const ProductCard = (props: Props) => {
         <HStack spacing={2}>
           <Tag
             size={{ base: "sm", md: "md" }}
-            colorScheme={calculateDday(campain.expireDate) > 3 ? "gray" : "red"}
+            colorScheme={calculateDday(campain.endDate) > 0 ? "red" : "gray"}
           >
-            {calculateDday(campain.expireDate) > 0
-              ? calculateDday(campain.expireDate) + "일 남음"
-              : Math.abs(calculateDday(campain.expireDate)) + "일 지남"}
+            {calculateDday(campain.endDate) > 0
+              ? calculateDday(campain.endDate) + "일 남음"
+              : Math.abs(calculateDday(campain.endDate)) + "일 지남"}
           </Tag>
           <Tag size={{ base: "sm", md: "md" }} colorScheme={"teal"}>
             {campain.type}

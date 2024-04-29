@@ -15,7 +15,7 @@ export const GridQuiteMinimalistic = (props: any) => (
         gap={{ base: "8", lg: "12" }}
       >
         {props?.campains?.map((campain: any) => (
-          <ProductCard key={campain.id} campain={campain} />
+          <ProductCard key={campain.doc_id} campain={campain} />
         ))}
       </SimpleGrid>
     </Box>

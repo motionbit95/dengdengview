@@ -11,6 +11,7 @@ import {
   query,
   serverTimestamp,
   addDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "./Config";
 import { debug, formattedDateTime, isExist } from "./Util";
@@ -55,6 +56,8 @@ export const getCollection = async (collectionName) => {
   return docList;
 };
 
+export const tableCount = 6;
+
 // 현재 페이지의 마지막 문서를 기준으로 이전 10개 또는 다음 10개 문서를 가져오는 함수 - 테이블 데이터는 이걸 사용해야합니다.
 export async function fetchDocuments(
   collectionName,
@@ -81,9 +84,9 @@ export async function fetchDocuments(
   }
 
   // 쿼리를 수행합니다.
-  let q = query(queryCollection, queryOrder, limit(10));
+  let q = query(queryCollection, queryOrder, limit(tableCount));
   if (queryPagination !== null) {
-    q = query(queryCollection, queryOrder, queryPagination, limit(10));
+    q = query(queryCollection, queryOrder, queryPagination, limit(tableCount));
   }
 
   const querySnapshot = await getDocs(q);
@@ -107,6 +110,12 @@ export const updateDoc = async (collectionName, id, data) => {
     updatedAt: new Date().toISOString(),
   }).then(() => {
     debug("문서 수정 성공 : ", collectionName, " > ", id);
+  });
+};
+
+export const deleteDocument = async (collectionName, id) => {
+  await deleteDoc(doc(db, collectionName, id)).then(() => {
+    debug("문서 삭제 성공 : ", collectionName, " > ", id);
   });
 };
 
