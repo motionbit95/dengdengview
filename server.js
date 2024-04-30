@@ -6,6 +6,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const app = express();
+const CryptoJS = require("crypto-js");
 
 app.use(express.json());
 
@@ -273,6 +274,46 @@ app.post("/crawl", (req, res) => {
   //     });
   //   })
   //   .then((res) => console.log(res)); // 저장된 결과를 출력
+});
+
+app.get("/keywordstool", function (req, res) {
+  var method = "GET";
+  var api_url = "/keywordstool";
+  var timestamp = Date.now() + "";
+  var accessKey =
+    "0100000000891248005b4721a7ed3230150ea1c3d44a09a84da051980d7443565b543fc46f";
+  var secretKey = "AQAAAACJEkgAW0chp+0yMBUOocPU62EHZEt4N5WKOmlcvc9x9Q==";
+
+  var hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, secretKey);
+  hmac.update(timestamp + "." + method + "." + api_url);
+
+  var hash = hmac.finalize();
+  hash.toString(CryptoJS.enc.Base64);
+
+  const request = require("request");
+  const options = {
+    url:
+      "https://api.naver.com/keywordstool?hintKeywords=" +
+      encodeURI(req.query.hintKeywords) +
+      "&showDetail=1",
+    headers: {
+      "X-Timestamp": timestamp,
+      "X-API-KEY": accessKey,
+      "X-API-SECRET": secretKey,
+      "X-CUSTOMER": 3159667,
+      "X-Signature": hash.toString(CryptoJS.enc.Base64),
+    },
+  };
+  request.get(options, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
+      res.end(body);
+    } else {
+      res.status(response.statusCode).end();
+      console.log("error = " + response.statusCode);
+      console.log(error);
+    }
+  });
 });
 
 app.listen(port, () => {

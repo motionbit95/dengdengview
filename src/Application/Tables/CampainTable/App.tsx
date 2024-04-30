@@ -41,12 +41,12 @@ export const CampainTable = (props: any) => {
                 {`체험단을 등록하고 수정할 수 있습니다.`}
               </Text>
             </Stack>
-            <InputGroup maxW="xs">
+            {/* <InputGroup maxW="xs">
               <InputLeftElement pointerEvents="none">
                 <Icon as={FiSearch} color="fg.muted" boxSize="5" />
               </InputLeftElement>
               <Input placeholder="검색" />
-            </InputGroup>
+            </InputGroup> */}
           </Stack>
         </Box>
         <Box overflowX="auto">

@@ -98,7 +98,15 @@ function TotalView(props) {
         </Center>
       ) : (
         <Stack>
-          <PageHeader2 title="종합상세보기" discription={campain.name} />
+          <HStack width={"full"} justifyContent={"space-between"}>
+            <PageHeader2 title="종합상세보기" discription={campain.name} />
+            <Button
+              mx={4}
+              onClick={() => window.location.replace("/admin/dashboard")}
+            >
+              다른 캠페인 선택하기
+            </Button>
+          </HStack>
 
           <Accordion defaultIndex={[0, 1]} allowMultiple>
             <AccordionItem>

@@ -25,6 +25,7 @@ import AdminLogin from "./Pages/AdminLogin";
 import AdminDashboard from "./Pages/AdminDashboard";
 import Home from "./Pages/Home";
 import Detail from "./Pages/Detail";
+import Forbidden from "./Pages/Forbidden";
 
 function App() {
   const [userInfo, setUserInfo] = React.useState(null);
@@ -66,6 +67,7 @@ function App() {
           <BrowserRouter>
             <Routes>
               {/* <Route path="/banner" element={<Banner />} /> */}
+              <Route path="/*" element={<Forbidden />} />
               <Route path="/card" element={<Cards />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/form" element={<Form />} />

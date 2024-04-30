@@ -33,12 +33,12 @@ export const RegisterTable = ({ ...props }) => {
               <Text textStyle="lg" fontWeight="medium">
                 {props.title}
               </Text>
-              <InputGroup maxW="xs">
+              {/* <InputGroup maxW="xs">
                 <InputLeftElement pointerEvents="none">
                   <Icon as={FiSearch} color="fg.muted" boxSize="5" />
                 </InputLeftElement>
                 <Input placeholder="Search" />
-              </InputGroup>
+              </InputGroup> */}
             </Stack>
           </Box>
           <Box overflowX="auto">

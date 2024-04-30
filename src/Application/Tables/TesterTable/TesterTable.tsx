@@ -86,31 +86,40 @@ export const TesterTable = ({ ...props }) => {
               <Text color="fg.muted">{member.blog}</Text>
             </Td>
             <Td>
-              <VStack spacing={4}>
-                <HStack>
-                  {member.step > 1 && (
-                    <BsCheckCircleFill style={{ color: "green" }} size={20} />
-                  )}
-                  <Text
-                    opacity={member.step > 1 ? 1 : 0.5}
-                    color={member.step > 1 ? "green.500" : "gray.500"}
-                    fontSize={"xl"}
-                    fontWeight="bold"
-                  >
-                    {member.step > 1 ? "사용완료" : "사용완료전"}{" "}
-                    {member.step > 1 ? member.useDate : ""}
-                  </Text>
-                </HStack>
-                <HStack>
-                  <Text
-                    opacity={member.step > 2 ? 1 : 0.5}
-                    fontSize={"xl"}
-                    fontWeight="bold"
-                  >
-                    리뷰작성전
-                  </Text>
-                </HStack>
-              </VStack>
+              {member.step === 0 ? (
+                <Button>선정하기</Button>
+              ) : (
+                <VStack spacing={4}>
+                  <HStack>
+                    {member.step > 1 && (
+                      <BsCheckCircleFill style={{ color: "green" }} size={20} />
+                    )}
+                    <Text
+                      opacity={member.step > 1 ? 1 : 0.5}
+                      color={member.step > 1 ? "green.500" : "gray.500"}
+                      fontSize={"xl"}
+                      fontWeight="bold"
+                    >
+                      {member.step > 1 ? "사용완료" : "사용완료전"}{" "}
+                      {member.step > 1 ? member.useDate : ""}
+                    </Text>
+                  </HStack>
+                  <HStack>
+                    {member.step > 2 && (
+                      <BsCheckCircleFill style={{ color: "green" }} size={20} />
+                    )}
+                    <Text
+                      opacity={member.step > 2 ? 1 : 0.5}
+                      color={member.step > 1 ? "green.500" : "gray.500"}
+                      fontSize={"xl"}
+                      fontWeight="bold"
+                    >
+                      {member.step > 2 ? "리뷰완료" : "리뷰작성전"}{" "}
+                      {member.step > 2 ? member.reviewDate : ""}
+                    </Text>
+                  </HStack>
+                </VStack>
+              )}
             </Td>
           </Tr>
         ))}

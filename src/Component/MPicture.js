@@ -43,20 +43,22 @@ function Picture(props) {
         {reviewList.map((review) => (
           <>
             {review.imageList.map((image) => (
-              <Image
-                objectFit={"cover"}
-                aspectRatio={1}
-                w={"full"}
-                alt=""
-                rounded={"lg"}
-                shadow={"md"}
-                src={
-                  bucketAddress +
-                  "/downloads%2F" +
-                  image.split("/").pop().split("?")[0] +
-                  "?alt=media"
-                }
-              />
+              <>
+                <Image
+                  objectFit={"cover"}
+                  aspectRatio={1}
+                  w={"full"}
+                  alt=""
+                  rounded={"lg"}
+                  shadow={"md"}
+                  src={
+                    bucketAddress +
+                    "/downloads%2F" +
+                    image.split("/").pop().split("?")[0] +
+                    "?alt=media"
+                  }
+                />
+              </>
             ))}
           </>
         ))}

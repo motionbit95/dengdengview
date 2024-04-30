@@ -40,12 +40,12 @@ export const UserTable = (props: any) => {
                 {`회원정보를 검색하고 수정하거나 삭제할 수 있습니다.\n(*변경불가 : uid, 이메일, 가입수단, 가입일)`}
               </Text>
             </Stack>
-            <InputGroup maxW="xs">
+            {/* <InputGroup maxW="xs">
               <InputLeftElement pointerEvents="none">
                 <Icon as={FiSearch} color="fg.muted" boxSize="5" />
               </InputLeftElement>
               <Input placeholder="검색" />
-            </InputGroup>
+            </InputGroup> */}
           </Stack>
         </Box>
         <Box overflowX="auto">

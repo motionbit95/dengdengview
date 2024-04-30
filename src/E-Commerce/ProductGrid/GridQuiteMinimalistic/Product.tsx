@@ -96,51 +96,59 @@ export const Product = ({ ...props }) => {
     "https://firebasestorage.googleapis.com/v0/b/dangdangview.appspot.com/o/dangdang_banner.png?alt=media";
 
   const handleSubmit = async () => {
-    console.log(url);
-    console.log(campain);
+    if (window.confirm("리뷰를 등록하시겠습니까?")) {
+      console.log(url);
+      console.log(campain);
 
-    // fetch를 사용하여 POST 요청을 보냅니다.
-    fetch("http://localhost:3001/crawl", {
-      method: "POST", // 요청 메서드를 POST로 지정합니다.
-      headers: {
-        "Content-Type": "application/json", // 요청 헤더에 Content-Type을 JSON으로 지정합니다.
-      },
-      body: JSON.stringify({ url: url }), // 요청 본문에 데이터를 JSON 문자열로 변환하여 넣습니다.
-    })
-      .then((response) => {
-        // 서버에서 응답을 받으면 JSON 형식으로 파싱합니다.
-        return response.json();
+      // fetch를 사용하여 POST 요청을 보냅니다.
+      fetch("http://localhost:3001/crawl", {
+        method: "POST", // 요청 메서드를 POST로 지정합니다.
+        headers: {
+          "Content-Type": "application/json", // 요청 헤더에 Content-Type을 JSON으로 지정합니다.
+        },
+        body: JSON.stringify({ url: url }), // 요청 본문에 데이터를 JSON 문자열로 변환하여 넣습니다.
       })
-      .then((data) => {
-        // 파싱된 응답 데이터를 이용하여 처리합니다.
-        console.log("서버로부터 받은 데이터:", data);
+        .then((response) => {
+          // 서버에서 응답을 받으면 JSON 형식으로 파싱합니다.
+          return response.json();
+        })
+        .then((data) => {
+          // 파싱된 응답 데이터를 이용하여 처리합니다.
+          console.log("서버로부터 받은 데이터:", data);
 
-        // 데이터를 저장합니다.
-        createDoc("Review", {
-          ...data,
-          url: url,
-          uid: campain.uid,
-          cid: campain.cid,
-        }).then(async () => {
-          onClose();
+          // 데이터를 저장합니다.
+          createDoc("Review", {
+            ...data,
+            url: url,
+            uid: campain.uid,
+            cid: campain.cid,
+          }).then(async () => {
+            onClose();
+          });
+
+          if (data.code === "error") {
+            console.log("error");
+            toast({
+              title: "",
+              description: data.message,
+              status: "error",
+              duration: 3000,
+              isClosable: true,
+              position: "top-right",
+            });
+          }
+        })
+        .catch((error) => {
+          // 오류가 발생하면 오류를 콘솔에 출력합니다.
+          console.error("데이터를 보내는 동안 오류 발생:", error);
         });
 
-        if (data.code === "error") {
-          console.log("error");
-          toast({
-            title: "",
-            description: data.message,
-            status: "error",
-            duration: 3000,
-            isClosable: true,
-            position: "top-right",
-          });
-        }
-      })
-      .catch((error) => {
-        // 오류가 발생하면 오류를 콘솔에 출력합니다.
-        console.error("데이터를 보내는 동안 오류 발생:", error);
+      // 리뷰 상태 변경
+      updateDoc("Tester", campain.testerId, {
+        step: 3,
+        reviewDate: formattedDate(new Date()),
       });
+    }
   };
   return (
     <HStack
@@ -186,7 +194,7 @@ export const Product = ({ ...props }) => {
                 WebkitBoxOrient: "vertical",
               }}
               color={useColorModeValue("black", "white")}
-              fontSize="lg"
+              fontSize={{ base: "md", md: "lg" }}
               fontWeight="semibold"
               letterSpacing="wider"
               textTransform="uppercase"
@@ -226,6 +234,7 @@ export const Product = ({ ...props }) => {
         )}
         {campain.step !== 1 && (
           <Button
+            isDisabled={campain.step === 3}
             colorScheme="black"
             variant={"outline"}
             h={{ base: "4rem", md: "2.5rem" }}
@@ -242,7 +251,13 @@ export const Product = ({ ...props }) => {
               spacing={2}
             >
               {campain.step === 0 ? <ImCancelCircle /> : <MdReviews />}
-              <Text>{campain.step === 0 ? "신청취소" : "리뷰등록"}</Text>
+              <Text>
+                {campain.step === 0
+                  ? "신청취소"
+                  : campain.step === 2
+                  ? "리뷰등록"
+                  : "리뷰완료"}
+              </Text>
             </Stack>
           </Button>
         )}

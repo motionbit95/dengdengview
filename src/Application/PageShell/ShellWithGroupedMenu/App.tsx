@@ -45,6 +45,8 @@ import SelectUser from "../../../Component/SelectUser";
 import Review from "../../../Component/MReview";
 import ReviewDetail from "../../../Component/MReviewDetail";
 import Picture from "../../../Component/MPicture";
+import Search from "../../../Pages/Search";
+import Keyword from "../../../Pages/Keyword";
 
 export const ShellWithGroupedMenu = () => {
   const [menu, setMenu] = useState(
@@ -257,6 +259,8 @@ export const ShellWithGroupedMenu = () => {
             {menu === 14 && <Review />}
             {menu === 15 && <ReviewDetail />}
             {menu === 16 && <Picture />}
+            {menu === 17 && <Search />}
+            {menu === 18 && <Keyword />}
           </Box>
         </Box>
       </Flex>

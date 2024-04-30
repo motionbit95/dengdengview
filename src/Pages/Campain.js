@@ -126,7 +126,7 @@ function Campain({ ...props }) {
           <Stack spacing={0}>
             <HStack w={"100%"} justifyContent={"space-between"}>
               <Text
-                fontSize={"xl"}
+                fontSize={{ base: "lg", md: "xl" }}
                 fontWeight={"bold"}
                 color={
                   props.description === "신청한 체험단" ? "red.400" : "black"
@@ -137,7 +137,7 @@ function Campain({ ...props }) {
                 신청한 체험단
               </Text>
               <Text
-                fontSize={"xl"}
+                fontSize={{ base: "lg", md: "xl" }}
                 fontWeight={"bold"}
                 color={
                   props.description === "선정된 체험단" ? "red.400" : "black"
@@ -148,7 +148,7 @@ function Campain({ ...props }) {
                 선정된 체험단
               </Text>
               <Text
-                fontSize={"xl"}
+                fontSize={{ base: "lg", md: "xl" }}
                 fontWeight={"bold"}
                 color={
                   props.description === "리뷰한 체험단" ? "red.400" : "black"
