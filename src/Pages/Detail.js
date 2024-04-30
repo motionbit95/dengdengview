@@ -299,7 +299,10 @@ function Detail(props) {
                 </Accordion>
               </TabPanel>
               <TabPanel>
-                <HStack alignItems={"start"}>
+                <Stack
+                  alignItems={"start"}
+                  direction={{ base: "column", md: "row" }}
+                >
                   <Text minW={"200px"} fontWeight={"bold"} fontSize={"lg"}>
                     신청자 목록
                   </Text>
@@ -341,7 +344,7 @@ function Detail(props) {
                       </HStack>
                     ))}
                   </Stack>
-                </HStack>
+                </Stack>
               </TabPanel>
             </TabPanels>
           </Tabs>
@@ -493,7 +496,7 @@ function RegisterButton(props) {
       >
         <ModalOverlay />
         <ModalContent
-          m={8}
+          m={{ base: "0", md: "auto" }}
           bgColor={"gray.50"}
           borderRadius={"xl"}
           overflow={"hidden"}

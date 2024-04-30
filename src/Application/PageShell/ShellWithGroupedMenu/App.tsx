@@ -50,7 +50,7 @@ import Keyword from "../../../Pages/Keyword";
 
 export const ShellWithGroupedMenu = () => {
   const [menu, setMenu] = useState(
-    Number(localStorage.getItem("ad_menu")) || 0
+    Number(localStorage.getItem("ad_menu")) || 11
   );
   return (
     <Box height="100vh" minW={"3xl"} overflow="hidden" position="relative">
