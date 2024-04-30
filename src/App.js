@@ -40,6 +40,15 @@ function App() {
         });
       }
     });
+
+    if (window.location.pathname.includes("/admin/dashboard")) {
+      if (
+        !window.location.pathname.replace("/admin/dashboard", "") &&
+        !localStorage.getItem("dang_admin_id")
+      ) {
+        window.location.href = "/admin/login";
+      }
+    }
   }, []);
   return (
     <>
@@ -47,7 +56,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/dashboard/*" element={<AdminDashboard />} />
           </Routes>
         </BrowserRouter>
       ) : (

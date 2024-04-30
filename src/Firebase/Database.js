@@ -12,6 +12,8 @@ import {
   serverTimestamp,
   addDoc,
   deleteDoc,
+  getDoc,
+  where,
 } from "firebase/firestore";
 import { db } from "./Config";
 import { debug, formattedDateTime, isExist } from "./Util";
@@ -48,6 +50,43 @@ export const getCollection = async (collectionName) => {
   const q = query(collection(db, collectionName));
   const querySnapshot = await getDocs(q);
 
+  const docList = [];
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    docList.push({ ...doc.data(), doc_id: doc.id });
+  });
+  return docList;
+};
+
+export const getDocument = async (collectionName, docId) => {
+  const docRef = doc(db, collectionName, docId);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    return null;
+  }
+};
+
+export const searchDoc = async (collectionName, condition) => {
+  const q = query(collection(db, collectionName), condition);
+  const querySnapshot = await getDocs(q);
+  const docList = [];
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    docList.push({ ...doc.data(), doc_id: doc.id });
+  });
+  return docList;
+};
+
+export const multiQuery = async (collectionName, uid, condition) => {
+  console.log(collectionName, condition);
+  const q = query(
+    collection(db, collectionName),
+    where("uid", "==", uid),
+    condition
+  );
+  const querySnapshot = await getDocs(q);
   const docList = [];
   querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
@@ -105,10 +144,14 @@ export async function fetchDocuments(
 
 export const updateDoc = async (collectionName, id, data) => {
   console.log(data);
-  await setDoc(doc(db, collectionName, id), {
-    ...data,
-    updatedAt: new Date().toISOString(),
-  }).then(() => {
+  await setDoc(
+    doc(db, collectionName, id),
+    {
+      ...data,
+      updatedAt: new Date().toISOString(),
+    },
+    { merge: true }
+  ).then(() => {
     debug("문서 수정 성공 : ", collectionName, " > ", id);
   });
 };

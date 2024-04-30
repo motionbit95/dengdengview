@@ -29,6 +29,7 @@ export const campains = [
     expireDate: "2024-04-20",
     type: "배송",
     views: 200,
+    step: 0,
     startDate: "2024-04-15",
     endDate: "2024-04-21",
     openDate: "2024-04-22",

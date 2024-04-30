@@ -29,21 +29,18 @@ export const CampainCollaspe = ({ ...props }) => {
       </Button>
       <Collapse in={isOpen} animateOpacity>
         <Stack spacing="1" alignItems="stretch" ps="8" py="1">
-          {[
-            "신청한 체험단",
-            "선정된 체험단",
-            "리뷰한 체험단",
-            "취소한 체험단",
-          ].map((item, index) => (
-            <Button
-              key={item}
-              variant="tertiary"
-              justifyContent="start"
-              onClick={() => props.setItem(item)}
-            >
-              {item}
-            </Button>
-          ))}
+          {["신청한 체험단", "선정된 체험단", "리뷰한 체험단"].map(
+            (item, index) => (
+              <Button
+                key={item}
+                variant="tertiary"
+                justifyContent="start"
+                onClick={() => props.setItem(item)}
+              >
+                {item}
+              </Button>
+            )
+          )}
         </Stack>
       </Collapse>
     </Box>

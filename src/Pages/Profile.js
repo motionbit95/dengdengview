@@ -70,6 +70,7 @@ function Profile(props) {
           <Campain
             title={breadcrumb?.title}
             description={breadcrumb?.description}
+            setItem={handleMenu}
           />
         )}
 

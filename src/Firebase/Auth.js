@@ -36,7 +36,7 @@ export const createUser = async (data) => {
       // ...
 
       // 유저 정보를 저장합니다.
-      createDoc("User", {
+      await createDoc("User", {
         ...data,
         ...{
           id: user.uid,

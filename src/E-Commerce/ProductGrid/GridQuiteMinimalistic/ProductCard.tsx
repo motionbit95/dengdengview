@@ -30,7 +30,7 @@ export const ProductCard = (props: Props) => {
       <Box position="relative" className="group">
         <AspectRatio ratio={1}>
           <Image
-            src={campain.images[0]}
+            src={campain.images?.[0]}
             alt={campain.name}
             draggable="false"
             fallback={<Skeleton />}

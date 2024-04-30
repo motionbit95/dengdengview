@@ -7,7 +7,7 @@ import {
   Tabs,
 } from "@chakra-ui/react";
 
-export const Tabs1 = () => (
+export const Tabs1 = (props: any) => (
   <Stack
     spacing="16"
     position={"sticky"}
@@ -16,11 +16,16 @@ export const Tabs1 = () => (
     pb={{ base: "4", md: "6" }}
   >
     {["lg"].map((size) => (
-      <Tabs key={size} size={size} variant="indicator">
+      <Tabs
+        key={size}
+        size={size}
+        variant="indicator"
+        onChange={props.onChange}
+      >
         <TabList>
           <Tab>최신순</Tab>
           <Tab>인기순</Tab>
-          <Tab>선정확률</Tab>
+          {/* <Tab>선정확률</Tab> */}
           <Tab>신청마감순</Tab>
         </TabList>
         <TabIndicator />

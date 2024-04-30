@@ -39,6 +39,9 @@ import { useState } from "react";
 import Dashboard from "../../../Component/MDashboard";
 import User from "../../../Component/MUser";
 import Campain from "../../../Component/MCampain";
+import TesterUser from "../../../Component/TesterUser";
+import TotalView from "../../../Component/TotalView";
+import SelectUser from "../../../Component/SelectUser";
 
 export const ShellWithGroupedMenu = () => {
   const [menu, setMenu] = useState(
@@ -50,17 +53,20 @@ export const ShellWithGroupedMenu = () => {
         <Box w="64" bg="gray.900" color="white" fontSize="sm">
           <Flex h="full" direction="column" px="4" py="4">
             <Stack spacing="8" flex="1" overflow="auto" mb={4}>
-              <NavGroup label="기본관리">
-                <NavItem
-                  active={menu === 0 || localStorage.getItem("ad_menu") === "0"}
-                  icon={<BiHome />}
-                  label="대시보드"
-                  onClick={() => {
-                    setMenu(0);
-                    localStorage.setItem("ad_menu", "0");
-                  }}
-                />
-                {/* <NavItem
+              {localStorage.getItem("dang_admin_id") && (
+                <NavGroup label="기본관리">
+                  <NavItem
+                    active={
+                      menu === 0 || localStorage.getItem("ad_menu") === "0"
+                    }
+                    icon={<BiHome />}
+                    label="대시보드"
+                    onClick={() => {
+                      setMenu(0);
+                      localStorage.setItem("ad_menu", "0");
+                    }}
+                  />
+                  {/* <NavItem
                   active={menu === 1 || localStorage.getItem("ad_menu") === "1"}
                   icon={<BiCommentAdd />}
                   label="광고문의"
@@ -69,25 +75,29 @@ export const ShellWithGroupedMenu = () => {
                     localStorage.setItem("ad_menu", "1");
                   }}
                 /> */}
-                <NavItem
-                  active={menu === 2 || localStorage.getItem("ad_menu") === "2"}
-                  icon={<BiUserCircle />}
-                  label="회원관리"
-                  onClick={() => {
-                    setMenu(2);
-                    localStorage.setItem("ad_menu", "2");
-                  }}
-                />
-                <NavItem
-                  active={menu === 3 || localStorage.getItem("ad_menu") === "3"}
-                  icon={<BiCreditCard />}
-                  label="체험단관리"
-                  onClick={() => {
-                    setMenu(3);
-                    localStorage.setItem("ad_menu", "3");
-                  }}
-                />
-                {/* <NavItem
+                  <NavItem
+                    active={
+                      menu === 2 || localStorage.getItem("ad_menu") === "2"
+                    }
+                    icon={<BiUserCircle />}
+                    label="회원관리"
+                    onClick={() => {
+                      setMenu(2);
+                      localStorage.setItem("ad_menu", "2");
+                    }}
+                  />
+                  <NavItem
+                    active={
+                      menu === 3 || localStorage.getItem("ad_menu") === "3"
+                    }
+                    icon={<BiCreditCard />}
+                    label="체험단관리"
+                    onClick={() => {
+                      setMenu(3);
+                      localStorage.setItem("ad_menu", "3");
+                    }}
+                  />
+                  {/* <NavItem
                   active={menu === 4 || localStorage.getItem("ad_menu") === "4"}
                   icon={<BiNotification />}
                   label="공지관리"
@@ -96,21 +106,112 @@ export const ShellWithGroupedMenu = () => {
                     localStorage.setItem("ad_menu", "4");
                   }}
                 /> */}
-              </NavGroup>
+                </NavGroup>
+              )}
 
               <NavGroup label="광고주관리">
-                <NavItem icon={<BiNews />} label="종합상세보기" />
-                <NavItem icon={<BiUserPlus />} label="신청자현황" />
-                <NavItem icon={<BiUserCheck />} label="선정자현황" />
-                <NavItem icon={<BsCommand />} label="리뷰모아보기" />
-                <NavItem icon={<BsHandThumbsUp />} label="리뷰분석" />
-                <NavItem icon={<AiFillPicture />} label="사진모아보기" />
-                <NavItem icon={<BiBarChart />} label="검색점유율" />
-                <NavItem icon={<BiPieChart />} label="유입키워드" />
-                <NavItem icon={<BiLink />} label="모집글보기" />
+                <NavItem
+                  active={
+                    menu === 11 || localStorage.getItem("ad_menu") === "11"
+                  }
+                  icon={<BiNews />}
+                  label="종합상세보기"
+                  onClick={() => {
+                    setMenu(11);
+                    localStorage.setItem("ad_menu", "11");
+                  }}
+                />
+                <NavItem
+                  active={
+                    menu === 12 || localStorage.getItem("ad_menu") === "12"
+                  }
+                  icon={<BiUserPlus />}
+                  label="신청자현황"
+                  onClick={() => {
+                    setMenu(12);
+                    localStorage.setItem("ad_menu", "12");
+                  }}
+                />
+                <NavItem
+                  active={
+                    menu === 13 || localStorage.getItem("ad_menu") === "13"
+                  }
+                  icon={<BiUserCheck />}
+                  label="선정자현황"
+                  onClick={() => {
+                    setMenu(13);
+                    localStorage.setItem("ad_menu", "13");
+                  }}
+                />
+                <NavItem
+                  active={
+                    menu === 14 || localStorage.getItem("ad_menu") === "14"
+                  }
+                  icon={<BsCommand />}
+                  label="리뷰모아보기"
+                  onClick={() => {
+                    setMenu(14);
+                    localStorage.setItem("ad_menu", "14");
+                  }}
+                />
+                <NavItem
+                  active={
+                    menu === 15 || localStorage.getItem("ad_menu") === "15"
+                  }
+                  icon={<BsHandThumbsUp />}
+                  label="리뷰분석"
+                  onClick={() => {
+                    setMenu(15);
+                    localStorage.setItem("ad_menu", "15");
+                  }}
+                />
+                <NavItem
+                  active={
+                    menu === 16 || localStorage.getItem("ad_menu") === "16"
+                  }
+                  icon={<AiFillPicture />}
+                  label="사진모아보기"
+                  onClick={() => {
+                    setMenu(16);
+                    localStorage.setItem("ad_menu", "16");
+                  }}
+                />
+                <NavItem
+                  active={
+                    menu === 17 || localStorage.getItem("ad_menu") === "17"
+                  }
+                  icon={<BiBarChart />}
+                  label="검색점유율"
+                  onClick={() => {
+                    setMenu(17);
+                    localStorage.setItem("ad_menu", "17");
+                  }}
+                />
+                <NavItem
+                  active={
+                    menu === 18 || localStorage.getItem("ad_menu") === "18"
+                  }
+                  icon={<BiPieChart />}
+                  label="유입키워드"
+                  onClick={() => {
+                    setMenu(18);
+                    localStorage.setItem("ad_menu", "18");
+                  }}
+                />
+                <NavItem
+                  active={
+                    menu === 19 || localStorage.getItem("ad_menu") === "19"
+                  }
+                  icon={<BiLink />}
+                  label="모집글보기"
+                  onClick={() => {
+                    setMenu(19);
+                    localStorage.setItem("ad_menu", "19");
+                  }}
+                />
               </NavGroup>
             </Stack>
-            <Box>
+            {/* <Box>
               <Stack spacing="1">
                 <NavItem subtle icon={<BiCog />} label="설정" />
                 <NavItem
@@ -126,7 +227,7 @@ export const ShellWithGroupedMenu = () => {
                   onClick={adminLogout}
                 />
               </Stack>
-            </Box>
+            </Box> */}
           </Flex>
         </Box>
         <Box
@@ -146,6 +247,10 @@ export const ShellWithGroupedMenu = () => {
             {menu === 0 && <Dashboard />}
             {menu === 2 && <User />}
             {menu === 3 && <Campain />}
+
+            {menu === 11 && <TotalView />}
+            {menu === 12 && <TesterUser />}
+            {menu === 13 && <SelectUser />}
           </Box>
         </Box>
       </Flex>

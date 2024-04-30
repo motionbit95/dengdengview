@@ -18,6 +18,8 @@ import {
   StackDivider,
   Input,
   useToast,
+  Avatar,
+  Divider,
 } from "@chakra-ui/react";
 import { calculateDday } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/_data";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
@@ -31,9 +33,14 @@ import {
 import Calendar from "react-calendar";
 import "../Component/Calendar.css";
 import moment from "moment";
-import { CardContent } from "../Application/Users/UserCardWithBackground/CardContent";
-import { BsCalendar, BsEye, BsEyeFill } from "react-icons/bs";
-import { createDoc, updateDoc } from "../Firebase/Database";
+import { BsEyeFill } from "react-icons/bs";
+import {
+  createDoc,
+  getDocument,
+  multiQuery,
+  searchDoc,
+  updateDoc,
+} from "../Firebase/Database";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import {
   Modal,
@@ -46,6 +53,7 @@ import {
 } from "@chakra-ui/react";
 import { AddressInput } from "../Component/MInput";
 import { auth } from "../Firebase/Config";
+import { where } from "firebase/firestore";
 
 function Detail(props) {
   const navigate = useNavigate();
@@ -53,6 +61,8 @@ function Detail(props) {
   const campain = location.state;
 
   const [isOpen, onToggle] = React.useState(false);
+
+  const [userList, setUserList] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -62,15 +72,15 @@ function Detail(props) {
       ...campain,
       views: campain?.views + 1,
     });
-  }, []);
 
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (!user) {
-        // navigate("/login");
-      } else {
-        console.log(user);
-      }
+    let userList = [];
+    searchDoc("Tester", where("cid", "==", campain?.doc_id)).then((data) => {
+      data.forEach((doc) => {
+        getDocument("User", doc.uid).then((user) => {
+          userList.push({ ...user, ...doc });
+          setUserList(userList);
+        });
+      });
     });
   }, []);
 
@@ -80,7 +90,10 @@ function Detail(props) {
       px={{ base: "4", sm: "8" }}
       py={{ base: "4", sm: "8" }}
     >
-      <HStack alignItems={"start"}>
+      <HStack
+        alignItems={"start"}
+        divider={<StackDivider display={{ base: "none", md: "block" }} />}
+      >
         <Stack w={"full"}>
           <Tag w={"fit-content"} size={{ base: "sm", md: "md" }}>
             {campain?.doc_id.substring(0, 8)}
@@ -108,54 +121,73 @@ function Detail(props) {
                 : `D-${calculateDday(campain?.endDate)}`}
             </Tag>
           </HStack>
-          <Card>
-            <CardBody>
-              <Stack>
-                <HStack spacing={"6"}>
-                  <Text fontWeight={"bold"}>모집기간</Text>
-                  <HStack>
-                    <Text>{campain?.startDate}</Text>
-                    <Text>{"~"}</Text>
+          <Stack display={{ base: "flex", md: "none" }}>
+            <Card>
+              <CardBody>
+                <Stack>
+                  <HStack spacing={"6"}>
+                    <Text fontWeight={"bold"}>모집기간</Text>
+                    <HStack>
+                      <Text>{campain?.startDate}</Text>
+                      <Text>{"~"}</Text>
+                      <Text>{campain?.endDate}</Text>
+                    </HStack>
+                  </HStack>
+                  <HStack spacing={"6"}>
+                    <Text fontWeight={"bold"}>발표기간</Text>
                     <Text>{campain?.endDate}</Text>
                   </HStack>
-                </HStack>
-                <HStack spacing={"6"}>
-                  <Text fontWeight={"bold"}>발표기간</Text>
-                  <Text>{campain?.endDate}</Text>
-                </HStack>
-                <HStack spacing={"6"}>
-                  <Text fontWeight={"bold"}>리뷰기간</Text>
-                  <HStack>
-                    <Text>{campain?.reviewStart}</Text>
-                    <Text>{"~"}</Text>
-                    <Text>{campain?.reviewEnd}</Text>
+                  <HStack spacing={"6"}>
+                    <Text fontWeight={"bold"}>리뷰기간</Text>
+                    <HStack>
+                      <Text>{campain?.reviewStart}</Text>
+                      <Text>{"~"}</Text>
+                      <Text>{campain?.reviewEnd}</Text>
+                    </HStack>
                   </HStack>
-                </HStack>
-              </Stack>
-            </CardBody>
-          </Card>
-
-          <RegisterButton
-            isDisabled={calculateDday(campain?.endDate) < 0}
-            onSubmit={(data) =>
-              createDoc("Tester", { ...data, cid: campain?.doc_id })
-            }
-          >
-            {calculateDday(campain?.endDate) < 0
-              ? "신청이 마감되었습니다."
-              : campain?.type + " 체험 신청하기"}
-          </RegisterButton>
-          <Stack overflow={"hidden"} spacing={0}>
+                </Stack>
+              </CardBody>
+            </Card>
+            <RegisterButton
+              cid={campain?.doc_id}
+              isDisabled={calculateDday(campain?.endDate) < 0}
+              onSubmit={(data) =>
+                createDoc("Tester", {
+                  ...data,
+                  cid: campain?.doc_id,
+                  step: 0,
+                }).then(async () => {
+                  window.location.reload();
+                })
+              }
+            >
+              {calculateDday(campain?.endDate) < 0
+                ? "신청이 마감되었습니다."
+                : campain?.type + " 체험 신청하기"}
+            </RegisterButton>
+          </Stack>
+          <Box w={"full"} h={300} overflowX={"scroll"}>
+            <HStack spacing={4}>
+              {campain?.images?.map((value, index) => (
+                <Image
+                  key={index}
+                  borderRadius={"xl"}
+                  w={300}
+                  aspectRatio={1}
+                  src={value}
+                />
+              ))}
+            </HStack>
+          </Box>
+          {/* <Stack overflow={"hidden"} spacing={0}>
             {isOpen ? (
               <>
                 {campain?.images?.map((value, index) => (
-                  // <Text pb={2}>{value}</Text>
                   <Image src={value} />
                 ))}
               </>
             ) : (
               <>
-                {/* <Text pb={2}>{campain?.images?.[0]}</Text> */}
                 <Image src={campain?.images?.[0]} />
               </>
             )}
@@ -167,10 +199,10 @@ function Detail(props) {
             rightIcon={isOpen ? <FiChevronUp /> : <FiChevronDown />}
           >
             {isOpen ? "내용 접기" : "펼쳐보기"}
-          </Button>
+          </Button> */}
 
           <Tabs>
-            <TabList pb={2}>
+            <TabList>
               <Tab>리뷰정보</Tab>
               <Tab>신청현황</Tab>
             </TabList>
@@ -255,7 +287,49 @@ function Detail(props) {
                 </Accordion>
               </TabPanel>
               <TabPanel>
-                <p>to be continue</p>
+                <HStack alignItems={"start"}>
+                  <Text minW={"200px"} fontWeight={"bold"} fontSize={"lg"}>
+                    신청자 목록
+                  </Text>
+                  <Stack w={"100%"} spacing={2}>
+                    <Text fontWeight={"bold"} fontSize={"lg"}>
+                      총{" "}
+                      <span style={{ color: "#F56565" }}>
+                        {userList.length}
+                      </span>
+                      명 / {campain?.targetCnt}명
+                    </Text>
+                    <HStack w={"100%"} justifyContent={"space-between"} p={2}>
+                      <Text fontWeight={"bold"} fontSize={"md"}>
+                        신청자
+                      </Text>
+                      <Text fontWeight={"bold"} fontSize={"md"}>
+                        신청날짜
+                      </Text>
+                    </HStack>
+                    <Divider />
+
+                    {userList.map((value) => (
+                      <HStack
+                        w={"100%"}
+                        key={value.doc_id}
+                        alignItems={"center"}
+                        justifyContent={"space-between"}
+                      >
+                        <HStack>
+                          <Avatar src={value.image} />
+                          <Text>
+                            {(value.nickname
+                              ? value.nickname
+                              : value.name
+                            ).substring(0, 1) + "****"}
+                          </Text>
+                        </HStack>
+                        <Text>{value.createdAt.split("T")[0]}</Text>
+                      </HStack>
+                    ))}
+                  </Stack>
+                </HStack>
               </TabPanel>
             </TabPanels>
           </Tabs>
@@ -265,23 +339,70 @@ function Detail(props) {
           pointerEvents={"none"}
           display={{ base: "none", lg: "block" }}
         >
-          <Calendar
-            formatDay={(locale, date) => moment(date).format("DD")} // 날'일' 제외하고 숫자만 보이도록 설정
-            value={[new Date(campain?.startDate), new Date(campain?.endDate)]}
-            selectRange={true}
-            navigationLabel={null}
-            nextLabel={null}
-            prevLabel={null}
-            prev2Label={null}
-            next2Label={null}
-            showNeighboringMonth={false} //  이전, 이후 달의 날짜는 보이지 않도록 설정
-            style={{
-              width: "100%",
-              marginX: "auto",
-              fontSize: "12px",
-            }}
-            calendarType="gregory"
-          />
+          <Stack>
+            <Calendar
+              formatDay={(locale, date) => moment(date).format("DD")} // 날'일' 제외하고 숫자만 보이도록 설정
+              value={[new Date(campain?.startDate), new Date(campain?.endDate)]}
+              selectRange={true}
+              navigationLabel={null}
+              nextLabel={null}
+              prevLabel={null}
+              prev2Label={null}
+              next2Label={null}
+              showNeighboringMonth={false} //  이전, 이후 달의 날짜는 보이지 않도록 설정
+              style={{
+                width: "100%",
+                marginX: "auto",
+                fontSize: "12px",
+              }}
+              calendarType="gregory"
+            />
+            <Stack>
+              <Card>
+                <CardBody>
+                  <Stack>
+                    <HStack spacing={"6"}>
+                      <Text fontWeight={"bold"}>모집기간</Text>
+                      <HStack>
+                        <Text>{campain?.startDate}</Text>
+                        <Text>{"~"}</Text>
+                        <Text>{campain?.endDate}</Text>
+                      </HStack>
+                    </HStack>
+                    <HStack spacing={"6"}>
+                      <Text fontWeight={"bold"}>발표기간</Text>
+                      <Text>{campain?.endDate}</Text>
+                    </HStack>
+                    <HStack spacing={"6"}>
+                      <Text fontWeight={"bold"}>리뷰기간</Text>
+                      <HStack>
+                        <Text>{campain?.reviewStart}</Text>
+                        <Text>{"~"}</Text>
+                        <Text>{campain?.reviewEnd}</Text>
+                      </HStack>
+                    </HStack>
+                  </Stack>
+                </CardBody>
+              </Card>
+              <RegisterButton
+                cid={campain?.doc_id}
+                isDisabled={calculateDday(campain?.endDate) < 0}
+                onSubmit={(data) =>
+                  createDoc("Tester", {
+                    ...data,
+                    cid: campain?.doc_id,
+                    step: 0,
+                  }).then(async () => {
+                    window.location.reload();
+                  })
+                }
+              >
+                {calculateDday(campain?.endDate) < 0
+                  ? "신청이 마감되었습니다."
+                  : campain?.type + " 체험 신청하기"}
+              </RegisterButton>
+            </Stack>
+          </Stack>
         </Box>
       </HStack>
     </Container>
@@ -296,6 +417,17 @@ function RegisterButton(props) {
   const navigate = useNavigate();
 
   const [uid, setUid] = React.useState(null);
+  const { cid } = props;
+  const [userTester, setUserTester] = React.useState(null);
+
+  useEffect(() => {
+    console.log(uid, cid);
+    if (uid) {
+      multiQuery("Tester", uid, where("cid", "==", cid)).then((data) => {
+        setUserTester(data.length > 0 ? true : false);
+      });
+    }
+  }, [uid]);
 
   useEffect(() => {
     let uid;
@@ -317,6 +449,7 @@ function RegisterButton(props) {
     <>
       <Button
         {...props}
+        isDisabled={userTester ? true : false}
         size={"xl"}
         onClick={() => {
           if (uid) {
@@ -334,7 +467,7 @@ function RegisterButton(props) {
           }
         }}
       >
-        {props.children}
+        {userTester ? "이미 신청한 체험단입니다." : props.children}
       </Button>
 
       <Modal
@@ -638,7 +771,7 @@ function RegisterButton(props) {
 
 export const accordionButtonStyle = {
   // borderTopColor: "gray.500",
-  borderTopWidth: 2,
+  // borderTopWidth: 2,
   fontSize: "lg",
   fontWeight: "bold",
   bgColor: "gray.50",

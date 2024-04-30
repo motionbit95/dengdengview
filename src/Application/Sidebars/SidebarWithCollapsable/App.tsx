@@ -73,12 +73,12 @@ export const SidebarWithCollapsable = ({ ...props }) => {
         <Stack spacing="4" divider={<StackDivider />}>
           <Box />
           <Stack spacing="1">
-            <SidebarButton
+            {/* <SidebarButton
               leftIcon={<BsMegaphone />}
               onClick={() => props.setItem("공지사항")}
             >
               공지사항
-            </SidebarButton>
+            </SidebarButton> */}
             <SidebarButton
               leftIcon={<BsPatchQuestion />}
               onClick={() =>
