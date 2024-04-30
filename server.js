@@ -3,13 +3,20 @@ const serviceAccount = require("./path/to/serviceAccountKey.json");
 const fs = require("fs");
 const puppeteer = require("puppeteer");
 const express = require("express");
+const cors = require("cors");
+const path = require("path");
 const app = express();
+
+app.use(express.json());
+
+app.use(cors());
 
 const port = 3001;
 
 // Firebase 초기화
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
+  storageBucket: "motionbit-dangdangview.appspot.com",
 });
 
 const cname = "Campain";
@@ -46,6 +53,53 @@ const cname = "Campain";
 
 const axios = require("axios");
 const cheerio = require("cheerio");
+
+const https = require("https");
+
+const bucket = admin.storage().bucket();
+
+// 다운로드할 파일 경로 및 이름
+const downloadFolderPath = "downloads"; // 이미지를 저장할 폴더 경로
+
+// // 이미지를 다운로드할 URL
+// const imageUrl = "https://example.com/image.jpg";
+
+// // 다운로드할 파일 경로 및 이름
+// const filePath = "downloaded_image.jpg";
+// 이미지를 다운로드하고 Firebase Storage에 업로드하는 함수
+async function downloadAndUploadImage(imageUrl, filePath) {
+  // 다운로드할 폴더가 없으면 생성
+  if (!fs.existsSync(downloadFolderPath)) {
+    fs.mkdirSync(downloadFolderPath);
+  }
+
+  // HTTP GET 요청을 사용하여 이미지를 다운로드
+  const file = fs.createWriteStream(filePath);
+  await new Promise((resolve, reject) => {
+    const request = https.get(imageUrl, (response) => {
+      response.pipe(file);
+      file.on("finish", () => {
+        file.close(resolve);
+      });
+    });
+    request.on("error", (err) => {
+      fs.unlink(filePath, () => {
+        reject(err.message);
+      });
+    });
+  });
+
+  // Firebase Storage에 파일 업로드
+  await bucket.upload(filePath, {
+    destination: filePath,
+  });
+
+  console.log("이미지가 Firebase Storage에 업로드되었습니다.");
+
+  // 다운로드한 파일 삭제
+  fs.unlinkSync(filePath);
+  console.log("다운로드한 이미지 파일이 삭제되었습니다.");
+}
 
 // axios를 활용해 AJAX로 HTML 문서를 가져오는 함수 구현
 async function getHTML(blogId, logNo) {
@@ -96,7 +150,98 @@ async function getHTML(blogId, logNo) {
 //   .then((res) => console.log(res)); // 저장된 결과를 출력
 
 app.post("/crawl", (req, res) => {
-  console.log(req.body);
+  try {
+    const strList = req.body.url.split("/");
+    const blogId = strList[strList.length - 2];
+    const logNo = strList[strList.length - 1];
+    console.log(blogId, logNo);
+
+    if (!blogId || !logNo) {
+      res.send({ code: "error", message: "URL을 다시 확인해주세요." });
+    } else {
+      getHTML(blogId, logNo)
+        .then((html) => {
+          let data = {
+            titleList: [],
+            writerList: [],
+            dateList: [],
+            imageList: [],
+            contentList: [],
+            commentCnt: 0,
+          };
+          console.log(html.data);
+          const $ = cheerio.load(html.data);
+
+          // 블로그 제목 가져오기
+          $("title").map((i, el) => {
+            data.titleList.push($(el).text());
+          });
+
+          console.log("[제목]", data.titleList);
+
+          $("div.blog2_container > span.writer > span.nick > a").map(
+            (i, el) => {
+              data.writerList.push($(el).text());
+            }
+          );
+
+          console.log("[작성자]", data.writerList);
+
+          $("div.blog2_container > span.se_publishDate.pcol2").map((i, el) => {
+            data.dateList.push($(el).text());
+          });
+
+          console.log("[시간]", data.dateList);
+
+          $("div > div > div > a > img").each(function (idx) {
+            var src = $(this).attr("src");
+            if (src.includes("type=w80_blur")) {
+              data.imageList.push(src.replace("type=w80_blur", "type=w966"));
+            }
+          });
+
+          console.log("[이미지]", data.imageList);
+
+          data.imageList.forEach((image) => {
+            // 이미지를 다운로드할 URL
+            const imageUrl = image;
+
+            const filePath = path.join(
+              downloadFolderPath,
+              image.split("/").pop().split("?")[0]
+            );
+
+            // 이미지 다운로드 및 업로드 함수 호출
+            downloadAndUploadImage(imageUrl, filePath).catch((error) => {
+              console.error("오류 발생:", error);
+            });
+          });
+
+          $("div.se-module > p.se-text-paragraph > span").map((i, el) => {
+            data.contentList.push($(el).text());
+          });
+
+          console.log("[내용]", data.contentList);
+
+          $("#commentCount").map((i, el) => {
+            data.commentCnt = $(el).text().trim();
+          });
+
+          $("em").map((i, el) => {
+            console.log($(el).text());
+          });
+
+          console.log("[댓글수]", data.commentCnt);
+
+          res.json(data);
+        })
+        .then((res) => console.log(res)); // 저장된 결과를 출력
+    }
+  } catch (error) {
+    console.log(error);
+    res.send({ code: "error", message: error.message });
+  }
+
   // getHTML()
   //   .then((html) => {
   //     let titleList = [];

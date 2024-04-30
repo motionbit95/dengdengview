@@ -68,11 +68,9 @@ function TotalView(props) {
   useEffect(() => {
     if (window.location.pathname.replaceAll("/admin/dashboard", "")) {
       let cid = window.location.pathname.replaceAll("/admin/dashboard/", "");
-      console.log(cid);
       getDocument("Campain", cid).then((data) => {
         setCampain(data);
         searchDoc("Tester", where("cid", "==", cid)).then((data) => {
-          console.log(data);
           setTesters(data);
 
           data.forEach((tester) => {

@@ -42,6 +42,9 @@ import Campain from "../../../Component/MCampain";
 import TesterUser from "../../../Component/TesterUser";
 import TotalView from "../../../Component/TotalView";
 import SelectUser from "../../../Component/SelectUser";
+import Review from "../../../Component/MReview";
+import ReviewDetail from "../../../Component/MReviewDetail";
+import Picture from "../../../Component/MPicture";
 
 export const ShellWithGroupedMenu = () => {
   const [menu, setMenu] = useState(
@@ -55,7 +58,7 @@ export const ShellWithGroupedMenu = () => {
             <Stack spacing="8" flex="1" overflow="auto" mb={4}>
               {localStorage.getItem("dang_admin_id") && (
                 <NavGroup label="기본관리">
-                  <NavItem
+                  {/* <NavItem
                     active={
                       menu === 0 || localStorage.getItem("ad_menu") === "0"
                     }
@@ -65,7 +68,7 @@ export const ShellWithGroupedMenu = () => {
                       setMenu(0);
                       localStorage.setItem("ad_menu", "0");
                     }}
-                  />
+                  /> */}
                   {/* <NavItem
                   active={menu === 1 || localStorage.getItem("ad_menu") === "1"}
                   icon={<BiCommentAdd />}
@@ -205,8 +208,8 @@ export const ShellWithGroupedMenu = () => {
                   icon={<BiLink />}
                   label="모집글보기"
                   onClick={() => {
-                    setMenu(19);
-                    localStorage.setItem("ad_menu", "19");
+                    let cid = window.location.pathname.split("/").pop();
+                    window.open("http://localhost:3000/campain/" + cid);
                   }}
                 />
               </NavGroup>
@@ -251,6 +254,9 @@ export const ShellWithGroupedMenu = () => {
             {menu === 11 && <TotalView />}
             {menu === 12 && <TesterUser />}
             {menu === 13 && <SelectUser />}
+            {menu === 14 && <Review />}
+            {menu === 15 && <ReviewDetail />}
+            {menu === 16 && <Picture />}
           </Box>
         </Box>
       </Flex>

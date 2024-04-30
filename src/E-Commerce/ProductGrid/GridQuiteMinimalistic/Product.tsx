@@ -23,7 +23,7 @@ import { Campain, calculateDday, campains } from "./_data";
 import { useNavigate } from "react-router-dom";
 import { ImCancelCircle } from "react-icons/im";
 import { MdCheck, MdReviews } from "react-icons/md";
-import { updateDoc } from "../../../Firebase/Database";
+import { createDoc, updateDoc } from "../../../Firebase/Database";
 import { formattedDate } from "../../../Firebase/Util";
 import {
   Modal,
@@ -37,6 +37,7 @@ import {
 import { ClipboardInput } from "@ark-ui/react";
 import { BiClipboard, BiCopy } from "react-icons/bi";
 import { useState } from "react";
+import { addDoc } from "firebase/firestore";
 
 interface Props {
   campain: Campain;
@@ -96,8 +97,50 @@ export const Product = ({ ...props }) => {
 
   const handleSubmit = async () => {
     console.log(url);
+    console.log(campain);
 
-    onClose();
+    // fetch를 사용하여 POST 요청을 보냅니다.
+    fetch("http://localhost:3001/crawl", {
+      method: "POST", // 요청 메서드를 POST로 지정합니다.
+      headers: {
+        "Content-Type": "application/json", // 요청 헤더에 Content-Type을 JSON으로 지정합니다.
+      },
+      body: JSON.stringify({ url: url }), // 요청 본문에 데이터를 JSON 문자열로 변환하여 넣습니다.
+    })
+      .then((response) => {
+        // 서버에서 응답을 받으면 JSON 형식으로 파싱합니다.
+        return response.json();
+      })
+      .then((data) => {
+        // 파싱된 응답 데이터를 이용하여 처리합니다.
+        console.log("서버로부터 받은 데이터:", data);
+
+        // 데이터를 저장합니다.
+        createDoc("Review", {
+          ...data,
+          url: url,
+          uid: campain.uid,
+          cid: campain.cid,
+        }).then(async () => {
+          onClose();
+        });
+
+        if (data.code === "error") {
+          console.log("error");
+          toast({
+            title: "",
+            description: data.message,
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+            position: "top-right",
+          });
+        }
+      })
+      .catch((error) => {
+        // 오류가 발생하면 오류를 콘솔에 출력합니다.
+        console.error("데이터를 보내는 동안 오류 발생:", error);
+      });
   };
   return (
     <HStack
@@ -107,7 +150,7 @@ export const Product = ({ ...props }) => {
       <HStack
         _hover={{ opacity: 0.7, cursor: "pointer" }}
         onClick={() => {
-          navigate(`/campain/${campain.doc_id}`, { state: campain });
+          navigate(`/campain/${campain.doc_id}`);
         }}
       >
         <Box position="relative" className="group" p={4}>

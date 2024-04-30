@@ -24,7 +24,7 @@ export const ProductCard = (props: Props) => {
       spacing="4"
       _hover={{ opacity: 0.7, cursor: "pointer" }}
       onClick={() => {
-        navigate(`/campain/${campain.doc_id}`, { state: campain });
+        navigate(`/campain/${campain.doc_id}`);
       }}
     >
       <Box position="relative" className="group">

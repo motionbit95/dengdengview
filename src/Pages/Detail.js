@@ -58,7 +58,8 @@ import { where } from "firebase/firestore";
 function Detail(props) {
   const navigate = useNavigate();
   const location = useLocation();
-  const campain = location.state;
+  // const campain = location.state;
+  const [campain, setCampain] = useState(null);
 
   const [isOpen, onToggle] = React.useState(false);
 
@@ -68,21 +69,32 @@ function Detail(props) {
     window.scrollTo(0, 0);
     // 조회수 업데이트
 
-    updateDoc("Campain", campain?.doc_id, {
-      ...campain,
-      views: campain?.views + 1,
-    });
+    getDocument("Campain", window.location.pathname.split("/").pop()).then(
+      (data) => {
+        setCampain(data);
+      }
+    );
+  }, []);
 
-    let userList = [];
-    searchDoc("Tester", where("cid", "==", campain?.doc_id)).then((data) => {
-      data.forEach((doc) => {
-        getDocument("User", doc.uid).then((user) => {
-          userList.push({ ...user, ...doc });
-          setUserList(userList);
+  useEffect(() => {
+    if (campain) {
+      updateDoc("Campain", campain?.doc_id, {
+        ...campain,
+        views: campain?.views + 1,
+      });
+
+      let userList = [];
+      searchDoc("Tester", where("cid", "==", campain?.doc_id)).then((data) => {
+        data.forEach((doc) => {
+          console.log(doc);
+          getDocument("User", doc.uid).then((user) => {
+            userList.push({ ...user, ...doc });
+            setUserList(userList);
+          });
         });
       });
-    });
-  }, []);
+    }
+  }, [campain]);
 
   return (
     <Container
@@ -96,7 +108,7 @@ function Detail(props) {
       >
         <Stack w={"full"}>
           <Tag w={"fit-content"} size={{ base: "sm", md: "md" }}>
-            {campain?.doc_id.substring(0, 8)}
+            {campain?.doc_id?.substring(0, 8)}
           </Tag>
           <Text pb={2} fontSize={{ base: "lg", md: "xl" }} fontWeight="bold">
             {campain?.name}
@@ -229,7 +241,7 @@ function Detail(props) {
                           <Text> 모집</Text>
                         </HStack>
                         <Stack spacing={1}>
-                          {campain?.product.split("\n").map((value) => (
+                          {campain?.product?.split("\n").map((value) => (
                             <Text>- {value}</Text>
                           ))}
                         </Stack>
@@ -342,7 +354,10 @@ function Detail(props) {
           <Stack>
             <Calendar
               formatDay={(locale, date) => moment(date).format("DD")} // 날'일' 제외하고 숫자만 보이도록 설정
-              value={[new Date(campain?.startDate), new Date(campain?.endDate)]}
+              value={[
+                campain?.startDate ? new Date(campain?.startDate) : new Date(),
+                campain?.endDate ? new Date(campain?.endDate) : new Date(),
+              ]}
               selectRange={true}
               navigationLabel={null}
               nextLabel={null}
@@ -417,17 +432,18 @@ function RegisterButton(props) {
   const navigate = useNavigate();
 
   const [uid, setUid] = React.useState(null);
-  const { cid } = props;
+  const [cid, setCid] = React.useState(null);
   const [userTester, setUserTester] = React.useState(null);
 
   useEffect(() => {
-    console.log(uid, cid);
-    if (uid) {
-      multiQuery("Tester", uid, where("cid", "==", cid)).then((data) => {
+    let id = window.location.pathname.split("/").pop();
+    setCid(id);
+    if (uid && id) {
+      multiQuery("Tester", uid, where("cid", "==", id)).then((data) => {
         setUserTester(data.length > 0 ? true : false);
       });
     }
-  }, [uid]);
+  }, [uid, cid]);
 
   useEffect(() => {
     let uid;
