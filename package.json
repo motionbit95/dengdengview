@@ -74,5 +74,5 @@
   "devDependencies": {
     "@faker-js/faker": "^8.4.1"
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "https://port-0-dengdengview-17xco2nlszge3vt.sel5.cloudtype.app"
 }

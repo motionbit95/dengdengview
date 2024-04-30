@@ -101,7 +101,7 @@ export const Product = ({ ...props }) => {
       console.log(campain);
 
       // fetch를 사용하여 POST 요청을 보냅니다.
-      fetch("http://localhost:3001/crawl", {
+      fetch(process.env.REACT_APP_SERVER_URL + "/crawl", {
         method: "POST", // 요청 메서드를 POST로 지정합니다.
         headers: {
           "Content-Type": "application/json", // 요청 헤더에 Content-Type을 JSON으로 지정합니다.

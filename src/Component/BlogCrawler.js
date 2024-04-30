@@ -5,7 +5,7 @@ import axios from "axios";
 function BlogCrawler() {
   const [url, setUrl] = useState("");
   const [blogData, setBlogData] = useState(null);
-  const apiUrl = "http://localhost:3001/crawl";
+  const apiUrl = process.env.REACT_APP_SERVER_URL + "/crawl";
 
   const handleUrlChange = (e) => {
     setUrl(e.target.value);
