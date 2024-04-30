@@ -80,7 +80,11 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
               </ButtonGroup>
               <Avatar
                 onClick={() => {
-                  window.location.href = "/mypage";
+                  if (!props.userInfo) {
+                    window.location.href = "/login";
+                  } else {
+                    window.location.href = "/mypage";
+                  }
                 }}
                 _hover={{ cursor: "pointer" }}
                 boxSize="10"

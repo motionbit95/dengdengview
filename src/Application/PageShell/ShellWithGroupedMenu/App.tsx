@@ -211,7 +211,7 @@ export const ShellWithGroupedMenu = () => {
                   label="모집글보기"
                   onClick={() => {
                     let cid = window.location.pathname.split("/").pop();
-                    window.open("http://localhost:3000/campain/" + cid);
+                    window.open("http://localhost:3001/campain/" + cid);
                   }}
                 />
               </NavGroup>

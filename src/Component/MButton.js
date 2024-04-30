@@ -6,7 +6,7 @@ import { debug } from "../Firebase/Util";
 import { createDoc } from "../Firebase/Database";
 import { serverTimestamp } from "firebase/firestore";
 
-export const naverBtnImg = require("../Assets/img/btnG_완성형.png");
+export const naverBtnImg = require("../Assets/img/btnG.png");
 
 export const NaverLogin = (props) => {
   const { naver } = window;

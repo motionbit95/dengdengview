@@ -24,3 +24,5 @@ yarn-error.log*
 
 # local file
 /path
+# Local Netlify folder
+.netlify
