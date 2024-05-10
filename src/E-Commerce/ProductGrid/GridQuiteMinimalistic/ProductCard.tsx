@@ -1,6 +1,7 @@
 import {
   AspectRatio,
   Box,
+  Center,
   HStack,
   Image,
   Skeleton,
@@ -11,6 +12,9 @@ import {
 } from "@chakra-ui/react";
 import { Campain, calculateDday, campains } from "./_data";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineInstagram } from "react-icons/ai";
+import { Naver } from "../../../Application/Tables/UserTable/Logo";
+import { FiShoppingBag } from "react-icons/fi";
 
 interface Props {
   campain: Campain;
@@ -41,6 +45,45 @@ export const ProductCard = (props: Props) => {
           #{campain.doc_id.substring(0, 8)}
         </Tag>
       </Box>
+      <HStack mt={-12} zIndex={999} px={{ base: "2", md: "4" }}>
+        {campain?.mozip?.includes(0) && (
+          <Center
+            w={"48px"}
+            h={"48px"}
+            rounded={"full"}
+            bgColor={"#f5f5f5"}
+            // border={"1px solid #d9d9d9"}
+          >
+            <Image src={require("../../../Assets/img/style14.png")} />
+          </Center>
+        )}
+        {campain?.mozip?.includes(1) && (
+          <Center
+            w={"48px"}
+            h={"48px"}
+            rounded={"full"}
+            bgColor={"#f5f5f5"}
+            // border={"1px solid #d9d9d9"}
+          >
+            <Image
+              src="https://cdn-icons-png.flaticon.com/512/174/174855.png"
+              w={"24px"}
+              h={"24px"}
+            />
+          </Center>
+        )}
+        {campain?.mozip?.includes(2) && (
+          <Center
+            w={"48px"}
+            h={"48px"}
+            rounded={"full"}
+            bgColor={"#f5f5f5"}
+            // border={"1px solid #d9d9d9"}
+          >
+            <FiShoppingBag color="orange" size={24} />
+          </Center>
+        )}
+      </HStack>
       <Stack spacing="1">
         <Stack justifyContent="space-between">
           <Text

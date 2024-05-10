@@ -22,11 +22,15 @@ export const Tabs1 = (props: any) => (
         variant="indicator"
         onChange={props.onChange}
       >
-        <TabList>
-          <Tab>최신순</Tab>
-          <Tab>인기순</Tab>
+        <TabList
+          justifyContent={"center"}
+          w={"full"}
+          // maxW={"container.lg"}
+        >
+          <Tab>전체 체험단</Tab>
+          <Tab>인플루언서</Tab>
           {/* <Tab>선정확률</Tab> */}
-          <Tab>신청마감순</Tab>
+          <Tab>구매평 체험단</Tab>
         </TabList>
         <TabIndicator />
       </Tabs>

@@ -26,6 +26,7 @@ import AdminDashboard from "./Pages/AdminDashboard";
 import Home from "./Pages/Home";
 import Detail from "./Pages/Detail";
 import Forbidden from "./Pages/Forbidden";
+import Ads from "./Pages/Ads";
 
 function App() {
   const [userInfo, setUserInfo] = React.useState(null);
@@ -84,6 +85,7 @@ function App() {
               <Route path="/signup" element={<SignUpForm />} />
               <Route path="/mypage/*" element={<Profile />} />
               <Route path="/terms" element={<Terms />} />
+              <Route path="/ads" element={<Ads />} />
             </Routes>
           </BrowserRouter>
           <FooterWithFourColumnsOnAccent />

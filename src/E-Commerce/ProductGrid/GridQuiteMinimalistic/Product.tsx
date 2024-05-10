@@ -202,7 +202,8 @@ export const Product = ({ ...props }) => {
               {campain.name}
             </Text>
           </Stack>
-          <Text opacity={0.5}>{campain.endDate.replaceAll("-", ".")}</Text>
+
+          {/* <Text opacity={0.5}>{campain?.endDate?.replaceAll("-", ".")}</Text> */}
         </Stack>
       </HStack>
       <Stack>

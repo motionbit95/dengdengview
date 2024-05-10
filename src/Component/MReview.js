@@ -65,7 +65,7 @@ function Review(props) {
               <Text>{review.commentCnt}개</Text>
             </HStack> */}
             <Text fontSize={"lg"} fontWeight={"bold"}>
-              {review.titleList.toString().replaceAll(" : 네이버 블로그", " ")}
+              {review.titleList?.toString().replaceAll(" : 네이버 블로그", " ")}
             </Text>
             <Text fontSize={"sm"} noOfLines={4} opacity={0.6}>
               {review.contentList.join()}

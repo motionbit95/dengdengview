@@ -28,12 +28,17 @@ import { Logo } from "./Logo";
 import { SidebarButton } from "./SidebarButton";
 import { CampainCollaspe } from "./CampainCollaspe";
 import { BsMegaphone, BsPatchQuestion } from "react-icons/bs";
+import { signOut } from "firebase/auth";
+import { auth } from "../../../Firebase/Config";
 
 export const SidebarWithCollapsable = ({ ...props }) => {
   console.log(props.userInfo);
   const handleLogout = () => {
     // localStorage.clear();
     // 고객단에서 사용하는 로컬 저장 변수를 삭제합니다.
+    signOut(auth).catch((error) => {
+      // An error happened.
+    });
     localStorage.removeItem("access_token");
     localStorage.removeItem("naver_id");
     sessionStorage.clear();

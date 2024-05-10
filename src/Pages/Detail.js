@@ -77,7 +77,7 @@ function Detail(props) {
   }, []);
 
   useEffect(() => {
-    if (campain) {
+    if (campain?.doc_id) {
       updateDoc("Campain", campain?.doc_id, {
         ...campain,
         views: campain?.views + 1,
@@ -310,7 +310,7 @@ function Detail(props) {
                     <Text fontWeight={"bold"} fontSize={"lg"}>
                       총{" "}
                       <span style={{ color: "#F56565" }}>
-                        {userList.length}
+                        {userList ? userList?.length : "0"}
                       </span>
                       명 / {campain?.targetCnt}명
                     </Text>
@@ -324,7 +324,7 @@ function Detail(props) {
                     </HStack>
                     <Divider />
 
-                    {userList.map((value) => (
+                    {userList?.map((value) => (
                       <HStack
                         w={"100%"}
                         key={value.doc_id}
@@ -436,12 +436,13 @@ function RegisterButton(props) {
 
   const [uid, setUid] = React.useState(null);
   const [cid, setCid] = React.useState(null);
-  const [userTester, setUserTester] = React.useState(null);
+  const [userTester, setUserTester] = React.useState(false);
 
   useEffect(() => {
     let id = window.location.pathname.split("/").pop();
     setCid(id);
     if (uid && id) {
+      console.log("--------->", uid, id);
       multiQuery("Tester", uid, where("cid", "==", id)).then((data) => {
         setUserTester(data.length > 0 ? true : false);
       });
@@ -464,6 +465,70 @@ function RegisterButton(props) {
       });
     }
   }, []);
+
+  const handleSubmit = () => {
+    const ret = false;
+    if (checked.length < 9) {
+      toast({
+        title: "",
+        description: "약관에 모두 동의 해야합니다.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+      return ret;
+    }
+    if (!formData.name) {
+      toast({
+        title: "",
+        description: "수령인을 입력해야합니다.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+      return ret;
+    }
+
+    if (!formData.zonecode || !formData.street) {
+      toast({
+        title: "",
+        description: "주소를 입력해야합니다.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+      return ret;
+    }
+
+    if (!formData.address) {
+      toast({
+        title: "",
+        description: "상세 주소를 입력해야합니다.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+      return ret;
+    }
+
+    if (!formData.phone) {
+      toast({
+        title: "",
+        description: "휴대폰 번호를 입력해야합니다.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+      return ret;
+    }
+
+    return true;
+  };
   return (
     <>
       <Button
@@ -471,6 +536,7 @@ function RegisterButton(props) {
         isDisabled={userTester ? true : false}
         size={"xl"}
         onClick={() => {
+          console.log(userTester, uid);
           if (uid) {
             onOpen();
           } else {
@@ -709,77 +775,48 @@ function RegisterButton(props) {
 
           <ModalFooter bgColor={"white"} justifyContent={"center"}>
             <Button
+              colorScheme="green"
               size={"xl"}
               mr={3}
               onClick={() => {
-                if (checked.length < 9) {
-                  toast({
-                    title: "",
-                    description: "약관에 모두 동의 해야합니다.",
-                    status: "error",
-                    duration: 3000,
-                    isClosable: true,
-                    position: "top-right",
-                  });
-                  return;
-                }
-                if (!formData.name) {
-                  toast({
-                    title: "",
-                    description: "수령인을 입력해야합니다.",
-                    status: "error",
-                    duration: 3000,
-                    isClosable: true,
-                    position: "top-right",
-                  });
-                  return;
-                }
-
-                if (!formData.zonecode || !formData.street) {
-                  toast({
-                    title: "",
-                    description: "주소를 입력해야합니다.",
-                    status: "error",
-                    duration: 3000,
-                    isClosable: true,
-                    position: "top-right",
-                  });
-                  return;
-                }
-
-                if (!formData.address) {
-                  toast({
-                    title: "",
-                    description: "상세 주소를 입력해야합니다.",
-                    status: "error",
-                    duration: 3000,
-                    isClosable: true,
-                    position: "top-right",
-                  });
-                  return;
-                }
-
-                if (!formData.phone) {
-                  toast({
-                    title: "",
-                    description: "휴대폰 번호를 입력해야합니다.",
-                    status: "error",
-                    duration: 3000,
-                    isClosable: true,
-                    position: "top-right",
-                  });
-                  return;
-                }
-
-                if (window.confirm("체험단을 신청하시겠습니까?")) {
-                  props.onSubmit({ ...formData, uid: uid });
-                  onClose();
-                } else {
-                  return;
+                if (handleSubmit()) {
+                  if (
+                    window.confirm("네이버 블로그 체험단을 신청하시겠습니까?")
+                  ) {
+                    props.onSubmit({
+                      ...formData,
+                      uid: uid,
+                      mozip_type: "naver",
+                    });
+                    onClose();
+                  } else {
+                    return;
+                  }
                 }
               }}
             >
-              체험단 신청하기
+              네이버 블로그 체험단 신청하기
+            </Button>
+            <Button
+              colorScheme="pink"
+              size={"xl"}
+              mr={3}
+              onClick={() => {
+                if (handleSubmit()) {
+                  if (window.confirm("인스타그램 체험단을 신청하시겠습니까?")) {
+                    props.onSubmit({
+                      ...formData,
+                      uid: uid,
+                      mozip_type: "instagram",
+                    });
+                    onClose();
+                  } else {
+                    return;
+                  }
+                }
+              }}
+            >
+              인스타그램 체험단 신청하기
             </Button>
           </ModalFooter>
         </ModalContent>

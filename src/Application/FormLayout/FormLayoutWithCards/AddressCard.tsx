@@ -1,13 +1,12 @@
 import {
   Box,
-  BoxProps,
-  Button,
-  Divider,
-  Flex,
+  Checkbox,
+  CheckboxGroup,
   FormControl,
   FormLabel,
   Input,
   Select,
+  SimpleGrid,
   Stack,
 } from "@chakra-ui/react";
 import { RangeDatepicker, SingleDatepicker } from "chakra-dayzed-datepicker";
@@ -50,6 +49,22 @@ export const PersonalInfoCard = ({ ...props }) => {
         px={{ base: "4", md: "6" }}
         py={{ base: "5", md: "6" }}
       >
+        <FormControl id="mozip" isRequired>
+          <FormLabel>모집부분</FormLabel>
+          <CheckboxGroup
+            defaultValue={
+              campain?.mozip ? campain?.mozip : ["0", "1", "2", "3"]
+            }
+            onChange={(e) => props.onChange({ mozip: e })}
+          >
+            <SimpleGrid columns={2} spacing={2}>
+              <Checkbox value={"0"}>네이버블로그 체험단</Checkbox>
+              <Checkbox value={"1"}>인스타그램 체험단</Checkbox>
+              <Checkbox value={"2"}>구매평 체험단</Checkbox>
+              <Checkbox value={"3"}>인플루언서 체험단</Checkbox>
+            </SimpleGrid>
+          </CheckboxGroup>
+        </FormControl>
         <Stack spacing="6" direction={{ base: "column", md: "row" }}>
           <FormControl id="name" isRequired>
             <FormLabel>체험단명</FormLabel>

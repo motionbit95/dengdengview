@@ -47,6 +47,7 @@ import ReviewDetail from "../../../Component/MReviewDetail";
 import Picture from "../../../Component/MPicture";
 import Search from "../../../Pages/Search";
 import Keyword from "../../../Pages/Keyword";
+import { Advertise } from "../../Tables/AdTable/App";
 
 export const ShellWithGroupedMenu = () => {
   const [menu, setMenu] = useState(
@@ -71,15 +72,17 @@ export const ShellWithGroupedMenu = () => {
                       localStorage.setItem("ad_menu", "0");
                     }}
                   /> */}
-                  {/* <NavItem
-                  active={menu === 1 || localStorage.getItem("ad_menu") === "1"}
-                  icon={<BiCommentAdd />}
-                  label="광고문의"
-                  onClick={() => {
-                    setMenu(1);
-                    localStorage.setItem("ad_menu", "1");
-                  }}
-                /> */}
+                  <NavItem
+                    active={
+                      menu === 1 || localStorage.getItem("ad_menu") === "1"
+                    }
+                    icon={<BiCommentAdd />}
+                    label="광고문의"
+                    onClick={() => {
+                      setMenu(1);
+                      localStorage.setItem("ad_menu", "1");
+                    }}
+                  />
                   <NavItem
                     active={
                       menu === 2 || localStorage.getItem("ad_menu") === "2"
@@ -252,6 +255,7 @@ export const ShellWithGroupedMenu = () => {
             borderColor={mode("gray.200", "gray.700")}
           >
             {menu === 0 && <Dashboard />}
+            {menu === 1 && <Advertise />}
             {menu === 2 && <User />}
             {menu === 3 && <Campain />}
 

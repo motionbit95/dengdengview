@@ -46,6 +46,7 @@ interface UserData {
     street: string;
     birthyear: string;
     agree: boolean;
+    instagram: string;
   };
 }
 
@@ -296,6 +297,25 @@ export const FormWithInlineLabels = (props: UserData) => {
                   defaultValue={userInfo?.blog}
                   placeholder="네이버 아이디 입력"
                   name="blog"
+                  onChange={handleChange}
+                />
+              </InputGroup>
+            </Stack>
+          </FormControl>
+
+          <FormControl id="instagram">
+            <Stack
+              direction={{ base: "column", md: "row" }}
+              spacing={{ base: "1.5", md: "4" }}
+              justify="space-between"
+            >
+              <FormLabel variant="inline">인스타그램 주소</FormLabel>
+              <InputGroup maxW={{ md: "3xl" }}>
+                <InputLeftAddon>https://www.instagram.com/</InputLeftAddon>
+                <Input
+                  defaultValue={userInfo?.instagram}
+                  placeholder="인스타그램 아이디 입력"
+                  name="instagram"
                   onChange={handleChange}
                 />
               </InputGroup>

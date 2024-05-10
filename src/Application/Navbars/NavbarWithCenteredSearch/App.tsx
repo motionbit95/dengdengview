@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   ButtonGroup,
   Container,
   HStack,
@@ -78,19 +79,42 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                   isRound
                 /> */}
               </ButtonGroup>
-              <Avatar
-                onClick={() => {
-                  if (!props.userInfo) {
-                    window.location.href = "/login";
-                  } else {
-                    window.location.href = "/mypage";
-                  }
-                }}
-                _hover={{ cursor: "pointer" }}
-                boxSize="10"
-                src={props.userInfo?.image}
-                // name={props.userInfo?.name}
-              />
+              {props.userInfo ? (
+                <Avatar
+                  onClick={() => {
+                    if (!props.userInfo) {
+                      window.location.href = "/login";
+                    } else {
+                      window.location.href = "/mypage";
+                    }
+                  }}
+                  _hover={{ cursor: "pointer" }}
+                  boxSize="10"
+                  src={props.userInfo?.image}
+                  // name={props.userInfo?.name}
+                />
+              ) : (
+                <ButtonGroup>
+                  <Button
+                    variant={"tertiary"}
+                    onClick={() => (window.location.href = "/login")}
+                  >
+                    로그인
+                  </Button>
+                  <Button
+                    variant={"tertiary"}
+                    onClick={() => (window.location.href = "/signup")}
+                  >
+                    회원가입
+                  </Button>
+                  <Button
+                    onClick={() => (window.location.href = "/ads")}
+                    borderRadius={"full"}
+                  >
+                    광고문의
+                  </Button>
+                </ButtonGroup>
+              )}
             </HStack>
           </HStack>
         </Container>

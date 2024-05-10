@@ -32,15 +32,36 @@ function Campain({ ...props }) {
   useEffect(() => {
     console.log(props.tab);
     if (props.tab) {
-      let property = "createdAt";
-      if (props.tab === 1) {
-        property = "views";
-      } else if (props.tab === 2) {
-        property = "endDate";
-      }
+      // let property = "createdAt";
+      // if (props.tab === 1) {
+      //   property = "views";
+      // } else if (props.tab === 2) {
+      //   property = "endDate";
+      // }
 
-      searchDoc("Campain", orderBy(property, "desc")).then((data) => {
-        setCampains(data);
+      getCollection("Campain").then((data) => {
+        let list = [];
+        data.forEach((doc) => {
+          console.log(doc);
+          // doc.data() is never undefined for query doc snapshots
+          if (props.tab === 0) {
+            list.push(doc);
+
+            setCampains(list);
+          } else if (props.tab === 1) {
+            if (doc.mozip.includes(3)) {
+              list.push(doc);
+
+              setCampains(list);
+            }
+          } else if (props.tab === 2) {
+            if (doc.mozip.includes(2)) {
+              list.push(doc);
+
+              setCampains(list);
+            }
+          }
+        });
       });
     }
   }, [props.tab]);
