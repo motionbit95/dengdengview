@@ -78,10 +78,20 @@ function Review(props) {
               src={
                 bucketAddress +
                 "/downloads%2F" +
-                review.imageList[0].split("/").pop().split("?")[0] +
+                encodeURIComponent(
+                  review.imageList[0].split("/").pop().split("?")[0]
+                ) +
                 "?alt=media"
               }
             />
+            {/* <Text>
+              {bucketAddress +
+                "/downloads%2F" +
+                encodeURIComponent(
+                  review.imageList[0].split("/").pop().split("?")[0]
+                ) +
+                "?alt=media"}
+            </Text> */}
             <Button
               leftIcon={<BiLink />}
               colorScheme="green"
