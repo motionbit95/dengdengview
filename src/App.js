@@ -28,6 +28,7 @@ import Detail from "./Pages/Detail";
 import Forbidden from "./Pages/Forbidden";
 import Ads from "./Pages/Ads";
 import Privacy from "./Pages/Privacy";
+import Report from "./Pages/Report";
 
 function App() {
   const [userInfo, setUserInfo] = React.useState(null);
@@ -108,6 +109,7 @@ function App() {
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/ads" element={<Ads />} />
+              <Route path="/report/*" element={<Report />} />
             </Routes>
           </BrowserRouter>
           <FooterWithFourColumnsOnAccent />
