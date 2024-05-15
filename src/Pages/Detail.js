@@ -20,6 +20,8 @@ import {
   useToast,
   Avatar,
   Divider,
+  WrapItem,
+  Wrap,
 } from "@chakra-ui/react";
 import { calculateDday } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/_data";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
@@ -248,25 +250,55 @@ function Detail(props) {
                       </Stack>
                     </AccordionPanel>
                   </AccordionItem>
-                  {/* <AccordionItem>
-                  <AccordionButton {...accordionButtonStyle}>
-                    <HStack as="span" flex="1" textAlign="left">
-                      <Text>필수 키워드</Text>
-                    </HStack>
+                  <AccordionItem>
+                    <AccordionButton {...accordionButtonStyle}>
+                      <HStack as="span" flex="1" textAlign="left">
+                        <Text>필수 키워드</Text>
+                      </HStack>
 
-                    <AccordionIcon />
-                  </AccordionButton>
+                      <AccordionIcon />
+                    </AccordionButton>
 
-                  <AccordionPanel {...accordionPanelStyle}>
-                    <Wrap>
-                      {campain?.must_keyword?.map((value) => (
-                        <WrapItem>
-                          <Tag>{value}</Tag>
-                        </WrapItem>
-                      ))}
-                    </Wrap>
-                  </AccordionPanel>
-                </AccordionItem> */}
+                    <AccordionPanel {...accordionPanelStyle}>
+                      <Wrap>
+                        {campain?.keywords?.map((value) => (
+                          <WrapItem>
+                            <Tag>{value}</Tag>
+                          </WrapItem>
+                        ))}
+                      </Wrap>
+                      <Box
+                        bgColor={"gray.50"}
+                        p={3}
+                        my={3}
+                        borderRadius={"lg"}
+                        borderColor={"gray.300"}
+                        borderWidth={1}
+                      >
+                        <Text>
+                          - 위의 키워드 중 <strong>제목, 본문, #태그</strong>에
+                          아래와 같이 키워드를 기재해주세요.
+                        </Text>
+                        <Box ml={3}>
+                          <Text>
+                            <strong>제목</strong>: 상품명키워드(필수)+이외
+                            키워드 택1개
+                          </Text>
+                          <Text>
+                            <strong>본문</strong>: 제목에서 선택한 키워드
+                            택1개를 본문에 3회 이상 언급
+                          </Text>
+                          <Text>
+                            <strong>#해시태그</strong>: 제시된 키워드 모두
+                            기재해주세요.
+                          </Text>
+                        </Box>
+                        <Text>
+                          - 키워드가 지켜지지 않으면 수정요청이 있을 수 있어요.
+                        </Text>
+                      </Box>
+                    </AccordionPanel>
+                  </AccordionItem>
                   <AccordionItem>
                     <AccordionButton {...accordionButtonStyle}>
                       <Box as="span" flex="1" textAlign="left">

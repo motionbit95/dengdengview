@@ -8,6 +8,7 @@ import {
   Select,
   SimpleGrid,
   Stack,
+  Text,
 } from "@chakra-ui/react";
 import { RangeDatepicker, SingleDatepicker } from "chakra-dayzed-datepicker";
 import { useState } from "react";

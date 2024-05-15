@@ -44,7 +44,10 @@ function ReviewDetail(props) {
       data.forEach((doc) => {
         like = like + 0;
         comment = comment + parseInt(doc.commentCnt);
-        letter = letter + doc.contentList.join().length;
+        letter =
+          doc.contentList?.length > 1
+            ? letter + doc.contentList.join().length
+            : 0;
         picture = picture + doc.imageList.length;
 
         setTotalCount({
@@ -53,11 +56,14 @@ function ReviewDetail(props) {
           letter: letter,
           picture: picture,
         });
-
-        getDocument("User", doc.uid).then((user) => {
-          reviewList.push({ ...doc, ...user });
-          setReviewList(reviewList);
-        });
+        if (doc.uid) {
+          getDocument("User", doc.uid).then((user) => {
+            reviewList.push({ ...doc, ...user });
+            setReviewList(reviewList);
+          });
+        } else {
+          reviewList.push({ ...doc });
+        }
       });
     });
   }, []);

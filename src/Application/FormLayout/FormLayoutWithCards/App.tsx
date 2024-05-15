@@ -17,7 +17,7 @@ import { isExist } from "../../../Firebase/Util";
 
 export const FormLayoutWithCards = ({ ...props }) => {
   const { campain } = props?.campain ? props?.campain : null;
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(campain);
   const toast = useToast();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -78,6 +78,11 @@ export const FormLayoutWithCards = ({ ...props }) => {
 
     if (!isExist("mission_description", formData)) {
       alert("리뷰어 미션을 입력하세요.");
+      return;
+    }
+
+    if (!isExist("keywords", formData)) {
+      alert("필수 키워드를 입력하세요.");
       return;
     }
 
@@ -151,6 +156,7 @@ export const FormLayoutWithCards = ({ ...props }) => {
             onConfirm={() => {
               props.onSave(formData);
             }}
+            onClose={() => setIsOpen(false)}
             title={"확인"}
             buttonText={"저장"}
             discription={"체험단를 저장하시겠습니까?"}

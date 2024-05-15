@@ -264,7 +264,11 @@ export const Product = ({ ...props }) => {
         )}
       </Stack>
       <>
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal
+          isOpen={isOpen}
+          onClose={onClose}
+          size={{ base: "full", md: "xl" }}
+        >
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>리뷰등록</ModalHeader>
@@ -295,10 +299,41 @@ export const Product = ({ ...props }) => {
                     아래 배너 링크를 블로그 글에 반드시 첨부해주세요.
                   </FormHelperText>
                   <Textarea
+                    height={"120px"}
                     readOnly
                     value="https://firebasestorage.googleapis.com/v0/b/dangdangview.appspot.com/o/dangdang_banner.png?alt=media"
                   />
                 </FormControl>
+
+                <Stack spacing={0} mt={4}>
+                  <Text fontSize={"lg"} fontWeight={"bold"}>
+                    블로그에서 링크 추가 버튼 찾기
+                  </Text>
+                  <Text>
+                    블로그 글쓰기 화면에서{" "}
+                    <strong style={{ color: "red" }}>링크추가 버튼</strong>을
+                    눌러주세요.
+                  </Text>
+                  <Text fontSize={"sm"} opacity={0.5}>
+                    {
+                      "(반드시 PC 웹 화면이나, 네이버 블로그 앱)을 사용하셔야합니다."
+                    }
+                  </Text>
+                  <Image src={require("../../../Assets/guide/g1.jpeg")} />
+                </Stack>
+                <Stack spacing={0}>
+                  <Text fontSize={"lg"} fontWeight={"bold"}>
+                    복사된 스폰서링크 코드를 붙여넣기
+                  </Text>
+                  <Text>
+                    복사된{" "}
+                    <strong style={{ color: "red" }}>
+                      스폰서 배너 코드를 링크에 붙이면
+                    </strong>
+                    배너가 생성됩니다,
+                  </Text>
+                  <Image src={require("../../../Assets/guide/g2.jpeg")} />
+                </Stack>
               </Stack>
             </ModalBody>
 

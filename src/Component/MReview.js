@@ -23,11 +23,16 @@ function Review(props) {
     searchDoc("Review", where("cid", "==", cid)).then((data) => {
       let reviewList = [];
       data.forEach((doc) => {
-        getDocument("User", doc.uid).then((user) => {
-          reviewList.push({ ...doc, ...user });
-          console.log({ ...doc, ...user });
-          setReviewList(reviewList);
-        });
+        console.log(doc);
+        if (doc.uid) {
+          getDocument("User", doc.uid).then((user) => {
+            reviewList.push({ ...doc, ...user });
+            console.log({ ...doc, ...user });
+            setReviewList(reviewList);
+          });
+        } else {
+          reviewList.push({ ...doc });
+        }
       });
     });
   }, []);
@@ -64,27 +69,34 @@ function Review(props) {
               <BiComment />
               <Text>{review.commentCnt}개</Text>
             </HStack> */}
-            <Text fontSize={"lg"} fontWeight={"bold"}>
-              {review.titleList?.toString().replaceAll(" : 네이버 블로그", " ")}
-            </Text>
-            <Text fontSize={"sm"} noOfLines={4} opacity={0.6}>
-              {review.contentList.join()}
-            </Text>
+            <Stack height={"full"} justifyContent={"space-between"}>
+              <Stack>
+                <Text fontSize={"lg"} fontWeight={"bold"}>
+                  {review.titleList
+                    ?.toString()
+                    .replaceAll(" : 네이버 블로그", " ")}
+                </Text>
+                <Text fontSize={"sm"} noOfLines={4} opacity={0.6}>
+                  {review.contentList.join()}
+                </Text>
 
-            <Image
-              aspectRatio={"4/3"}
-              w={"full"}
-              alt=""
-              src={
-                bucketAddress +
-                "/downloads%2F" +
-                encodeURIComponent(
-                  review.imageList[0].split("/").pop().split("?")[0]
-                ) +
-                "?alt=media"
-              }
-            />
-            {/* <Text>
+                <Image
+                  aspectRatio={"4/3"}
+                  w={"full"}
+                  alt=""
+                  src={
+                    review.imageList[0].includes("firebase")
+                      ? review.imageList[0]
+                      : bucketAddress +
+                        "/downloads%2F" +
+                        encodeURIComponent(
+                          review.imageList[0].split("/").pop().split("?")[0]
+                        ) +
+                        "?alt=media"
+                  }
+                />
+              </Stack>
+              {/* <Text>
               {bucketAddress +
                 "/downloads%2F" +
                 encodeURIComponent(
@@ -92,15 +104,16 @@ function Review(props) {
                 ) +
                 "?alt=media"}
             </Text> */}
-            <Button
-              leftIcon={<BiLink />}
-              colorScheme="green"
-              onClick={() => {
-                window.open(review.url);
-              }}
-            >
-              리뷰 보러가기
-            </Button>
+              <Button
+                leftIcon={<BiLink />}
+                colorScheme="green"
+                onClick={() => {
+                  window.open(review.url);
+                }}
+              >
+                리뷰 보러가기
+              </Button>
+            </Stack>
           </Stack>
         ))}
       </SimpleGrid>

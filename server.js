@@ -22,35 +22,35 @@ admin.initializeApp({
 
 const cname = "Campain";
 
-// JSON 파일 읽기
-fs.readFile(`./path/to/${cname}.json`, "utf8", (err, data) => {
-  if (err) {
-    console.error("Error reading JSON file:", err);
-    return;
-  }
+// // JSON 파일 읽기
+// fs.readFile(`./path/to/${cname}.json`, "utf8", (err, data) => {
+//   if (err) {
+//     console.error("Error reading JSON file:", err);
+//     return;
+//   }
 
-  try {
-    // JSON 파싱
-    const jsonData = JSON.parse(data);
+//   try {
+//     // JSON 파싱
+//     const jsonData = JSON.parse(data);
 
-    // Firestore에 데이터 업로드
-    const db = admin.firestore();
-    const collectionRef = db.collection(cname); // 업로드할 컬렉션 이름
+//     // Firestore에 데이터 업로드
+//     const db = admin.firestore();
+//     const collectionRef = db.collection(cname); // 업로드할 컬렉션 이름
 
-    jsonData.forEach((data) => {
-      collectionRef
-        .add(data)
-        .then((docRef) => {
-          console.log("Document written with ID:", docRef.id);
-        })
-        .catch((error) => {
-          console.error("Error adding document:", error);
-        });
-    });
-  } catch (error) {
-    console.error("Error parsing JSON:", error);
-  }
-});
+//     jsonData.forEach((data) => {
+//       collectionRef
+//         .add(data)
+//         .then((docRef) => {
+//           console.log("Document written with ID:", docRef.id);
+//         })
+//         .catch((error) => {
+//           console.error("Error adding document:", error);
+//         });
+//     });
+//   } catch (error) {
+//     console.error("Error parsing JSON:", error);
+//   }
+// });
 
 const axios = require("axios");
 const cheerio = require("cheerio");
@@ -277,6 +277,7 @@ app.post("/crawl", (req, res) => {
 });
 
 app.get("/keywordstool", function (req, res) {
+  console.log(req.query.hintKeywords);
   var method = "GET";
   var api_url = "/keywordstool";
   var timestamp = Date.now() + "";
@@ -306,8 +307,10 @@ app.get("/keywordstool", function (req, res) {
   };
   request.get(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
-      res.end(body);
+      // res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
+      // console.log(body);
+      // res.end(body);
+      res.send({ data: body, code: "success", message: "success" });
     } else {
       res.status(response.statusCode).end();
       console.log("error = " + response.statusCode);

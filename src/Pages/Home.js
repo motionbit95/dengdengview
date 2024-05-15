@@ -63,7 +63,7 @@ function Home(props) {
             src={require("../Assets/img/banner_mokup.png")}
           />
         </Carousel>
-        <Center p={{ base: "8", md: "4" }}>
+        {/* <Center p={{ base: "8", md: "4" }}>
           <SimpleGrid
             columns={{ base: 5, md: 10 }}
             spacing={{ base: "4", md: "8" }}
@@ -109,7 +109,7 @@ function Home(props) {
               <Text>카테고리10</Text>
             </VStack>
           </SimpleGrid>
-        </Center>
+        </Center> */}
       </Box>
       <Campain tab={tab} />
     </Stack>

@@ -43,6 +43,16 @@ function App() {
       }
     });
 
+    if (localStorage.getItem("naver_id")) {
+      getUserInfo(localStorage.getItem("naver_id")).then(async (response) => {
+        setUserInfo(response.data);
+      });
+
+      onSnapshot(doc(db, "User", localStorage.getItem("naver_id")), (doc) => {
+        setUserInfo(doc.data());
+      });
+    }
+
     if (window.location.pathname.includes("/admin/dashboard")) {
       if (
         !window.location.pathname.replace("/admin/dashboard", "") &&
@@ -57,6 +67,16 @@ function App() {
       {window.location.pathname.includes("/admin") ? (
         <BrowserRouter>
           <Routes>
+            <Route
+              path="/admin"
+              element={
+                localStorage.getItem("dang_admin_id") ? (
+                  <AdminDashboard />
+                ) : (
+                  <AdminLogin />
+                )
+              }
+            />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard/*" element={<AdminDashboard />} />
           </Routes>

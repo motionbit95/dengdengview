@@ -99,7 +99,7 @@ function TotalView(props) {
       ) : (
         <Stack>
           <HStack width={"full"} justifyContent={"space-between"}>
-            <PageHeader2 title="종합상세보기" discription={campain.name} />
+            <PageHeader2 title="종합상세보기" discription={campain?.name} />
             <Button
               mx={4}
               onClick={() => window.location.replace("/admin/dashboard")}
@@ -156,15 +156,15 @@ function TotalView(props) {
                     <Stack alignItems={"around"}>
                       <Center h={10}>
                         <Text>
-                          {campain.startDate} ~ {campain.endDate}
+                          {campain?.startDate} ~ {campain?.endDate}
                         </Text>
                       </Center>
                       <Center h={10}>
-                        <Text w={"full"}>{campain.openDate}</Text>
+                        <Text w={"full"}>{campain?.openDate}</Text>
                       </Center>
                       <Center h={10}>
                         <Text w={"full"}>
-                          {campain.reviewStart} ~ {campain.reviewEnd}
+                          {campain?.reviewStart} ~ {campain?.reviewEnd}
                         </Text>
                       </Center>
                     </Stack>

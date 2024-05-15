@@ -49,13 +49,13 @@ function Campain({ ...props }) {
 
             setCampains(list);
           } else if (props.tab === 1) {
-            if (doc.mozip.includes(3)) {
+            if (doc.mozip.includes("3")) {
               list.push(doc);
 
               setCampains(list);
             }
           } else if (props.tab === 2) {
-            if (doc.mozip.includes(2)) {
+            if (doc.mozip.includes("2")) {
               list.push(doc);
 
               setCampains(list);

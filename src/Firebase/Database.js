@@ -33,14 +33,15 @@ export const createDoc = async (collectionName, data) => {
     await setDoc(doc(db, collectionName, data.id), {
       ...data,
       createdAt: formattedDateTime(new Date()),
-    }).then(() => {
+    }).then(async () => {
       debug("문서 저장 성공 : ", collectionName, " > ", data.id);
     });
   } else {
+    console.log(data);
     addDoc(collection(db, collectionName), {
       ...data,
       createdAt: formattedDateTime(new Date()),
-    }).then(() => {
+    }).then(async () => {
       debug("문서 저장 성공 : ", collectionName);
     });
   }
@@ -152,7 +153,7 @@ export const updateDoc = async (collectionName, id, data) => {
     },
     { merge: true }
   ).then(() => {
-    debug("문서 수정 성공 : ", collectionName, " > ", id);
+    debug("문서 수정 성공 : ", collectionName, " > ", id, " > ", data);
   });
 };
 

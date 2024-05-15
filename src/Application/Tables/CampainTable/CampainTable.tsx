@@ -55,10 +55,10 @@ function ModifierButton(campain: any) {
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        size={{ base: "full", md: "6xl" }}
+        size={{ base: "full", md: "7xl" }}
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent m={{ base: "0", lg: "16" }}>
           <ModalHeader>체험단 수정</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -66,8 +66,9 @@ function ModifierButton(campain: any) {
               campain={campain}
               onCancel={onClose}
               onSave={(data: any) => {
-                console.log(data);
-                onClose();
+                updateDoc("Campain", campain.campain.doc_id, data).then(() => {
+                  onClose();
+                });
               }}
             />
           </ModalBody>

@@ -46,7 +46,7 @@ export const ProductCard = (props: Props) => {
         </Tag>
       </Box>
       <HStack mt={-12} zIndex={999} px={{ base: "2", md: "4" }}>
-        {campain?.mozip?.includes(0) && (
+        {campain?.mozip?.includes("0") && (
           <Center
             w={"48px"}
             h={"48px"}
@@ -57,7 +57,7 @@ export const ProductCard = (props: Props) => {
             <Image src={require("../../../Assets/img/style14.png")} />
           </Center>
         )}
-        {campain?.mozip?.includes(1) && (
+        {campain?.mozip?.includes("1") && (
           <Center
             w={"48px"}
             h={"48px"}
@@ -72,7 +72,7 @@ export const ProductCard = (props: Props) => {
             />
           </Center>
         )}
-        {campain?.mozip?.includes(2) && (
+        {campain?.mozip?.includes("2") && (
           <Center
             w={"48px"}
             h={"48px"}

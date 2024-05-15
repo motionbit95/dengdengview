@@ -9,12 +9,16 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  HStack,
   Image,
   Input,
   InputGroup,
   InputLeftAddon,
   Stack,
+  Tag,
+  TagCloseButton,
   Textarea,
+  Wrap,
 } from "@chakra-ui/react";
 import { Dropzone } from "./Dropzone";
 import { useState } from "react";
@@ -24,6 +28,35 @@ import { ListCampainImages } from "../../List/ListCampainImages/App";
 export const ProfileCard = ({ ...props }) => {
   const { campain } = props;
   const [url, setUrl] = useState<string>("");
+  const [keyword, setKeyword] = useState<string>("");
+  const [keywords, setKeywords] = useState<string[]>(
+    campain?.keywords ? campain?.keywords : []
+  );
+
+  const handleKeywords = (keyword: string) => {
+    if (keywords.includes(keyword)) {
+      // setKeywords(keywords.filter((k) => k !== keyword));
+    } else {
+      setKeywords([...keywords, keyword]);
+
+      props.onChange({
+        keywords: [...keywords, keyword],
+      });
+
+      setKeyword("");
+    }
+  };
+
+  const deleteKeyword = (keyword: string) => {
+    if (keywords.includes(keyword)) {
+      setKeywords(keywords.filter((k) => k !== keyword));
+      props.onChange({
+        keywords: keywords.filter((k) => k !== keyword),
+      });
+    } else {
+      // setKeywords([...keywords, keyword]);
+    }
+  };
   return (
     <Box
       w={"full"}
@@ -102,6 +135,26 @@ export const ProfileCard = ({ ...props }) => {
           <FormHelperText color="fg.subtle">
             리뷰어가 수행해야하는 미션을 작성해주세요.
           </FormHelperText>
+        </FormControl>
+
+        <FormControl id="bio" isRequired>
+          <FormLabel>필수키워드</FormLabel>
+          <HStack>
+            <Input
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+              placeholder="필수키워드를 입력해주세요."
+            />
+            <Button onClick={() => handleKeywords(keyword)}>등록</Button>
+          </HStack>
+          <Wrap py={4}>
+            {keywords.map((keyword) => (
+              <Tag size="sm" colorScheme="cyan" key={keyword}>
+                {keyword}
+                <TagCloseButton onClick={() => deleteKeyword(keyword)} />
+              </Tag>
+            ))}
+          </Wrap>
         </FormControl>
       </Stack>
     </Box>

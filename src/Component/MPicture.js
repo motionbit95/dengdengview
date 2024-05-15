@@ -54,7 +54,7 @@ function Picture(props) {
                   src={
                     bucketAddress +
                     "/downloads%2F" +
-                    image.split("/").pop().split("?")[0] +
+                    encodeURIComponent(image.split("/").pop().split("?")[0]) +
                     "?alt=media"
                   }
                 />

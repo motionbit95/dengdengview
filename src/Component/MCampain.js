@@ -85,10 +85,11 @@ function Campain(props) {
             campain={{}}
             onCancel={() => setIsRegister(!isRegister)}
             onSave={(data) => {
-              createDoc("Campain", { ...data, views: 0 }).then(() => {
-                setIsRegister(!isRegister);
-                window.location.reload();
-              });
+              console.log(data);
+              // createDoc("Campain", { ...data, views: 0 }).then(() => {
+              //   setIsRegister(!isRegister);
+              //   window.location.reload();
+              // });
             }}
           />
         </Stack>

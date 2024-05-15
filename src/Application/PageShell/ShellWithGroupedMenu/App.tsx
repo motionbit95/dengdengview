@@ -48,6 +48,8 @@ import Picture from "../../../Component/MPicture";
 import Search from "../../../Pages/Search";
 import Keyword from "../../../Pages/Keyword";
 import { Advertise } from "../../Tables/AdTable/App";
+import RegisterSearch from "../../../Component/RegisterSearch";
+import RegisterReview from "../../../Component/RegisterReview";
 
 export const ShellWithGroupedMenu = () => {
   const [menu, setMenu] = useState(
@@ -114,6 +116,28 @@ export const ShellWithGroupedMenu = () => {
                     localStorage.setItem("ad_menu", "4");
                   }}
                 /> */}
+                  <NavItem
+                    active={
+                      menu === 6 || localStorage.getItem("ad_menu") === "6"
+                    }
+                    icon={<BsCommand />}
+                    label="[수동] 리뷰등록"
+                    onClick={() => {
+                      setMenu(6);
+                      localStorage.setItem("ad_menu", "6");
+                    }}
+                  />
+                  <NavItem
+                    active={
+                      menu === 5 || localStorage.getItem("ad_menu") === "5"
+                    }
+                    icon={<BiBarChart />}
+                    label="[수동] 검색점유율 등록"
+                    onClick={() => {
+                      setMenu(5);
+                      localStorage.setItem("ad_menu", "5");
+                    }}
+                  />
                 </NavGroup>
               )}
 
@@ -215,7 +239,7 @@ export const ShellWithGroupedMenu = () => {
                   onClick={() => {
                     let cid = window.location.pathname.split("/").pop();
                     window.open(
-                      process.env.REACT_APP_SERVER_URL + "/campain/" + cid
+                      process.env.REACT_APP_CLIENT_URL + "/campain/" + cid
                     );
                   }}
                 />
@@ -258,6 +282,8 @@ export const ShellWithGroupedMenu = () => {
             {menu === 1 && <Advertise />}
             {menu === 2 && <User />}
             {menu === 3 && <Campain />}
+            {menu === 5 && <RegisterSearch />}
+            {menu === 6 && <RegisterReview />}
 
             {menu === 11 && <TotalView />}
             {menu === 12 && <TesterUser />}

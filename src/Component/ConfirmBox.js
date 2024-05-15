@@ -32,7 +32,7 @@ function ConfirmBox({ ...props }) {
               <Text>{props.title}</Text>
             </HStack>
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton onClick={props.onClose} />
           <ModalBody>
             <Text>{props.discription}</Text>
           </ModalBody>
@@ -42,7 +42,7 @@ function ConfirmBox({ ...props }) {
               variant="outline"
               colorScheme="gray"
               mr={3}
-              onClick={onClose}
+              onClick={props.onClose}
             >
               취소
             </Button>

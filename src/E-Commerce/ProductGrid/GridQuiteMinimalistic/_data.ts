@@ -26,7 +26,7 @@ export const campains = [
       bucketAddress + "/demo%2Fdemo3.png?alt=media",
       bucketAddress + "/demo%2Fdemo4.png?alt=media",
     ],
-    mozip: [0],
+    mozip: ["0"],
     expireDate: "2024-04-20",
     type: "배송",
     views: 200,

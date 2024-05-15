@@ -29,16 +29,18 @@ export const DocumentCollapse = ({ ...props }) => {
       </Button>
       <Collapse in={isOpen} animateOpacity>
         <Stack spacing="1" alignItems="stretch" ps="8" py="1">
-          {["기본정보 수정" /*, "비밀번호 변경"*/].map((item) => (
-            <Button
-              key={item}
-              variant="tertiary"
-              justifyContent="start"
-              onClick={() => props.setItem(item)}
-            >
-              {item}
-            </Button>
-          ))}
+          {["기본정보 수정", "블로그 위젯 등록" /*, "비밀번호 변경"*/].map(
+            (item) => (
+              <Button
+                key={item}
+                variant="tertiary"
+                justifyContent="start"
+                onClick={() => props.setItem(item)}
+              >
+                {item}
+              </Button>
+            )
+          )}
         </Stack>
       </Collapse>
     </Box>
