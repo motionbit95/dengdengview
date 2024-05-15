@@ -18,7 +18,7 @@ export const links = [
     title: "약관",
     links: [
       { label: "서비스 이용약관", href: "/terms" },
-      // { label: "개인정보 처리방침", href: "#" },
+      { label: "개인정보 처리방침", href: "/privacy" },
     ],
   },
 ];

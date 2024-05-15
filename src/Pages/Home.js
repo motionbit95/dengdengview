@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import Campain from "./Campain";
 import {
   Box,
-  Center,
-  Flex,
-  HStack,
   Image,
   SimpleGrid,
   Stack,
@@ -28,28 +25,18 @@ function Home(props) {
           setTab(value);
         }}
       />
-      <Box>
+      <Box py={{ base: "4", md: "8" }}>
         <Carousel
+          duration={2000}
           showArrows={true}
           centerMode={true}
-          centerSlidePercentage={isMobile ? 100 : 30}
+          centerSlidePercentage={isMobile ? 100 : 40}
           showThumbs={false}
           showStatus={false}
           autoPlay={true}
+          showIndicators={false}
           infiniteLoop={true}
         >
-          <Image
-            px={{ base: "8", md: "4" }}
-            src={require("../Assets/img/banner_mokup.png")}
-          />
-          <Image
-            px={{ base: "8", md: "4" }}
-            src={require("../Assets/img/banner_mokup.png")}
-          />
-          <Image
-            px={{ base: "8", md: "4" }}
-            src={require("../Assets/img/banner_mokup.png")}
-          />
           <Image
             px={{ base: "8", md: "4" }}
             src={require("../Assets/img/banner_mokup.png")}

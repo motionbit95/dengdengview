@@ -49,7 +49,9 @@ function Keyword(props) {
     // keywords.forEach((keyword) => {
     // console.log("keywords", keywords, keywords.join(","));
     fetch(
-      "http://localhost:3001/keywordstool?hintKeywords=" + keywords.join(",")
+      process.env.REACT_APP_SERVER_URL +
+        "/keywordstool?hintKeywords=" +
+        keywords.join(",")
     )
       .then(async (response) => {
         return response.json();
