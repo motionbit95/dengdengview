@@ -30,6 +30,7 @@ import {
   BsCheck2Square,
 } from "react-icons/bs";
 import { colorScheme } from "../App";
+import { FaSearch } from "react-icons/fa";
 
 const Report = () => (
   <Stack align="center" background="#d9d9d9" spacing={8}>
@@ -72,6 +73,7 @@ const ReportMain = () => {
           direction={{ base: "column", md: "row" }}
           justify="space-between"
           spacing={0}
+          align={{ base: "start", md: "center" }}
         >
           <Text fontWeight="bold" fontSize="3xl">
             전체 캠페인 현황
@@ -82,14 +84,19 @@ const ReportMain = () => {
         </Stack>
         <Stack
           direction={{ base: "column", md: "row" }}
-          p={{ base: 3, md: 5 }}
+          p={5}
           align={"center"}
           borderRadius={"xl"}
           border="1px solid #D9D9D9"
-          spacing={{ base: 3, md: 0 }}
+          spacing={{ base: 5, md: 0 }}
           divider={<StackDivider />}
         >
-          <HStack justify="space-between" flex="1" px={10} w={"100%"}>
+          <HStack
+            justify="space-between"
+            flex="1"
+            px={{ base: 0, md: 10 }}
+            w={"100%"}
+          >
             <Stack align="center">
               <Icon as={BsClipboardCheck} fontSize={"xl"} />
               <Text fontWeight="bold" fontSize="md">
@@ -128,7 +135,7 @@ const ReportMain = () => {
             </Stack>
           </HStack>
           {/* <Box w="1px" h="40px" border={"1px solid #D9D9D9"} /> */}
-          <Stack flex="1" px={10} w={"100%"}>
+          <Stack flex="1" px={{ base: 0, md: 10 }} w={"100%"}>
             <HStack justify="space-between">
               <Text fontWeight="bold" fontSize="lg">
                 최근 30일 조회
@@ -160,7 +167,22 @@ const ReportMain = () => {
               <Text color="#ECC94B">30일</Text>
               <Text>조회 그래프</Text>
             </HStack>
-            <Box borderRadius="xl" border={"1px solid #D9D9D9"} h={300} />
+            <Box
+              borderRadius="xl"
+              border={"1px solid #D9D9D9"}
+              overflow={"hidden"}
+              h={200}
+            >
+              <Stack
+                w={"full"}
+                h={"full"}
+                bgColor={"gray"}
+                align={"center"}
+                justify={"center"}
+              >
+                <Text>차트</Text>
+              </Stack>
+            </Box>
           </Stack>
           <Stack spacing={3} flex="1" alignSelf="stretch">
             <HStack fontWeight="bold">
@@ -168,7 +190,22 @@ const ReportMain = () => {
               <Text color="#ECC94B">총 조회</Text>
               <Text>그래프</Text>
             </HStack>
-            <Box borderRadius="xl" border={"1px solid #D9D9D9"} h={300} />
+            <Box
+              borderRadius="xl"
+              border={"1px solid #D9D9D9"}
+              overflow={"hidden"}
+              h={200}
+            >
+              <Stack
+                w={"full"}
+                h={"full"}
+                bgColor={"gray"}
+                align={"center"}
+                justify={"center"}
+              >
+                <Text>차트</Text>
+              </Stack>
+            </Box>
           </Stack>
         </Stack>
         <Button
@@ -194,15 +231,14 @@ const ReportMain = () => {
           </Text>
         </HStack>
         <Stack
-          direction={{ base: "column", md: "row" }}
+          direction={{ base: "column", lg: "row" }}
           p={4}
           justify={"space-between"}
           spacing={2}
-          flex="1"
         >
-          <Stack direction={{ base: "column", md: "row" }}>
-            <HStack>
-              <Stack>
+          <Stack direction={{ base: "column", md: "row" }} w={"full"} flex={2}>
+            <HStack w={"full"}>
+              <Stack w={"full"}>
                 <Text>OOO</Text>
                 <HStack align={"center"}>
                   <Text fontSize={"sm"}>00건 노출</Text>
@@ -214,7 +250,7 @@ const ReportMain = () => {
                   <Image objectFit={"cover"} overflow={"hidden"} />
                 </AspectRatio>
               </Stack>
-              <Stack>
+              <Stack w={"full"}>
                 <Text>OOO</Text>
                 <HStack align={"center"}>
                   <Text fontSize={"sm"}>00건 노출</Text>
@@ -226,7 +262,7 @@ const ReportMain = () => {
                   <Image />
                 </AspectRatio>
               </Stack>
-              <Stack>
+              <Stack w={"full"}>
                 <Text>OOO</Text>
                 <HStack align={"center"}>
                   <Text fontSize={"sm"}>00건 노출</Text>
@@ -245,63 +281,100 @@ const ReportMain = () => {
               </Button>
             </Stack>
           </Stack>
-          <Stack px={5} spacing={6} fontWeight="bold">
-            <Text fontSize={"lg"}>네이버 키워드 노출 순위</Text>
-            <Stack spacing={3} flex="1">
-              <HStack justify="space-between" align="center">
-                <HStack spacing={3}>
-                  <Text>광교한우</Text>
-                  <Circle size={5} background="#D96083" />
-                </HStack>
-                <HStack spacing={0}>
-                  <Text color="#ECC94B">186</Text>
-                  <Text>건</Text>
-                </HStack>
+          <Stack
+            justify={"space-between"}
+            direction={{ base: "column", md: "row" }}
+            w={"full"}
+            flex={3}
+            align={"flex-start"}
+          >
+            <Stack
+              px={5}
+              spacing={6}
+              fontWeight="bold"
+              flex={{ md: 2 }}
+              w={"full"}
+            >
+              <HStack
+                w={"full"}
+                justify={"space-between"}
+                borderBottom={"1px solid #D9D9D9"}
+                pb={1}
+              >
+                <Text fontSize={"lg"}>네이버 키워드 노출 순위</Text>
+                <Icon as={FaSearch} cursor={"pointer"} />
               </HStack>
-              <HStack justify="space-between" align="center">
-                <HStack spacing={3}>
-                  <Text>광교룸 식당</Text>
-                  <Circle size={5} background="#5082D0" />
+              <Stack spacing={3} flex="1">
+                <HStack justify="space-between" align="center">
+                  <HStack spacing={3}>
+                    <Text>광교한우</Text>
+                    <Circle size={5} background="#D96083" />
+                  </HStack>
+                  <HStack spacing={0}>
+                    <Text color="#ECC94B">186</Text>
+                    <Text>건</Text>
+                  </HStack>
                 </HStack>
-                <HStack spacing={0}>
-                  <Text color="#ECC94B">186</Text>
-                  <Text>건</Text>
+                <HStack justify="space-between" align="center">
+                  <HStack spacing={3}>
+                    <Text>광교룸 식당</Text>
+                    <Circle size={5} background="#5082D0" />
+                  </HStack>
+                  <HStack spacing={0}>
+                    <Text color="#ECC94B">186</Text>
+                    <Text>건</Text>
+                  </HStack>
                 </HStack>
-              </HStack>
-              <HStack justify="space-between" align="center">
-                <HStack spacing={3}>
-                  <Text>광교 한우</Text>
-                  <Circle size={5} background="#66DD7D" />
+                <HStack justify="space-between" align="center">
+                  <HStack spacing={3}>
+                    <Text>광교 한우</Text>
+                    <Circle size={5} background="#66DD7D" />
+                  </HStack>
+                  <HStack spacing={0}>
+                    <Text color="#ECC94B">186</Text>
+                    <Text>건</Text>
+                  </HStack>
                 </HStack>
-                <HStack spacing={0}>
-                  <Text color="#ECC94B">186</Text>
-                  <Text>건</Text>
+                <HStack justify="space-between" align="center">
+                  <HStack spacing={3}>
+                    <Text>수원광교맛집</Text>
+                    <Circle size={5} background="#E5D279" />
+                  </HStack>
+                  <HStack spacing={0}>
+                    <Text color="#ECC94B">186</Text>
+                    <Text>건</Text>
+                  </HStack>
                 </HStack>
-              </HStack>
-              <HStack justify="space-between" align="center">
-                <HStack spacing={3}>
-                  <Text>수원광교맛집</Text>
-                  <Circle size={5} background="#E5D279" />
+                <HStack justify="space-between" align="center">
+                  <HStack spacing={3}>
+                    <Text>수원광교한우맛집</Text>
+                    <Circle size={5} background="#88CEC3" />
+                  </HStack>
+                  <HStack spacing={0}>
+                    <Text color="#ECC94B">186</Text>
+                    <Text>건</Text>
+                  </HStack>
                 </HStack>
-                <HStack spacing={0}>
-                  <Text color="#ECC94B">186</Text>
-                  <Text>건</Text>
-                </HStack>
-              </HStack>
-              <HStack justify="space-between" align="center">
-                <HStack spacing={3}>
-                  <Text>수원광교한우맛집</Text>
-                  <Circle size={5} background="#88CEC3" />
-                </HStack>
-                <HStack spacing={0}>
-                  <Text color="#ECC94B">186</Text>
-                  <Text>건</Text>
-                </HStack>
-              </HStack>
+              </Stack>
             </Stack>
-          </Stack>
-          <Stack p={4}>
-            <Box w={300} h={200} bg={"red"}></Box>
+            <Stack p={4} flex={{ md: 3 }} w={"full"}>
+              <Box
+                borderRadius="xl"
+                border={"1px solid #D9D9D9"}
+                overflow={"hidden"}
+                h={200}
+              >
+                <Stack
+                  w={"full"}
+                  h={"full"}
+                  bgColor={"gray"}
+                  align={"center"}
+                  justify={"center"}
+                >
+                  <Text>차트</Text>
+                </Stack>
+              </Box>
+            </Stack>
           </Stack>
         </Stack>
       </Stack>
@@ -548,12 +621,12 @@ const ReportCampain = () => {
                   </HStack>
                 </Td>
                 <Td>
-                  <HStack justify={"space-between"} fontWeight="bold">
-                    <Stack
-                      align="center"
-                      spacing={2}
-                      fontSize={{ base: "md", lg: "lg" }}
-                    >
+                  <HStack
+                    justify={"space-between"}
+                    fontWeight="bold"
+                    fontSize={{ base: "md", lg: "lg" }}
+                  >
+                    <Stack align="center" spacing={2}>
                       <Text
                         fontSize={{ base: "sm", lg: "md" }}
                         color="rgba(0, 0, 0, 0.6)"
@@ -723,7 +796,143 @@ const ReportCampain = () => {
               ))}
             </Tbody>
           ) : (
-            <Text>여긴 모바일</Text>
+            <Tbody borderY={"1px solid black"}>
+              <Tr>
+                <Td px={0}>
+                  <HStack>
+                    <Stack
+                      borderRadius="xl"
+                      w={{ base: 12, lg: 14 }}
+                      h={{ base: 12, lg: 14 }}
+                      background="#203E59"
+                      justify="center"
+                    >
+                      <Stack
+                        align="center"
+                        spacing={"0px"}
+                        color="white"
+                        fontWeight="bold"
+                      >
+                        <Text fontSize={{ base: "md", lg: "lg" }}>전체</Text>
+                        <Text fontSize={{ base: "sm", lg: "md" }}>종합</Text>
+                      </Stack>
+                    </Stack>
+                    <Stack flex={1}>
+                      <HStack justify={"space-between"}>
+                        <Text>전체 종합 지수</Text>
+                        <Text>2023~05.25~2024.06.01</Text>
+                      </HStack>
+                      <HStack
+                        justify={"space-between"}
+                        divider={<StackDivider />}
+                      >
+                        <Text>신청 1,029</Text>
+                        <Text>선정 1,029</Text>
+                        <Text>사용 1,029</Text>
+                        <Text>리뷰 1,029</Text>
+                      </HStack>
+                      <HStack
+                        justify={"space-between"}
+                        divider={<StackDivider />}
+                        border={"1px solid #E5E5E5"}
+                        borderRadius={"md"}
+                        p={2}
+                      >
+                        <Text>최근 30일:6,894</Text>
+                        <Text>총 조회수:6,894</Text>
+                      </HStack>
+                    </Stack>
+                  </HStack>
+                </Td>
+              </Tr>
+              {reportCampains.map((item, index) => (
+                <Tr>
+                  <Td px={0}>
+                    <HStack>
+                      <Stack
+                        borderRadius="xl"
+                        w={{ base: 12, lg: 14 }}
+                        h={{ base: 12, lg: 14 }}
+                        background="linear-gradient(270deg, #228d58 0%, #4585bf 100%)"
+                        justify="center"
+                      >
+                        <Stack
+                          align="center"
+                          spacing={"0px"}
+                          color="white"
+                          fontWeight="bold"
+                        >
+                          <Text fontSize={{ base: "md", lg: "lg" }}>
+                            {item.state}
+                          </Text>
+                          <Text fontSize={{ base: "sm", lg: "md" }}>
+                            {item.state1}
+                          </Text>
+                        </Stack>
+                      </Stack>
+                      <Stack flex={1}>
+                        <HStack justify={"space-between"}>
+                          <Text>{item.title}</Text>
+                          <Text>
+                            {item.startDate}~{item.endDate}
+                          </Text>
+                        </HStack>
+                        <HStack
+                          justify={"space-between"}
+                          divider={<StackDivider />}
+                        >
+                          <Text>
+                            신청{" "}
+                            {item.campains
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          </Text>
+                          <Text>
+                            선정{" "}
+                            {item.tester
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          </Text>
+                          <Text>
+                            사용{" "}
+                            {item.campains1
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          </Text>
+                          <Text>
+                            리뷰{" "}
+                            {item.campains2
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          </Text>
+                        </HStack>
+                        <HStack
+                          justify={"space-between"}
+                          divider={<StackDivider />}
+                          border={"1px solid #E5E5E5"}
+                          borderRadius={"md"}
+                          p={2}
+                        >
+                          <Text>
+                            최근 30일:
+                            {item.LastThirtyDaysView.toString().replace(
+                              /\B(?=(\d{3})+(?!\d))/g,
+                              ","
+                            )}
+                          </Text>
+                          <Text>
+                            총 조회수:
+                            {item.totalView
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          </Text>
+                        </HStack>
+                      </Stack>
+                    </HStack>
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
           )}
         </Table>
       </TableContainer>
