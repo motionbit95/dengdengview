@@ -49,6 +49,8 @@ export const Product = ({ ...props }) => {
   const navigate = useNavigate();
   const toast = useToast();
   const [url, setUrl] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [campainName, setCampain] = useState<string>("");
 
   // 텍스트를 클립보드에 복사하는 함수
   function copyToClipboard(text: string) {
@@ -120,6 +122,8 @@ export const Product = ({ ...props }) => {
           createDoc("Review", {
             ...data,
             url: url,
+            name: name,
+            campainName: campainName,
             uid: campain.uid,
             cid: campain.cid,
           }).then(async () => {
@@ -151,198 +155,182 @@ export const Product = ({ ...props }) => {
     }
   };
   return (
-    <HStack
-      // spacing="4"
-      justifyContent="space-between"
-    >
+    <>
+      {/** 테스트용 */}
+      <Button onClick={onOpen}>링크 등록</Button>
       <HStack
-        _hover={{ opacity: 0.7, cursor: "pointer" }}
-        onClick={() => {
-          navigate(`/campain/${campain.doc_id}`);
-        }}
+        // spacing="4"
+        justifyContent="space-between"
       >
-        <Box position="relative" className="group" p={4}>
-          <AspectRatio ratio={1} w={100} h={100}>
-            <Image
-              src={campain.images?.[0]}
-              alt={campain.name}
-              draggable="false"
-              fallback={<Skeleton />}
-              borderRadius="lg"
-            />
-          </AspectRatio>
-          {/* <Tag size={"sm"} position="absolute" top="2" left="2">
+        <HStack
+          _hover={{ opacity: 0.7, cursor: "pointer" }}
+          onClick={() => {
+            navigate(`/campain/${campain.doc_id}`);
+          }}
+        >
+          <Box position="relative" className="group" p={4}>
+            <AspectRatio ratio={1} w={100} h={100}>
+              <Image
+                src={campain.images?.[0]}
+                alt={campain.name}
+                draggable="false"
+                fallback={<Skeleton />}
+                borderRadius="lg"
+              />
+            </AspectRatio>
+            {/* <Tag size={"sm"} position="absolute" top="2" left="2">
           #{campain.doc_id.substring(0, 8)}
         </Tag> */}
-        </Box>
-        <Stack spacing="1">
-          <Stack justifyContent="space-between">
-            <Tag
-              colorScheme={"green"}
-              w={"fit-content"}
-              size={{ base: "sm", md: "md" }}
-            >
-              {campain.step === 0 ? "신청중" : "선정완료"}
-            </Tag>
-            <Text
-              textOverflow={"ellipsis"}
-              overflow="hidden"
-              wordBreak={"break-word"}
-              style={{
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-              }}
-              color={useColorModeValue("black", "white")}
-              fontSize={{ base: "md", md: "lg" }}
-              fontWeight="semibold"
-              letterSpacing="wider"
-              textTransform="uppercase"
-            >
-              {campain.name}
-            </Text>
-          </Stack>
-
-          {/* <Text opacity={0.5}>{campain?.endDate?.replaceAll("-", ".")}</Text> */}
-        </Stack>
-      </HStack>
-      <Stack>
-        {(campain.step === 1 || campain.step === 2) && (
-          <Button
-            isDisabled={campain.step === 2}
-            colorScheme="black"
-            variant={"outline"}
-            h={{ base: "4rem", md: "2.5rem" }}
-            onClick={() => {
-              if (window.confirm("사용등록 하시겠습니까?")) {
-                updateDoc("Tester", campain.testerId, {
-                  step: 2,
-                  useDate: formattedDate(new Date()),
-                });
-              }
-            }}
-          >
-            <Stack
-              alignItems={"center"}
-              justifyContent={"center"}
-              direction={{ base: "column", md: "row" }}
-              spacing={2}
-            >
-              <MdCheck />
-              <Text>{campain.step === 1 ? "사용등록" : "사용완료"}</Text>
-            </Stack>
-          </Button>
-        )}
-        {campain.step !== 1 && (
-          <Button
-            isDisabled={campain.step === 3}
-            colorScheme="black"
-            variant={"outline"}
-            h={{ base: "4rem", md: "2.5rem" }}
-            onClick={() => {
-              if (campain.step === 2) {
-                onOpen();
-              }
-            }}
-          >
-            <Stack
-              alignItems={"center"}
-              justifyContent={"center"}
-              direction={{ base: "column", md: "row" }}
-              spacing={2}
-            >
-              {campain.step === 0 ? <ImCancelCircle /> : <MdReviews />}
-              <Text>
-                {campain.step === 0
-                  ? "신청취소"
-                  : campain.step === 2
-                  ? "리뷰등록"
-                  : "리뷰완료"}
+          </Box>
+          <Stack spacing="1">
+            <Stack justifyContent="space-between">
+              <Tag
+                colorScheme={"green"}
+                w={"fit-content"}
+                size={{ base: "sm", md: "md" }}
+              >
+                {campain.step === 0 ? "신청중" : "선정완료"}
+              </Tag>
+              <Text
+                textOverflow={"ellipsis"}
+                overflow="hidden"
+                wordBreak={"break-word"}
+                style={{
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                }}
+                color={useColorModeValue("black", "white")}
+                fontSize={{ base: "md", md: "lg" }}
+                fontWeight="semibold"
+                letterSpacing="wider"
+                textTransform="uppercase"
+              >
+                {campain.name}
               </Text>
             </Stack>
-          </Button>
-        )}
-      </Stack>
-      <>
-        <Modal
-          isOpen={isOpen}
-          onClose={onClose}
-          size={{ base: "full", md: "xl" }}
-        >
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>리뷰등록</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Stack>
-                <FormControl>
-                  <FormLabel>리뷰 URL</FormLabel>
-                  <Input
-                    onChange={(e) => setUrl(e.target.value)}
-                    placeholder="https://blog.naver.com/블로그아이디/포스팅번호"
-                  />
-                </FormControl>
 
-                <FormControl>
-                  <FormLabel>
-                    <HStack w={"full"} justifyContent={"space-between"}>
-                      <Text>배너등록</Text>
-                      <IconButton
-                        variant={"ghost"}
-                        icon={<BiCopy />}
-                        aria-label="Clipboard"
-                        onClick={() => copyToClipboard(textToCopy)}
-                      />
-                    </HStack>
-                  </FormLabel>
-                  <FormHelperText>
-                    아래 배너 링크를 블로그 글에 반드시 첨부해주세요.
-                  </FormHelperText>
-                  <Textarea
-                    height={"120px"}
-                    readOnly
-                    value="https://firebasestorage.googleapis.com/v0/b/dangdangview.appspot.com/o/dangdang_banner.png?alt=media"
-                  />
-                </FormControl>
-
-                <Stack spacing={0} mt={4}>
-                  <Text fontSize={"lg"} fontWeight={"bold"}>
-                    블로그에서 링크 추가 버튼 찾기
-                  </Text>
-                  <Text>
-                    블로그 글쓰기 화면에서{" "}
-                    <strong style={{ color: "red" }}>링크추가 버튼</strong>을
-                    눌러주세요.
-                  </Text>
-                  <Text fontSize={"sm"} opacity={0.5}>
-                    {
-                      "(반드시 PC 웹 화면이나, 네이버 블로그 앱)을 사용하셔야합니다."
-                    }
-                  </Text>
-                  <Image src={require("../../../Assets/guide/g1.jpeg")} />
-                </Stack>
-                <Stack spacing={0}>
-                  <Text fontSize={"lg"} fontWeight={"bold"}>
-                    복사된 스폰서링크 코드를 붙여넣기
-                  </Text>
-                  <Text>
-                    복사된{" "}
-                    <strong style={{ color: "red" }}>
-                      스폰서 배너 코드를 링크에 붙이면
-                    </strong>
-                    배너가 생성됩니다,
-                  </Text>
-                  <Image src={require("../../../Assets/guide/g2.jpeg")} />
-                </Stack>
+            {/* <Text opacity={0.5}>{campain?.endDate?.replaceAll("-", ".")}</Text> */}
+          </Stack>
+        </HStack>
+        <Stack>
+          {(campain.step === 1 || campain.step === 2) && (
+            <Button
+              isDisabled={campain.step === 2}
+              colorScheme="black"
+              variant={"outline"}
+              h={{ base: "4rem", md: "2.5rem" }}
+              onClick={() => {
+                if (window.confirm("사용등록 하시겠습니까?")) {
+                  updateDoc("Tester", campain.testerId, {
+                    step: 2,
+                    useDate: formattedDate(new Date()),
+                  });
+                }
+              }}
+            >
+              <Stack
+                alignItems={"center"}
+                justifyContent={"center"}
+                direction={{ base: "column", md: "row" }}
+                spacing={2}
+              >
+                <MdCheck />
+                <Text>{campain.step === 1 ? "사용등록" : "사용완료"}</Text>
               </Stack>
-            </ModalBody>
+            </Button>
+          )}
+          {campain.step !== 1 && (
+            <Button
+              isDisabled={campain.step === 3}
+              colorScheme="black"
+              variant={"outline"}
+              h={{ base: "4rem", md: "2.5rem" }}
+              onClick={() => {
+                if (campain.step === 2) {
+                  onOpen();
+                }
+              }}
+            >
+              <Stack
+                alignItems={"center"}
+                justifyContent={"center"}
+                direction={{ base: "column", md: "row" }}
+                spacing={2}
+              >
+                {campain.step === 0 ? <ImCancelCircle /> : <MdReviews />}
+                <Text>
+                  {campain.step === 0
+                    ? "신청취소"
+                    : campain.step === 2
+                    ? "리뷰등록"
+                    : "리뷰완료"}
+                </Text>
+              </Stack>
+            </Button>
+          )}
+        </Stack>
 
-            <ModalFooter>
-              <Button onClick={handleSubmit}>리뷰등록</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </>
-    </HStack>
+        <>
+          <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>리뷰등록</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <Stack>
+                  <FormControl>
+                    <FormLabel>체험단명</FormLabel>
+                    <Input
+                      onChange={(e) => setCampain(e.target.value)}
+                      placeholder="체험단명(매뉴얼입력용)"
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>유저이름</FormLabel>
+                    <Input
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="유저명"
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>리뷰 URL</FormLabel>
+                    <Input
+                      onChange={(e) => setUrl(e.target.value)}
+                      placeholder="https://blog.naver.com/블로그아이디/포스팅번호"
+                    />
+                  </FormControl>
+
+                  <FormControl>
+                    <FormLabel>
+                      <HStack w={"full"} justifyContent={"space-between"}>
+                        <Text>배너등록</Text>
+                        <IconButton
+                          variant={"ghost"}
+                          icon={<BiCopy />}
+                          aria-label="Clipboard"
+                          onClick={() => copyToClipboard(textToCopy)}
+                        />
+                      </HStack>
+                    </FormLabel>
+                    <FormHelperText>
+                      아래 배너 링크를 블로그 글에 반드시 첨부해주세요.
+                    </FormHelperText>
+                    <Textarea
+                      readOnly
+                      value="https://firebasestorage.googleapis.com/v0/b/dangdangview.appspot.com/o/dangdang_banner.png?alt=media"
+                    />
+                  </FormControl>
+                </Stack>
+              </ModalBody>
+
+              <ModalFooter>
+                <Button onClick={handleSubmit}>리뷰등록</Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </>
+      </HStack>
+    </>
   );
 };

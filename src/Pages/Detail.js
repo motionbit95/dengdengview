@@ -168,10 +168,8 @@ function Detail(props) {
               onSubmit={(data) =>
                 createDoc("Tester", {
                   ...data,
-                  cid: campain?.doc_id,
+                  cid: window.location.pathname.split("/").pop(),
                   step: 0,
-                }).then(async () => {
-                  window.location.reload();
                 })
               }
             >
@@ -437,15 +435,13 @@ function Detail(props) {
               <RegisterButton
                 cid={campain?.doc_id}
                 isDisabled={calculateDday(campain?.endDate) < 0}
-                onSubmit={(data) =>
+                onSubmit={(data) => {
                   createDoc("Tester", {
                     ...data,
-                    cid: campain?.doc_id,
+                    cid: window.location.pathname.split("/").pop(),
                     step: 0,
-                  }).then(async () => {
-                    window.location.reload();
-                  })
-                }
+                  });
+                }}
               >
                 {calculateDday(campain?.endDate) < 0
                   ? "신청이 마감되었습니다."

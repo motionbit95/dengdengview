@@ -27,48 +27,43 @@ import {
 import { colorScheme } from "../App";
 
 const Report = () => (
-  <Stack align="center" background="#d9d9d9" minW="1024px" spacing="30px">
-    <HStack
-      w="100%"
-      padding={"10px 40px"}
-      justify="space-between"
-      bgColor={"white"}
-      borderColor="#D9D9D9"
-      borderBottomWidth="1px"
-    >
-      <Text fontWeight="bold" fontSize="2xl" color="black">
-        댕댕뷰
-      </Text>
-      <Text fontWeight="regular" fontSize="lg" color="black">
-        서비스 리포트 페이지
-      </Text>
-    </HStack>
+  <Stack align="center" background="#d9d9d9" spacing={8}>
+    <ReportMain />
+    <ReportCampain />
+    <ReportNotification />
+  </Stack>
+);
+
+export default Report;
+
+const ReportMain = () => {
+  return (
     <Stack
-      paddingX="40px"
-      paddingTop="30px"
-      paddingBottom="80px"
-      spacing="30px"
-      alignSelf="stretch"
+      w={"100%"}
+      px={10}
+      pt={8}
+      pb={20}
+      spacing={8}
       background="linear-gradient(180deg, #ffffff00 0%, #ffffff 100%)"
     >
-      <Stack align="flex-start" spacing="10px">
-        <Text lineHeight="1.2" fontWeight="bold" fontSize="30px" color="black">
+      <Stack align="flex-start" spacing={0}>
+        <Text fontWeight="bold" fontSize="3xl">
           [경기 수원]
         </Text>
-        <Text lineHeight="1.2" fontWeight="bold" fontSize="36px" color="black">
+        <Text fontWeight="bold" fontSize="4xl">
           한우갑 광교점
         </Text>
         <Button size="lg">모집글 보기</Button>
       </Stack>
       {/* 캠페인 현황 */}
       <Stack
-        padding={"30px 20px"}
-        borderRadius="10px"
-        spacing="20px"
-        background="white"
+        p={8}
+        borderRadius={"xl"}
+        spacing={5}
+        bgColor="white"
         boxShadow="0px 4px 4px 0px rgba(0, 0, 0, 0.25)"
       >
-        <HStack justify="space-between" align="center">
+        <HStack justify="space-between">
           <Text fontWeight="bold" fontSize="3xl">
             전체 캠페인 현황
           </Text>
@@ -77,14 +72,14 @@ const Report = () => (
           </Text>
         </HStack>
         <HStack
-          padding="20px"
-          borderRadius="10px"
+          p={5}
+          borderRadius={"xl"}
           border="1px solid #D9D9D9"
           spacing="0"
         >
-          <HStack justify="space-around" flex="1">
+          <HStack justify="space-between" flex="1" px={10}>
             <Stack align="center">
-              <Icon as={BsClipboardCheck} />
+              <Icon as={BsClipboardCheck} fontSize={"xl"} />
               <Text fontWeight="bold" fontSize="md">
                 신청
               </Text>
@@ -93,7 +88,7 @@ const Report = () => (
               </Text>
             </Stack>
             <Stack align="center">
-              <Icon as={BsPersonCheck} />
+              <Icon as={BsPersonCheck} fontSize={"xl"} />
               <Text fontWeight="bold" fontSize="md">
                 선정
               </Text>
@@ -102,7 +97,7 @@ const Report = () => (
               </Text>
             </Stack>
             <Stack align="center">
-              <Icon as={BsCalendarCheck} />
+              <Icon as={BsCalendarCheck} fontSize={"xl"} />
               <Text fontWeight="bold" fontSize="md">
                 체험완료
               </Text>
@@ -111,7 +106,7 @@ const Report = () => (
               </Text>
             </Stack>
             <Stack align="center">
-              <Icon as={BsCheck2Square} />
+              <Icon as={BsCheck2Square} fontSize={"xl"} />
               <Text fontWeight="bold" fontSize="md">
                 리뷰완료
               </Text>
@@ -121,280 +116,130 @@ const Report = () => (
             </Stack>
           </HStack>
           <Box w="1px" h="40px" border={"1px solid #D9D9D9"} />
-          <Stack flex="1">
-            <HStack justify="space-around" spacing="10px">
+          <Stack flex="1" px={10}>
+            <HStack justify="space-between">
               <Text fontWeight="bold" fontSize="lg">
                 최근 30일 조회
               </Text>
               <HStack>
-                <Text fontWeight="bold" fontSize="md" color="#ECC94B">
+                <Text fontWeight="bold" color="#ECC94B">
                   6,133
                 </Text>
-                <Text fontWeight="regular" fontSize="md" color="#000000">
-                  회
-                </Text>
+                <Text>회</Text>
               </HStack>
             </HStack>
-            <HStack justify="space-around" spacing="10px">
+            <HStack justify="space-between">
               <Text fontWeight="bold" fontSize="lg">
                 총 조회 수
               </Text>
               <HStack>
-                <Text
-                  lineHeight="1.5"
-                  fontWeight="bold"
-                  fontSize="16px"
-                  color="#ECC94B"
-                >
+                <Text fontWeight="bold" color="#ECC94B">
                   208,998
                 </Text>
-                <Text
-                  lineHeight="1.5"
-                  fontWeight="regular"
-                  fontSize="16px"
-                  color="#000000"
-                >
-                  회
-                </Text>
+                <Text>회</Text>
               </HStack>
             </HStack>
           </Stack>
         </HStack>
-        <HStack h={"240px"}>
-          <Stack spacing="10px" flex="1" alignSelf="stretch">
-            <HStack fontWeight="bold" fontSize="16px">
+        <HStack spacing={5}>
+          <Stack spacing={3} flex="1">
+            <HStack fontWeight="bold">
               <Text>지난</Text>
               <Text color="#ECC94B">30일</Text>
               <Text>조회 그래프</Text>
             </HStack>
-            <Stack borderRadius="10px" border={"1px solid #D9D9D9"} flex="1" />
+            <Box borderRadius="xl" border={"1px solid #D9D9D9"} h={200} />
           </Stack>
-          <Stack spacing="10px" flex="1" alignSelf="stretch">
-            <HStack fontWeight="bold" fontSize="16px">
+          <Stack spacing={3} flex="1" alignSelf="stretch">
+            <HStack fontWeight="bold">
               <Text>전체</Text>
               <Text color="#ECC94B">총 조회</Text>
               <Text>그래프</Text>
             </HStack>
-            <Stack
-              borderRadius="10px"
-              border={"1px solid #D9D9D9"}
-              flex="1"
-              alignSelf="stretch"
-            />
+            <Box borderRadius="xl" border={"1px solid #D9D9D9"} h={200} />
           </Stack>
         </HStack>
         <Button
           size="lg"
           // colorScheme={colorScheme}
-          height="48px"
-          alignSelf="stretch"
+          height={12}
+          // alignSelf="stretch"
         >
           종합 상세 리포트 보기
         </Button>
       </Stack>
       {/* 네이버 노출 키워드 */}
       <Stack
-        borderRadius="10px"
+        borderRadius={"xl"}
         overflow="hidden"
         border={"1px solid #4FC671"}
-        height="449px"
-        background="white"
+        height={440}
+        bgColor="white"
         boxShadow="0px 4px 4px 0px rgba(0, 0, 0, 0.25)"
       >
-        <HStack
-          padding={"4px 10px"}
-          align="center"
-          spacing="10px"
-          background="#4FC671"
-        >
+        <HStack py={1} px={2} background="#4FC671">
           <Text fontWeight="bold" fontSize="xl" color="white">
             네이버 노출 키워드
           </Text>
         </HStack>
-        <HStack padding="10px" spacing="10px" flex="1">
-          <Stack paddingX="20px" spacing="25px" flex="1" alignSelf="stretch">
-            <Text
-              lineHeight="1.5"
-              fontWeight="bold"
-              fontSize="18px"
-              color="#000000"
-            >
-              네이버 키워드 노출 순위
-            </Text>
-            <Stack align="center" spacing="12px" flex="1" alignSelf="stretch">
-              <HStack
-                justify="space-between"
-                align="center"
-                alignSelf="stretch"
-              >
-                <HStack justify="flex-start" align="center" spacing="10px">
-                  <Text
-                    lineHeight="1.5"
-                    fontWeight="bold"
-                    fontSize="16px"
-                    color="#000000"
-                  >
-                    광교한우
-                  </Text>
-                  <Circle size="20px" background="#D96083" />
+        <HStack p={2} spacing={2} flex="1">
+          <Stack
+            px={5}
+            spacing={6}
+            flex="1"
+            alignSelf="stretch"
+            fontWeight="bold"
+          >
+            <Text fontSize={"lg"}>네이버 키워드 노출 순위</Text>
+            <Stack spacing={3} flex="1">
+              <HStack justify="space-between" align="center">
+                <HStack spacing={3}>
+                  <Text>광교한우</Text>
+                  <Circle size={5} background="#D96083" />
                 </HStack>
-                <HStack gap={"0px"}>
-                  <Text
-                    lineHeight="1.5"
-                    fontWeight="bold"
-                    fontSize="16px"
-                    color="#ECC94B"
-                  >
-                    186
-                  </Text>
-                  <Text
-                    lineHeight="1.5"
-                    fontWeight="bold"
-                    fontSize="16px"
-                    color="#000000"
-                  >
-                    건
-                  </Text>
+                <HStack spacing={0}>
+                  <Text color="#ECC94B">186</Text>
+                  <Text>건</Text>
                 </HStack>
               </HStack>
-              <HStack
-                justify="space-between"
-                align="center"
-                alignSelf="stretch"
-              >
-                <HStack justify="flex-start" align="center" spacing="10px">
-                  <Text
-                    lineHeight="1.5"
-                    fontWeight="bold"
-                    fontSize="16px"
-                    color="#000000"
-                  >
-                    광교룸 식당
-                  </Text>
-                  <Circle size="20px" background="#5082D0" />
+              <HStack justify="space-between" align="center">
+                <HStack spacing={3}>
+                  <Text>광교룸 식당</Text>
+                  <Circle size={5} background="#5082D0" />
                 </HStack>
-                <HStack gap={"0px"}>
-                  <Text
-                    lineHeight="1.5"
-                    fontWeight="bold"
-                    fontSize="16px"
-                    color="#ECC94B"
-                  >
-                    186
-                  </Text>
-                  <Text
-                    lineHeight="1.5"
-                    fontWeight="bold"
-                    fontSize="16px"
-                    color="#000000"
-                  >
-                    건
-                  </Text>
+                <HStack spacing={0}>
+                  <Text color="#ECC94B">186</Text>
+                  <Text>건</Text>
                 </HStack>
               </HStack>
-              <HStack
-                justify="space-between"
-                align="center"
-                alignSelf="stretch"
-              >
-                <HStack justify="flex-start" align="center" spacing="10px">
-                  <Text
-                    lineHeight="1.5"
-                    fontWeight="bold"
-                    fontSize="16px"
-                    color="#000000"
-                  >
-                    광교 한우
-                  </Text>
-                  <Circle size="20px" background="#66DD7D" />
+              <HStack justify="space-between" align="center">
+                <HStack spacing={3}>
+                  <Text>광교 한우</Text>
+                  <Circle size={5} background="#66DD7D" />
                 </HStack>
-                <HStack gap={"0px"}>
-                  <Text
-                    lineHeight="1.5"
-                    fontWeight="bold"
-                    fontSize="16px"
-                    color="#ECC94B"
-                  >
-                    186
-                  </Text>
-                  <Text
-                    lineHeight="1.5"
-                    fontWeight="bold"
-                    fontSize="16px"
-                    color="#000000"
-                  >
-                    건
-                  </Text>
+                <HStack spacing={0}>
+                  <Text color="#ECC94B">186</Text>
+                  <Text>건</Text>
                 </HStack>
               </HStack>
-              <HStack
-                justify="space-between"
-                align="center"
-                alignSelf="stretch"
-              >
-                <HStack justify="flex-start" align="center" spacing="10px">
-                  <Text
-                    lineHeight="1.5"
-                    fontWeight="bold"
-                    fontSize="16px"
-                    color="#000000"
-                  >
-                    수원광교맛집
-                  </Text>
-                  <Circle size="20px" background="#E5D279" />
+              <HStack justify="space-between" align="center">
+                <HStack spacing={3}>
+                  <Text>수원광교맛집</Text>
+                  <Circle size={5} background="#E5D279" />
                 </HStack>
-                <HStack gap={"0px"}>
-                  <Text
-                    lineHeight="1.5"
-                    fontWeight="bold"
-                    fontSize="16px"
-                    color="#ECC94B"
-                  >
-                    186
-                  </Text>
-                  <Text
-                    lineHeight="1.5"
-                    fontWeight="bold"
-                    fontSize="16px"
-                    color="#000000"
-                  >
-                    건
-                  </Text>
+                <HStack spacing={0}>
+                  <Text color="#ECC94B">186</Text>
+                  <Text>건</Text>
                 </HStack>
               </HStack>
-              <HStack
-                justify="space-between"
-                align="center"
-                alignSelf="stretch"
-              >
-                <HStack justify="flex-start" align="center" spacing="10px">
-                  <Text
-                    lineHeight="1.5"
-                    fontWeight="bold"
-                    fontSize="16px"
-                    color="#000000"
-                  >
-                    수원광교한우맛집
-                  </Text>
-                  <Circle size="20px" background="#88CEC3" />
+              <HStack justify="space-between" align="center">
+                <HStack spacing={3}>
+                  <Text>수원광교한우맛집</Text>
+                  <Circle size={5} background="#88CEC3" />
                 </HStack>
-                <HStack gap={"0px"}>
-                  <Text
-                    lineHeight="1.5"
-                    fontWeight="bold"
-                    fontSize="16px"
-                    color="#ECC94B"
-                  >
-                    186
-                  </Text>
-                  <Text
-                    lineHeight="1.5"
-                    fontWeight="bold"
-                    fontSize="16px"
-                    color="#000000"
-                  >
-                    건
-                  </Text>
+                <HStack spacing={0}>
+                  <Text color="#ECC94B">186</Text>
+                  <Text>건</Text>
                 </HStack>
               </HStack>
             </Stack>
@@ -407,51 +252,160 @@ const Report = () => (
         </HStack>
       </Stack>
     </Stack>
-    <Stack
-      paddingX="40px"
-      paddingTop="30px"
-      paddingBottom="80px"
-      spacing="30px"
-      w="100%"
-      background="white"
-    >
+  );
+};
+
+const ReportCampain = () => {
+  const reportCampains = [
+    {
+      id: 1,
+      title: "OOO 체험단",
+      startDate: "2024.04.01",
+      endDate: "2024.05.01",
+      state: "신청",
+      state1: "마감",
+      campains: "123",
+      campains1: "56",
+      tester: "45",
+      campains2: "36",
+      LastThirtyDaysView: "5653",
+      totalView: "32103",
+    },
+    {
+      id: 2,
+      title: "OOO 체험단",
+      startDate: "2024.04.01",
+      endDate: "2024.05.01",
+      state: "신청",
+      state1: "마감",
+      campains: "123",
+      campains1: "56",
+      tester: "45",
+      campains2: "36",
+      LastThirtyDaysView: "5653",
+      totalView: "32103",
+    },
+    {
+      id: 3,
+      title: "OOO 체험단",
+      startDate: "2024.04.01",
+      endDate: "2024.05.01",
+      state: "신청",
+      state1: "마감",
+      campains: "123",
+      campains1: "56",
+      tester: "45",
+      campains2: "36",
+      LastThirtyDaysView: "5653",
+      totalView: "32103",
+    },
+    {
+      id: 4,
+      title: "OOO 체험단",
+      startDate: "2024.04.01",
+      endDate: "2024.05.01",
+      state: "신청",
+      state1: "마감",
+      campains: "123",
+      campains1: "56",
+      tester: "45",
+      campains2: "36",
+      LastThirtyDaysView: "5653",
+      totalView: "32103",
+    },
+    {
+      id: 5,
+      title: "OOO 체험단",
+      startDate: "2024.04.01",
+      endDate: "2024.05.01",
+      state: "신청",
+      state1: "마감",
+      campains: "123",
+      campains1: "56",
+      tester: "45",
+      campains2: "36",
+      LastThirtyDaysView: "5653",
+      totalView: "32103",
+    },
+    {
+      id: 6,
+      title: "OOO 체험단",
+      startDate: "2024.04.01",
+      endDate: "2024.05.01",
+      state: "신청",
+      state1: "마감",
+      campains: "123",
+      campains1: "56",
+      tester: "45",
+      campains2: "36",
+      LastThirtyDaysView: "5653",
+      totalView: "32103",
+    },
+    {
+      id: 7,
+      title: "OOO 체험단",
+      startDate: "2024.04.01",
+      endDate: "2024.05.01",
+      state: "신청",
+      state1: "마감",
+      campains: "123",
+      campains1: "56",
+      tester: "45",
+      campains2: "36",
+      LastThirtyDaysView: "5653",
+      totalView: "32103",
+    },
+    {
+      id: 8,
+      title: "OOO 체험단",
+      startDate: "2024.04.01",
+      endDate: "2024.05.01",
+      state: "신청",
+      state1: "마감",
+      campains: "123",
+      campains1: "56",
+      tester: "45",
+      campains2: "36",
+      LastThirtyDaysView: "5653",
+      totalView: "32103",
+    },
+  ];
+  return (
+    <Stack w={"100%"} px={10} pt={8} pb={20} spacing={8} background="white">
       <TableContainer>
         <Table variant="simple">
           <Thead>
-            <Stack marginBottom="20px">
+            <Stack mb={4}>
               <Text fontWeight="bold" fontSize="3xl">
                 진행별 캠페인
               </Text>
-              <Text
-                fontWeight="medium"
-                fontSize="md"
-                color="rgba(0, 0, 0, 0.5)"
-              >
+              <Text fontWeight="medium" color="rgba(0, 0, 0, 0.5)">
                 각 차수별로 자세한 내용을 들어가 볼 수 있습니다.
               </Text>
             </Stack>
           </Thead>
           <Tbody borderY={"1px solid black"}>
             <Tr>
-              <Td>
-                <HStack>
+              <Td w={"50%"}>
+                <HStack spacing={4}>
                   <Stack
-                    borderRadius="10px"
-                    width="64px"
-                    height="64px"
+                    borderRadius="xl"
+                    width={16}
+                    height={16}
                     background="#203E59"
                     justify="center"
                   >
-                    <Stack align="center" spacing={"0px"} color="white">
-                      <Text fontWeight="bold" fontSize="xl">
-                        전체
-                      </Text>
-                      <Text fontWeight="medium" fontSize="sm">
-                        종합
-                      </Text>
+                    <Stack
+                      align="center"
+                      spacing={"0px"}
+                      color="white"
+                      fontWeight="bold"
+                    >
+                      <Text fontSize="xl">전체</Text>
+                      <Text>종합</Text>
                     </Stack>
                   </Stack>
-                  <Stack justify="center" spacing="4px">
+                  <Stack justify="center" spacing={1}>
                     <Text fontWeight="bold" fontSize="xl">
                       전체 종합지수
                     </Text>
@@ -460,1062 +414,191 @@ const Report = () => (
                       fontSize="sm"
                       color="rgba(0, 0, 0, 0.5)"
                     >
-                      2023.05.25~2024.01.31
+                      2024.04.01~2024.05.01
                     </Text>
                   </Stack>
                 </HStack>
               </Td>
               <Td>
-                <HStack flex="1" justify="flex-end" spacing="30px">
-                  <HStack w="350px" justify="space-around">
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        신청자
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">2,169</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        선정자
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">67</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        사용완료
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">54</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        리뷰완료
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">54</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                  </HStack>
-                  <HStack w="250px" justify="space-around">
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        최근 30일 조회
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">6,133</Text>
-                        <Text>회</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        총 조회 수
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">208,998</Text>
-                        <Text>회</Text>
-                      </HStack>
-                    </Stack>
-                  </HStack>
+                <HStack justify={"space-between"} fontWeight="bold">
+                  <Stack align="center" spacing={2}>
+                    <Text fontSize="md" color="rgba(0, 0, 0, 0.6)">
+                      신청자
+                    </Text>
+                    <HStack spacing={0} fontSize="xl">
+                      <Text color="#ECC94B">2,169</Text>
+                      <Text>명</Text>
+                    </HStack>
+                  </Stack>
+                  <Stack align="center" spacing={2}>
+                    <Text fontSize="md" color="rgba(0, 0, 0, 0.6)">
+                      선정자
+                    </Text>
+                    <HStack spacing={0} fontSize="xl">
+                      <Text color="#ECC94B">67</Text>
+                      <Text>명</Text>
+                    </HStack>
+                  </Stack>
+                  <Stack align="center" spacing={2}>
+                    <Text fontSize="md" color="rgba(0, 0, 0, 0.6)">
+                      사용완료
+                    </Text>
+                    <HStack spacing={0} fontSize="xl">
+                      <Text color="#ECC94B">54</Text>
+                      <Text>명</Text>
+                    </HStack>
+                  </Stack>
+                  <Stack align="center" spacing={2}>
+                    <Text fontSize="md" color="rgba(0, 0, 0, 0.6)">
+                      리뷰완료
+                    </Text>
+                    <HStack spacing={0} fontSize="xl">
+                      <Text color="#ECC94B">54</Text>
+                      <Text>명</Text>
+                    </HStack>
+                  </Stack>
+                </HStack>
+              </Td>
+              <Td>
+                <HStack justify={"flex-end"} spacing={6} fontWeight="bold">
+                  <Stack align="center" spacing={2}>
+                    <Text fontSize="md" color="rgba(0, 0, 0, 0.6)">
+                      최근 30일 조회
+                    </Text>
+                    <HStack spacing={0} fontSize="xl">
+                      <Text color="#ECC94B">6,133</Text>
+                      <Text>회</Text>
+                    </HStack>
+                  </Stack>
+                  <Stack align="center" spacing={2}>
+                    <Text fontSize="md" color="rgba(0, 0, 0, 0.6)">
+                      총 조회 수
+                    </Text>
+                    <HStack spacing={0} fontSize="xl">
+                      <Text color="#ECC94B">208,998</Text>
+                      <Text>회</Text>
+                    </HStack>
+                  </Stack>
                 </HStack>
               </Td>
             </Tr>
-            <Tr>
-              <Td>
-                <HStack>
-                  <Stack
-                    borderRadius="10px"
-                    width="64px"
-                    height="64px"
-                    background="linear-gradient(270deg, #228d58 0%, #4585bf 100%)"
-                    justify="center"
-                  >
-                    <Stack align="center" spacing={"0px"} color="white">
-                      <Text fontWeight="bold" fontSize="xl">
-                        8차
-                      </Text>
-                      <Text fontWeight="medium" fontSize="sm">
-                        마감
-                      </Text>
-                    </Stack>
-                  </Stack>
-                  <Stack justify="center" spacing="4px">
-                    <Text fontWeight="bold" fontSize="xl">
-                      [경기 수원] 한우갑 광교점
-                    </Text>
-                    <Text
-                      fontWeight="bold"
-                      fontSize="sm"
-                      color="rgba(0, 0, 0, 0.5)"
+            {reportCampains.map((item) => (
+              <Tr>
+                <Td w={"50%"}>
+                  <HStack spacing={4}>
+                    <Stack
+                      borderRadius="xl"
+                      width={16}
+                      height={16}
+                      background="linear-gradient(270deg, #228d58 0%, #4585bf 100%)"
+                      justify="center"
                     >
-                      2023.01.09~2024.01.31
-                    </Text>
-                  </Stack>
-                </HStack>
-              </Td>
-              <Td>
-                <HStack flex="1" justify="flex-end" spacing="30px">
-                  <HStack w="350px" justify="space-around">
-                    <Stack align="center" spacing="0px">
-                      <Text
+                      <Stack
+                        align="center"
+                        spacing={"0px"}
+                        color="white"
                         fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
                       >
-                        신청자
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">117</Text>
-                        <Text>명</Text>
-                      </HStack>
+                        <Text fontSize="xl">{item.state}</Text>
+                        <Text>{item.state1}</Text>
+                      </Stack>
                     </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        선정자
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">18</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        사용완료
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">17</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        리뷰완료
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">17</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                  </HStack>
-                  <HStack w="250px" justify="space-around">
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        최근 30일 조회
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">3,061</Text>
-                        <Text>회</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        총 조회 수
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">11,379</Text>
-                        <Text>회</Text>
-                      </HStack>
-                    </Stack>
-                  </HStack>
-                </HStack>
-              </Td>
-            </Tr>
-            <Tr>
-              <Td>
-                <HStack>
-                  <Stack
-                    borderRadius="10px"
-                    width="64px"
-                    height="64px"
-                    background="linear-gradient(270deg, #228d58 0%, #4585bf 100%)"
-                    justify="center"
-                  >
-                    <Stack align="center" spacing={"0px"} color="white">
+                    <Stack justify="center" spacing={1}>
                       <Text fontWeight="bold" fontSize="xl">
-                        7차
+                        {item.title}
                       </Text>
-                      <Text fontWeight="medium" fontSize="sm">
-                        마감
-                      </Text>
-                    </Stack>
-                  </Stack>
-                  <Stack justify="center" spacing="4px">
-                    <Text fontWeight="bold" fontSize="xl">
-                      [경기 수원] 한우갑 광교점
-                    </Text>
-                    <Text
-                      fontWeight="bold"
-                      fontSize="sm"
-                      color="rgba(0, 0, 0, 0.5)"
-                    >
-                      2023.01.09~2024.01.31
-                    </Text>
-                  </Stack>
-                </HStack>
-              </Td>
-              <Td>
-                <HStack flex="1" justify="flex-end" spacing="30px">
-                  <HStack w="350px" justify="space-around">
-                    <Stack align="center" spacing="0px">
                       <Text
                         fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
+                        fontSize="sm"
+                        color="rgba(0, 0, 0, 0.5)"
                       >
+                        {item.startDate}~{item.endDate}
+                      </Text>
+                    </Stack>
+                  </HStack>
+                </Td>
+                <Td>
+                  <HStack justify={"space-between"} fontWeight="bold">
+                    <Stack align="center" spacing={2}>
+                      <Text fontSize="md" color="rgba(0, 0, 0, 0.6)">
                         신청자
                       </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">117</Text>
+                      <HStack spacing={0} fontSize="xl">
+                        <Text color="#ECC94B">{item.campains}</Text>
                         <Text>명</Text>
                       </HStack>
                     </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
+                    <Stack align="center" spacing={2}>
+                      <Text fontSize="md" color="rgba(0, 0, 0, 0.6)">
                         선정자
                       </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">18</Text>
+                      <HStack spacing={0} fontSize="xl">
+                        <Text color="#ECC94B">{item.campains1}</Text>
                         <Text>명</Text>
                       </HStack>
                     </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
+                    <Stack align="center" spacing={2}>
+                      <Text fontSize="md" color="rgba(0, 0, 0, 0.6)">
                         사용완료
                       </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">17</Text>
+                      <HStack spacing={0} fontSize="xl">
+                        <Text color="#ECC94B">{item.tester}</Text>
                         <Text>명</Text>
                       </HStack>
                     </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
+                    <Stack align="center" spacing={2}>
+                      <Text fontSize="md" color="rgba(0, 0, 0, 0.6)">
                         리뷰완료
                       </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">17</Text>
+                      <HStack spacing={0} fontSize="xl">
+                        <Text color="#ECC94B">{item.campains2}</Text>
                         <Text>명</Text>
                       </HStack>
                     </Stack>
                   </HStack>
-                  <HStack w="250px" justify="space-around">
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
+                </Td>
+                <Td>
+                  <HStack justify={"flex-end"} spacing={6} fontWeight="bold">
+                    <Stack align="center" spacing={2}>
+                      <Text fontSize="md" color="rgba(0, 0, 0, 0.6)">
                         최근 30일 조회
                       </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">3,061</Text>
+                      <HStack spacing={0} fontSize="xl">
+                        <Text color="#ECC94B">
+                          {item.LastThirtyDaysView.toString().replace(
+                            /\B(?=(\d{3})+(?!\d))/g,
+                            ","
+                          )}
+                        </Text>
                         <Text>회</Text>
                       </HStack>
                     </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
+                    <Stack align="center" spacing={2}>
+                      <Text fontSize="md" color="rgba(0, 0, 0, 0.6)">
                         총 조회 수
                       </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">11,379</Text>
+                      <HStack spacing={0} fontSize="xl">
+                        <Text color="#ECC94B">
+                          {item.totalView
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        </Text>
                         <Text>회</Text>
                       </HStack>
                     </Stack>
                   </HStack>
-                </HStack>
-              </Td>
-            </Tr>
-            <Tr>
-              <Td>
-                <HStack>
-                  <Stack
-                    borderRadius="10px"
-                    width="64px"
-                    height="64px"
-                    background="linear-gradient(270deg, #228d58 0%, #4585bf 100%)"
-                    justify="center"
-                  >
-                    <Stack align="center" spacing={"0px"} color="white">
-                      <Text fontWeight="bold" fontSize="xl">
-                        6차
-                      </Text>
-                      <Text fontWeight="medium" fontSize="sm">
-                        마감
-                      </Text>
-                    </Stack>
-                  </Stack>
-                  <Stack justify="center" spacing="4px">
-                    <Text fontWeight="bold" fontSize="xl">
-                      [경기 수원] 한우갑 광교점
-                    </Text>
-                    <Text
-                      fontWeight="bold"
-                      fontSize="sm"
-                      color="rgba(0, 0, 0, 0.5)"
-                    >
-                      2023.01.09~2024.01.31
-                    </Text>
-                  </Stack>
-                </HStack>
-              </Td>
-              <Td>
-                <HStack flex="1" justify="flex-end" spacing="30px">
-                  <HStack w="350px" justify="space-around">
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        신청자
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">117</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        선정자
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">18</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        사용완료
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">17</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        리뷰완료
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">17</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                  </HStack>
-                  <HStack w="250px" justify="space-around">
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        최근 30일 조회
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">3,061</Text>
-                        <Text>회</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        총 조회 수
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">11,379</Text>
-                        <Text>회</Text>
-                      </HStack>
-                    </Stack>
-                  </HStack>
-                </HStack>
-              </Td>
-            </Tr>
-            <Tr>
-              <Td>
-                <HStack>
-                  <Stack
-                    borderRadius="10px"
-                    width="64px"
-                    height="64px"
-                    background="linear-gradient(270deg, #228d58 0%, #4585bf 100%)"
-                    justify="center"
-                  >
-                    <Stack align="center" spacing={"0px"} color="white">
-                      <Text fontWeight="bold" fontSize="xl">
-                        5차
-                      </Text>
-                      <Text fontWeight="medium" fontSize="sm">
-                        마감
-                      </Text>
-                    </Stack>
-                  </Stack>
-                  <Stack justify="center" spacing="4px">
-                    <Text fontWeight="bold" fontSize="xl">
-                      [경기 수원] 한우갑 광교점
-                    </Text>
-                    <Text
-                      fontWeight="bold"
-                      fontSize="sm"
-                      color="rgba(0, 0, 0, 0.5)"
-                    >
-                      2023.01.09~2024.01.31
-                    </Text>
-                  </Stack>
-                </HStack>
-              </Td>
-              <Td>
-                <HStack flex="1" justify="flex-end" spacing="30px">
-                  <HStack w="350px" justify="space-around">
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        신청자
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">117</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        선정자
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">18</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        사용완료
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">17</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        리뷰완료
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">17</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                  </HStack>
-                  <HStack w="250px" justify="space-around">
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        최근 30일 조회
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">3,061</Text>
-                        <Text>회</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        총 조회 수
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">11,379</Text>
-                        <Text>회</Text>
-                      </HStack>
-                    </Stack>
-                  </HStack>
-                </HStack>
-              </Td>
-            </Tr>
-            <Tr>
-              <Td>
-                <HStack>
-                  <Stack
-                    borderRadius="10px"
-                    width="64px"
-                    height="64px"
-                    background="linear-gradient(270deg, #228d58 0%, #4585bf 100%)"
-                    justify="center"
-                  >
-                    <Stack align="center" spacing={"0px"} color="white">
-                      <Text fontWeight="bold" fontSize="xl">
-                        4차
-                      </Text>
-                      <Text fontWeight="medium" fontSize="sm">
-                        마감
-                      </Text>
-                    </Stack>
-                  </Stack>
-                  <Stack justify="center" spacing="4px">
-                    <Text fontWeight="bold" fontSize="xl">
-                      [경기 수원] 한우갑 광교점
-                    </Text>
-                    <Text
-                      fontWeight="bold"
-                      fontSize="sm"
-                      color="rgba(0, 0, 0, 0.5)"
-                    >
-                      2023.01.09~2024.01.31
-                    </Text>
-                  </Stack>
-                </HStack>
-              </Td>
-              <Td>
-                <HStack flex="1" justify="flex-end" spacing="30px">
-                  <HStack w="350px" justify="space-around">
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        신청자
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">117</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        선정자
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">18</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        사용완료
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">17</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        리뷰완료
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">17</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                  </HStack>
-                  <HStack w="250px" justify="space-around">
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        최근 30일 조회
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">3,061</Text>
-                        <Text>회</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        총 조회 수
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">11,379</Text>
-                        <Text>회</Text>
-                      </HStack>
-                    </Stack>
-                  </HStack>
-                </HStack>
-              </Td>
-            </Tr>
-            <Tr>
-              <Td>
-                <HStack>
-                  <Stack
-                    borderRadius="10px"
-                    width="64px"
-                    height="64px"
-                    background="linear-gradient(270deg, #228d58 0%, #4585bf 100%)"
-                    justify="center"
-                  >
-                    <Stack align="center" spacing={"0px"} color="white">
-                      <Text fontWeight="bold" fontSize="xl">
-                        3차
-                      </Text>
-                      <Text fontWeight="medium" fontSize="sm">
-                        마감
-                      </Text>
-                    </Stack>
-                  </Stack>
-                  <Stack justify="center" spacing="4px">
-                    <Text fontWeight="bold" fontSize="xl">
-                      [경기 수원] 한우갑 광교점
-                    </Text>
-                    <Text
-                      fontWeight="bold"
-                      fontSize="sm"
-                      color="rgba(0, 0, 0, 0.5)"
-                    >
-                      2023.01.09~2024.01.31
-                    </Text>
-                  </Stack>
-                </HStack>
-              </Td>
-              <Td>
-                <HStack flex="1" justify="flex-end" spacing="30px">
-                  <HStack w="350px" justify="space-around">
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        신청자
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">117</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        선정자
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">18</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        사용완료
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">17</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        리뷰완료
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">17</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                  </HStack>
-                  <HStack w="250px" justify="space-around">
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        최근 30일 조회
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">3,061</Text>
-                        <Text>회</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        총 조회 수
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">11,379</Text>
-                        <Text>회</Text>
-                      </HStack>
-                    </Stack>
-                  </HStack>
-                </HStack>
-              </Td>
-            </Tr>
-            <Tr>
-              <Td>
-                <HStack>
-                  <Stack
-                    borderRadius="10px"
-                    width="64px"
-                    height="64px"
-                    background="linear-gradient(270deg, #228d58 0%, #4585bf 100%)"
-                    justify="center"
-                  >
-                    <Stack align="center" spacing={"0px"} color="white">
-                      <Text fontWeight="bold" fontSize="xl">
-                        2차
-                      </Text>
-                      <Text fontWeight="medium" fontSize="sm">
-                        마감
-                      </Text>
-                    </Stack>
-                  </Stack>
-                  <Stack justify="center" spacing="4px">
-                    <Text fontWeight="bold" fontSize="xl">
-                      [경기 수원] 한우갑 광교점
-                    </Text>
-                    <Text
-                      fontWeight="bold"
-                      fontSize="sm"
-                      color="rgba(0, 0, 0, 0.5)"
-                    >
-                      2023.01.09~2024.01.31
-                    </Text>
-                  </Stack>
-                </HStack>
-              </Td>
-              <Td>
-                <HStack flex="1" justify="flex-end" spacing="30px">
-                  <HStack w="350px" justify="space-around">
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        신청자
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">117</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        선정자
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">18</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        사용완료
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">17</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        리뷰완료
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">17</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                  </HStack>
-                  <HStack w="250px" justify="space-around">
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        최근 30일 조회
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">3,061</Text>
-                        <Text>회</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        총 조회 수
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">11,379</Text>
-                        <Text>회</Text>
-                      </HStack>
-                    </Stack>
-                  </HStack>
-                </HStack>
-              </Td>
-            </Tr>
-            <Tr>
-              <Td>
-                <HStack>
-                  <Stack
-                    borderRadius="10px"
-                    width="64px"
-                    height="64px"
-                    background="linear-gradient(270deg, #228d58 0%, #4585bf 100%)"
-                    justify="center"
-                  >
-                    <Stack align="center" spacing={"0px"} color="white">
-                      <Text fontWeight="bold" fontSize="xl">
-                        1차
-                      </Text>
-                      <Text fontWeight="medium" fontSize="sm">
-                        마감
-                      </Text>
-                    </Stack>
-                  </Stack>
-                  <Stack justify="center" spacing="4px">
-                    <Text fontWeight="bold" fontSize="xl">
-                      [경기 수원] 한우갑 광교점
-                    </Text>
-                    <Text
-                      fontWeight="bold"
-                      fontSize="sm"
-                      color="rgba(0, 0, 0, 0.5)"
-                    >
-                      2023.01.09~2024.01.31
-                    </Text>
-                  </Stack>
-                </HStack>
-              </Td>
-              <Td>
-                <HStack flex="1" justify="flex-end" spacing="30px">
-                  <HStack w="350px" justify="space-around">
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        신청자
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">117</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        선정자
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">18</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        사용완료
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">17</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        리뷰완료
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">17</Text>
-                        <Text>명</Text>
-                      </HStack>
-                    </Stack>
-                  </HStack>
-                  <HStack w="250px" justify="space-around">
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        최근 30일 조회
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">3,061</Text>
-                        <Text>회</Text>
-                      </HStack>
-                    </Stack>
-                    <Stack align="center" spacing="0px">
-                      <Text
-                        fontWeight="bold"
-                        fontSize="md"
-                        color="rgba(0, 0, 0, 0.6)"
-                      >
-                        총 조회 수
-                      </Text>
-                      <HStack spacing="0px" fontWeight="bold" fontSize="xl">
-                        <Text color="#ECC94B">11,379</Text>
-                        <Text>회</Text>
-                      </HStack>
-                    </Stack>
-                  </HStack>
-                </HStack>
-              </Td>
-            </Tr>
+                </Td>
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </TableContainer>
     </Stack>
+  );
+};
+
+const ReportNotification = () => {
+  return (
     <Stack
       padding="30px"
       justify="flex-start"
@@ -1715,117 +798,5 @@ const Report = () => (
         </AccordionItem>
       </Accordion>
     </Stack>
-    <Stack
-      paddingX="100px"
-      paddingY="50px"
-      justify="space-between"
-      align="flex-start"
-      spacing="10px"
-      overflow="hidden"
-      height="274px"
-      alignSelf="stretch"
-      background="#FFFFFF"
-    >
-      <Stack justify="flex-start" align="flex-start" spacing="36px">
-        <Stack justify="flex-start" align="flex-start" spacing="10px">
-          <Text fontWeight="bold" fontSize="40px" color="#000000">
-            댕댕뷰
-          </Text>
-          <Text fontWeight="medium" fontSize="12px" color="rgba(0, 0, 0, 0.5)">
-            2023 JHCompany, Inc. All rights reserved.
-          </Text>
-        </Stack>
-        <Stack justify="flex-start" align="flex-start" spacing="16px">
-          <Stack
-            direction="row"
-            justify="flex-start"
-            align="flex-start"
-            spacing="36px"
-          >
-            <HStack justify="flex-start" align="flex-start" spacing="16px">
-              <Text
-                fontWeight="medium"
-                fontSize="14px"
-                color="rgba(0, 0, 0, 0.5)"
-              >
-                상호명
-              </Text>
-              <Text fontWeight="medium" fontSize="14px" color="#000000">
-                제이에이치컴퍼니
-              </Text>
-            </HStack>
-            <HStack justify="flex-start" align="flex-start" spacing="16px">
-              <Text
-                fontWeight="medium"
-                fontSize="14px"
-                color="rgba(0, 0, 0, 0.5)"
-              >
-                대표
-              </Text>
-              <Text fontWeight="medium" fontSize="14px" color="#000000">
-                OOO
-              </Text>
-            </HStack>
-            <HStack justify="flex-start" align="flex-start" spacing="16px">
-              <Text
-                fontWeight="medium"
-                fontSize="14px"
-                color="rgba(0, 0, 0, 0.5)"
-              >
-                사업자등록번호
-              </Text>
-              <Text fontWeight="medium" fontSize="14px" color="#000000">
-                OOO-OO-OOOOO
-              </Text>
-            </HStack>
-          </Stack>
-          <Stack
-            direction="row"
-            justify="flex-start"
-            align="flex-end"
-            spacing="36px"
-          >
-            <HStack justify="flex-start" align="flex-start" spacing="16px">
-              <Text
-                fontWeight="medium"
-                fontSize="14px"
-                color="rgba(0, 0, 0, 0.5)"
-              >
-                전화
-              </Text>
-              <Text fontWeight="medium" fontSize="14px" color="#000000">
-                OOO-OOOO-OOOO
-              </Text>
-            </HStack>
-            <HStack justify="flex-start" align="flex-start" spacing="16px">
-              <Text
-                fontWeight="medium"
-                fontSize="14px"
-                color="rgba(0, 0, 0, 0.5)"
-              >
-                이메일
-              </Text>
-              <Text fontWeight="medium" fontSize="14px" color="#000000">
-                OOO@OOOOO
-              </Text>
-            </HStack>
-            <HStack justify="flex-start" align="flex-start" spacing="16px">
-              <Text
-                fontWeight="medium"
-                fontSize="14px"
-                color="rgba(0, 0, 0, 0.5)"
-              >
-                주소
-              </Text>
-              <Text fontWeight="medium" fontSize="14px" color="#000000">
-                OO시 OO구 OO로
-              </Text>
-            </HStack>
-          </Stack>
-        </Stack>
-      </Stack>
-    </Stack>
-  </Stack>
-);
-
-export default Report;
+  );
+};
