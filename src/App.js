@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import "./Component/Calendar.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -32,6 +32,7 @@ import Report from "./Pages/Report";
 
 function App() {
   const [userInfo, setUserInfo] = React.useState(null);
+  const [tab, setTab] = useState("0");
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -64,6 +65,7 @@ function App() {
       }
     }
   }, []);
+
   return (
     <>
       {window.location.pathname.includes("/admin") ? (
@@ -85,8 +87,10 @@ function App() {
         </BrowserRouter>
       ) : (
         <>
-          <BannerWithSignUp />
-          <NavbarWithCenteredSearch userInfo={userInfo} />
+          {/* <BannerWithSignUp /> */}
+          {!window.location.pathname.includes("report") && (
+            <NavbarWithCenteredSearch userInfo={userInfo} setTab={setTab} />
+          )}
           <BrowserRouter>
             <Routes>
               {/* <Route path="/banner" element={<Banner />} /> */}
@@ -101,7 +105,7 @@ function App() {
               <Route path="/filter" element={<Filter />} />
               <Route path="/cart" element={<Cart />} />
 
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Home tab={tab} />} />
               <Route path="/campain/*" element={<Detail />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUpForm />} />
@@ -109,6 +113,7 @@ function App() {
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/ads" element={<Ads />} />
+
               <Route path="/report/*" element={<Report />} />
             </Routes>
           </BrowserRouter>

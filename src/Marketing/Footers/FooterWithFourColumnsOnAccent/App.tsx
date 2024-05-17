@@ -5,6 +5,7 @@ import {
   Container,
   Divider,
   IconButton,
+  Image,
   SimpleGrid,
   Stack,
   Text,
@@ -33,7 +34,7 @@ export const FooterWithFourColumnsOnAccent = () => (
         spacing="8"
       >
         <Stack spacing={{ base: "6", md: "8" }} align="start">
-          <Logo />
+          <Image w={24} src={require("../../../Assets/img/LogoTextW.png")} />
           <Text color="fg.accent.muted">강아지 고양이 체험단 & 이벤트</Text>
           <Stack color="fg.accent.muted" fontSize={"sm"}>
             <Text>대표자 : 홍길동</Text>

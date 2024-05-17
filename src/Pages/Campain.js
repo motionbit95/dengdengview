@@ -30,7 +30,7 @@ function Campain({ ...props }) {
   const [uid, setUid] = useState(null);
 
   useEffect(() => {
-    console.log(props.tab);
+    console.log("최종적으로 여기서 바뀜", props.tab);
     if (props.tab) {
       // let property = "createdAt";
       // if (props.tab === 1) {
@@ -44,17 +44,17 @@ function Campain({ ...props }) {
         data.forEach((doc) => {
           console.log(doc);
           // doc.data() is never undefined for query doc snapshots
-          if (props.tab === 0) {
+          if (props.tab === "0") {
             list.push(doc);
 
             setCampains(list);
-          } else if (props.tab === 1) {
+          } else if (props.tab === "1") {
             if (doc.mozip.includes("3")) {
               list.push(doc);
 
               setCampains(list);
             }
-          } else if (props.tab === 2) {
+          } else if (props.tab === "2") {
             if (doc.mozip.includes("2")) {
               list.push(doc);
 

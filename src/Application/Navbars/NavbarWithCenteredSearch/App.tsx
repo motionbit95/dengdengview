@@ -7,6 +7,7 @@ import {
   HStack,
   Icon,
   IconButton,
+  Image,
   Input,
   InputGroup,
   InputLeftElement,
@@ -28,6 +29,9 @@ import { SidebarWithCollapsable } from "../../Sidebars/SidebarWithCollapsable/Ap
 
 export const NavbarWithCenteredSearch = ({ ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const handleTabChange = (value: string) => {
+    props.setTab(value);
+  };
   return (
     <Box
       as="section"
@@ -53,18 +57,44 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
               icon={<FiMenu />}
               display={{ base: "inline-flex", md: "none" }}
             />
-            <Box onClick={() => (window.location.href = "/")}>
-              <Logo />
-            </Box>
+            <HStack spacing={20}>
+              <Box onClick={() => (window.location.href = "/")}>
+                {/* <Logo /> */}
+                <Image
+                  w={20}
+                  src={require("../../../Assets/img/LogoText.png")}
+                />
+              </Box>
+              <ButtonGroup variant={"ghost"} colorScheme="gray" size={"lg"}>
+                <Button
+                  fontWeight={"bold"}
+                  onClick={() => handleTabChange("0")}
+                >
+                  전체 체험단
+                </Button>
+                <Button
+                  fontWeight={"bold"}
+                  onClick={() => handleTabChange("1")}
+                >
+                  인플루언서
+                </Button>
+                <Button
+                  fontWeight={"bold"}
+                  onClick={() => handleTabChange("2")}
+                >
+                  구매평 체험단
+                </Button>
+              </ButtonGroup>
+            </HStack>
             {/* <InputGroup
-            maxW={{ md: "sm", lg: "md" }}
-            display={{ base: "none", md: "inline-flex" }}
-          >
-            <InputLeftElement>
-              <Icon as={FiSearch} color="fg.muted" fontSize="lg" />
-            </InputLeftElement>
-            <Input placeholder="Search" />
-          </InputGroup> */}
+              maxW={{ md: "sm", lg: "md" }}
+              display={{ base: "none", md: "inline-flex" }}
+            >
+              <InputLeftElement>
+                <Icon as={FiSearch} color="fg.muted" fontSize="lg" />
+              </InputLeftElement>
+              <Input placeholder="Search" />
+            </InputGroup> */}
             <HStack spacing={{ base: "2", md: "4" }}>
               <ButtonGroup variant="tertiary" spacing="1">
                 {/* <IconButton

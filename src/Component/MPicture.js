@@ -2,14 +2,18 @@ import React, { useEffect, useState } from "react";
 import { getDocument, searchDoc } from "../Firebase/Database";
 import { where } from "firebase/firestore";
 import {
-  Avatar,
   Button,
-  Divider,
-  HStack,
   Image,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalOverlay,
   SimpleGrid,
   Stack,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { PageHeader2 } from "../Application/PageHeader/PageHeader2";
 import { BiComment, BiLink } from "react-icons/bi";
@@ -18,6 +22,9 @@ import { bucketAddress } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/_
 function Picture(props) {
   const [reviewList, setReviewList] = useState([]);
   const [totalPicture, setTotalPicture] = useState(0);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
+
   useEffect(() => {
     let cid = window.location.pathname.replaceAll("/admin/dashboard/", "");
     console.log(cid);
@@ -32,6 +39,13 @@ function Picture(props) {
       });
     });
   }, []);
+
+  const handleImageClick = (imageUrl) => {
+    // console.log("이미지링크 이건디 : ", imageUrl);
+    setSelectedImageUrl(imageUrl);
+    onOpen();
+  };
+
   return (
     <Stack>
       <PageHeader2
@@ -51,11 +65,22 @@ function Picture(props) {
                   alt=""
                   rounded={"lg"}
                   shadow={"md"}
+                  cursor={"pointer"}
                   src={
                     bucketAddress +
                     "/downloads%2F" +
                     encodeURIComponent(image.split("/").pop().split("?")[0]) +
                     "?alt=media"
+                  }
+                  onClick={() =>
+                    handleImageClick(
+                      bucketAddress +
+                        "/downloads%2F" +
+                        encodeURIComponent(
+                          image.split("/").pop().split("?")[0]
+                        ) +
+                        "?alt=media"
+                    )
                   }
                 />
               </>
@@ -63,6 +88,25 @@ function Picture(props) {
           </>
         ))}
       </SimpleGrid>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent h={"80vh"} borderRadius="2xl">
+          <ModalBody>
+            {selectedImageUrl && (
+              <Image
+                src={selectedImageUrl}
+                objectFit="contain"
+                w="full"
+                h="full"
+                alt=""
+              />
+            )}
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>닫기</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Stack>
   );
 }
