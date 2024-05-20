@@ -379,77 +379,82 @@ function Detail(props) {
             </TabPanels>
           </Tabs>
         </Stack>
-        <Box
-          w={"50%"}
-          pointerEvents={"none"}
-          display={{ base: "none", lg: "block" }}
-        >
-          <Stack>
-            <Calendar
-              formatDay={(locale, date) => moment(date).format("DD")} // 날'일' 제외하고 숫자만 보이도록 설정
-              value={[
-                campain?.startDate ? new Date(campain?.startDate) : new Date(),
-                campain?.endDate ? new Date(campain?.endDate) : new Date(),
-              ]}
-              selectRange={true}
-              navigationLabel={null}
-              nextLabel={null}
-              prevLabel={null}
-              prev2Label={null}
-              next2Label={null}
-              showNeighboringMonth={false} //  이전, 이후 달의 날짜는 보이지 않도록 설정
-              style={{
-                width: "100%",
-                marginX: "auto",
-                fontSize: "12px",
-              }}
-              calendarType="gregory"
-            />
+        <Stack w={"50%"}>
+          <Box
+            w={"100%"}
+            pointerEvents={"none"}
+            display={{ base: "none", md: "block" }}
+          >
             <Stack>
-              <Card>
-                <CardBody>
-                  <Stack>
-                    <HStack spacing={"6"}>
-                      <Text fontWeight={"bold"}>모집기간</Text>
-                      <HStack>
-                        <Text>{campain?.startDate}</Text>
-                        <Text>{"~"}</Text>
+              <Calendar
+                formatDay={(locale, date) => moment(date).format("DD")} // 날'일' 제외하고 숫자만 보이도록 설정
+                value={[
+                  campain?.startDate
+                    ? new Date(campain?.startDate)
+                    : new Date(),
+                  campain?.endDate ? new Date(campain?.endDate) : new Date(),
+                ]}
+                selectRange={true}
+                navigationLabel={null}
+                nextLabel={null}
+                prevLabel={null}
+                prev2Label={null}
+                next2Label={null}
+                showNeighboringMonth={false} //  이전, 이후 달의 날짜는 보이지 않도록 설정
+                style={{
+                  width: "100%",
+                  marginX: "auto",
+                  fontSize: "12px",
+                }}
+                calendarType="gregory"
+              />
+              <Stack>
+                <Card>
+                  <CardBody>
+                    <Stack>
+                      <HStack spacing={"6"}>
+                        <Text fontWeight={"bold"}>모집기간</Text>
+                        <HStack>
+                          <Text>{campain?.startDate}</Text>
+                          <Text>{"~"}</Text>
+                          <Text>{campain?.endDate}</Text>
+                        </HStack>
+                      </HStack>
+                      <HStack spacing={"6"}>
+                        <Text fontWeight={"bold"}>발표기간</Text>
                         <Text>{campain?.endDate}</Text>
                       </HStack>
-                    </HStack>
-                    <HStack spacing={"6"}>
-                      <Text fontWeight={"bold"}>발표기간</Text>
-                      <Text>{campain?.endDate}</Text>
-                    </HStack>
-                    <HStack spacing={"6"}>
-                      <Text fontWeight={"bold"}>리뷰기간</Text>
-                      <HStack>
-                        <Text>{campain?.reviewStart}</Text>
-                        <Text>{"~"}</Text>
-                        <Text>{campain?.reviewEnd}</Text>
+                      <HStack spacing={"6"}>
+                        <Text fontWeight={"bold"}>리뷰기간</Text>
+                        <HStack>
+                          <Text>{campain?.reviewStart}</Text>
+                          <Text>{"~"}</Text>
+                          <Text>{campain?.reviewEnd}</Text>
+                        </HStack>
                       </HStack>
-                    </HStack>
-                  </Stack>
-                </CardBody>
-              </Card>
-              <RegisterButton
-                cid={campain?.doc_id}
-                isDisabled={calculateDday(campain?.endDate) < 0}
-                onSubmit={(data) => {
-                  createDoc("Tester", {
-                    ...data,
-                    cid: window.location.pathname.split("/").pop(),
-                    step: 0,
-                  });
-                }}
-              >
-                {calculateDday(campain?.endDate) < 0
-                  ? "신청이 마감되었습니다."
-                  : campain?.type + " 체험 신청하기"}
-              </RegisterButton>
+                    </Stack>
+                  </CardBody>
+                </Card>
+              </Stack>
             </Stack>
-          </Stack>
-        </Box>
+          </Box>
+
+          <RegisterButton
+            cid={campain?.doc_id}
+            isDisabled={calculateDday(campain?.endDate) < 0}
+            onSubmit={(data) => {
+              createDoc("Tester", {
+                ...data,
+                cid: window.location.pathname.split("/").pop(),
+                step: 0,
+              });
+            }}
+          >
+            {calculateDday(campain?.endDate) < 0
+              ? "신청이 마감되었습니다."
+              : campain?.type + " 체험 신청하기"}
+          </RegisterButton>
+        </Stack>
       </HStack>
     </Container>
   );

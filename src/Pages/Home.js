@@ -29,23 +29,25 @@ import { Carousel } from "react-responsive-carousel";
 import { IoWarning } from "react-icons/io5";
 
 function Home(props) {
-  const tab = props.tab;
+  const [tab, setTab] = useState(props.tab);
   const isMobile = useBreakpointValue({ base: true, md: false });
 
-  // useEffect(() => {
-  //   console.log("필터링해줘!!!", tab);
-  // }, [tab]);
+  useEffect(() => {
+    console.log("필터링해줘!! " + props.tab);
+  }, [props.tab]);
 
   const [popupOpen, setPopupOpen] = useState(false);
   const [type, setType] = useState(0);
   return (
     <Stack>
-      {/* <Tabs1
-        onChange={(value) => {
-          console.log(value);
-          setTab(value);
-        }}
-      /> */}
+      {useBreakpointValue({ base: true, md: false }) && (
+        <Tabs1
+          onChange={(value) => {
+            console.log(value);
+            setTab(value.toString());
+          }}
+        />
+      )}
       <Box py={{ base: "4", md: "8" }}>
         {/* <Carousel
           duration={2000}
@@ -143,7 +145,7 @@ function Home(props) {
           </Flex>
         </Container>
       </Box>
-      <Campain tab={tab} />
+      <Campain tab={props.tab} />
       <PopupModal
         isOpen={popupOpen}
         onClose={() => setPopupOpen(false)}

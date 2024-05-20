@@ -284,25 +284,40 @@ export const Product = ({ ...props }) => {
                 </FormControl>
 
                 <FormControl>
-                  <FormLabel>
-                    <HStack w={"full"} justifyContent={"space-between"}>
-                      <Text>배너등록</Text>
-                      <IconButton
+                  <Stack>
+                    <FormLabel>
+                      <HStack w={"full"} justifyContent={"space-between"}>
+                        <Text>배너등록</Text>
+                        {/* <IconButton
                         variant={"ghost"}
                         icon={<BiCopy />}
                         aria-label="Clipboard"
                         onClick={() => copyToClipboard(textToCopy)}
-                      />
-                    </HStack>
-                  </FormLabel>
-                  <FormHelperText>
-                    아래 배너 링크를 블로그 글에 반드시 첨부해주세요.
-                  </FormHelperText>
-                  <Textarea
+                      /> */}
+                      </HStack>
+                    </FormLabel>
+                    <FormHelperText>
+                      아래 배너 링크를 블로그 글에 반드시 첨부해주세요.
+                    </FormHelperText>
+                    <Image
+                      border={"1px solid #d9d9d9"}
+                      p={2}
+                      src={
+                        "https://firebasestorage.googleapis.com/v0/b/dangdangview.appspot.com/o/dangdang_banner.png?alt=media"
+                      }
+                    />
+                    <Button
+                      w={"full"}
+                      onClick={() => copyToClipboard(textToCopy)}
+                    >
+                      링크 복사하기
+                    </Button>
+                  </Stack>
+                  {/* <Textarea
                     height={"120px"}
                     readOnly
                     value="https://firebasestorage.googleapis.com/v0/b/dangdangview.appspot.com/o/dangdang_banner.png?alt=media"
-                  />
+                  /> */}
                 </FormControl>
 
                 <Stack spacing={0} mt={4}>

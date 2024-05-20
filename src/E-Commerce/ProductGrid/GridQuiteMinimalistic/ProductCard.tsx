@@ -8,6 +8,7 @@ import {
   Stack,
   Tag,
   Text,
+  useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { Campain, calculateDday, campains } from "./_data";
@@ -22,6 +23,7 @@ interface Props {
 
 export const ProductCard = (props: Props) => {
   const { campain } = props;
+  const isMobile = useBreakpointValue({ base: true, md: false });
   const navigate = useNavigate();
   return (
     <Stack
@@ -45,42 +47,44 @@ export const ProductCard = (props: Props) => {
           #{campain.doc_id.substring(0, 8)}
         </Tag>
       </Box>
-      <HStack mt={-12} zIndex={999} px={{ base: "2", md: "4" }}>
+      <HStack zIndex={999}>
         {campain?.mozip?.includes("0") && (
           <Center
-            w={"48px"}
-            h={"48px"}
+            w={{ base: "36px", md: "48px" }}
+            h={{ base: "36px", md: "48px" }}
             rounded={"full"}
             bgColor={"#f5f5f5"}
             // border={"1px solid #d9d9d9"}
           >
-            <Image src={require("../../../Assets/img/style14.png")} />
+            <Image
+              src={require("../../../Assets/img/style14.png")}
+              w={{ base: "24px", md: "32px" }}
+            />
           </Center>
         )}
         {campain?.mozip?.includes("1") && (
           <Center
-            w={"48px"}
-            h={"48px"}
+            w={{ base: "36px", md: "48px" }}
+            h={{ base: "36px", md: "48px" }}
             rounded={"full"}
             bgColor={"#f5f5f5"}
             // border={"1px solid #d9d9d9"}
           >
             <Image
               src="https://cdn-icons-png.flaticon.com/512/174/174855.png"
-              w={"24px"}
-              h={"24px"}
+              w={{ base: "24px", md: "32px" }}
             />
           </Center>
         )}
         {campain?.mozip?.includes("2") && (
           <Center
-            w={"48px"}
-            h={"48px"}
+            w={{ base: "36px", md: "48px" }}
+            h={{ base: "36px", md: "48px" }}
             rounded={"full"}
             bgColor={"#f5f5f5"}
             // border={"1px solid #d9d9d9"}
           >
-            <FiShoppingBag color="orange" size={24} />
+            <FiShoppingBag color="orange" size={isMobile ? "24px" : "32px"} />
           </Center>
         )}
       </HStack>

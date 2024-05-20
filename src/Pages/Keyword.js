@@ -9,11 +9,13 @@ import {
   Tag,
   HStack,
   Box,
+  IconButton,
 } from "@chakra-ui/react";
 import { PageHeader2 } from "../Application/PageHeader/PageHeader2";
 import { getDocument } from "../Firebase/Database";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2"; // 원하는 차트 종류를 가져오세요.
+import { MdRestore } from "react-icons/md";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -25,7 +27,7 @@ function Keyword(props) {
     console.log(window.location.pathname.split("/").pop());
     let cid = window.location.pathname.split("/").pop();
 
-    getDocument("Campain", cid).then((data) => {
+    getDocument("Campain", cid).then(async (data) => {
       let keywordList = [];
       data.keywords.forEach((keyword) => {
         keywordList.push(keyword);
@@ -48,6 +50,7 @@ function Keyword(props) {
   useEffect(() => {
     // keywords.forEach((keyword) => {
     // console.log("keywords", keywords, keywords.join(","));
+    if (result.length > 0) return;
     fetch(
       process.env.REACT_APP_SERVER_URL +
         "/keywordstool?hintKeywords=" +
@@ -70,6 +73,10 @@ function Keyword(props) {
       });
     // });
   }, [keywords]);
+
+  useEffect(() => {
+    console.log(result);
+  }, [result]);
 
   const option = {
     responsive: true,
@@ -122,7 +129,15 @@ function Keyword(props) {
 
   return (
     <Stack>
-      <PageHeader2 title="유입키워드" />
+      <HStack alignItems={"flex-end"}>
+        <PageHeader2 title="유입키워드" />
+        <IconButton
+          mb={1}
+          onClick={() => window.location.reload()}
+          size={"sm"}
+          icon={<MdRestore />}
+        />
+      </HStack>
       <Stack mx={{ base: "4", md: "8" }}>
         {/* <Wrap>
           {keywords.map(
@@ -173,7 +188,7 @@ function Keyword(props) {
                 키워드 순위
               </Text>
               <Stack>
-                {rank.map((keyword, index) => (
+                {rank?.map((keyword, index) => (
                   <Text>
                     {index + 1}. {keyword.relKeyword}
                   </Text>
@@ -185,7 +200,7 @@ function Keyword(props) {
                 기타 유입키워드
               </Text>
               <Wrap>
-                {result.map(
+                {result?.map(
                   (keyword, index) =>
                     index < 30 && (
                       <Tag

@@ -13,6 +13,7 @@ import {
   TabList,
   Tabs,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import {
   Accordion,
@@ -66,30 +67,71 @@ function TotalView(props) {
   const [completeTester, setCompleteTester] = useState([]);
   const [reviewTester, setReviewTester] = useState([]);
   useEffect(() => {
-    if (window.location.pathname.replaceAll("/admin/dashboard", "")) {
-      let cid = window.location.pathname.replaceAll("/admin/dashboard/", "");
-      getDocument("Campain", cid).then((data) => {
-        setCampain(data);
-        searchDoc("Tester", where("cid", "==", cid)).then((data) => {
-          setTesters(data);
+    const cid = window.location.pathname.split("/").pop();
+    getDocument("Campain", cid).then((data) => {
+      setCampain(data);
+      searchDoc("Tester", where("cid", "==", cid)).then((data) => {
+        setTesters(data);
 
-          data.forEach((tester) => {
-            if (tester.step > 0) {
-              setSelectTester((prev) => [...prev, tester]);
-            }
+        data.forEach((tester) => {
+          if (tester.step > 0) {
+            setSelectTester((prev) => [...prev, tester]);
+          }
 
-            if (tester.step > 1) {
-              setCompleteTester((prev) => [...prev, tester]);
-            }
+          if (tester.step > 1) {
+            setCompleteTester((prev) => [...prev, tester]);
+          }
 
-            if (tester.step > 2) {
-              setReviewTester((prev) => [...prev, tester]);
-            }
-          });
+          if (tester.step > 2) {
+            setReviewTester((prev) => [...prev, tester]);
+          }
         });
       });
-    }
+    });
   }, []);
+
+  const toast = useToast();
+
+  function copyToClipboard(text) {
+    // 지원되는 브라우저에서는 navigator.clipboard.writeText()를 사용하여 클립보드에 텍스트를 복사합니다.
+    if (navigator.clipboard) {
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          toast({
+            title: "",
+            description: "텍스트가 클립보드에 복사되었습니다.",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+            position: "top-right",
+          });
+        })
+        .catch((err) => {
+          console.error(
+            "텍스트를 클립보드에 복사하는 동안 오류가 발생했습니다:",
+            err
+          );
+        });
+    } else {
+      // 지원되지 않는 브라우저에서는 document.execCommand()를 사용하여 텍스트를 클립보드에 복사합니다.
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      toast({
+        title: "",
+        description: "텍스트가 클립보드에 복사되었습니다.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+    }
+  }
+
   return (
     <>
       {!window.location.pathname.replaceAll("/admin/dashboard", "") ? (
@@ -100,12 +142,27 @@ function TotalView(props) {
         <Stack>
           <HStack width={"full"} justifyContent={"space-between"}>
             <PageHeader2 title="종합상세보기" discription={campain?.name} />
-            <Button
-              mx={4}
-              onClick={() => window.location.replace("/admin/dashboard")}
-            >
-              다른 캠페인 선택하기
-            </Button>
+            {window.location.pathname.includes("/admin") && (
+              <HStack mx={4}>
+                <Button
+                  onClick={() =>
+                    copyToClipboard(
+                      window.location.href.replaceAll(
+                        "/admin/dashboard",
+                        "/report"
+                      )
+                    )
+                  }
+                >
+                  링크 생성하기
+                </Button>
+                <Button
+                  onClick={() => window.location.replace("/admin/dashboard")}
+                >
+                  다른 캠페인 선택하기
+                </Button>
+              </HStack>
+            )}
           </HStack>
 
           <Accordion defaultIndex={[0, 1]} allowMultiple>
@@ -300,9 +357,16 @@ function TotalView(props) {
 }
 
 export function LineChart() {
-  const [diffDate, setDiffDate] = useState(0);
+  const [diffDate, setDiffDate] = useState(4);
   const options = {
     responsive: true,
+    scales: {
+      x: {
+        ticks: {
+          maxTicksLimit: 5, // x 축 틱의 최대 수
+        },
+      },
+    },
     plugins: {
       legend: {
         position: "top",
@@ -427,16 +491,16 @@ export function LineChart() {
   };
   return (
     <Stack>
-      <Tabs onChange={setDiffDate}>
+      <Tabs onChange={setDiffDate} defaultIndex={4}>
         <TabList>
-          <Tab>전체</Tab>
-          <Tab>1년</Tab>
-          <Tab>반년</Tab>
-          <Tab>90일</Tab>
-          <Tab>30일</Tab>
+          <Tab value={0}>전체</Tab>
+          <Tab value={1}>1년</Tab>
+          <Tab value={2}>반년</Tab>
+          <Tab value={3}>90일</Tab>
+          <Tab value={4}>30일</Tab>
         </TabList>
       </Tabs>
-      <Line options={options} data={data} />
+      <Line options={options} data={data} height={"100px"} />
     </Stack>
   );
 }

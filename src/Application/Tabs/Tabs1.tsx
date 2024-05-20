@@ -12,10 +12,10 @@ export const Tabs1 = (props: any) => (
     spacing="16"
     position={"sticky"}
     top="72px"
-    zIndex="docked"
+    zIndex="1111"
     pb={{ base: "4", md: "6" }}
   >
-    {["lg"].map((size) => (
+    {["md"].map((size) => (
       <Tabs
         key={size}
         size={size}

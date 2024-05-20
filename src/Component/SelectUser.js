@@ -100,7 +100,9 @@ function SelectUser(props) {
       <PageHeader2 title="선정자 목록" discription={campain?.name} />
       <RegisterTable
         members={userList}
-        title={`총 ${userList.length}명 / ${campain?.targetCnt}명`}
+        title={`총 ${userList.length}명 / ${
+          campain?.targetCnt ? campain?.targetCnt : 0
+        }명`}
       />
     </Stack>
   );

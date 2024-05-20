@@ -4,6 +4,7 @@ import {
   Flex,
   Stack,
   useColorModeValue as mode,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import {
   BiBarChart,
@@ -52,6 +53,7 @@ import RegisterSearch from "../../../Component/RegisterSearch";
 import RegisterReview from "../../../Component/RegisterReview";
 
 export const ShellWithGroupedMenu = () => {
+  const isMobile = useBreakpointValue({ base: true, md: false });
   const [menu, setMenu] = useState(
     Number(localStorage.getItem("ad_menu")) || 11
   );
@@ -61,9 +63,10 @@ export const ShellWithGroupedMenu = () => {
         <Box w="64" bg="gray.900" color="white" fontSize="sm">
           <Flex h="full" direction="column" px="4" py="4">
             <Stack spacing="8" flex="1" overflow="auto" mb={4}>
-              {localStorage.getItem("dang_admin_id") && (
-                <NavGroup label="기본관리">
-                  {/* <NavItem
+              {localStorage.getItem("dang_admin_id") &&
+                window.location.pathname.includes("/admin/dashboard") && (
+                  <NavGroup label="기본관리">
+                    {/* <NavItem
                     active={
                       menu === 0 || localStorage.getItem("ad_menu") === "0"
                     }
@@ -74,40 +77,40 @@ export const ShellWithGroupedMenu = () => {
                       localStorage.setItem("ad_menu", "0");
                     }}
                   /> */}
-                  <NavItem
-                    active={
-                      menu === 1 || localStorage.getItem("ad_menu") === "1"
-                    }
-                    icon={<BiCommentAdd />}
-                    label="광고문의"
-                    onClick={() => {
-                      setMenu(1);
-                      localStorage.setItem("ad_menu", "1");
-                    }}
-                  />
-                  <NavItem
-                    active={
-                      menu === 2 || localStorage.getItem("ad_menu") === "2"
-                    }
-                    icon={<BiUserCircle />}
-                    label="회원관리"
-                    onClick={() => {
-                      setMenu(2);
-                      localStorage.setItem("ad_menu", "2");
-                    }}
-                  />
-                  <NavItem
-                    active={
-                      menu === 3 || localStorage.getItem("ad_menu") === "3"
-                    }
-                    icon={<BiCreditCard />}
-                    label="체험단관리"
-                    onClick={() => {
-                      setMenu(3);
-                      localStorage.setItem("ad_menu", "3");
-                    }}
-                  />
-                  {/* <NavItem
+                    <NavItem
+                      active={
+                        menu === 1 || localStorage.getItem("ad_menu") === "1"
+                      }
+                      icon={<BiCommentAdd />}
+                      label="광고문의"
+                      onClick={() => {
+                        setMenu(1);
+                        localStorage.setItem("ad_menu", "1");
+                      }}
+                    />
+                    <NavItem
+                      active={
+                        menu === 2 || localStorage.getItem("ad_menu") === "2"
+                      }
+                      icon={<BiUserCircle />}
+                      label="회원관리"
+                      onClick={() => {
+                        setMenu(2);
+                        localStorage.setItem("ad_menu", "2");
+                      }}
+                    />
+                    <NavItem
+                      active={
+                        menu === 3 || localStorage.getItem("ad_menu") === "3"
+                      }
+                      icon={<BiCreditCard />}
+                      label="체험단관리"
+                      onClick={() => {
+                        setMenu(3);
+                        localStorage.setItem("ad_menu", "3");
+                      }}
+                    />
+                    {/* <NavItem
                   active={menu === 4 || localStorage.getItem("ad_menu") === "4"}
                   icon={<BiNotification />}
                   label="공지관리"
@@ -116,30 +119,30 @@ export const ShellWithGroupedMenu = () => {
                     localStorage.setItem("ad_menu", "4");
                   }}
                 /> */}
-                  <NavItem
-                    active={
-                      menu === 6 || localStorage.getItem("ad_menu") === "6"
-                    }
-                    icon={<BsCommand />}
-                    label="[수동] 리뷰등록"
-                    onClick={() => {
-                      setMenu(6);
-                      localStorage.setItem("ad_menu", "6");
-                    }}
-                  />
-                  <NavItem
-                    active={
-                      menu === 5 || localStorage.getItem("ad_menu") === "5"
-                    }
-                    icon={<BiBarChart />}
-                    label="[수동] 검색점유율 등록"
-                    onClick={() => {
-                      setMenu(5);
-                      localStorage.setItem("ad_menu", "5");
-                    }}
-                  />
-                </NavGroup>
-              )}
+                    <NavItem
+                      active={
+                        menu === 6 || localStorage.getItem("ad_menu") === "6"
+                      }
+                      icon={<BsCommand />}
+                      label="[수동] 리뷰등록"
+                      onClick={() => {
+                        setMenu(6);
+                        localStorage.setItem("ad_menu", "6");
+                      }}
+                    />
+                    <NavItem
+                      active={
+                        menu === 5 || localStorage.getItem("ad_menu") === "5"
+                      }
+                      icon={<BiBarChart />}
+                      label="[수동] 검색점유율 등록"
+                      onClick={() => {
+                        setMenu(5);
+                        localStorage.setItem("ad_menu", "5");
+                      }}
+                    />
+                  </NavGroup>
+                )}
 
               <NavGroup label="광고주관리">
                 <NavItem
@@ -264,6 +267,7 @@ export const ShellWithGroupedMenu = () => {
             </Box> */}
           </Flex>
         </Box>
+
         <Box
           bg={mode("white", "gray.800")}
           flex="1"

@@ -11,6 +11,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import {
   Drawer,
@@ -65,26 +66,31 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                   src={require("../../../Assets/img/LogoText.png")}
                 />
               </Box>
-              <ButtonGroup variant={"ghost"} colorScheme="gray" size={"lg"}>
-                <Button
-                  fontWeight={"bold"}
-                  onClick={() => handleTabChange("0")}
-                >
-                  전체 체험단
-                </Button>
-                <Button
-                  fontWeight={"bold"}
-                  onClick={() => handleTabChange("1")}
-                >
-                  인플루언서
-                </Button>
-                <Button
-                  fontWeight={"bold"}
-                  onClick={() => handleTabChange("2")}
-                >
-                  구매평 체험단
-                </Button>
-              </ButtonGroup>
+              {useBreakpointValue({ base: false, md: true }) && (
+                <ButtonGroup variant={"ghost"} colorScheme="gray" size={"lg"}>
+                  <Button
+                    fontWeight={"bold"}
+                    onClick={() => handleTabChange("0")}
+                    colorScheme={props.tab === "0" ? "cyan" : "gray"}
+                  >
+                    전체 체험단
+                  </Button>
+                  <Button
+                    fontWeight={"bold"}
+                    onClick={() => handleTabChange("1")}
+                    colorScheme={props.tab === "1" ? "cyan" : "gray"}
+                  >
+                    인플루언서
+                  </Button>
+                  <Button
+                    fontWeight={"bold"}
+                    onClick={() => handleTabChange("2")}
+                    colorScheme={props.tab === "2" ? "cyan" : "gray"}
+                  >
+                    구매평 체험단
+                  </Button>
+                </ButtonGroup>
+              )}
             </HStack>
             {/* <InputGroup
               maxW={{ md: "sm", lg: "md" }}
@@ -109,42 +115,46 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                   isRound
                 /> */}
               </ButtonGroup>
-              {props.userInfo ? (
-                <Avatar
-                  onClick={() => {
-                    if (!props.userInfo) {
-                      window.location.href = "/login";
-                    } else {
-                      window.location.href = "/mypage";
-                    }
-                  }}
-                  _hover={{ cursor: "pointer" }}
-                  boxSize="10"
-                  src={props.userInfo?.image}
-                  // name={props.userInfo?.name}
-                />
-              ) : (
-                <ButtonGroup>
-                  <Button
-                    variant={"tertiary"}
-                    onClick={() => (window.location.href = "/login")}
-                  >
-                    로그인
-                  </Button>
-                  <Button
-                    variant={"tertiary"}
-                    onClick={() => (window.location.href = "/signup")}
-                  >
-                    회원가입
-                  </Button>
-                  <Button
-                    onClick={() => (window.location.href = "/ads")}
-                    borderRadius={"full"}
-                  >
-                    광고문의
-                  </Button>
-                </ButtonGroup>
-              )}
+
+              <ButtonGroup>
+                {!props.userInfo && (
+                  <>
+                    <Button
+                      variant={"tertiary"}
+                      onClick={() => (window.location.href = "/login")}
+                    >
+                      로그인
+                    </Button>
+                    <Button
+                      variant={"tertiary"}
+                      onClick={() => (window.location.href = "/signup")}
+                    >
+                      회원가입
+                    </Button>
+                  </>
+                )}
+                <Button
+                  onClick={() => (window.location.href = "/ads")}
+                  borderRadius={"full"}
+                >
+                  광고문의
+                </Button>
+                {props.userInfo && (
+                  <Avatar
+                    onClick={() => {
+                      if (!props.userInfo) {
+                        window.location.href = "/login";
+                      } else {
+                        window.location.href = "/mypage";
+                      }
+                    }}
+                    _hover={{ cursor: "pointer" }}
+                    boxSize="10"
+                    src={props.userInfo?.image}
+                    // name={props.userInfo?.name}
+                  />
+                )}
+              </ButtonGroup>
             </HStack>
           </HStack>
         </Container>

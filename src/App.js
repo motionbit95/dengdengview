@@ -66,6 +66,12 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (tab) {
+      console.log(tab);
+    }
+  }, [tab]);
+
   return (
     <>
       {window.location.pathname.includes("/admin") ? (
@@ -89,7 +95,11 @@ function App() {
         <>
           {/* <BannerWithSignUp /> */}
           {!window.location.pathname.includes("report") && (
-            <NavbarWithCenteredSearch userInfo={userInfo} setTab={setTab} />
+            <NavbarWithCenteredSearch
+              userInfo={userInfo}
+              setTab={setTab}
+              tab={tab}
+            />
           )}
           <BrowserRouter>
             <Routes>
@@ -115,9 +125,12 @@ function App() {
               <Route path="/ads" element={<Ads />} />
 
               <Route path="/report/*" element={<Report />} />
+              <Route path="/report/detail/*" element={<AdminDashboard />} />
             </Routes>
           </BrowserRouter>
-          <FooterWithFourColumnsOnAccent />
+          {!window.location.pathname.includes("/report/detail") && (
+            <FooterWithFourColumnsOnAccent />
+          )}
         </>
       )}
     </>

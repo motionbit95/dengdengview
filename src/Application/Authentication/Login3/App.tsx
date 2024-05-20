@@ -1,12 +1,14 @@
 import {
   Box,
   Button,
+  Center,
   Checkbox,
   Container,
   FormControl,
   FormLabel,
   Heading,
   HStack,
+  Image,
   Input,
   Link,
   Stack,
@@ -51,7 +53,10 @@ export const LoginWithEmailPasswordOrNaver = ({ ...props }) => {
       <Container maxW="md" py={{ base: "12", md: "24" }}>
         <Stack spacing="8">
           <Stack spacing="6">
-            <Logo />
+            {/* <Logo /> */}
+            <Center>
+              <Image w={20} src={require("../../../Assets/img/LogoText.png")} />
+            </Center>
             <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
               <Heading size={{ base: "xs", md: "sm" }}>통합 로그인</Heading>
               <Text color="fg.muted">
