@@ -72,13 +72,10 @@ function Profile(props) {
     }
   };
 
-  function clip() {
-    var url = "";
+  function clip(text) {
     var textarea = document.createElement("textarea");
     document.body.appendChild(textarea);
-    url =
-      "https://firebasestorage.googleapis.com/v0/b/motionbit-dangdangview.appspot.com/o/widget.png?alt=media&token=923c0928-cb9e-43bc-8adb-07d89c24fd4a";
-    textarea.value = url;
+    textarea.value = text;
     textarea.select();
     document.execCommand("copy");
     document.body.removeChild(textarea);
@@ -130,17 +127,113 @@ function Profile(props) {
                   01. 위젯 링크 복사
                 </Text>
                 <Text>아래의 위젯 코드를 복사해주세요!</Text>
-                <Image
-                  w={"100px"}
-                  h={"auto"}
-                  src={
-                    "https://firebasestorage.googleapis.com/v0/b/motionbit-dangdangview.appspot.com/o/widget.png?alt=media&token=923c0928-cb9e-43bc-8adb-07d89c24fd4a"
-                  }
-                  alt={"image"}
-                />
-                <Button w={"100px"} onClick={clip}>
-                  코드복사
-                </Button>
+                <HStack>
+                  <Stack>
+                    <Image
+                      w={"100px"}
+                      h={"auto"}
+                      src={
+                        "https://firebasestorage.googleapis.com/v0/b/motionbit-dangdangview.appspot.com/o/widget%2FKakaoTalk_20230918_214550861.png?alt=media&token=1a31513a-ddb1-4aba-be95-e4a9b20a1c09"
+                      }
+                      alt={"image"}
+                    />
+                    <Button
+                      size={"sm"}
+                      w={"100px"}
+                      onClick={() =>
+                        clip(
+                          `<a href="https://cafe.naver.com/dengdengview" target="_self"><img id="se_object_150665982298945477" src=https://postfiles.pstatic.net/MjAyMzA5MThfMTI4/MDAxNjk1MDQzNzkyMTkw.t78obcwa2GiWgPI8xwPydDubRjnvVaYLk6K7e6oqjukg.B3Dia_yttI88W-zlsxuPqt4pZYdU57p_P8cI3byWdScg.PNG.svs0520/KakaoTalk_20230918_214550861.png?type=w966`
+                        )
+                      }
+                    >
+                      코드복사
+                    </Button>
+                  </Stack>{" "}
+                  <Stack>
+                    <Image
+                      w={"100px"}
+                      h={"auto"}
+                      src={
+                        "https://firebasestorage.googleapis.com/v0/b/motionbit-dangdangview.appspot.com/o/widget%2FKakaoTalk_20230918_214550861_01.png?alt=media&token=6c61c5d1-ae38-400e-9250-f7d0457a2873"
+                      }
+                      alt={"image"}
+                    />
+                    <Button
+                      size={"sm"}
+                      w={"100px"}
+                      onClick={() =>
+                        clip(
+                          `<a href="https://cafe.naver.com/dengdengview" target="_self"><img id="se_object_150665982298945477" src=https://postfiles.pstatic.net/MjAyMzA5MThfMjIw/MDAxNjk1MDQzNzkyMTky.jZCUvOeD_6Wo1U1ArpI8j2v9wJQLM0ZgjuEsjBwO40Mg.VcBUDQSI0vdsKZtuSUNCEkkgTtDPnWf9XJj6q6QHzKAg.PNG.svs0520/KakaoTalk_20230918_214550861_01.png?type=w966`
+                        )
+                      }
+                    >
+                      코드복사
+                    </Button>
+                  </Stack>{" "}
+                  <Stack>
+                    <Image
+                      w={"100px"}
+                      h={"auto"}
+                      src={
+                        "https://firebasestorage.googleapis.com/v0/b/motionbit-dangdangview.appspot.com/o/widget%2FKakaoTalk_20230918_214550861_02.png?alt=media&token=3f111d7a-12cd-48e5-ae62-2ab5841c1de8"
+                      }
+                      alt={"image"}
+                    />
+                    <Button
+                      w={"100px"}
+                      size={"sm"}
+                      onClick={() =>
+                        clip(
+                          `<a href="https://cafe.naver.com/dengdengview" target="_self"><img id="se_object_150665982298945477" src=https://postfiles.pstatic.net/MjAyMzA5MThfMzgg/MDAxNjk1MDQzNzkyMTg1.5KmyWkC__9_emuW3sAKmYekoT66by2i0NSRBhUZ2igYg.Bl0gs5sgpkkapMdVKf-8vRfTix5qErtBgUSXjENTayMg.PNG.svs0520/KakaoTalk_20230918_214550861_02.png?type=w966`
+                        )
+                      }
+                    >
+                      코드복사
+                    </Button>
+                  </Stack>
+                  <Stack>
+                    <Image
+                      w={"100px"}
+                      h={"auto"}
+                      src={
+                        "https://firebasestorage.googleapis.com/v0/b/motionbit-dangdangview.appspot.com/o/widget%2FKakaoTalk_20230918_214550861_03.png?alt=media&token=9bdfb327-18df-4210-b005-ae9c4db56e98"
+                      }
+                      alt={"image"}
+                    />
+                    <Button
+                      w={"100px"}
+                      size={"sm"}
+                      onClick={() =>
+                        clip(
+                          `<a href="https://cafe.naver.com/dengdengview" target="_self"><img id="se_object_150665982298945477" src=https://postfiles.pstatic.net/MjAyMzA5MThfODYg/MDAxNjk1MDQzNzkyMTg5.44ZtYIwBKvLtM3bl28_tObyjY82yxcIa1OqUt2vwjCEg.76uPRlivct5KAXQKSPTnqMj5Zxkpa8H7nodYVyStaDgg.PNG.svs0520/KakaoTalk_20230918_214550861_03.png?type=w966`
+                        )
+                      }
+                    >
+                      코드복사
+                    </Button>
+                  </Stack>
+                  <Stack>
+                    <Image
+                      w={"100px"}
+                      h={"auto"}
+                      src={
+                        "https://firebasestorage.googleapis.com/v0/b/motionbit-dangdangview.appspot.com/o/widget%2FKakaoTalk_20230918_214550861_04.png?alt=media&token=4335aaa1-3dc0-414a-b6c9-7c508ed1da57"
+                      }
+                      alt={"image"}
+                    />
+                    <Button
+                      w={"100px"}
+                      size={"sm"}
+                      onClick={() =>
+                        clip(
+                          `<a href="https://cafe.naver.com/dengdengview" target="_self"><img id="se_object_150665982298945477" src=https://postfiles.pstatic.net/MjAyMzA5MThfMTg2/MDAxNjk1MDQzNzkyMTkw.HTHuSGX3_weeSGNB6yq-VLTl-qPTwvzVzfJhURQgIv0g.w-PV4mU5uCHLPVLjn5dT7WP4hEk_kToyoxm6Qlzn5Jgg.PNG.svs0520/KakaoTalk_20230918_214550861_04.png?type=w966`
+                        )
+                      }
+                    >
+                      코드복사
+                    </Button>
+                  </Stack>
+                </HStack>
               </Stack>
               <Stack borderTop={"3px solid"} borderColor={"gray.800"} p={2}>
                 <Text fontSize={"xl"} fontWeight={"bold"}>

@@ -30,11 +30,13 @@ import { IoWarning } from "react-icons/io5";
 
 function Home(props) {
   const [tab, setTab] = useState(props.tab);
+  const { keyword } = props;
   const isMobile = useBreakpointValue({ base: true, md: false });
 
-  useEffect(() => {
-    console.log("필터링해줘!! " + props.tab);
-  }, [props.tab]);
+  // useEffect(() => {
+  //   console.log("필터링해줘!! " + props.tab);
+  //   console.log(keyword);
+  // }, [keyword]);
 
   const [popupOpen, setPopupOpen] = useState(false);
   const [type, setType] = useState(0);
@@ -145,7 +147,7 @@ function Home(props) {
           </Flex>
         </Container>
       </Box>
-      <Campain tab={props.tab} />
+      <Campain tab={props.tab} keyword={keyword} />
       <PopupModal
         isOpen={popupOpen}
         onClose={() => setPopupOpen(false)}

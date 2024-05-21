@@ -30,6 +30,10 @@ function Campain({ ...props }) {
   const [uid, setUid] = useState(null);
 
   useEffect(() => {
+    console.log("최종적으로 여기서 바뀜", props.keyword);
+  }, [props.keyword]);
+
+  useEffect(() => {
     console.log("최종적으로 여기서 바뀜", props.tab);
     if (props.tab) {
       // let property = "createdAt";
@@ -42,6 +46,9 @@ function Campain({ ...props }) {
       getCollection("Campain").then((data) => {
         let list = [];
         data.forEach((doc) => {
+          if (!doc.name.includes(props.keyword)) {
+            return;
+          }
           console.log(doc);
           // doc.data() is never undefined for query doc snapshots
           if (props.tab === "0") {
@@ -64,7 +71,7 @@ function Campain({ ...props }) {
         });
       });
     }
-  }, [props.tab]);
+  }, [props.tab, props.keyword]);
 
   useEffect(() => {
     let uid;

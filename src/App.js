@@ -33,6 +33,7 @@ import Report from "./Pages/Report";
 function App() {
   const [userInfo, setUserInfo] = React.useState(null);
   const [tab, setTab] = useState("0");
+🛠️  const [keyword, setKeyword] = useState("");
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -96,6 +97,7 @@ function App() {
           {/* <BannerWithSignUp /> */}
           {!window.location.pathname.includes("report") && (
             <NavbarWithCenteredSearch
+              handleSearch={(e) => setKeyword(e.target.value)}
               userInfo={userInfo}
               setTab={setTab}
               tab={tab}
@@ -115,7 +117,7 @@ function App() {
               <Route path="/filter" element={<Filter />} />
               <Route path="/cart" element={<Cart />} />
 
-              <Route path="/" element={<Home tab={tab} />} />
+              <Route path="/" element={<Home tab={tab} keyword={keyword} />} />
               <Route path="/campain/*" element={<Detail />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUpForm />} />

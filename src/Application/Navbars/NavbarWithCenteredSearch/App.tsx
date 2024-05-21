@@ -176,7 +176,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                   <InputLeftElement>
                     <Icon as={FiSearch} color="fg.muted" fontSize="lg" />
                   </InputLeftElement>
-                  <Input placeholder="Search" />
+                  <Input placeholder="검색" onChange={props.handleSearch} />
                 </InputGroup>
                 {props.userInfo && (
                   <>
