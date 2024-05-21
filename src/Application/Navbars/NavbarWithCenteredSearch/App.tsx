@@ -27,12 +27,27 @@ import { FiBell, FiMenu, FiSearch } from "react-icons/fi";
 import { Logo } from "./Logo";
 import { useState } from "react";
 import { SidebarWithCollapsable } from "../../Sidebars/SidebarWithCollapsable/App";
+import { signOut } from "firebase/auth";
+import { auth } from "../../../Firebase/Config";
 
 export const NavbarWithCenteredSearch = ({ ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleTabChange = (value: string) => {
     props.setTab(value);
   };
+
+  const handleLogout = () => {
+    // localStorage.clear();
+    // 고객단에서 사용하는 로컬 저장 변수를 삭제합니다.
+    signOut(auth).catch((error) => {
+      // An error happened.
+    });
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("naver_id");
+    sessionStorage.clear();
+    window.location.href = "/login";
+  };
+
   return (
     <Box
       as="section"
@@ -139,7 +154,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                 >
                   광고문의
                 </Button>
-                {props.userInfo && (
+                {/* {props.userInfo && (
                   <Avatar
                     onClick={() => {
                       if (!props.userInfo) {
@@ -153,6 +168,28 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                     src={props.userInfo?.image}
                     // name={props.userInfo?.name}
                   />
+                )} */}
+                <InputGroup
+                  maxW={{ md: "sm", lg: "md" }}
+                  display={{ base: "none", md: "inline-flex" }}
+                >
+                  <InputLeftElement>
+                    <Icon as={FiSearch} color="fg.muted" fontSize="lg" />
+                  </InputLeftElement>
+                  <Input placeholder="Search" />
+                </InputGroup>
+                {props.userInfo && (
+                  <>
+                    <Button
+                      variant={"tertiary"}
+                      onClick={() => (window.location.href = "/mypage")}
+                    >
+                      마이페이지
+                    </Button>
+                    <Button variant={"tertiary"} onClick={handleLogout}>
+                      로그아웃
+                    </Button>
+                  </>
                 )}
               </ButtonGroup>
             </HStack>
