@@ -34,14 +34,23 @@ export const FooterWithFourColumnsOnAccent = () => (
         spacing="8"
       >
         <Stack spacing={{ base: "6", md: "8" }} align="start">
-          <Image w={24} src={require("../../../Assets/img/LogoTextW.png")} />
+          {/* <Image w={24} src={require("../../../Assets/img/LogoTextW.png")} /> */}
+          <Text
+            color={"white"}
+            fontSize={{ base: "2xl", md: "3xl" }}
+            fontFamily={"Cafe24Ssurround"}
+          >
+            댕댕뷰
+          </Text>
           <Text color="fg.accent.muted">강아지 고양이 체험단 & 이벤트</Text>
           <Stack color="fg.accent.muted" fontSize={"sm"}>
-            <Text>대표자 : 홍길동</Text>
-            <Text>사업자등록번호 : 123-45-67890</Text>
-            <Text>전화번호 : 010-1234-5678</Text>
-            <Text>이메일 : dangdang@example.com</Text>
-            <Text>주소 : 서울시 강남구 테헤란로</Text>
+            <Text>대표자 : 조재현,김현준</Text>
+            <Text>상호명 : 제이에이치컴퍼니(댕댕뷰)</Text>
+            <Text>사업자등록번호 : 376-02-02457</Text>
+            <Text>전화번호 : 010-8307-2838</Text>
+            <Text>이메일 : dengdengview@naver.com</Text>
+            <Text>주소 : 경기도 군포시 군포첨단산업2로7번길 8</Text>
+            <Text>카카오톡 채널 문의 : 댕댕뷰 체험단</Text>
           </Stack>
         </Stack>
         <SimpleGrid

@@ -94,7 +94,13 @@ const Report = () => {
         justifyContent={"left"}
       >
         <Container>
-          <Image src={require("../Assets/img/LogoText.png")} h={"30px"} />
+          <Text
+            fontSize={{ base: "2xl", md: "3xl" }}
+            fontFamily={"Cafe24Ssurround"}
+          >
+            댕댕뷰
+          </Text>
+          {/* <Image src={require("../Assets/img/LogoText.png")} h={"30px"} /> */}
         </Container>
       </Flex>
       <Stack align="center" background="#f5f5f5" spacing={8}>

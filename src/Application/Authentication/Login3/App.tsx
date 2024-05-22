@@ -55,7 +55,13 @@ export const LoginWithEmailPasswordOrNaver = ({ ...props }) => {
           <Stack spacing="6">
             {/* <Logo /> */}
             <Center>
-              <Image w={20} src={require("../../../Assets/img/LogoText.png")} />
+              {/* <Image w={20} src={require("../../../Assets/img/LogoText.png")} /> */}
+              <Text
+                fontSize={{ base: "3xl", md: "4xl" }}
+                fontFamily={"Cafe24Ssurround"}
+              >
+                댕댕뷰
+              </Text>
             </Center>
             <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
               <Heading size={{ base: "xs", md: "sm" }}>통합 로그인</Heading>

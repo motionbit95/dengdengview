@@ -91,7 +91,11 @@ function Home(props) {
               }}
             >
               <Stack spacing={6}>
-                <Text fontSize={"calc(0.5em + 1vw)"} fontWeight={"md"}>
+                <Text
+                  fontFamily={"Cafe24Ssurround"}
+                  fontSize={"calc(0.5em + 1vw)"}
+                  fontWeight={"md"}
+                >
                   댕댕뷰가 처음이신가요?
                 </Text>
                 <Text
@@ -100,6 +104,7 @@ function Home(props) {
                     lg: "calc(1.2em + 1.2vw)",
                   }}
                   fontWeight={"extrabold"}
+                  fontFamily={"Cafe24Ssurround"}
                 >
                   신규 회원 가이드
                   <br />
@@ -125,7 +130,11 @@ function Home(props) {
               }}
             >
               <Stack spacing={{ base: 3, md: 6 }}>
-                <Text fontSize={"calc(0.5em + 1vw)"} fontWeight={"md"}>
+                <Text
+                  fontFamily={"Cafe24Ssurround"}
+                  fontSize={"calc(0.5em + 1vw)"}
+                  fontWeight={"md"}
+                >
                   체험을 완료하셨나요?
                 </Text>
                 <Text
@@ -134,6 +143,7 @@ function Home(props) {
                     lg: "calc(1.4em + 1.2vw)",
                   }}
                   fontWeight={"extrabold"}
+                  fontFamily={"Cafe24Ssurround"}
                 >
                   리뷰 등록 방법
                   <br />

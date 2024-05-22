@@ -11,6 +11,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
 import {
@@ -76,10 +77,17 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
             <HStack spacing={20}>
               <Box onClick={() => (window.location.href = "/")}>
                 {/* <Logo /> */}
-                <Image
+                {/* <Image
                   w={20}
                   src={require("../../../Assets/img/LogoText.png")}
-                />
+                /> */}
+                <Text
+                  fontSize={{ base: "2xl", md: "3xl" }}
+                  fontFamily={"Cafe24Ssurround"}
+                  // color={"#23E9AE"}
+                >
+                  댕댕뷰
+                </Text>
               </Box>
               {useBreakpointValue({ base: false, md: true }) && (
                 <ButtonGroup variant={"ghost"} colorScheme="gray" size={"lg"}>
@@ -140,12 +148,12 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                     >
                       로그인
                     </Button>
-                    <Button
+                    {/* <Button
                       variant={"tertiary"}
                       onClick={() => (window.location.href = "/signup")}
                     >
                       회원가입
-                    </Button>
+                    </Button> */}
                   </>
                 )}
                 <Button
