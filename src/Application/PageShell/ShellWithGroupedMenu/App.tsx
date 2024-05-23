@@ -1,8 +1,15 @@
 import {
   Box,
+  Button,
+  Center,
   Circle,
+  Container,
   Flex,
+  FormControl,
+  FormLabel,
+  Input,
   Stack,
+  Text,
   useColorModeValue as mode,
   useBreakpointValue,
 } from "@chakra-ui/react";
@@ -51,12 +58,56 @@ import Keyword from "../../../Pages/Keyword";
 import { Advertise } from "../../Tables/AdTable/App";
 import RegisterSearch from "../../../Component/RegisterSearch";
 import RegisterReview from "../../../Component/RegisterReview";
+import { createDoc } from "../../../Firebase/Database";
+import { updateDoc } from "firebase/firestore";
 
 export const ShellWithGroupedMenu = () => {
   const isMobile = useBreakpointValue({ base: true, md: false });
   const [menu, setMenu] = useState(
     Number(localStorage.getItem("ad_menu")) || 11
   );
+
+  const [url, setUrl] = useState("");
+  const [name, setName] = useState("");
+
+  const handleSubmit = async () => {
+    if (window.confirm("리뷰를 등록하시겠습니까?")) {
+      // fetch를 사용하여 POST 요청을 보냅니다.
+      fetch(process.env.REACT_APP_SERVER_URL + "/crawl", {
+        method: "POST", // 요청 메서드를 POST로 지정합니다.
+        headers: {
+          "Content-Type": "application/json", // 요청 헤더에 Content-Type을 JSON으로 지정합니다.
+        },
+        body: JSON.stringify({ url: url }), // 요청 본문에 데이터를 JSON 문자열로 변환하여 넣습니다.
+      })
+        .then((response) => {
+          // 서버에서 응답을 받으면 JSON 형식으로 파싱합니다.
+          return response.json();
+        })
+        .then((data) => {
+          // 파싱된 응답 데이터를 이용하여 처리합니다.
+          console.log("서버로부터 받은 데이터:", data);
+
+          // 데이터를 저장합니다.
+          createDoc("Review", {
+            ...data,
+            url: url,
+            uid: "",
+            cid: "",
+            name: name,
+          });
+
+          if (data.code === "error") {
+            console.log("error");
+          }
+        })
+        .catch((error) => {
+          // 오류가 발생하면 오류를 콘솔에 출력합니다.
+          console.error("데이터를 보내는 동안 오류 발생:", error);
+        });
+    }
+  };
+
   return (
     <Box height="100vh" minW={"3xl"} overflow="hidden" position="relative">
       <Flex h="full" id="app-container">
@@ -119,6 +170,17 @@ export const ShellWithGroupedMenu = () => {
                     localStorage.setItem("ad_menu", "4");
                   }}
                 /> */}
+                    <NavItem
+                      active={
+                        menu === 7 || localStorage.getItem("ad_menu") === "7"
+                      }
+                      icon={<BsCommand />}
+                      label="[크롤링] 네이버블로그 리뷰"
+                      onClick={() => {
+                        setMenu(7);
+                        localStorage.setItem("ad_menu", "7");
+                      }}
+                    />
                     <NavItem
                       active={
                         menu === 6 || localStorage.getItem("ad_menu") === "6"
@@ -288,6 +350,29 @@ export const ShellWithGroupedMenu = () => {
             {menu === 3 && <Campain />}
             {menu === 5 && <RegisterSearch />}
             {menu === 6 && <RegisterReview />}
+
+            {menu === 7 && (
+              <Container maxW="lg">
+                <Stack p={{ base: "4", lg: "6" }}>
+                  <FormControl>
+                    <FormLabel>이름</FormLabel>
+                    <Input
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="리뷰 작성자를 입력해주세요."
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>리뷰 URL</FormLabel>
+                    <Input
+                      onChange={(e) => setUrl(e.target.value)}
+                      placeholder="https://blog.naver.com/블로그아이디/포스팅번호"
+                    />
+                  </FormControl>
+
+                  <Button onClick={handleSubmit}>등록하기</Button>
+                </Stack>
+              </Container>
+            )}
 
             {menu === 11 && <TotalView />}
             {menu === 12 && <TesterUser />}

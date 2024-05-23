@@ -82,7 +82,9 @@ function Detail(props) {
     if (campain?.doc_id) {
       updateDoc("Campain", campain?.doc_id, {
         ...campain,
-        views: campain?.views + 1,
+        views: {
+          "2023-05-23": campain?.views + 1,
+        },
       });
 
       let userList = [];
@@ -109,9 +111,10 @@ function Detail(props) {
         divider={<StackDivider display={{ base: "none", md: "block" }} />}
       >
         <Stack w={"full"}>
-          <Tag w={"fit-content"} size={{ base: "sm", md: "md" }}>
-            {campain?.doc_id?.substring(0, 8)}
-          </Tag>
+          {/* <Tag w={"fit-content"} size={{ base: "sm", md: "md" }}>
+            {"#"}
+            {location.pathname.split("/").pop()?.substring(0, 8)}
+          </Tag> */}
           <Text pb={2} fontSize={{ base: "lg", md: "xl" }} fontWeight="bold">
             {campain?.name}
           </Text>
@@ -123,10 +126,10 @@ function Detail(props) {
             >
               {campain?.type}
             </Tag>
-            <Tag colorScheme="yellow">
+            {/* <Tag colorScheme="yellow">
               <TagLeftIcon boxSize="12px" as={BsEyeFill} />
               {campain?.views}
-            </Tag>
+            </Tag> */}
             <Tag
               colorScheme={calculateDday(campain?.endDate) < 0 ? "gray" : "red"}
             >
@@ -186,7 +189,13 @@ function Detail(props) {
                   borderRadius={"xl"}
                   w={300}
                   aspectRatio={1}
-                  src={value}
+                  src={
+                    process.env.REACT_APP_STORAGE +
+                    "/campain" +
+                    "%2F" +
+                    value +
+                    "?alt=media"
+                  }
                 />
               ))}
             </HStack>

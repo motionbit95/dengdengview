@@ -36,16 +36,22 @@ export const ProductCard = (props: Props) => {
       <Box position="relative" className="group">
         <AspectRatio ratio={1}>
           <Image
-            src={campain.images?.[0]}
+            src={
+              process.env.REACT_APP_STORAGE +
+              "/campain" +
+              "%2F" +
+              campain.images?.[0] +
+              "?alt=media"
+            }
             alt={campain.name}
             draggable="false"
             fallback={<Skeleton />}
             borderRadius="md"
           />
         </AspectRatio>
-        <Tag size={"sm"} position="absolute" top="2" left="2">
+        {/* <Tag size={"sm"} position="absolute" top="2" left="2">
           #{campain.doc_id.substring(0, 8)}
-        </Tag>
+        </Tag> */}
       </Box>
       <HStack zIndex={999}>
         {campain?.mozip?.includes("0") && (

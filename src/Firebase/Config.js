@@ -10,13 +10,20 @@ import { getAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAOY3RaVNVGDSmRruLlDjZgwIlOJrAxw0g",
-  authDomain: "motionbit-dangdangview.firebaseapp.com",
-  projectId: "motionbit-dangdangview",
-  storageBucket: "motionbit-dangdangview.appspot.com",
-  messagingSenderId: "108420630610",
-  appId: "1:108420630610:web:3aa133936aba160a1c378b",
-  measurementId: "G-501VR68QZD",
+  // apiKey: "AIzaSyAOY3RaVNVGDSmRruLlDjZgwIlOJrAxw0g",
+  // authDomain: "motionbit-dangdangview.firebaseapp.com",
+  // projectId: "motionbit-dangdangview",
+  // storageBucket: "motionbit-dangdangview.appspot.com",
+  // messagingSenderId: "108420630610",
+  // appId: "1:108420630610:web:3aa133936aba160a1c378b",
+  // measurementId: "G-501VR68QZD",
+  apiKey: "AIzaSyADSb5I3kiyvkjXw9OTJYVO59dBkCxCBv0",
+  authDomain: "dangdangview.firebaseapp.com",
+  projectId: "dangdangview",
+  storageBucket: "dangdangview.appspot.com",
+  messagingSenderId: "426078123033",
+  appId: "1:426078123033:web:a51b259679ed42bcf52688",
+  measurementId: "G-RJ1Q3LPNFV",
 };
 
 // Initialize Firebase
