@@ -32,6 +32,7 @@ function Review(props) {
           });
         } else {
           reviewList.push({ ...doc });
+          setReviewList(reviewList);
         }
       });
     });
@@ -43,8 +44,13 @@ function Review(props) {
         discription={`총 ${reviewList.length} 개의 리뷰가 있습니다.`}
       />
 
-      <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={4} p={4}>
-        {reviewList.map((review) => (
+      <SimpleGrid
+        columns={{ base: 1, md: 2, lg: 3 }}
+        spacing={4}
+        p={{ base: 4, xl: 8 }}
+        // px={{ base: 0, xl: 16 }}
+      >
+        {reviewList?.map((review) => (
           <Stack
             borderRadius={"lg"}
             borderColor={"green.500"}
@@ -71,7 +77,7 @@ function Review(props) {
             </HStack> */}
             <Stack height={"full"} justifyContent={"space-between"}>
               <Stack>
-                <Text fontSize={"lg"} fontWeight={"bold"}>
+                <Text fontSize={"lg"} fontWeight={"bold"} noOfLines={1}>
                   {review.titleList
                     ?.toString()
                     .replaceAll(" : 네이버 블로그", " ")}
@@ -80,17 +86,28 @@ function Review(props) {
                   {review.contentList.join()}
                 </Text>
 
+                {/* <Text>
+                  {review.imageList[0]?.includes("firebase")
+                    ? review.imageList[0]
+                    : bucketAddress +
+                      "/downloads%2F" +
+                      encodeURIComponent(
+                        review.imageList[0]?.split("/").pop().split("?")[0]
+                      ) +
+                      "?alt=media"}
+                </Text> */}
                 <Image
                   aspectRatio={"4/3"}
+                  objectFit={"cover"}
                   w={"full"}
                   alt=""
                   src={
-                    review.imageList[0].includes("firebase")
+                    review.imageList[0]?.includes("firebase")
                       ? review.imageList[0]
                       : bucketAddress +
                         "/downloads%2F" +
                         encodeURIComponent(
-                          review.imageList[0].split("/").pop().split("?")[0]
+                          review.imageList[0]?.split("/").pop().split("?")[0]
                         ) +
                         "?alt=media"
                   }

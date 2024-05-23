@@ -112,7 +112,7 @@ export const TesterTable = (props: any) => {
           <Th minW={"100px"}>리뷰일정</Th>
           <Th minW={"100px"}>모집인원</Th>
           <Th minW={"100px"}>모집구분</Th>
-          <Th minW={"100px"}>조회수</Th>
+          {/* <Th minW={"100px"}>조회수</Th> */}
           <Th></Th>
         </Tr>
       </Thead>
@@ -131,7 +131,7 @@ export const TesterTable = (props: any) => {
             </Td>
             <Td>{campain.targetCnt}</Td>
             <Td>{campain.type}</Td>
-            <Td>{campain.views}</Td>
+            {/* <Td>{campain.views}</Td> */}
             <Td>
               <HStack spacing="1">
                 <ConfirmBox

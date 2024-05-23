@@ -71,6 +71,8 @@ function Detail(props) {
     window.scrollTo(0, 0);
     // 조회수 업데이트
 
+    console.log(window.location.pathname.split("/").pop());
+
     getDocument("Campain", window.location.pathname.split("/").pop()).then(
       (data) => {
         setCampain(data);
@@ -181,7 +183,7 @@ function Detail(props) {
                 : campain?.type + " 체험 신청하기"}
             </RegisterButton>
           </Stack>
-          <Box w={"full"} h={300} overflowX={"scroll"}>
+          {/* <Box w={"full"} h={300} overflowX={"scroll"}>
             <HStack spacing={4}>
               {campain?.images?.map((value, index) => (
                 <Image
@@ -199,17 +201,33 @@ function Detail(props) {
                 />
               ))}
             </HStack>
-          </Box>
-          {/* <Stack overflow={"hidden"} spacing={0}>
+          </Box> */}
+          <Stack overflow={"hidden"} spacing={0}>
             {isOpen ? (
               <>
                 {campain?.images?.map((value, index) => (
-                  <Image src={value} />
+                  <Image
+                    src={
+                      process.env.REACT_APP_STORAGE +
+                      "/campain" +
+                      "%2F" +
+                      value +
+                      "?alt=media"
+                    }
+                  />
                 ))}
               </>
             ) : (
               <>
-                <Image src={campain?.images?.[0]} />
+                <Image
+                  src={
+                    process.env.REACT_APP_STORAGE +
+                    "/campain" +
+                    "%2F" +
+                    campain?.images?.[0] +
+                    "?alt=media"
+                  }
+                />
               </>
             )}
           </Stack>
@@ -220,7 +238,7 @@ function Detail(props) {
             rightIcon={isOpen ? <FiChevronUp /> : <FiChevronDown />}
           >
             {isOpen ? "내용 접기" : "펼쳐보기"}
-          </Button> */}
+          </Button>
 
           <Tabs>
             <TabList>
@@ -388,12 +406,8 @@ function Detail(props) {
             </TabPanels>
           </Tabs>
         </Stack>
-        <Stack w={"50%"}>
-          <Box
-            w={"100%"}
-            pointerEvents={"none"}
-            display={{ base: "none", md: "block" }}
-          >
+        <Stack w={"50%"} display={{ base: "none", md: "block" }}>
+          <Box w={"100%"} pointerEvents={"none"}>
             <Stack>
               <Calendar
                 formatDay={(locale, date) => moment(date).format("DD")} // 날'일' 제외하고 숫자만 보이도록 설정
@@ -449,6 +463,7 @@ function Detail(props) {
           </Box>
 
           <RegisterButton
+            mt={4}
             cid={campain?.doc_id}
             isDisabled={calculateDday(campain?.endDate) < 0}
             onSubmit={(data) => {
@@ -577,6 +592,7 @@ function RegisterButton(props) {
         {...props}
         isDisabled={userTester ? true : false}
         size={"xl"}
+        w={"100%"}
         onClick={() => {
           console.log(userTester, uid);
           if (uid) {

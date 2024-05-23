@@ -70,7 +70,7 @@ function Search(props) {
               </Tag>
             ))}
           </Wrap>
-          <Text>
+          <Text px={{ base: 4, md: 8 }}>
             총 <strong>{totalCnt}건</strong>의 리뷰가 검색 노출되었습니다.
           </Text>
           <Box mt={8}>

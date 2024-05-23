@@ -34,7 +34,13 @@ export const ListCampainImages = ({ ...props }) => {
                     objectFit: "cover",
                   }}
                   key={index}
-                  src={url}
+                  src={
+                    process.env.REACT_APP_STORAGE +
+                    "/campain" +
+                    "%2F" +
+                    url +
+                    "?alt=media"
+                  }
                 />
               </GridItem>
             ))}

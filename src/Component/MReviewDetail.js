@@ -43,7 +43,7 @@ function ReviewDetail(props) {
       let picture = 0;
       data.forEach((doc) => {
         like = like + 0;
-        comment = comment + parseInt(doc.commentCnt);
+        comment = comment + parseInt(doc.commentCnt ? doc.commentCnt : 0);
         letter =
           doc.contentList?.length > 1
             ? letter + doc.contentList.join().length
@@ -63,6 +63,7 @@ function ReviewDetail(props) {
           });
         } else {
           reviewList.push({ ...doc });
+          setReviewList(reviewList);
         }
       });
     });
@@ -120,7 +121,7 @@ function ReviewDetail(props) {
             </HStack>
             <HStack>
               <Text fontWeight={"bold"} fontSize={"lg"} color={"red.500"}>
-                {totalCount.letter}
+                {totalCount.letter.toLocaleString()}
               </Text>
               <Text fontWeight={"bold"} fontSize={"lg"}>
                 개
@@ -182,7 +183,7 @@ function ReviewDetail(props) {
                       댓글 수
                     </Text>
                     <Text fontSize={"md"} fontWeight={"bold"} color={"red.500"}>
-                      {review.commentCnt}
+                      {review.commentCnt ? review.commentCnt : 0}
                     </Text>
                   </HStack>
                 </Td>
@@ -194,7 +195,7 @@ function ReviewDetail(props) {
                       글자 수
                     </Text>
                     <Text fontSize={"md"} fontWeight={"bold"} color={"red.500"}>
-                      {review.contentList.join(" ").length}
+                      {review.contentList.join(" ").length.toLocaleString()}
                     </Text>
                   </HStack>
                 </Td>

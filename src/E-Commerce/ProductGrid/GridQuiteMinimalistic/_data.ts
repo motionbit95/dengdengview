@@ -1,5 +1,5 @@
 export const bucketAddress =
-  "https://firebasestorage.googleapis.com/v0/b/motionbit-dangdangview.appspot.com/o";
+  "https://firebasestorage.googleapis.com/v0/b/dangdangview.appspot.com/o";
 
 export function calculateDday(targetDate: string) {
   var today = new Date();

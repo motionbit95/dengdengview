@@ -27,13 +27,17 @@ function Keyword(props) {
     console.log(window.location.pathname.split("/").pop());
     let cid = window.location.pathname.split("/").pop();
 
-    getDocument("Campain", cid).then(async (data) => {
-      let keywordList = [];
-      data.keywords.forEach((keyword) => {
-        keywordList.push(keyword);
-        setKeywords(keywordList);
+    if (keywords.length === 0) {
+      getDocument("Campain", cid).then(async (data) => {
+        let keywordList = [];
+        if (data.keywords) {
+          data.keywords?.forEach((keyword) => {
+            keywordList.push(keyword);
+            setKeywords(keywordList);
+          });
+        }
       });
-    });
+    }
 
     // fetch("http://localhost:3001/keywordstool?hintKeywords=" + "프로바이오틱스")
     //   .then(async (response) => {
@@ -50,7 +54,8 @@ function Keyword(props) {
   useEffect(() => {
     // keywords.forEach((keyword) => {
     // console.log("keywords", keywords, keywords.join(","));
-    if (result.length > 0) return;
+    // if (result.length > 0) return;
+    if (keywords.length === 0) return;
     fetch(
       process.env.REACT_APP_SERVER_URL +
         "/keywordstool?hintKeywords=" +
@@ -62,6 +67,8 @@ function Keyword(props) {
       .then(async (data) => {
         let originArray = JSON.parse(data.data).keywordList;
 
+        if (data.length === 0) return;
+
         let newArray = originArray.filter((keyword) => {
           return keywords.includes(keyword.relKeyword);
         });
@@ -71,6 +78,7 @@ function Keyword(props) {
         setRank(newArray);
         setResult(originArray);
       });
+
     // });
   }, [keywords]);
 

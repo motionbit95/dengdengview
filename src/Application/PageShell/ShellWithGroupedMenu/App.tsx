@@ -60,6 +60,7 @@ import RegisterSearch from "../../../Component/RegisterSearch";
 import RegisterReview from "../../../Component/RegisterReview";
 import { createDoc } from "../../../Firebase/Database";
 import { updateDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 export const ShellWithGroupedMenu = () => {
   const isMobile = useBreakpointValue({ base: true, md: false });
@@ -69,6 +70,9 @@ export const ShellWithGroupedMenu = () => {
 
   const [url, setUrl] = useState("");
   const [name, setName] = useState("");
+  const [cid, setCid] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     if (window.confirm("리뷰를 등록하시겠습니까?")) {
@@ -93,7 +97,7 @@ export const ShellWithGroupedMenu = () => {
             ...data,
             url: url,
             uid: "",
-            cid: "",
+            cid: cid,
             name: name,
           });
 
@@ -303,9 +307,7 @@ export const ShellWithGroupedMenu = () => {
                   label="모집글보기"
                   onClick={() => {
                     let cid = window.location.pathname.split("/").pop();
-                    window.open(
-                      process.env.REACT_APP_CLIENT_URL + "/campain/" + cid
-                    );
+                    window.location.replace("/campain/" + cid);
                   }}
                 />
               </NavGroup>
@@ -354,6 +356,13 @@ export const ShellWithGroupedMenu = () => {
             {menu === 7 && (
               <Container maxW="lg">
                 <Stack p={{ base: "4", lg: "6" }}>
+                  <FormControl>
+                    <FormLabel>체험단 ID</FormLabel>
+                    <Input
+                      onChange={(e) => setCid(e.target.value)}
+                      placeholder="체험단 ID를 입력하세요."
+                    />
+                  </FormControl>
                   <FormControl>
                     <FormLabel>이름</FormLabel>
                     <Input

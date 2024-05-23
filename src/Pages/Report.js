@@ -240,10 +240,12 @@ const ReportMain = (props) => {
 
     getDocument("Campain", cid).then((data) => {
       let keywordList = [];
-      data.keywords?.forEach((keyword) => {
-        keywordList.push(keyword);
-        setKeywords(keywordList);
-      });
+      if (data.keywords) {
+        data.keywords?.forEach((keyword) => {
+          keywordList.push(keyword);
+          setKeywords(keywordList);
+        });
+      }
     });
 
     // fetch("http://localhost:3001/keywordstool?hintKeywords=" + "프로바이오틱스")

@@ -9,6 +9,7 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalFooter,
+  ModalHeader,
   ModalOverlay,
   SimpleGrid,
   Stack,
@@ -90,8 +91,10 @@ function Picture(props) {
       </SimpleGrid>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent h={"80vh"} borderRadius="2xl">
-          <ModalBody>
+        <ModalContent borderRadius="2xl">
+          <ModalHeader />
+          <ModalCloseButton />
+          <ModalBody py={4}>
             {selectedImageUrl && (
               <Image
                 src={selectedImageUrl}
@@ -103,7 +106,9 @@ function Picture(props) {
             )}
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>닫기</Button>
+            <Button w={"full"} onClick={onClose}>
+              이미지 닫기
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
