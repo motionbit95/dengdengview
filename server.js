@@ -17,7 +17,7 @@ const port = 3001;
 // Firebase 초기화
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  storageBucket: "motionbit-dangdangview.appspot.com",
+  storageBucket: "dangdangview.appspot.com",
 });
 
 const cname = "Campain";
