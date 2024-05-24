@@ -43,7 +43,7 @@ function Campain({ ...props }) {
       //   property = "endDate";
       // }
 
-      getCollection("Campain").then((data) => {
+      searchDoc("Campain", orderBy("openDate", "desc")).then((data) => {
         let list = [];
         data.forEach((doc) => {
           if (!doc.name.includes(props.keyword)) {
@@ -93,7 +93,7 @@ function Campain({ ...props }) {
   useEffect(() => {
     if (window.location.pathname === "/") {
       console.log("tab", props.tab);
-      searchDoc("Campain", orderBy("createdAt", "desc")).then((data) => {
+      searchDoc("Campain", orderBy("openDate", "desc")).then((data) => {
         setCampains(data);
       });
     } else if (window.location.pathname === "/mypage") {

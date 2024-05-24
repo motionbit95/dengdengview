@@ -17,6 +17,7 @@ const firebaseConfig = {
   // messagingSenderId: "108420630610",
   // appId: "1:108420630610:web:3aa133936aba160a1c378b",
   // measurementId: "G-501VR68QZD",
+
   apiKey: "AIzaSyADSb5I3kiyvkjXw9OTJYVO59dBkCxCBv0",
   authDomain: "dangdangview.firebaseapp.com",
   projectId: "dangdangview",

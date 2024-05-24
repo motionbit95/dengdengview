@@ -70,6 +70,7 @@ export const getDocument = async (collectionName, docId) => {
 };
 
 export const searchDoc = async (collectionName, condition) => {
+  console.log(collectionName, condition);
   const q = query(collection(db, collectionName), condition);
   const querySnapshot = await getDocs(q);
   const docList = [];

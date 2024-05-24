@@ -159,9 +159,10 @@ function Detail(props) {
                   <HStack spacing={"6"}>
                     <Text fontWeight={"bold"}>리뷰기간</Text>
                     <HStack>
-                      <Text>{campain?.reviewStart}</Text>
+                      <Text>체험 후 3일 이내 작성이 원칙</Text>
+                      {/* <Text>{campain?.reviewStart}</Text>
                       <Text>{"~"}</Text>
-                      <Text>{campain?.reviewEnd}</Text>
+                      <Text>{campain?.reviewEnd}</Text> */}
                     </HStack>
                   </HStack>
                 </Stack>
@@ -332,12 +333,12 @@ function Detail(props) {
                       <AccordionIcon />
                     </AccordionButton>
                     <AccordionPanel {...accordionPanelStyle}>
-                      <HStack>
+                      {/* <HStack>
                         {campain?.mission?.map((value) => (
                           <Text pb={2}>{value}</Text>
                         ))}
-                      </HStack>
-                      <Text whiteSpace={"pre-line"}>
+                      </HStack> */}
+                      <Text whiteSpace={"pre-wrap"}>
                         {campain?.mission_description}
                       </Text>
                     </AccordionPanel>
@@ -450,9 +451,10 @@ function Detail(props) {
                       <HStack spacing={"6"}>
                         <Text fontWeight={"bold"}>리뷰기간</Text>
                         <HStack>
-                          <Text>{campain?.reviewStart}</Text>
+                          <Text>체험 후 3일 이내 작성이 원칙</Text>
+                          {/* <Text>{campain?.reviewStart}</Text>
                           <Text>{"~"}</Text>
-                          <Text>{campain?.reviewEnd}</Text>
+                          <Text>{campain?.reviewEnd}</Text> */}
                         </HStack>
                       </HStack>
                     </Stack>

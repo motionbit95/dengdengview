@@ -26,7 +26,7 @@ function Campain(props) {
     });
 
     // 전체 유저 정보를 받아옵니다.
-    fetchDocuments("Campain", "createdAt", lastVisible, "initial").then(
+    fetchDocuments("Campain", "openDate", lastVisible, "initial").then(
       (data) => {
         console.log(data);
         setmembers(data.list);
@@ -61,7 +61,7 @@ function Campain(props) {
             })
           }
           onNext={() => {
-            fetchDocuments("Campain", "createdAt", lastVisible, "next").then(
+            fetchDocuments("Campain", "openDate", lastVisible, "next").then(
               (data) => {
                 console.log(data);
                 setPage(page + 1);
