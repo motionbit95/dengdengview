@@ -51,7 +51,7 @@ function Picture(props) {
     <Stack>
       <PageHeader2
         title="사진모아보기"
-        discription={`총 ${totalPicture} 개의 사진이 있습니다.`}
+        discription={`총 ${totalPicture} 개의 사진이 있습니다.(리뷰 배너 포함 첨부된 이미지 수)`}
       />
 
       <SimpleGrid columns={{ base: 2, lg: 4 }} spacing={4} p={4}>
@@ -59,31 +59,49 @@ function Picture(props) {
           <>
             {review.imageList.map((image) => (
               <>
-                <Image
-                  objectFit={"cover"}
-                  aspectRatio={1}
-                  w={"full"}
-                  alt=""
-                  rounded={"lg"}
-                  shadow={"md"}
-                  cursor={"pointer"}
-                  src={
-                    bucketAddress +
-                    "/downloads%2F" +
-                    encodeURIComponent(image.split("/").pop().split("?")[0]) +
-                    "?alt=media"
-                  }
-                  onClick={() =>
-                    handleImageClick(
-                      bucketAddress +
-                        "/downloads%2F" +
-                        encodeURIComponent(
-                          image.split("/").pop().split("?")[0]
-                        ) +
-                        "?alt=media"
-                    )
-                  }
-                />
+                {/* <Text>
+                  {encodeURIComponent(image.split("/").pop().split("?")[0])}
+                </Text> */}
+                {encodeURIComponent(image.split("/").pop().split("?")[0]) ===
+                "image.png" ? null : (
+                  <Image
+                    objectFit={
+                      encodeURIComponent(
+                        image.split("/").pop().split("?")[0]
+                      ) === "image.png"
+                        ? "contain"
+                        : "cover"
+                    }
+                    aspectRatio={1}
+                    w={"full"}
+                    alt=""
+                    rounded={"lg"}
+                    shadow={"md"}
+                    cursor={"pointer"}
+                    src={
+                      encodeURIComponent(
+                        image.split("/").pop().split("?")[0]
+                      ) === "image.png"
+                        ? "https://firebasestorage.googleapis.com/v0/b/dangdangview.appspot.com/o/dangdang_banner.png?alt=media"
+                        : bucketAddress +
+                          "/downloads%2F" +
+                          encodeURIComponent(
+                            image.split("/").pop().split("?")[0]
+                          ) +
+                          "?alt=media"
+                    }
+                    onClick={() =>
+                      handleImageClick(
+                        bucketAddress +
+                          "/downloads%2F" +
+                          encodeURIComponent(
+                            image.split("/").pop().split("?")[0]
+                          ) +
+                          "?alt=media"
+                      )
+                    }
+                  />
+                )}
               </>
             ))}
           </>
