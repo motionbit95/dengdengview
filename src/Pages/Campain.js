@@ -44,12 +44,13 @@ function Campain({ ...props }) {
       // }
 
       searchDoc("Campain", orderBy("openDate", "desc")).then((data) => {
+        console.log(JSON.stringify(data));
         let list = [];
         data.forEach((doc) => {
           if (!doc.name.includes(props.keyword)) {
             return;
           }
-          console.log(doc);
+          // console.log(doc);
           // doc.data() is never undefined for query doc snapshots
           if (props.tab === "0") {
             list.push(doc);

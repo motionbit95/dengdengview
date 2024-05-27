@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use(cors());
 
-const port = 3001;
+const port = 8001;
 
 // Firebase 초기화
 admin.initializeApp({

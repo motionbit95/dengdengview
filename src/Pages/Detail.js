@@ -184,8 +184,14 @@ function Detail(props) {
                 : campain?.type + " 체험 신청하기"}
             </RegisterButton>
           </Stack>
-          {/* <Box w={"full"} h={300} overflowX={"scroll"}>
-            <HStack spacing={4}>
+
+          <Box
+            w={"full"}
+            h={300}
+            overflowX={"scroll"}
+            display={{ base: "none", md: "block" }}
+          >
+            <HStack spacing={4} className="scroll">
               {campain?.images?.map((value, index) => (
                 <Image
                   key={index}
@@ -202,8 +208,12 @@ function Detail(props) {
                 />
               ))}
             </HStack>
-          </Box> */}
-          <Stack overflow={"hidden"} spacing={0}>
+          </Box>
+          <Stack
+            overflow={"hidden"}
+            spacing={0}
+            display={{ base: "block", md: "none" }}
+          >
             {isOpen ? (
               <>
                 {campain?.images?.map((value, index) => (
@@ -231,15 +241,16 @@ function Detail(props) {
                 />
               </>
             )}
+            <Button
+              w={"full"}
+              colorScheme="gray"
+              variant="outline"
+              onClick={() => onToggle(!isOpen)}
+              rightIcon={isOpen ? <FiChevronUp /> : <FiChevronDown />}
+            >
+              {isOpen ? "내용 접기" : "펼쳐보기"}
+            </Button>
           </Stack>
-          <Button
-            colorScheme="gray"
-            variant="outline"
-            onClick={() => onToggle(!isOpen)}
-            rightIcon={isOpen ? <FiChevronUp /> : <FiChevronDown />}
-          >
-            {isOpen ? "내용 접기" : "펼쳐보기"}
-          </Button>
 
           <Tabs>
             <TabList>

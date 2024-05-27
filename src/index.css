@@ -19,3 +19,26 @@ code {
   font-weight: normal;
   font-style: normal;
 }
+
+/* ( 크롬, 사파리, 오페라, 엣지 ) 동작 */
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll {
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+}
+
+/* 스크롤바 생성 */
+.scroll {
+  /* width: 300px; */
+  height: 300px;
+  overflow-y: scroll;
+}
+
+.scroll p {
+  font-size: 2rem;
+  padding: 0.6rem 1rem;
+  background: #febf00;
+}

@@ -34,7 +34,7 @@ export const TesterTable = ({ ...props }) => {
       }
     );
 
-    sendKakao();
+    // sendKakao();
   };
 
   const sendKakao = () => {
@@ -85,8 +85,8 @@ ${campain}
               name: "당첨 확인(바로가기 클릭)",
               linkType: "WL",
               linkTypeName: "웹링크",
-              linkPc: "https://dangdangview.netlify.app/mypage",
-              linkMo: "https://dangdangview.netlify.app/mypage",
+              linkPc: "https://댕댕뷰.com/mypage",
+              linkMo: "https://댕댕뷰.com/mypage",
             },
           ],
         },
@@ -99,7 +99,7 @@ ${campain}
 
   return (
     <Table {...props}>
-      <Button onClick={() => sendKakao()}>테스트</Button>
+      {/* <Button onClick={() => sendKakao()}>테스트</Button> */}
       <Thead>
         <Tr>
           <Th>

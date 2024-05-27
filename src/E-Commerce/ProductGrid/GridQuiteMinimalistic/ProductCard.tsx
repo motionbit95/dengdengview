@@ -49,9 +49,9 @@ export const ProductCard = (props: Props) => {
             borderRadius="md"
           />
         </AspectRatio>
-        <Tag size={"sm"} position="absolute" top="2" left="2">
+        {/* <Tag size={"sm"} position="absolute" top="2" left="2">
           #{campain.doc_id.substring(0, 8)}
-        </Tag>
+        </Tag> */}
       </Box>
       <HStack zIndex={999}>
         {campain?.mozip?.includes("0") && (

@@ -62,6 +62,7 @@ function Keyword(props) {
         keywords.join(",")
     )
       .then(async (response) => {
+        // console.log(response);
         return response.json();
       })
       .then(async (data) => {
