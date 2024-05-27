@@ -1,5 +1,6 @@
 const admin = require("firebase-admin");
-const serviceAccount = require("./path/to/serviceAccountKey.json");
+// const serviceAccount = require("./path/to/serviceAccountKey.json");
+const serviceAccount = require("/home/hosting_users/dnsjxn/apps/dnsjxn_dengdengview/path/to/serviceAccountKey.json");
 const fs = require("fs");
 const puppeteer = require("puppeteer");
 const express = require("express");
