@@ -51,10 +51,10 @@ export const FormLayoutWithCards = ({ ...props }) => {
       return;
     }
 
-    if (!isExist("reviewStart", formData) || !isExist("reviewEnd", formData)) {
-      alert("리뷰일정을 입력하세요.");
-      return;
-    }
+    // if (!isExist("reviewStart", formData) || !isExist("reviewEnd", formData)) {
+    //   alert("리뷰일정을 입력하세요.");
+    //   return;
+    // }
 
     if (!isExist("targetCnt", formData)) {
       alert("모집인원을 입력하세요.");

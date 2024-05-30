@@ -122,7 +122,7 @@ export const PersonalInfoCard = ({ ...props }) => {
               }}
             />
           </FormControl>
-          <FormControl id="street" isRequired>
+          {/* <FormControl id="street" isRequired>
             <FormLabel>리뷰일정</FormLabel>
             <RangeDatepicker
               configs={{
@@ -144,7 +144,7 @@ export const PersonalInfoCard = ({ ...props }) => {
                 });
               }}
             />
-          </FormControl>
+          </FormControl> */}
         </Stack>
         <FormControl id="city" isRequired>
           <FormLabel>모집인원</FormLabel>

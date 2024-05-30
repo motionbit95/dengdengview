@@ -109,7 +109,7 @@ export const TesterTable = (props: any) => {
           </Th>
           <Th minW={"100px"}>모집일정</Th>
           <Th minW={"100px"}>발표일</Th>
-          <Th minW={"100px"}>리뷰일정</Th>
+          {/* <Th minW={"100px"}>리뷰일정</Th> */}
           <Th minW={"100px"}>모집인원</Th>
           <Th minW={"100px"}>모집구분</Th>
           {/* <Th minW={"100px"}>조회수</Th> */}
@@ -126,9 +126,9 @@ export const TesterTable = (props: any) => {
             </Td>
 
             <Td>{campain.openDate}</Td>
-            <Td>
+            {/* <Td>
               {campain.reviewStart} ~ {campain.reviewEnd}
-            </Td>
+            </Td> */}
             <Td>{campain.targetCnt}</Td>
             <Td>{campain.type}</Td>
             {/* <Td>{campain.views}</Td> */}

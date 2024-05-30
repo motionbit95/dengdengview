@@ -123,14 +123,14 @@ ${campain}
             <Td>
               <HStack spacing="3">
                 {/* <Checkbox /> */}
-                <Avatar
+                {/* <Avatar
                   src={member.avatarUrl}
                   boxSize="10"
                   cursor={"pointer"}
                   onClick={() =>
                     window.open("https://m.blog.naver.com/" + member.blog)
                   }
-                />
+                /> */}
                 <Box>
                   <Text fontWeight="medium">{member.name}</Text>
                 </Box>

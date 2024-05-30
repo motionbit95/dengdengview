@@ -97,7 +97,7 @@ export const multiQuery = async (collectionName, uid, condition) => {
   return docList;
 };
 
-export const tableCount = 6;
+export const tableCount = 10;
 
 // 현재 페이지의 마지막 문서를 기준으로 이전 10개 또는 다음 10개 문서를 가져오는 함수 - 테이블 데이터는 이걸 사용해야합니다.
 export async function fetchDocuments(

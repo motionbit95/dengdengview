@@ -83,7 +83,7 @@ export const MemberTable = (props: any) => {
               ) : (
                 <HStack spacing="3">
                   {/* <Checkbox /> */}
-                  <Avatar src={member.image} boxSize="10" />
+                  {/* <Avatar src={member.image} boxSize="10" /> */}
                   <Stack>
                     <HStack>
                       <Text fontWeight="medium">{member.name}</Text>

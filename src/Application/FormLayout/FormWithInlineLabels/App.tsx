@@ -57,7 +57,7 @@ export const FormWithInlineLabels = (props: UserData) => {
 
   const [profileImage, setProfileImage] = useState("");
   const [gender, setGender] = useState("");
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<any>({});
 
   useEffect(() => {
     console.log(userInfo);
@@ -71,6 +71,10 @@ export const FormWithInlineLabels = (props: UserData) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  // useEffect(() => {
+  //   console.log(formData);
+  // }, [formData]);
 
   const submit = () => {
     console.log(formData);
@@ -372,6 +376,12 @@ export const FormWithInlineLabels = (props: UserData) => {
               <CheckboxCard
                 value={"agree"}
                 checkboxProps={{ isChecked: userInfo?.agree }}
+                onClick={() => {
+                  setFormData({
+                    ...formData,
+                    ...{ agree: !formData?.agree },
+                  });
+                }}
               >
                 <Text color="fg.emphasized" fontWeight="medium" fontSize="sm">
                   {
