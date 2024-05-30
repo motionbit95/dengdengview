@@ -6,6 +6,7 @@ import {
   Circle,
   Container,
   Flex,
+  HStack,
   Icon,
   Image,
   Modal,
@@ -40,6 +41,10 @@ function Home(props) {
 
   const [popupOpen, setPopupOpen] = useState(false);
   const [type, setType] = useState(0);
+
+  const handleClick = (order) => {
+    window.location.replace("/view?order=" + order);
+  };
   return (
     <Stack>
       {useBreakpointValue({ base: true, md: false }) && (
@@ -79,6 +84,7 @@ function Home(props) {
           <Flex w={"full"} gap={4}>
             <Stack
               w={"100%"}
+              cursor={"pointer"}
               direction={{ base: "column", md: "row" }}
               borderRadius={"xl"}
               bgColor={"#FFD60A"}
@@ -117,6 +123,7 @@ function Home(props) {
             </Stack>
             <Stack
               w={"100%"}
+              cursor={"pointer"}
               direction={{ base: "column", md: "row" }}
               borderRadius={"xl"}
               bgColor={"#BF5AF2"}
@@ -157,7 +164,78 @@ function Home(props) {
           </Flex>
         </Container>
       </Box>
-      <Campain tab={props.tab} keyword={keyword} />
+      <Box>
+        <Container>
+          <HStack py={4} justifyContent={"space-between"}>
+            <Text fontSize={"2xl"} fontWeight={"bold"}>
+              진행중인 체험단
+            </Text>
+            <Text
+              cursor={"pointer"}
+              fontSize={"md"}
+              fontWeight={"bold"}
+              onClick={() => handleClick("진행중인 체험단")}
+            >
+              더보기
+            </Text>
+          </HStack>
+        </Container>
+        <Campain tab={props.tab} keyword={keyword} />
+      </Box>
+      <Box>
+        <Container>
+          <HStack py={4} justifyContent={"space-between"}>
+            <Text fontSize={"2xl"} fontWeight={"bold"}>
+              인기 체험단
+            </Text>
+            <Text
+              cursor={"pointer"}
+              fontSize={"md"}
+              fontWeight={"bold"}
+              onClick={() => handleClick("인기 체험단")}
+            >
+              더보기
+            </Text>
+          </HStack>
+        </Container>
+        <Campain tab={props.tab} keyword={keyword} />
+      </Box>
+      <Box>
+        <Container>
+          <HStack py={4} justifyContent={"space-between"}>
+            <Text fontSize={"2xl"} fontWeight={"bold"}>
+              마감임박 체험단
+            </Text>
+            <Text
+              cursor={"pointer"}
+              fontSize={"md"}
+              fontWeight={"bold"}
+              onClick={() => handleClick("마감임박 체험단")}
+            >
+              더보기
+            </Text>
+          </HStack>
+        </Container>
+        <Campain tab={props.tab} keyword={keyword} />
+      </Box>
+      <Box>
+        <Container>
+          <HStack py={4} justifyContent={"space-between"}>
+            <Text fontSize={"2xl"} fontWeight={"bold"}>
+              신규 체험단
+            </Text>
+            <Text
+              cursor={"pointer"}
+              fontSize={"md"}
+              fontWeight={"bold"}
+              onClick={() => handleClick("신규 체험단")}
+            >
+              더보기
+            </Text>
+          </HStack>
+        </Container>
+        <Campain tab={props.tab} keyword={keyword} />
+      </Box>
       <PopupModal
         isOpen={popupOpen}
         onClose={() => setPopupOpen(false)}

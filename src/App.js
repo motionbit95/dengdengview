@@ -29,6 +29,7 @@ import Forbidden from "./Pages/Forbidden";
 import Ads from "./Pages/Ads";
 import Privacy from "./Pages/Privacy";
 import Report from "./Pages/Report";
+import ViewMoreCampain from "./Pages/ViewMoreCampain";
 
 function App() {
   const [userInfo, setUserInfo] = React.useState(null);
@@ -95,14 +96,16 @@ function App() {
       ) : (
         <>
           {/* <BannerWithSignUp /> */}
-          {!window.location.pathname.includes("report") && (
-            <NavbarWithCenteredSearch
-              handleSearch={(e) => setKeyword(e.target.value)}
-              userInfo={userInfo}
-              setTab={setTab}
-              tab={tab}
-            />
-          )}
+          {!window.location.pathname.includes("report") &&
+            !window.location.pathname.includes("login") &&
+            !window.location.pathname.includes("signup") && (
+              <NavbarWithCenteredSearch
+                handleSearch={(e) => setKeyword(e.target.value)}
+                userInfo={userInfo}
+                setTab={setTab}
+                tab={tab}
+              />
+            )}
           <BrowserRouter>
             <Routes>
               {/* <Route path="/banner" element={<Banner />} /> */}
@@ -125,14 +128,17 @@ function App() {
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/ads" element={<Ads />} />
+              <Route path="/view" element={<ViewMoreCampain />} />
 
               <Route path="/report/*" element={<Report />} />
               <Route path="/report/detail/*" element={<AdminDashboard />} />
             </Routes>
           </BrowserRouter>
-          {!window.location.pathname.includes("/report/detail") && (
-            <FooterWithFourColumnsOnAccent />
-          )}
+          {!window.location.pathname.includes("/report/detail") &&
+            !window.location.pathname.includes("/login") &&
+            !window.location.pathname.includes("signup") && (
+              <FooterWithFourColumnsOnAccent />
+            )}
         </>
       )}
     </>

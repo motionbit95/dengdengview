@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  ButtonGroup,
   Center,
   Checkbox,
   Container,
@@ -49,12 +50,23 @@ export const LoginWithEmailPasswordOrNaver = ({ ...props }) => {
     });
   };
   return (
-    <Box>
-      <Container maxW="md" py={{ base: "12", md: "24" }}>
-        <Stack spacing="8">
-          <Stack spacing="6">
-            {/* <Logo /> */}
-            <Center>
+    <Box height={"100vh"}>
+      <Container py={{ base: "12", md: "24" }} height={"full"}>
+        <Stack
+          direction={{ base: "column", md: "row" }}
+          align={"center"}
+          spacing={{ base: "8", md: "16" }}
+          height={"full"}
+        >
+          <Stack
+            h={"full"}
+            // align={{ base: "center", md: "start" }}
+            spacing={{ base: "8", md: "16" }}
+            maxW={"xl"}
+            w={{ base: "auto", md: "xl" }}
+          >
+            <Stack spacing="6">
+              {/* <Logo /> */}
               {/* <Image w={20} src={require("../../../Assets/img/LogoText.png")} /> */}
               <Text
                 fontSize={{ base: "3xl", md: "4xl" }}
@@ -62,61 +74,75 @@ export const LoginWithEmailPasswordOrNaver = ({ ...props }) => {
               >
                 댕댕뷰
               </Text>
-            </Center>
-            <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
-              <Heading size={{ base: "xs", md: "sm" }}>통합 로그인</Heading>
-              <Text color="fg.muted">
-                모든 반려동물이 행복해지는 그날까지 댕댕뷰는 반려인분들과 함께
-                할 것을 약속드리겠습니다💑
-              </Text>
             </Stack>
-          </Stack>
-          <Stack spacing="6">
-            <Stack spacing="5">
-              <FormControl>
-                <FormLabel htmlFor="email">이메일</FormLabel>
-                <Input
-                  name="email"
-                  placeholder="이메일을 입력해주세요"
-                  type="email"
-                  onChange={handleChange}
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel htmlFor="password">비밀번호</FormLabel>
-                <Input
-                  name="password"
-                  placeholder="********"
-                  type="password"
-                  onChange={handleChange}
-                />
-              </FormControl>
-            </Stack>
-            <HStack justify="space-between">
-              <Checkbox defaultChecked>자동로그인</Checkbox>
-              <Button variant="text" size="sm">
-                비밀번호 찾기
-              </Button>
-            </HStack>
-            <HStack spacing="4">
-              <Button
-                fontSize={"lg"}
-                width={"50%"}
-                height={"48px"}
-                onClick={handleLogin}
-              >
-                로그인
-              </Button>
-              {/* <Button variant="secondary" leftIcon={<GoogleIcon />}>
+            <Stack spacing="6">
+              <Stack spacing={{ base: "2", md: "3" }}>
+                <Heading size={{ base: "xs", md: "sm" }}>로그인</Heading>
+                <Text color="fg.muted" whiteSpace={"pre-line"}>
+                  {`모든 반려동물이 행복해지는 그날까지 댕댕뷰는 
+                  반려인분들과 함께 할 것을 약속드리겠습니다💑`}
+                </Text>
+              </Stack>
+              <Stack spacing="5">
+                <FormControl>
+                  {/* <FormLabel htmlFor="email">이메일</FormLabel> */}
+                  <Input
+                    name="email"
+                    bg={"gray.50"}
+                    fontSize={"sm"}
+                    placeholder="이메일을 입력해주세요"
+                    type="email"
+                    onChange={handleChange}
+                  />
+                </FormControl>
+                <FormControl>
+                  {/* <FormLabel htmlFor="password">비밀번호</FormLabel> */}
+                  <Input
+                    name="password"
+                    bg={"gray.50"}
+                    fontSize={"sm"}
+                    placeholder="비밀번호를 입력해주세요"
+                    type="password"
+                    onChange={handleChange}
+                  />
+                </FormControl>
+              </Stack>
+              <HStack justify="flex-end">
+                {/* <Checkbox defaultChecked>자동로그인</Checkbox> */}
+                <Button variant="text" size="sm">
+                  비밀번호 찾기
+                </Button>
+              </HStack>
+              <HStack justifyContent={"space-between"} w={"full"}>
+                <Button
+                  flex={1}
+                  fontSize={"lg"}
+                  height={"48px"}
+                  onClick={handleLogin}
+                >
+                  로그인
+                </Button>
+                {/* <Button variant="secondary" leftIcon={<GoogleIcon />}>
             Sign in with Google
           </Button> */}
-              <NaverLogin />
-            </HStack>
+                <NaverLogin />
+              </HStack>
+            </Stack>
+            <Box mb={24} textAlign={"center"}>
+              <Text textStyle="sm" color="fg.muted">
+                아직 회원이 아니신가요?{" "}
+                <Link href="/signup"> 간편회원가입하기</Link>
+              </Text>
+            </Box>
           </Stack>
-          <Text textStyle="sm" color="fg.muted">
-            아직 회원이 아니신가요?{" "}
-            <Link href="/signup"> 간편회원가입하기</Link>
-          </Text>
+          <Box
+            borderRadius={"2xl"}
+            bgImage="linear-gradient(to top right,  rgba(11, 197, 234, 1), rgba(25, 219, 138, 1))"
+            display={{ base: "none", md: "block" }}
+            w={{ base: "md", md: "full" }}
+            h={"full"}
+            // h={"524px"}
+          />
         </Stack>
       </Container>
     </Box>

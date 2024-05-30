@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Container,
   FormControl,
@@ -51,63 +52,95 @@ export const SignUpForm = () => {
   };
 
   return (
-    <Container maxW="md" py={{ base: "12", md: "24" }}>
-      <Stack spacing="8">
-        <Stack spacing="6" align="center">
-          <Logo />
-          <Stack spacing="3" textAlign="center">
-            <Heading size={{ base: "xs", md: "sm" }}>회원가입하기</Heading>
-            <Text color="fg.muted">
-              반려동물들을 위한 프리미엄 체험단 댕댕뷰🐶🐱
+    <Container py={{ base: "12", md: "24" }} h={"100vh"}>
+      <Stack
+        direction={{ base: "column", md: "row" }}
+        align={"center"}
+        spacing={{ base: "8", md: "16" }}
+        h={"full"}
+      >
+        <Stack h={"full"} maxW={"xl"} w={{ base: "auto", md: "xl" }}>
+          <Stack spacing="6" mb={16}>
+            {/* <Logo /> */}
+            {/* <Image w={20} src={require("../../../Assets/img/LogoText.png")} /> */}
+            <Text
+              fontSize={{ base: "3xl", md: "4xl" }}
+              fontFamily={"Cafe24Ssurround"}
+            >
+              댕댕뷰
             </Text>
           </Stack>
-        </Stack>
-        <Stack spacing="6">
-          <Stack spacing="5">
-            <FormControl isRequired>
-              <FormLabel htmlFor="name">이름</FormLabel>
-              <Input
-                name="name"
-                type="text"
-                placeholder="실명을 입력해주세요(추후 변경이 어렵습니다)"
-                onChange={handleChange}
-              />
-            </FormControl>
-            <FormControl isRequired>
-              <FormLabel htmlFor="email">이메일</FormLabel>
-              <Input
-                name="email"
-                type="email"
-                placeholder="유효한 이메일을 입력해주세요(추후 변경이 어렵습니다)"
-                onChange={handleChange}
-              />
-            </FormControl>
-            <FormControl isRequired>
-              <FormLabel htmlFor="password">비밀번호</FormLabel>
-              <Input
-                name="password"
-                type="password"
-                placeholder="비밀번호를 입력해주세요"
-                onChange={handleChange}
-              />
-              <FormHelperText color="fg.muted">
-                8자 이상으로 작성해주세요.
-              </FormHelperText>
-            </FormControl>
-          </Stack>
-          {/* <HStack spacing="4"> */}
-          <Button fontSize={"lg"} height={"48px"} onClick={addUser}>
-            간편 회원가입 완료
-          </Button>
-          {/* <NaverLogin /> */}
-          {/* <Button variant="secondary" leftIcon={<GoogleIcon />}>
+          <Stack spacing="6">
+            {/* <Logo /> */}
+            <Stack spacing="3">
+              <Heading size={{ base: "xs", md: "sm" }}>회원가입하기</Heading>
+              <Text color="fg.muted">
+                반려동물들을 위한 프리미엄 체험단 댕댕뷰🐶🐱
+              </Text>
+            </Stack>
+            <Stack spacing="5">
+              <FormControl isRequired>
+                {/* <FormLabel htmlFor="name">이름</FormLabel> */}
+                <Input
+                  name="name"
+                  type="text"
+                  bg={"gray.50"}
+                  fontSize={"sm"}
+                  placeholder="실명을 입력해주세요"
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                {/* <FormLabel htmlFor="email">이메일</FormLabel> */}
+                <Input
+                  name="email"
+                  type="email"
+                  bg={"gray.50"}
+                  fontSize={"sm"}
+                  placeholder="유효한 이메일을 입력해주세요"
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                {/* <FormLabel htmlFor="password">비밀번호</FormLabel> */}
+                <Input
+                  name="password"
+                  type="password"
+                  bg={"gray.50"}
+                  fontSize={"sm"}
+                  placeholder="비밀번호를 입력해주세요"
+                  onChange={handleChange}
+                />
+                {/* <FormHelperText color="fg.muted">
+                  8자 이상으로 작성해주세요.
+                </FormHelperText> */}
+              </FormControl>
+            </Stack>
+            <Stack spacing="6">
+              {/* <HStack spacing="4"> */}
+              <Button fontSize={"lg"} height={"48px"} onClick={addUser}>
+                간편 회원가입 완료
+              </Button>
+              {/* <NaverLogin /> */}
+              {/* <Button variant="secondary" leftIcon={<GoogleIcon />}>
             Sign up with Google
           </Button> */}
-          {/* </HStack> */}
+              {/* </HStack> */}
+            </Stack>
+          </Stack>
+          <Box pt={{ base: "8", md: "16" }}>
+            <Text textStyle="sm" color="fg.muted" textAlign="center">
+              이미 회원이신가요? <Link href="/login">로그인하기</Link>
+            </Text>
+          </Box>
         </Stack>
-        <Text textStyle="sm" color="fg.muted" textAlign="center">
-          이미 회원이신가요? <Link href="/login">로그인하기</Link>
-        </Text>
+        <Box
+          borderRadius={"2xl"}
+          bgImage="linear-gradient(to top right,  rgba(11, 197, 234, 1), rgba(25, 219, 138, 1))"
+          display={{ base: "none", md: "block" }}
+          w={"full"}
+          h={"full"}
+        />
       </Stack>
     </Container>
   );
