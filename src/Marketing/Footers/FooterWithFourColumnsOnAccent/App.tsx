@@ -24,7 +24,7 @@ import { BiCoffee } from "react-icons/bi";
 import { FiCoffee } from "react-icons/fi";
 
 export const FooterWithFourColumnsOnAccent = () => (
-  <Box bg="bg.accent.default" color="on-acccent">
+  <Box bg="#F1F4F8" color="on-acccent">
     <Container as="footer" role="contentinfo">
       <Stack
         justify="space-between"
@@ -36,35 +36,41 @@ export const FooterWithFourColumnsOnAccent = () => (
         <Stack spacing={{ base: "6", md: "8" }} align="start">
           {/* <Image w={24} src={require("../../../Assets/img/LogoTextW.png")} /> */}
           <Text
-            color={"white"}
+            color={"#8C8C8C"}
             fontSize={{ base: "2xl", md: "3xl" }}
             fontFamily={"Cafe24Ssurround"}
           >
             댕댕뷰
           </Text>
-          <Text color="fg.accent.muted">강아지 고양이 체험단 & 이벤트</Text>
-          <Stack color="fg.accent.muted" fontSize={"sm"}>
-            <Text>대표자 : 조재현,김현준</Text>
-            <Text>상호명 : 제이에이치컴퍼니(댕댕뷰)</Text>
-            <Text>사업자등록번호 : 376-02-02457</Text>
-            <Text>전화번호 : 010-8307-2838</Text>
-            <Text>이메일 : dengdengview@naver.com</Text>
-            <Text>주소 : 경기도 군포시 군포첨단산업2로7번길 8</Text>
+          <Text color="#57636C">강아지 고양이 체험단 & 이벤트</Text>
+          <Stack color="#57636C" fontSize={"sm"} whiteSpace={"nowrap"}>
+            <Stack direction={{ base: "column", lg: "row" }}>
+              <Text>대표자 : 조재현,김현준</Text>
+              <Text display={{ base: "none", lg: "block" }}>|</Text>
+              <Text>상호명 : 제이에이치컴퍼니(댕댕뷰)</Text>
+            </Stack>
+            <Stack direction={{ base: "column", lg: "row" }}>
+              <Text>사업자등록번호 : 376-02-02457</Text>
+              <Text display={{ base: "none", lg: "block" }}>|</Text>
+              <Text>전화번호 : 010-8307-2838</Text>
+            </Stack>
+            <Stack direction={{ base: "column", lg: "row" }}>
+              <Text>이메일 : dengdengview@naver.com</Text>
+              <Text display={{ base: "none", lg: "block" }}>|</Text>
+              <Text>주소 : 경기도 군포시 군포첨단산업2로7번길 8</Text>
+            </Stack>
             <Text>카카오톡 채널 문의 : 댕댕뷰 체험단</Text>
           </Stack>
         </Stack>
         <SimpleGrid
-          columns={{ base: 2, md: 4 }}
-          gap="8"
+          columns={{ base: 2, md: 3 }}
+          columnGap={{ base: "4", md: "8" }}
+          rowGap={{ base: "4", md: "8" }}
           width={{ base: "full", lg: "auto" }}
         >
           {links.map((group, idx) => (
             <Stack key={idx} spacing="4" minW={{ lg: "40" }}>
-              <Text
-                fontSize="sm"
-                fontWeight="semibold"
-                color="fg.accent.subtle"
-              >
+              <Text fontSize="sm" fontWeight="semibold" color="#8C8C8C">
                 {group.title}
               </Text>
               <Stack spacing="3" shouldWrapChildren>
@@ -72,7 +78,10 @@ export const FooterWithFourColumnsOnAccent = () => (
                   <Button
                     key={idx}
                     as="a"
-                    variant="text.accent"
+                    // variant="text.accent"
+                    variant={"ghost"}
+                    color={"#57636C"}
+                    _hover={{ bgColor: "gray.200" }}
                     href={link.href}
                   >
                     {link.label}
@@ -83,7 +92,7 @@ export const FooterWithFourColumnsOnAccent = () => (
           ))}
         </SimpleGrid>
       </Stack>
-      <Divider borderColor="bg.accent.subtle" />
+      <Divider borderColor="#CCCCCC" />
       <Stack
         pt="8"
         pb="12"
@@ -91,28 +100,28 @@ export const FooterWithFourColumnsOnAccent = () => (
         direction={{ base: "column-reverse", md: "row" }}
         align="center"
       >
-        <Text fontSize="sm" color="fg.accent.subtle">
+        <Text fontSize="sm" color="#57636C">
           &copy; {new Date().getFullYear()} JH Company, Inc. All rights
           reserved.
         </Text>
-        <ButtonGroup variant="tertiary.accent">
+        <ButtonGroup variant="ghost">
           <IconButton
             as="a"
             href="https://www.instagram.com/dengdeng_view/"
             aria-label="Instagram"
-            icon={<FaInstagram size={"24px"} />}
+            icon={<FaInstagram size={"24px"} color="#57636C" />}
           />
           <IconButton
             as="a"
             href="https://cafe.naver.com/dengdengview"
             aria-label="Blog"
-            icon={<Naver />}
+            icon={<Naver color="#57636C" />}
           />
           <IconButton
             as="a"
             href="https://pf.kakao.com/_xbxnxnyxj"
             aria-label="Blog"
-            icon={<Kakao />}
+            icon={<Kakao color="#57636C" />}
           />
         </ButtonGroup>
       </Stack>

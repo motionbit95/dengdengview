@@ -43,6 +43,7 @@ function Campain({ ...props }) {
       //   property = "endDate";
       // }
 
+      // 전체 캠페인 -> 발표일 기준 정렬
       searchDoc("Campain", orderBy("openDate", "desc")).then((data) => {
         console.log(JSON.stringify(data));
         let list = [];
@@ -244,7 +245,10 @@ function Campain({ ...props }) {
             ))}
         </Stack>
       ) : (
-        <GridQuiteMinimalistic campains={campains} />
+        <GridQuiteMinimalistic
+          campains={campains}
+          orderType={props.orderType}
+        />
       )}
     </Stack>
   );

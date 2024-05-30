@@ -135,7 +135,7 @@ function App() {
             </Routes>
           </BrowserRouter>
           {!window.location.pathname.includes("/report/detail") &&
-            !window.location.pathname.includes("/login") &&
+            !window.location.pathname.includes("login") &&
             !window.location.pathname.includes("signup") && (
               <FooterWithFourColumnsOnAccent />
             )}

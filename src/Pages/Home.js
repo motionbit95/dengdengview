@@ -180,7 +180,7 @@ function Home(props) {
             </Text>
           </HStack>
         </Container>
-        <Campain tab={props.tab} keyword={keyword} />
+        <Campain tab={props.tab} keyword={keyword} orderType={0} />
       </Box>
       <Box>
         <Container>
@@ -198,7 +198,7 @@ function Home(props) {
             </Text>
           </HStack>
         </Container>
-        <Campain tab={props.tab} keyword={keyword} />
+        <Campain tab={props.tab} keyword={keyword} orderType={1} />
       </Box>
       <Box>
         <Container>
@@ -216,7 +216,7 @@ function Home(props) {
             </Text>
           </HStack>
         </Container>
-        <Campain tab={props.tab} keyword={keyword} />
+        <Campain tab={props.tab} keyword={keyword} orderType={2} />
       </Box>
       <Box>
         <Container>
@@ -234,7 +234,7 @@ function Home(props) {
             </Text>
           </HStack>
         </Container>
-        <Campain tab={props.tab} keyword={keyword} />
+        <Campain tab={props.tab} keyword={keyword} orderType={3} />
       </Box>
       <PopupModal
         isOpen={popupOpen}

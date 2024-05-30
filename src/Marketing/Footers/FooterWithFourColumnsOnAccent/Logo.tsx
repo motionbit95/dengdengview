@@ -145,7 +145,7 @@ export const Naver = (props: HTMLChakraProps<"svg">) => (
     >
       <path
         d="M14.6817 4.5V12.1271L9.31831 4.5H3.5625V19.5H9.31831V12L14.6817 19.5H20.4375V4.5H14.6817Z"
-        fill="white"
+        fill="#57636C"
       />
     </svg>
   </chakra.svg>
@@ -169,7 +169,7 @@ export const Kakao = (props: HTMLChakraProps<"svg">) => (
     >
       <path
         d="M12.5482 4C7.83195 4 4 7.1 4 10.9C4 13.3 5.57208 15.4 7.83195 16.7L7.24242 20L10.8779 17.6C11.3691 17.7 11.9587 17.7 12.4499 17.7C17.1662 17.7 20.9981 14.6 20.9981 10.8C21.0964 7.1 17.2645 4 12.5482 4Z"
-        fill="white"
+        fill="#57636C"
       />
     </svg>
   </chakra.svg>

@@ -104,7 +104,7 @@ function Detail(props) {
 
   return (
     <Container
-      maxW={{ base: "container.sm", lg: "container.xl" }}
+      maxW={{ base: "container.sm", md: "full", lg: "container.xl" }}
       px={{ base: "4", sm: "8" }}
       py={{ base: "4", sm: "8" }}
     >
@@ -187,7 +187,7 @@ function Detail(props) {
 
           <Box
             w={"full"}
-            h={300}
+            // h={300}
             overflowX={"scroll"}
             display={{ base: "none", md: "block" }}
           >
@@ -418,7 +418,7 @@ function Detail(props) {
             </TabPanels>
           </Tabs>
         </Stack>
-        <Stack w={"50%"} display={{ base: "none", md: "block" }}>
+        <Stack w={"50%"} minW={"334px"} display={{ base: "none", md: "block" }}>
           <Box w={"100%"} pointerEvents={"none"}>
             <Stack>
               <Calendar
@@ -603,7 +603,12 @@ function RegisterButton(props) {
     <>
       <Button
         {...props}
-        isDisabled={userTester ? true : false}
+        isDisabled={
+          userTester
+            ? // || props.children === "신청이 마감되었습니다."
+              true
+            : false
+        }
         size={"xl"}
         w={"100%"}
         onClick={() => {
@@ -619,7 +624,7 @@ function RegisterButton(props) {
               isClosable: true,
               position: "top-right",
             });
-            navigate("/login");
+            window.location.replace("/login");
           }
         }}
       >
