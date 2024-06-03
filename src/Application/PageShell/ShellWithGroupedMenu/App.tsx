@@ -343,7 +343,7 @@ export const ShellWithGroupedMenu = () => {
             h="full"
             overflow={"auto"}
             rounded="lg"
-            border="3px dashed"
+            // border="3px dashed"
             borderColor={mode("gray.200", "gray.700")}
           >
             {menu === 0 && <Dashboard />}

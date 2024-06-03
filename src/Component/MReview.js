@@ -63,7 +63,7 @@ function Review(props) {
           >
             <HStack justifyContent={"space-between"}>
               <HStack>
-                <Avatar src={review.image} size="sm" />
+                {/* <Avatar src={review.image} size="sm" /> */}
                 <Text>{review.nickname ? review.nickname : review.name}</Text>
               </HStack>
               <Text color="fg.muted" fontSize={"sm"}>

@@ -1,6 +1,6 @@
 const admin = require("firebase-admin");
-// const serviceAccount = require("./path/to/serviceAccountKey.json");
-const serviceAccount = require("/home/hosting_users/dnsjxn/apps/dnsjxn_dengdengview/path/to/serviceAccountKey.json");
+const serviceAccount = require("./path/to/serviceAccountKey.json");
+// const serviceAccount = require("/home/hosting_users/dnsjxn/apps/dnsjxn_dengdengview/path/to/serviceAccountKey.json");
 const fs = require("fs");
 const puppeteer = require("puppeteer");
 const express = require("express");
@@ -278,7 +278,6 @@ app.post("/crawl", (req, res) => {
 });
 
 app.get("/keywordstool", function (req, res) {
-  console.log(req.query.hintKeywords);
   var method = "GET";
   var api_url = "/keywordstool";
   var timestamp = Date.now() + "";
@@ -296,8 +295,7 @@ app.get("/keywordstool", function (req, res) {
   const options = {
     url:
       "https://api.naver.com/keywordstool?hintKeywords=" +
-      encodeURI(req.query.hintKeywords) +
-      "&showDetail=1",
+      encodeURIComponent(req.query.hintKeywords),
     headers: {
       "X-Timestamp": timestamp,
       "X-API-KEY": accessKey,

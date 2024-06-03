@@ -179,7 +179,7 @@ function TotalView(props) {
                     fontWeight={"bold"}
                     fontSize={"lg"}
                   >
-                    '종합' 캠페인 현황
+                    체험단 현황
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
@@ -221,7 +221,8 @@ function TotalView(props) {
                       </Center>
                       <Center h={10}>
                         <Text w={"full"}>
-                          {campain?.reviewStart} ~ {campain?.reviewEnd}
+                          {/* {campain?.reviewStart} ~ {campain?.reviewEnd} */}
+                          체험 후 3일 이내 작성이 원칙
                         </Text>
                       </Center>
                     </Stack>
@@ -340,7 +341,7 @@ function TotalView(props) {
                     fontWeight={"bold"}
                     fontSize={"lg"}
                   >
-                    리뷰 조회 수 현황
+                    조회 수 현황
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>

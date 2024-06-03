@@ -152,7 +152,7 @@ function ReviewDetail(props) {
               <Tr>
                 <Td>
                   <HStack>
-                    <Avatar size={"sm"} src={review.image} />
+                    {/* <Avatar size={"sm"} src={review.image} /> */}
                     <Text>{review.name}</Text>
                   </HStack>
                 </Td>
