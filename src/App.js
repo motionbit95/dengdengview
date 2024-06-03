@@ -30,6 +30,7 @@ import Ads from "./Pages/Ads";
 import Privacy from "./Pages/Privacy";
 import Report from "./Pages/Report";
 import ViewMoreCampain from "./Pages/ViewMoreCampain";
+import { Box, Button } from "@chakra-ui/react";
 
 function App() {
   const [userInfo, setUserInfo] = React.useState(null);
@@ -96,6 +97,28 @@ function App() {
       ) : (
         <>
           {/* <BannerWithSignUp /> */}
+          {!window.location.pathname.includes("report") &&
+            !window.location.pathname.includes("login") &&
+            !window.location.pathname.includes("signup") && (
+              <Box
+                position={"fixed"}
+                bottom={"10"}
+                right={"10"}
+                justifyContent={"flex-end"}
+                display={"flex"}
+              >
+                <Button
+                  boxSize={16}
+                  borderRadius={"full"}
+                  as="a"
+                  target="_blank" // 이건 새 페이지로 열기 기능
+                  href="https://pf.kakao.com/_xbxnxnyxj"
+                >
+                  1:1 문의
+                </Button>
+              </Box>
+            )}
+
           {!window.location.pathname.includes("report") &&
             !window.location.pathname.includes("login") &&
             !window.location.pathname.includes("signup") && (

@@ -25,15 +25,19 @@ import { FiCoffee } from "react-icons/fi";
 
 export const FooterWithFourColumnsOnAccent = () => (
   <Box bg="#F1F4F8" color="on-acccent">
-    <Container as="footer" role="contentinfo">
+    <Container as="footer" role="contentinfo" py={{ base: "12", md: "16" }}>
       <Stack
         justify="space-between"
-        align="start"
+        align={{ base: "center", md: "end" }}
+        spacing={{ base: "8", md: "0" }}
         direction={{ base: "column", lg: "row" }}
-        py={{ base: "12", md: "16" }}
-        spacing="8"
+        // py={{ base: "8", md: "16" }}
+        // spacing="8"
       >
-        <Stack spacing={{ base: "6", md: "8" }} align="start">
+        <Stack
+          spacing={{ base: "6", md: "8" }}
+          align={{ base: "center", md: "start" }}
+        >
           {/* <Image w={24} src={require("../../../Assets/img/LogoTextW.png")} /> */}
           <Text
             color={"#8C8C8C"}
@@ -43,26 +47,31 @@ export const FooterWithFourColumnsOnAccent = () => (
             댕댕뷰
           </Text>
           <Text color="#57636C">강아지 고양이 체험단 & 이벤트</Text>
-          <Stack color="#57636C" fontSize={"sm"} whiteSpace={"nowrap"}>
+          <Stack
+            color="#57636C"
+            fontSize={"sm"}
+            whiteSpace={"nowrap"}
+            spacing={{ base: 1, md: 0.5 }}
+          >
             <Stack direction={{ base: "column", lg: "row" }}>
-              <Text>대표자 : 조재현,김현준</Text>
+              <Text>제이에이치컴퍼니(댕댕뷰)</Text>
               <Text display={{ base: "none", lg: "block" }}>|</Text>
-              <Text>상호명 : 제이에이치컴퍼니(댕댕뷰)</Text>
+              <Text>대표자 : 조재현,김현준</Text>
             </Stack>
             <Stack direction={{ base: "column", lg: "row" }}>
               <Text>사업자등록번호 : 376-02-02457</Text>
               <Text display={{ base: "none", lg: "block" }}>|</Text>
-              <Text>전화번호 : 010-8307-2838</Text>
+              <Text>주소 : 경기도 군포시 군포첨단산업2로7번길 8</Text>
             </Stack>
             <Stack direction={{ base: "column", lg: "row" }}>
               <Text>이메일 : dengdengview@naver.com</Text>
               <Text display={{ base: "none", lg: "block" }}>|</Text>
-              <Text>주소 : 경기도 군포시 군포첨단산업2로7번길 8</Text>
+              <Text>전화번호 : 010-8307-2838</Text>
             </Stack>
             <Text>카카오톡 채널 문의 : 댕댕뷰 체험단</Text>
           </Stack>
         </Stack>
-        <SimpleGrid
+        {/* <SimpleGrid
           columns={{ base: 2, md: 3 }}
           columnGap={{ base: "4", md: "8" }}
           rowGap={{ base: "4", md: "8" }}
@@ -90,21 +99,41 @@ export const FooterWithFourColumnsOnAccent = () => (
               </Stack>
             </Stack>
           ))}
-        </SimpleGrid>
+        </SimpleGrid> */}
+        <Stack
+          spacing={2}
+          fontSize={"sm"}
+          fontWeight={"700"}
+          textAlign={{ base: "center", md: "end" }}
+        >
+          <Text>이용약관</Text>
+          <Text>개인정보처리방침</Text>
+        </Stack>
       </Stack>
-      <Divider borderColor="#CCCCCC" />
+      {/* <Divider borderColor="#CCCCCC" /> */}
       <Stack
-        pt="8"
-        pb="12"
+        pt={{ base: "4", md: "8" }}
         justify="space-between"
         direction={{ base: "column-reverse", md: "row" }}
         align="center"
       >
-        <Text fontSize="sm" color="#57636C">
+        <Text fontSize="sm" color="#57636C" fontWeight={"700"}>
           &copy; {new Date().getFullYear()} JH Company, Inc. All rights
           reserved.
         </Text>
         <ButtonGroup variant="ghost">
+          <IconButton
+            as="a"
+            href="https://pf.kakao.com/_xbxnxnyxj"
+            aria-label="Blog"
+            icon={<Kakao color="#57636C" />}
+          />
+          {/* <IconButton
+            as="a"
+            // href="https://www.instagram.com/dengdeng_view/"
+            aria-label="Link"
+            icon={<FaLink size={"24px"} color="#57636C" />}
+          /> */}
           <IconButton
             as="a"
             href="https://www.instagram.com/dengdeng_view/"
@@ -116,12 +145,6 @@ export const FooterWithFourColumnsOnAccent = () => (
             href="https://cafe.naver.com/dengdengview"
             aria-label="Blog"
             icon={<Naver color="#57636C" />}
-          />
-          <IconButton
-            as="a"
-            href="https://pf.kakao.com/_xbxnxnyxj"
-            aria-label="Blog"
-            icon={<Kakao color="#57636C" />}
           />
         </ButtonGroup>
       </Stack>

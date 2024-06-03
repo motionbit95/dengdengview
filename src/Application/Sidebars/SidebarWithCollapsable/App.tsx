@@ -55,7 +55,25 @@ export const SidebarWithCollapsable = ({ ...props }) => {
         // borderRightWidth="1px"
         justifyContent="space-between"
       >
-        <Stack spacing="8">
+        <Stack spacing="8" divider={<StackDivider />}>
+          <HStack spacing="3" justify="space-between">
+            <HStack spacing="3">
+              <Avatar boxSize="10" src={props.userInfo?.image} />
+              <Box>
+                <Text textStyle="sm" fontWeight="medium">
+                  {props.userInfo?.name}
+                </Text>
+                <Text textStyle="sm" color="fg.muted">
+                  {props.userInfo?.email}
+                </Text>
+              </Box>
+            </HStack>
+            {/* <IconButton
+            variant="tertiary"
+            icon={<FiMoreVertical />}
+            aria-label="Open Menu"
+          /> */}
+          </HStack>
           <Stack spacing="1">
             <CampainCollaspe
               setItem={(index: string) => props.setItem(index)}
@@ -93,24 +111,6 @@ export const SidebarWithCollapsable = ({ ...props }) => {
               카카오톡 채널
             </SidebarButton>
           </Stack>
-          <HStack spacing="3" justify="space-between">
-            <HStack spacing="3">
-              <Avatar boxSize="10" src={props.userInfo?.image} />
-              <Box>
-                <Text textStyle="sm" fontWeight="medium">
-                  {props.userInfo?.name}
-                </Text>
-                <Text textStyle="sm" color="fg.muted">
-                  {props.userInfo?.email}
-                </Text>
-              </Box>
-            </HStack>
-            {/* <IconButton
-            variant="tertiary"
-            icon={<FiMoreVertical />}
-            aria-label="Open Menu"
-          /> */}
-          </HStack>
         </Stack>
       </Stack>
     </Flex>

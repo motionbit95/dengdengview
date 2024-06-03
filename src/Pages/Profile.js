@@ -8,6 +8,8 @@ import {
   Image,
   Center,
   Button,
+  IconButton,
+  Box,
 } from "@chakra-ui/react";
 import Campain from "./Campain";
 import Mypage from "./Mypage";
