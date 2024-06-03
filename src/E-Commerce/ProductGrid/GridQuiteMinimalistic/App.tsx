@@ -15,15 +15,25 @@ export const GridQuiteMinimalistic = (props: any) => {
   useEffect(() => {
     console.log("props", campains, orderType);
 
-    if (!orderType || orderType === 0) {
-      setCampainList(campains);
-    } else if (orderType === 1) {
-      campains.sort((a: any, b: any) => b.createdAt - a.createdAt);
-    } else if (orderType === 2) {
-      campains.sort((a: any, b: any) => b.views - a.views);
-    } else if (orderType === 3) {
-      campains.sort((a: any, b: any) => b.endDate - a.endDate);
+    let tempList = campains;
+
+    if (orderType === 2 || orderType === 3) {
+      tempList = campains.filter((element: any) => {
+        return element.type !== "이벤트";
+      });
     }
+
+    if (!orderType || orderType === 0) {
+      setCampainList(tempList);
+    } else if (orderType === 1) {
+      tempList.sort((a: any, b: any) => b.createdAt - a.createdAt);
+    } else if (orderType === 2) {
+      tempList.sort((a: any, b: any) => b.views - a.views);
+    } else if (orderType === 3) {
+      tempList.sort((a: any, b: any) => b.endDate - a.endDate);
+    }
+
+    setCampainList(tempList);
 
     // setCampainList(
     //   campains.sort((a: any, b: any) => b.createdAt - a.createdAt)
@@ -44,7 +54,7 @@ export const GridQuiteMinimalistic = (props: any) => {
             columns={{ base: 2, sm: 3, lg: 4 }}
             gap={{ base: "8", lg: "12" }}
           >
-            {props?.campains?.slice(0, 8).map((campain: any) => (
+            {campainList?.slice(0, 8).map((campain: any) => (
               <ProductCard key={campain.doc_id} campain={campain} />
             ))}
           </SimpleGrid>
@@ -53,7 +63,7 @@ export const GridQuiteMinimalistic = (props: any) => {
             columns={{ base: 2, sm: 3, lg: 4 }}
             gap={{ base: "8", lg: "12" }}
           >
-            {props?.campains?.map((campain: any) => (
+            {campainList?.map((campain: any) => (
               <ProductCard key={campain.doc_id} campain={campain} />
             ))}
           </SimpleGrid>

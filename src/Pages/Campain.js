@@ -44,7 +44,7 @@ function Campain({ ...props }) {
       // }
 
       // 전체 캠페인 -> 발표일 기준 정렬
-      searchDoc("Campain", orderBy("openDate", "desc")).then((data) => {
+      getCollection("Campain").then((data) => {
         console.log(JSON.stringify(data));
         let list = [];
         data.forEach((doc) => {
@@ -95,7 +95,7 @@ function Campain({ ...props }) {
   useEffect(() => {
     if (window.location.pathname === "/") {
       console.log("tab", props.tab);
-      searchDoc("Campain", orderBy("openDate", "desc")).then((data) => {
+      getCollection("Campain").then((data) => {
         setCampains(data);
       });
     } else if (window.location.pathname === "/mypage") {

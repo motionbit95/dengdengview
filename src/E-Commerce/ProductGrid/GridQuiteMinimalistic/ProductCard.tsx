@@ -36,7 +36,15 @@ export const ProductCard = (props: Props) => {
         navigate(`/campain/${campain.doc_id}`);
       }}
     >
-      <Box position="relative" className="group">
+      <Box
+        position="relative"
+        className="group"
+        bgGradient={
+          campain.type === "이벤트" ? "linear(45deg, #19DB8A, #0BC5EA)" : "none"
+        }
+        borderRadius={{ base: "md", md: "xl" }}
+        p={2}
+      >
         <AspectRatio ratio={1}>
           <Image
             src={
@@ -56,60 +64,65 @@ export const ProductCard = (props: Props) => {
           #{campain.doc_id.substring(0, 8)}
         </Tag> */}
       </Box>
-      <Stack direction={{ base: "column", md: "row" }} spacing={2}>
-        <HStack zIndex={999} spacing={0}>
-          {campain?.mozip?.includes("0") && (
-            <Center
-              w={{ base: "28px", md: "36px" }}
-              h={{ base: "28px", md: "36px" }}
-              // rounded={"full"}
-              // bgColor={"#f5f5f5"}
-              // border={"1px solid #d9d9d9"}
+      {campain?.type !== "이벤트" && (
+        <Stack direction={{ base: "column", md: "row" }} spacing={2}>
+          <HStack zIndex={999} spacing={0}>
+            {campain?.mozip?.includes("0") && (
+              <Center
+                w={{ base: "28px", md: "36px" }}
+                h={{ base: "28px", md: "36px" }}
+                // rounded={"full"}
+                // bgColor={"#f5f5f5"}
+                // border={"1px solid #d9d9d9"}
+              >
+                <Image
+                  src={require("../../../Assets/img/style14.png")}
+                  w={{ base: "20px", md: "28px" }}
+                />
+              </Center>
+            )}
+            {campain?.mozip?.includes("1") && (
+              <Center
+                w={{ base: "28px", md: "36px" }}
+                h={{ base: "28px", md: "36px" }}
+                // rounded={"full"}
+                // bgColor={"#f5f5f5"}
+                // border={"1px solid #d9d9d9"}
+              >
+                <Image
+                  src="https://cdn-icons-png.flaticon.com/512/174/174855.png"
+                  w={{ base: "16px", md: "22px" }}
+                />
+              </Center>
+            )}
+            {campain?.mozip?.includes("2") && (
+              <Center
+                w={{ base: "28px", md: "36px" }}
+                h={{ base: "28px", md: "36px" }}
+                // rounded={"full"}
+                // bgColor={"#f5f5f5"}
+                // border={"1px solid #d9d9d9"}
+              >
+                <HiReceiptTax
+                  color="orange"
+                  size={isMobile ? "18px" : "24px"}
+                />
+                {/* <FiShoppingBag color="orange" size={isMobile ? "18px" : "24px"} /> */}
+              </Center>
+            )}
+          </HStack>
+          <HStack spacing={2}>
+            <Tag
+              size={{ base: "sm", md: "md" }}
+              colorScheme={calculateDday(campain.endDate) > 0 ? "red" : "gray"}
             >
-              <Image
-                src={require("../../../Assets/img/style14.png")}
-                w={{ base: "20px", md: "28px" }}
-              />
-            </Center>
-          )}
-          {campain?.mozip?.includes("1") && (
-            <Center
-              w={{ base: "28px", md: "36px" }}
-              h={{ base: "28px", md: "36px" }}
-              // rounded={"full"}
-              // bgColor={"#f5f5f5"}
-              // border={"1px solid #d9d9d9"}
-            >
-              <Image
-                src="https://cdn-icons-png.flaticon.com/512/174/174855.png"
-                w={{ base: "16px", md: "22px" }}
-              />
-            </Center>
-          )}
-          {campain?.mozip?.includes("2") && (
-            <Center
-              w={{ base: "28px", md: "36px" }}
-              h={{ base: "28px", md: "36px" }}
-              // rounded={"full"}
-              // bgColor={"#f5f5f5"}
-              // border={"1px solid #d9d9d9"}
-            >
-              <HiReceiptTax color="orange" size={isMobile ? "18px" : "24px"} />
-              {/* <FiShoppingBag color="orange" size={isMobile ? "18px" : "24px"} /> */}
-            </Center>
-          )}
-        </HStack>
-        <HStack spacing={2}>
-          <Tag
-            size={{ base: "sm", md: "md" }}
-            colorScheme={calculateDday(campain.endDate) > 0 ? "red" : "gray"}
-          >
-            {calculateDday(campain.endDate) > 0
-              ? calculateDday(campain.endDate) + "일 남음"
-              : Math.abs(calculateDday(campain.endDate)) + "일 지남"}
-          </Tag>
-        </HStack>
-      </Stack>
+              {calculateDday(campain.endDate) > 0
+                ? calculateDday(campain.endDate) + "일 남음"
+                : Math.abs(calculateDday(campain.endDate)) + "일 지남"}
+            </Tag>
+          </HStack>
+        </Stack>
+      )}
       <Stack justifyContent="space-between">
         <Text
           textOverflow={"ellipsis"}
@@ -129,9 +142,11 @@ export const ProductCard = (props: Props) => {
           {campain.name}
         </Text>
       </Stack>
-      <Text fontSize={"sm"} opacity={0.7}>
-        신청 {cnt} / {campain.targetCnt}명
-      </Text>
+      {campain?.type !== "이벤트" && (
+        <Text fontSize={"sm"} opacity={0.7}>
+          신청 {cnt} / {campain.targetCnt}명
+        </Text>
+      )}
     </Stack>
   );
 };

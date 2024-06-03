@@ -12,6 +12,7 @@ import {
   Stack,
   StackDivider,
   Text,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import {
   FiBookmark,
@@ -75,9 +76,11 @@ export const SidebarWithCollapsable = ({ ...props }) => {
             aria-label="Open Menu"
           /> */}
           </HStack>
-          <Stack>
-            <Button>광고문의</Button>
-          </Stack>
+          {!useBreakpointValue({ base: false, sm: true }) && (
+            <Stack>
+              <Button>광고문의</Button>
+            </Stack>
+          )}
           <Stack spacing="1">
             <CampainCollaspe
               setItem={(index: string) => props.setItem(index)}

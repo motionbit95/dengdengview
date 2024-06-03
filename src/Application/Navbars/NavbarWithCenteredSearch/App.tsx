@@ -141,9 +141,8 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                   isRound
                 /> */}
               </ButtonGroup>
-
               {useBreakpointValue({ base: false, md: true }) && (
-                <ButtonGroup>
+                <ButtonGroup justifyContent={"flex-end"}>
                   {!props.userInfo && (
                     <>
                       <Button
@@ -160,7 +159,20 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                     </Button> */}
                     </>
                   )}
+                  <InputGroup display={{ base: "none", md: "inline-flex" }}>
+                    <InputLeftElement>
+                      <Icon as={FiSearch} color="fg.muted" fontSize="lg" />
+                    </InputLeftElement>
+                    <Input
+                      width="100%"
+                      transition="width 0.5s ease"
+                      _focus={{ width: "100%" }}
+                      placeholder="검색"
+                      onChange={props.handleSearch}
+                    />
+                  </InputGroup>
                   <Button
+                    boxShadow={"md"}
                     onClick={() => (window.location.href = "/ads")}
                     borderRadius={"full"}
                   >
@@ -181,15 +193,6 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                     // name={props.userInfo?.name}
                   />
                 )} */}
-                  <InputGroup
-                    maxW={{ md: "sm", lg: "md" }}
-                    display={{ base: "none", md: "inline-flex" }}
-                  >
-                    <InputLeftElement>
-                      <Icon as={FiSearch} color="fg.muted" fontSize="lg" />
-                    </InputLeftElement>
-                    <Input placeholder="검색" onChange={props.handleSearch} />
-                  </InputGroup>
                   {props.userInfo && (
                     <>
                       <Button
