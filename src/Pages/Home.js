@@ -245,6 +245,38 @@ function Home(props) {
         </Container>
         <Campain tab={props.tab} keyword={keyword} ordertype={3} />
       </Box>
+      <Container bgColor={"rgba(11, 197, 234, 1)"} mb={8}>
+        <HStack
+          justify={"space-between"}
+          align={"center"}
+          py={{ base: "8", md: "12" }}
+          position={"relative"}
+        >
+          <Stack
+            color={"white"}
+            // py={{ base: "16", lg: "0" }}
+          >
+            <Text fontSize={{ base: "xl", lg: "2xl" }}>광고주이신가요?</Text>
+            <Text fontSize={{ base: "4xl", lg: "5xl" }}>
+              광고 제휴 문의 바로가기
+            </Text>
+          </Stack>
+          <Box
+            position={"absolute"}
+            bottom={0}
+            right={0}
+            w={"50%"}
+            display={{ base: "none", md: "flex" }}
+            justifyContent={"center"}
+            alignContent={"center"}
+          >
+            <Image
+              w={{ base: "50%", md: "60%" }}
+              src={require("../Assets/img/bottomBannerImage.png")}
+            />
+          </Box>
+        </HStack>
+      </Container>
       <PopupModal
         isOpen={popupOpen}
         onClose={() => setPopupOpen(false)}

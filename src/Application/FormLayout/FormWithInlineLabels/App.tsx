@@ -98,13 +98,13 @@ export const FormWithInlineLabels = (props: UserData) => {
           justify="space-between"
         >
           <Box>
-            <Text textStyle="lg" fontWeight="medium">
+            <Text textStyle="3xl" fontWeight="medium">
               기본정보수정
             </Text>
           </Box>
-          <Button alignSelf="start" onClick={submit}>
+          {/* <Button alignSelf="start" onClick={submit}>
             수정
-          </Button>
+          </Button> */}
         </Stack>
         <Divider />
         <Stack spacing="5" divider={<StackDivider />}>
@@ -152,7 +152,7 @@ export const FormWithInlineLabels = (props: UserData) => {
                   <Text>성함</Text>
                   <FormHelperText color="fg.muted">
                     <HStack>
-                      <Icon as={IoWarning} boxSize="4" />
+                      {/* <Icon as={IoWarning} boxSize="4" /> */}
                       <Text>변경 불가능 합니다.</Text>
                     </HStack>
                   </FormHelperText>
@@ -221,6 +221,7 @@ export const FormWithInlineLabels = (props: UserData) => {
             >
               <FormLabel variant="inline">출생연도</FormLabel>
               <Select
+                w={"50%"}
                 defaultValue={new Date().getFullYear().toString()}
                 onChange={(e) => {
                   setFormData({ ...formData, birthyear: e.target.value });
@@ -246,7 +247,12 @@ export const FormWithInlineLabels = (props: UserData) => {
               justify="space-between"
             >
               <FormLabel variant="inline">전화번호</FormLabel>
-              <Stack w={"full"} maxW={{ md: "3xl" }} spacing={0}>
+              <Stack
+                direction={"row"}
+                w={"full"}
+                maxW={{ md: "3xl" }}
+                spacing={2}
+              >
                 <Input
                   maxW={{ md: "3xl" }}
                   type="tel"
@@ -255,96 +261,97 @@ export const FormWithInlineLabels = (props: UserData) => {
                   name="phone"
                   onChange={handleChange}
                 />
+                <Button>인증하기</Button>
                 {/* <FormHelperText>
                 일부 체험단 신청 시 휴대폰 인증이 필요합니다.
               </FormHelperText> */}
               </Stack>
             </Stack>
           </FormControl>
-          <FormControl id="email">
-            <Stack
-              direction={{ base: "column", md: "row" }}
-              spacing={{ base: "1.5", md: "4" }}
-              justify="space-between"
-            >
-              <FormLabel variant="inline">
-                <Stack spacing={0}>
-                  <Text>이메일</Text>
-                  <FormHelperText color="fg.muted">
-                    <HStack>
-                      <Icon as={IoWarning} boxSize="4" />
-                      <Text>변경 불가능 합니다.</Text>
-                    </HStack>
-                  </FormHelperText>
-                </Stack>
-              </FormLabel>
-              <Input
-                type="email"
-                maxW={{ md: "3xl" }}
-                placeholder="이메일 입력"
-                defaultValue={userInfo?.email}
-                isDisabled
-                name="email"
-                onChange={handleChange}
-              />
-            </Stack>
-          </FormControl>
-          <FormControl id="website">
-            <Stack
-              direction={{ base: "column", md: "row" }}
-              spacing={{ base: "1.5", md: "4" }}
-              justify="space-between"
-            >
-              <FormLabel variant="inline">네이버 블로그 주소</FormLabel>
-              <InputGroup maxW={{ md: "3xl" }}>
-                <InputLeftAddon>https://blog.naver.com/</InputLeftAddon>
+          <Stack spacing={3}>
+            <FormControl id="email">
+              <Stack
+                direction={{ base: "column", md: "row" }}
+                spacing={{ base: "1.5", md: "4" }}
+                justify="space-between"
+              >
+                <FormLabel variant="inline">
+                  <Stack spacing={0}>
+                    <Text>이메일</Text>
+                    <FormHelperText color="fg.muted">
+                      <HStack>
+                        {/* <Icon as={IoWarning} boxSize="4" /> */}
+                        <Text>변경 불가능 합니다.</Text>
+                      </HStack>
+                    </FormHelperText>
+                  </Stack>
+                </FormLabel>
                 <Input
-                  defaultValue={userInfo?.blog}
-                  placeholder="네이버 아이디 입력"
-                  name="blog"
+                  type="email"
+                  maxW={{ md: "3xl" }}
+                  placeholder="이메일 입력"
+                  defaultValue={userInfo?.email}
+                  isDisabled
+                  name="email"
                   onChange={handleChange}
                 />
-              </InputGroup>
-            </Stack>
-          </FormControl>
-
-          <FormControl id="instagram">
-            <Stack
-              direction={{ base: "column", md: "row" }}
-              spacing={{ base: "1.5", md: "4" }}
-              justify="space-between"
-            >
-              <FormLabel variant="inline">인스타그램 주소</FormLabel>
-              <InputGroup maxW={{ md: "3xl" }}>
-                <InputLeftAddon>https://www.instagram.com/</InputLeftAddon>
-                <Input
-                  defaultValue={userInfo?.instagram}
-                  placeholder="인스타그램 아이디 입력"
-                  name="instagram"
-                  onChange={handleChange}
-                />
-              </InputGroup>
-            </Stack>
-          </FormControl>
-
-          <FormControl id="influence">
-            <Stack
-              direction={{ base: "column", md: "row" }}
-              spacing={{ base: "1.5", md: "4" }}
-              justify="space-between"
-            >
-              <FormLabel variant="inline">네이버 인플루언서 등록</FormLabel>
-              <InputGroup maxW={{ md: "3xl" }}>
-                {/* <InputLeftAddon>https://www.instagram.com/</InputLeftAddon> */}
-                <Input
-                  defaultValue={userInfo?.influence}
-                  placeholder="네이버 인플루언서 정보 등록"
-                  name="influence"
-                  onChange={handleChange}
-                />
-              </InputGroup>
-            </Stack>
-          </FormControl>
+              </Stack>
+            </FormControl>
+            <FormControl id="website">
+              <Stack
+                direction={{ base: "column", md: "row" }}
+                spacing={{ base: "1.5", md: "4" }}
+                justify="space-between"
+              >
+                <FormLabel variant="inline">네이버 블로그 주소</FormLabel>
+                <InputGroup maxW={{ md: "3xl" }}>
+                  <InputLeftAddon>https://blog.naver.com/</InputLeftAddon>
+                  <Input
+                    defaultValue={userInfo?.blog}
+                    placeholder="네이버 아이디 입력"
+                    name="blog"
+                    onChange={handleChange}
+                  />
+                </InputGroup>
+              </Stack>
+            </FormControl>
+            <FormControl id="instagram">
+              <Stack
+                direction={{ base: "column", md: "row" }}
+                spacing={{ base: "1.5", md: "4" }}
+                justify="space-between"
+              >
+                <FormLabel variant="inline">인스타그램 주소</FormLabel>
+                <InputGroup maxW={{ md: "3xl" }}>
+                  <InputLeftAddon>https://www.instagram.com/</InputLeftAddon>
+                  <Input
+                    defaultValue={userInfo?.instagram}
+                    placeholder="인스타그램 아이디 입력"
+                    name="instagram"
+                    onChange={handleChange}
+                  />
+                </InputGroup>
+              </Stack>
+            </FormControl>
+            <FormControl id="influence">
+              <Stack
+                direction={{ base: "column", md: "row" }}
+                spacing={{ base: "1.5", md: "4" }}
+                justify="space-between"
+              >
+                <FormLabel variant="inline">네이버 인플루언서 등록</FormLabel>
+                <InputGroup maxW={{ md: "3xl" }}>
+                  {/* <InputLeftAddon>https://www.instagram.com/</InputLeftAddon> */}
+                  <Input
+                    defaultValue={userInfo?.influence}
+                    placeholder="네이버 인플루언서 정보 등록"
+                    name="influence"
+                    onChange={handleChange}
+                  />
+                </InputGroup>
+              </Stack>
+            </FormControl>
+          </Stack>
           <FormControl id="address">
             <Stack
               direction={{ base: "column", md: "row" }}

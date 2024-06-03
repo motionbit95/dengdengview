@@ -110,7 +110,7 @@ function Profile(props) {
 
         {breadcrumb?.title?.includes("위젯") && (
           <Stack p={{ base: "4", md: "8", lg: "12" }}>
-            <Stack spacing={0}>
+            <Stack spacing={0} pb={6}>
               <Text fontSize={"2xl"}>지금, 블로그 위젯을</Text>
               <Text fontSize={"2xl"} fontWeight={"bold"}>
                 등록해보세요!
@@ -124,12 +124,16 @@ function Profile(props) {
               </Text>
             </Stack>
             <Stack spacing={8} mt={8}>
-              <Stack borderTop={"3px solid"} borderColor={"gray.800"} p={2}>
+              <Stack
+                borderTop={"1px solid"}
+                borderColor={"gray.200"}
+                py={{ base: 4, md: 8 }}
+              >
                 <Text fontSize={"xl"} fontWeight={"bold"}>
                   01. 위젯 링크 복사
                 </Text>
                 <Text>아래의 위젯 코드를 복사해주세요!</Text>
-                <HStack>
+                <HStack spacing={8}>
                   <Stack>
                     <Image
                       w={"100px"}
@@ -142,6 +146,9 @@ function Profile(props) {
                     <Button
                       size={"sm"}
                       w={"100px"}
+                      border={"1px solid rgba(217, 217, 217, 1)"}
+                      bgColor={"white"}
+                      color={"#57636C"}
                       onClick={() =>
                         clip(
                           `<a href="https://cafe.naver.com/dengdengview" target="_self"><img id="se_object_150665982298945477" src=https://postfiles.pstatic.net/MjAyMzA5MThfMTI4/MDAxNjk1MDQzNzkyMTkw.t78obcwa2GiWgPI8xwPydDubRjnvVaYLk6K7e6oqjukg.B3Dia_yttI88W-zlsxuPqt4pZYdU57p_P8cI3byWdScg.PNG.svs0520/KakaoTalk_20230918_214550861.png?type=w966`
@@ -150,7 +157,7 @@ function Profile(props) {
                     >
                       코드복사
                     </Button>
-                  </Stack>{" "}
+                  </Stack>
                   <Stack>
                     <Image
                       w={"100px"}
@@ -163,6 +170,9 @@ function Profile(props) {
                     <Button
                       size={"sm"}
                       w={"100px"}
+                      border={"1px solid rgba(217, 217, 217, 1)"}
+                      bgColor={"white"}
+                      color={"#57636C"}
                       onClick={() =>
                         clip(
                           `<a href="https://cafe.naver.com/dengdengview" target="_self"><img id="se_object_150665982298945477" src=https://postfiles.pstatic.net/MjAyMzA5MThfMjIw/MDAxNjk1MDQzNzkyMTky.jZCUvOeD_6Wo1U1ArpI8j2v9wJQLM0ZgjuEsjBwO40Mg.VcBUDQSI0vdsKZtuSUNCEkkgTtDPnWf9XJj6q6QHzKAg.PNG.svs0520/KakaoTalk_20230918_214550861_01.png?type=w966`
@@ -171,7 +181,7 @@ function Profile(props) {
                     >
                       코드복사
                     </Button>
-                  </Stack>{" "}
+                  </Stack>
                   <Stack>
                     <Image
                       w={"100px"}
@@ -184,6 +194,9 @@ function Profile(props) {
                     <Button
                       w={"100px"}
                       size={"sm"}
+                      border={"1px solid rgba(217, 217, 217, 1)"}
+                      bgColor={"white"}
+                      color={"#57636C"}
                       onClick={() =>
                         clip(
                           `<a href="https://cafe.naver.com/dengdengview" target="_self"><img id="se_object_150665982298945477" src=https://postfiles.pstatic.net/MjAyMzA5MThfMzgg/MDAxNjk1MDQzNzkyMTg1.5KmyWkC__9_emuW3sAKmYekoT66by2i0NSRBhUZ2igYg.Bl0gs5sgpkkapMdVKf-8vRfTix5qErtBgUSXjENTayMg.PNG.svs0520/KakaoTalk_20230918_214550861_02.png?type=w966`
@@ -205,6 +218,9 @@ function Profile(props) {
                     <Button
                       w={"100px"}
                       size={"sm"}
+                      border={"1px solid rgba(217, 217, 217, 1)"}
+                      bgColor={"white"}
+                      color={"#57636C"}
                       onClick={() =>
                         clip(
                           `<a href="https://cafe.naver.com/dengdengview" target="_self"><img id="se_object_150665982298945477" src=https://postfiles.pstatic.net/MjAyMzA5MThfODYg/MDAxNjk1MDQzNzkyMTg5.44ZtYIwBKvLtM3bl28_tObyjY82yxcIa1OqUt2vwjCEg.76uPRlivct5KAXQKSPTnqMj5Zxkpa8H7nodYVyStaDgg.PNG.svs0520/KakaoTalk_20230918_214550861_03.png?type=w966`
@@ -226,6 +242,9 @@ function Profile(props) {
                     <Button
                       w={"100px"}
                       size={"sm"}
+                      border={"1px solid rgba(217, 217, 217, 1)"}
+                      bgColor={"white"}
+                      color={"#57636C"}
                       onClick={() =>
                         clip(
                           `<a href="https://cafe.naver.com/dengdengview" target="_self"><img id="se_object_150665982298945477" src=https://postfiles.pstatic.net/MjAyMzA5MThfMTg2/MDAxNjk1MDQzNzkyMTkw.HTHuSGX3_weeSGNB6yq-VLTl-qPTwvzVzfJhURQgIv0g.w-PV4mU5uCHLPVLjn5dT7WP4hEk_kToyoxm6Qlzn5Jgg.PNG.svs0520/KakaoTalk_20230918_214550861_04.png?type=w966`
@@ -237,7 +256,11 @@ function Profile(props) {
                   </Stack>
                 </HStack>
               </Stack>
-              <Stack borderTop={"3px solid"} borderColor={"gray.800"} p={2}>
+              <Stack
+                borderTop={"1px solid"}
+                borderColor={"gray.200"}
+                py={{ base: 4, md: 8 }}
+              >
                 <Text fontSize={"xl"} fontWeight={"bold"}>
                   02. 블로그에 등록하기
                 </Text>

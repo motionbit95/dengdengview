@@ -9,9 +9,9 @@ export const PageHeader1 = ({ ...props }) => (
   >
     <Container>
       <Stack spacing="1">
-        <Heading size={{ base: "xs", md: "sm" }} fontWeight="medium">
+        {/* <Heading size={{ base: "xs", md: "sm" }} fontWeight="medium">
           {props.title}
-        </Heading>
+        </Heading> */}
         {props.description.includes("체험단") && (
           <Text color="fg.muted">{props.description}</Text>
         )}
