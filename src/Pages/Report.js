@@ -436,7 +436,7 @@ const ReportMain = (props) => {
                   </Text>
                   <HStack>
                     <Text fontWeight="bold" color="cyan.500">
-                      {props.campain.views}
+                      {0}
                     </Text>
                     <Text>회</Text>
                   </HStack>
@@ -447,7 +447,7 @@ const ReportMain = (props) => {
                   </Text>
                   <HStack>
                     <Text fontWeight="bold" color="cyan.500">
-                      {props.campain.views}
+                      {0}
                     </Text>
                     <Text>회</Text>
                   </HStack>
@@ -1037,7 +1037,7 @@ const ReportCampain = (props) => {
                         최근 30일 조회
                       </Text>
                       <HStack spacing={0}>
-                        <Text color="cyan.500">{props.campain.views}</Text>
+                        <Text color="cyan.500">{0}</Text>
                         <Text>회</Text>
                       </HStack>
                     </Stack>
@@ -1049,7 +1049,7 @@ const ReportCampain = (props) => {
                         총 조회 수
                       </Text>
                       <HStack spacing={0}>
-                        <Text color="cyan.500">{props.campain.views}</Text>
+                        <Text color="cyan.500">{0}</Text>
                         <Text>회</Text>
                       </HStack>
                     </Stack>
@@ -1180,7 +1180,7 @@ const ReportCampain = (props) => {
                         </Text>
                         <HStack spacing={0}>
                           <Text color="cyan.500">
-                            {item.views}
+                            {0}
                             {/* {item.LastThirtyDaysView.toString().replace(
                               /\B(?=(\d{3})+(?!\d))/g,
                               ","
@@ -1198,7 +1198,7 @@ const ReportCampain = (props) => {
                         </Text>
                         <HStack spacing={0}>
                           <Text color="cyan.500">
-                            {item.views}
+                            {0}
                             {/* {item.totalView
                               .toString()
                               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")} */}
