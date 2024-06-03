@@ -30,7 +30,7 @@ export const FooterWithFourColumnsOnAccent = () => (
         justify="space-between"
         align={{ base: "center", md: "end" }}
         spacing={{ base: "8", md: "0" }}
-        direction={{ base: "column", lg: "row" }}
+        direction={{ base: "column", md: "row" }}
         // py={{ base: "8", md: "16" }}
         // spacing="8"
       >
