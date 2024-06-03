@@ -30,7 +30,8 @@ import Ads from "./Pages/Ads";
 import Privacy from "./Pages/Privacy";
 import Report from "./Pages/Report";
 import ViewMoreCampain from "./Pages/ViewMoreCampain";
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, IconButton, Image, Text, VStack } from "@chakra-ui/react";
+import { Kakao } from "./Marketing/Footers/FooterWithFourColumnsOnAccent/Logo";
 
 function App() {
   const [userInfo, setUserInfo] = React.useState(null);
@@ -102,20 +103,29 @@ function App() {
             !window.location.pathname.includes("signup") && (
               <Box
                 position={"fixed"}
-                bottom={"10"}
-                right={"10"}
-                justifyContent={"flex-end"}
+                bottom={{ base: "4", md: "10" }}
+                right={{ base: "4", md: "10" }}
+                justifyContent={"center"}
+                alignItems={"center"}
                 display={"flex"}
+                zIndex={9999}
+                bgColor={"yellow.400"}
+                aspectRatio={1 / 1}
+                boxSize={{ base: "16", md: "20" }}
+                boxShadow={"md"}
+                borderRadius={"full"}
+                as="a"
+                target="_blank" // 이건 새 페이지로 열기 기능
+                href="https://pf.kakao.com/_xbxnxnyxj"
+                _hover={{ transform: "scale(1.1)", transition: "all 0.2s" }}
+                p={2}
               >
-                <Button
-                  boxSize={16}
-                  borderRadius={"full"}
-                  as="a"
-                  target="_blank" // 이건 새 페이지로 열기 기능
-                  href="https://pf.kakao.com/_xbxnxnyxj"
-                >
-                  1:1 문의
-                </Button>
+                <VStack spacing={0}>
+                  <Kakao />
+                  <Text fontSize={"xs"} fontWeight={"bold"}>
+                    1:1 문의
+                  </Text>
+                </VStack>
               </Box>
             )}
 

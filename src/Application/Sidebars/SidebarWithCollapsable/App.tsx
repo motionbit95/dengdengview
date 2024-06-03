@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Flex,
   HStack,
   Icon,
@@ -74,6 +75,9 @@ export const SidebarWithCollapsable = ({ ...props }) => {
             aria-label="Open Menu"
           /> */}
           </HStack>
+          <Stack>
+            <Button>광고문의</Button>
+          </Stack>
           <Stack spacing="1">
             <CampainCollaspe
               setItem={(index: string) => props.setItem(index)}

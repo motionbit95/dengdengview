@@ -61,7 +61,10 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <SidebarWithCollapsable setItem={(index: string) => {}} />
+          <SidebarWithCollapsable
+            userInfo={props.userInfo}
+            setItem={(index: string) => {}}
+          />
         </DrawerContent>
       </Drawer>
       <Box borderBottomWidth="1px" bg="bg.surface">
@@ -75,7 +78,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
               display={{ base: "inline-flex", md: "none" }}
             />
             <HStack spacing={20}>
-              <Box onClick={() => (window.location.href = "/")}>
+              <Box onClick={() => (window.location.href = "/")} minW={"100px"}>
                 {/* <Logo /> */}
                 {/* <Image
                   w={20}
@@ -139,30 +142,31 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                 /> */}
               </ButtonGroup>
 
-              <ButtonGroup>
-                {!props.userInfo && (
-                  <>
-                    <Button
-                      variant={"tertiary"}
-                      onClick={() => (window.location.href = "/login")}
-                    >
-                      로그인
-                    </Button>
-                    {/* <Button
+              {useBreakpointValue({ base: false, md: true }) && (
+                <ButtonGroup>
+                  {!props.userInfo && (
+                    <>
+                      <Button
+                        variant={"tertiary"}
+                        onClick={() => (window.location.href = "/login")}
+                      >
+                        로그인
+                      </Button>
+                      {/* <Button
                       variant={"tertiary"}
                       onClick={() => (window.location.href = "/signup")}
                     >
                       회원가입
                     </Button> */}
-                  </>
-                )}
-                <Button
-                  onClick={() => (window.location.href = "/ads")}
-                  borderRadius={"full"}
-                >
-                  광고문의
-                </Button>
-                {/* {props.userInfo && (
+                    </>
+                  )}
+                  <Button
+                    onClick={() => (window.location.href = "/ads")}
+                    borderRadius={"full"}
+                  >
+                    광고문의
+                  </Button>
+                  {/* {props.userInfo && (
                   <Avatar
                     onClick={() => {
                       if (!props.userInfo) {
@@ -177,29 +181,30 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                     // name={props.userInfo?.name}
                   />
                 )} */}
-                <InputGroup
-                  maxW={{ md: "sm", lg: "md" }}
-                  display={{ base: "none", md: "inline-flex" }}
-                >
-                  <InputLeftElement>
-                    <Icon as={FiSearch} color="fg.muted" fontSize="lg" />
-                  </InputLeftElement>
-                  <Input placeholder="검색" onChange={props.handleSearch} />
-                </InputGroup>
-                {props.userInfo && (
-                  <>
-                    <Button
-                      variant={"tertiary"}
-                      onClick={() => (window.location.href = "/mypage")}
-                    >
-                      마이페이지
-                    </Button>
-                    <Button variant={"tertiary"} onClick={handleLogout}>
-                      로그아웃
-                    </Button>
-                  </>
-                )}
-              </ButtonGroup>
+                  <InputGroup
+                    maxW={{ md: "sm", lg: "md" }}
+                    display={{ base: "none", md: "inline-flex" }}
+                  >
+                    <InputLeftElement>
+                      <Icon as={FiSearch} color="fg.muted" fontSize="lg" />
+                    </InputLeftElement>
+                    <Input placeholder="검색" onChange={props.handleSearch} />
+                  </InputGroup>
+                  {props.userInfo && (
+                    <>
+                      <Button
+                        variant={"tertiary"}
+                        onClick={() => (window.location.href = "/mypage")}
+                      >
+                        마이페이지
+                      </Button>
+                      <Button variant={"tertiary"} onClick={handleLogout}>
+                        로그아웃
+                      </Button>
+                    </>
+                  )}
+                </ButtonGroup>
+              )}
             </HStack>
           </HStack>
         </Container>
