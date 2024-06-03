@@ -22,6 +22,8 @@ import {
   Divider,
   WrapItem,
   Wrap,
+  Center,
+  Flex,
 } from "@chakra-ui/react";
 import { calculateDday } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/_data";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
@@ -56,6 +58,7 @@ import {
 import { AddressInput } from "../Component/MInput";
 import { auth } from "../Firebase/Config";
 import { where } from "firebase/firestore";
+import { HiReceiptTax } from "react-icons/hi";
 
 function Detail(props) {
   const navigate = useNavigate();
@@ -103,24 +106,82 @@ function Detail(props) {
   }, [campain]);
 
   return (
-    <Container
-      maxW={{ base: "container.sm", md: "full", lg: "container.xl" }}
-      px={{ base: "4", sm: "8" }}
-      py={{ base: "4", sm: "8" }}
-    >
-      <HStack
-        alignItems={"start"}
-        divider={<StackDivider display={{ base: "none", md: "block" }} />}
+    <Stack spacing={4}>
+      <Container
+        maxW={{ base: "container.sm", md: "full", lg: "container.xl" }}
+        px={{ base: "4", sm: "8" }}
+        py={{ base: "4", sm: "8" }}
       >
-        <Stack w={"full"}>
-          {/* <Tag w={"fit-content"} size={{ base: "sm", md: "md" }}>
+        <HStack
+          alignItems={"start"}
+          divider={<StackDivider display={{ base: "none", md: "block" }} />}
+        >
+          <Stack w={"full"}>
+            {/* <Tag w={"fit-content"} size={{ base: "sm", md: "md" }}>
             {"#"}
             {location.pathname.split("/").pop()?.substring(0, 8)}
           </Tag> */}
-          <Text pb={2} fontSize={{ base: "lg", md: "xl" }} fontWeight="bold">
-            {campain?.name}
-          </Text>
-          <HStack>
+            <HStack zIndex={999} spacing={0}>
+              {campain?.mozip?.includes("0") && (
+                <Center
+                  w={{ base: "28px", md: "36px" }}
+                  h={{ base: "28px", md: "36px" }}
+                  // rounded={"full"}
+                  // bgColor={"#f5f5f5"}
+                  // border={"1px solid #d9d9d9"}
+                >
+                  <Image
+                    src={require("../Assets/img/style14.png")}
+                    w={{ base: "20px", md: "28px" }}
+                  />
+                </Center>
+              )}
+              {campain?.mozip?.includes("1") && (
+                <Center
+                  w={{ base: "28px", md: "36px" }}
+                  h={{ base: "28px", md: "36px" }}
+                  // rounded={"full"}
+                  // bgColor={"#f5f5f5"}
+                  // border={"1px solid #d9d9d9"}
+                >
+                  <Image
+                    src="https://cdn-icons-png.flaticon.com/512/174/174855.png"
+                    w={{ base: "16px", md: "22px" }}
+                  />
+                </Center>
+              )}
+              {campain?.mozip?.includes("2") && (
+                <Center
+                  w={{ base: "28px", md: "36px" }}
+                  h={{ base: "28px", md: "36px" }}
+                  // rounded={"full"}
+                  // bgColor={"#f5f5f5"}
+                  // border={"1px solid #d9d9d9"}
+                >
+                  <HiReceiptTax
+                    color="orange"
+                    size={"24px"}
+                    // size={isMobile ? "18px" : "24px"}
+                  />
+                  {/* <FiShoppingBag color="orange" size={isMobile ? "18px" : "24px"} /> */}
+                </Center>
+              )}
+              <Tag
+                size={{ base: "sm", md: "md" }}
+                colorScheme={
+                  calculateDday(campain?.endDate) > 0 ? "red" : "gray"
+                }
+              >
+                {calculateDday(campain?.endDate) > 0
+                  ? calculateDday(campain?.endDate) + "일 남음"
+                  : Math.abs(calculateDday(campain?.endDate)) + "일 지남"}
+              </Tag>
+            </HStack>
+
+            <Text pb={2} fontSize={{ base: "lg", md: "xl" }} fontWeight="bold">
+              {campain?.name}
+            </Text>
+            {/* <HStack>
             <Tag
               w={"fit-content"}
               size={{ base: "sm", md: "md" }}
@@ -128,10 +189,6 @@ function Detail(props) {
             >
               {campain?.type}
             </Tag>
-            {/* <Tag colorScheme="yellow">
-              <TagLeftIcon boxSize="12px" as={BsEyeFill} />
-              {campain?.views}
-            </Tag> */}
             <Tag
               colorScheme={calculateDday(campain?.endDate) < 0 ? "gray" : "red"}
             >
@@ -139,85 +196,65 @@ function Detail(props) {
                 ? "신청마감"
                 : `D-${calculateDday(campain?.endDate)}`}
             </Tag>
-          </HStack>
-          <Stack display={{ base: "flex", md: "none" }}>
-            <Card>
-              <CardBody>
-                <Stack>
-                  <HStack spacing={"6"}>
-                    <Text fontWeight={"bold"}>모집기간</Text>
-                    <HStack>
-                      <Text>{campain?.startDate}</Text>
-                      <Text>{"~"}</Text>
+          </HStack> */}
+            <Stack display={{ base: "flex", md: "none" }}>
+              <Card>
+                <CardBody>
+                  <Stack>
+                    <HStack spacing={"6"}>
+                      <Text fontWeight={"bold"}>모집기간</Text>
+                      <HStack>
+                        <Text>{campain?.startDate}</Text>
+                        <Text>{"~"}</Text>
+                        <Text>{campain?.endDate}</Text>
+                      </HStack>
+                    </HStack>
+                    <HStack spacing={"6"}>
+                      <Text fontWeight={"bold"}>발표기간</Text>
                       <Text>{campain?.endDate}</Text>
                     </HStack>
-                  </HStack>
-                  <HStack spacing={"6"}>
-                    <Text fontWeight={"bold"}>발표기간</Text>
-                    <Text>{campain?.endDate}</Text>
-                  </HStack>
-                  <HStack spacing={"6"}>
-                    <Text fontWeight={"bold"}>리뷰기간</Text>
-                    <HStack>
-                      <Text>체험 후 3일 이내 작성이 원칙</Text>
-                      {/* <Text>{campain?.reviewStart}</Text>
+                    <HStack spacing={"6"}>
+                      <Text fontWeight={"bold"}>리뷰기간</Text>
+                      <HStack>
+                        <Text>체험 후 3일 이내 작성이 원칙</Text>
+                        {/* <Text>{campain?.reviewStart}</Text>
                       <Text>{"~"}</Text>
                       <Text>{campain?.reviewEnd}</Text> */}
+                      </HStack>
                     </HStack>
-                  </HStack>
-                </Stack>
-              </CardBody>
-            </Card>
-            <RegisterButton
-              cid={campain?.doc_id}
-              isDisabled={calculateDday(campain?.endDate) < 0}
-              onSubmit={(data) =>
-                createDoc("Tester", {
-                  ...data,
-                  cid: window.location.pathname.split("/").pop(),
-                  step: 0,
-                })
-              }
-            >
-              {calculateDday(campain?.endDate) < 0
-                ? "신청이 마감되었습니다."
-                : campain?.type + " 체험 신청하기"}
-            </RegisterButton>
-          </Stack>
+                  </Stack>
+                </CardBody>
+              </Card>
+              <RegisterButton
+                cid={campain?.doc_id}
+                isDisabled={calculateDday(campain?.endDate) < 0}
+                onSubmit={(data) =>
+                  createDoc("Tester", {
+                    ...data,
+                    cid: window.location.pathname.split("/").pop(),
+                    step: 0,
+                  })
+                }
+              >
+                {calculateDday(campain?.endDate) < 0
+                  ? "신청이 마감되었습니다."
+                  : campain?.type + " 체험 신청하기"}
+              </RegisterButton>
+            </Stack>
 
-          <Box
-            w={"full"}
-            // h={300}
-            overflowX={"scroll"}
-            display={{ base: "none", md: "block" }}
-          >
-            <HStack spacing={4} className="scroll">
-              {campain?.images?.map((value, index) => (
-                <Image
-                  key={index}
-                  borderRadius={"xl"}
-                  w={300}
-                  aspectRatio={1}
-                  src={
-                    process.env.REACT_APP_STORAGE +
-                    "/campain" +
-                    "%2F" +
-                    value +
-                    "?alt=media"
-                  }
-                />
-              ))}
-            </HStack>
-          </Box>
-          <Stack
-            overflow={"hidden"}
-            spacing={0}
-            display={{ base: "block", md: "none" }}
-          >
-            {isOpen ? (
-              <>
+            <Box
+              w={"full"}
+              // h={300}
+              overflowX={"scroll"}
+              display={{ base: "none", md: "block" }}
+            >
+              <HStack spacing={4} className="scroll">
                 {campain?.images?.map((value, index) => (
                   <Image
+                    key={index}
+                    borderRadius={"xl"}
+                    w={300}
+                    aspectRatio={1}
                     src={
                       process.env.REACT_APP_STORAGE +
                       "/campain" +
@@ -227,134 +264,155 @@ function Detail(props) {
                     }
                   />
                 ))}
-              </>
-            ) : (
-              <>
-                <Image
-                  src={
-                    process.env.REACT_APP_STORAGE +
-                    "/campain" +
-                    "%2F" +
-                    campain?.images?.[0] +
-                    "?alt=media"
-                  }
-                />
-              </>
-            )}
-            <Button
-              w={"full"}
-              colorScheme="gray"
-              variant="outline"
-              onClick={() => onToggle(!isOpen)}
-              rightIcon={isOpen ? <FiChevronUp /> : <FiChevronDown />}
+              </HStack>
+            </Box>
+            <Stack
+              overflow={"hidden"}
+              spacing={0}
+              display={{ base: "block", md: "none" }}
             >
-              {isOpen ? "내용 접기" : "펼쳐보기"}
-            </Button>
-          </Stack>
+              {isOpen ? (
+                <>
+                  {campain?.images?.map((value, index) => (
+                    <Image
+                      src={
+                        process.env.REACT_APP_STORAGE +
+                        "/campain" +
+                        "%2F" +
+                        value +
+                        "?alt=media"
+                      }
+                    />
+                  ))}
+                </>
+              ) : (
+                <>
+                  <Image
+                    src={
+                      process.env.REACT_APP_STORAGE +
+                      "/campain" +
+                      "%2F" +
+                      campain?.images?.[0] +
+                      "?alt=media"
+                    }
+                  />
+                </>
+              )}
+              <Button
+                w={"full"}
+                colorScheme="gray"
+                variant="outline"
+                onClick={() => onToggle(!isOpen)}
+                rightIcon={isOpen ? <FiChevronUp /> : <FiChevronDown />}
+              >
+                {isOpen ? "내용 접기" : "펼쳐보기"}
+              </Button>
+            </Stack>
 
-          <Tabs>
-            <TabList>
-              <Tab>리뷰정보</Tab>
-              <Tab>신청현황</Tab>
-            </TabList>
+            <Tabs>
+              <TabList>
+                <Tab>리뷰정보</Tab>
+                <Tab>신청현황</Tab>
+              </TabList>
 
-            <TabPanels>
-              <TabPanel p={0}>
-                <Accordion defaultIndex={[0, 1, 2, 3]} allowMultiple>
-                  <AccordionItem>
-                    <AccordionButton {...accordionButtonStyle}>
-                      <Box as="span" flex="1" textAlign="left">
-                        리뷰어 제공
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel {...accordionPanelStyle}>
-                      <Stack>
-                        <HStack spacing={1}>
-                          <Text>총</Text>
-                          <Text
-                            style={{ color: "#3182CE", fontWeight: "bold" }}
-                          >
-                            {campain?.targetCnt}명
-                          </Text>
-                          <Text> 모집</Text>
-                        </HStack>
-                        <Stack spacing={1}>
-                          {campain?.product?.split("\n").map((value) => (
-                            <Text>- {value}</Text>
-                          ))}
+              <TabPanels>
+                <TabPanel p={0}>
+                  <Accordion defaultIndex={[0, 1, 2, 3]} allowMultiple>
+                    <AccordionItem>
+                      <AccordionButton {...accordionButtonStyle}>
+                        <Box as="span" flex="1" textAlign="left">
+                          리뷰어 제공
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                      <AccordionPanel {...accordionPanelStyle}>
+                        <Stack>
+                          <HStack spacing={1}>
+                            <Text>총</Text>
+                            <Text
+                              style={{ color: "#3182CE", fontWeight: "bold" }}
+                            >
+                              {campain?.targetCnt}명
+                            </Text>
+                            <Text> 모집</Text>
+                          </HStack>
+                          <Stack spacing={1}>
+                            {campain?.product?.split("\n").map((value) => (
+                              <Text>- {value}</Text>
+                            ))}
+                          </Stack>
                         </Stack>
-                      </Stack>
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton {...accordionButtonStyle}>
-                      <HStack as="span" flex="1" textAlign="left">
-                        <Text>필수 키워드</Text>
-                      </HStack>
+                      </AccordionPanel>
+                    </AccordionItem>
+                    <AccordionItem>
+                      <AccordionButton {...accordionButtonStyle}>
+                        <HStack as="span" flex="1" textAlign="left">
+                          <Text>필수 키워드</Text>
+                        </HStack>
 
-                      <AccordionIcon />
-                    </AccordionButton>
+                        <AccordionIcon />
+                      </AccordionButton>
 
-                    <AccordionPanel {...accordionPanelStyle}>
-                      <Wrap>
-                        {campain?.keywords?.map((value) => (
-                          <WrapItem>
-                            <Tag>{value}</Tag>
-                          </WrapItem>
-                        ))}
-                      </Wrap>
-                      <Box
-                        bgColor={"gray.50"}
-                        p={3}
-                        my={3}
-                        borderRadius={"lg"}
-                        borderColor={"gray.300"}
-                        borderWidth={1}
-                      >
-                        <Text>
-                          - 위의 키워드 중 <strong>제목, 본문, #태그</strong>에
-                          아래와 같이 키워드를 기재해주세요.
-                        </Text>
-                        <Box ml={3}>
+                      <AccordionPanel {...accordionPanelStyle}>
+                        <Wrap>
+                          {campain?.keywords?.map((value) => (
+                            <WrapItem>
+                              <Tag>{value}</Tag>
+                            </WrapItem>
+                          ))}
+                        </Wrap>
+                        <Box
+                          bgColor={"gray.50"}
+                          p={3}
+                          my={3}
+                          borderRadius={"lg"}
+                          borderColor={"gray.300"}
+                          borderWidth={1}
+                        >
                           <Text>
-                            <strong>제목</strong>: 상품명키워드(필수)+이외
-                            키워드 택1개
+                            - 위의 키워드 중 <strong>제목, 본문, #태그</strong>
+                            에 아래와 같이 키워드를 기재해주세요.
                           </Text>
+                          <Box ml={3}>
+                            <Text>
+                              <strong>제목</strong>: 상품명키워드(필수)+이외
+                              키워드 택1개
+                            </Text>
+                            <Text>
+                              <strong>본문</strong>: 제목에서 선택한 키워드
+                              택1개를 본문에 3회 이상 언급
+                            </Text>
+                            <Text>
+                              <strong>#해시태그</strong>: 제시된 키워드 모두
+                              기재해주세요.
+                            </Text>
+                          </Box>
                           <Text>
-                            <strong>본문</strong>: 제목에서 선택한 키워드
-                            택1개를 본문에 3회 이상 언급
-                          </Text>
-                          <Text>
-                            <strong>#해시태그</strong>: 제시된 키워드 모두
-                            기재해주세요.
+                            - 키워드가 지켜지지 않으면 수정요청이 있을 수
+                            있어요.
                           </Text>
                         </Box>
-                        <Text>
-                          - 키워드가 지켜지지 않으면 수정요청이 있을 수 있어요.
-                        </Text>
-                      </Box>
-                    </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                    <AccordionButton {...accordionButtonStyle}>
-                      <Box as="span" flex="1" textAlign="left">
-                        리뷰어 미션
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel {...accordionPanelStyle}>
-                      {/* <HStack>
+                      </AccordionPanel>
+                    </AccordionItem>
+                    <AccordionItem>
+                      <AccordionButton {...accordionButtonStyle}>
+                        <Box as="span" flex="1" textAlign="left">
+                          리뷰어 미션
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                      <AccordionPanel {...accordionPanelStyle}>
+                        {/* <HStack>
                         {campain?.mission?.map((value) => (
                           <Text pb={2}>{value}</Text>
                         ))}
                       </HStack> */}
-                      <Text whiteSpace={"pre-wrap"}>
-                        {campain?.mission_description}
-                      </Text>
-                    </AccordionPanel>
-                  </AccordionItem>
-                  {/* <AccordionItem>
+                        <Text whiteSpace={"pre-wrap"}>
+                          {campain?.mission_description}
+                        </Text>
+                      </AccordionPanel>
+                    </AccordionItem>
+                    {/* <AccordionItem>
                   <AccordionButton {...accordionButtonStyle}>
                     <Box as="span" flex="1" textAlign="left">
                       추가 안내사항
@@ -365,135 +423,145 @@ function Detail(props) {
                     <Text whiteSpace={"pre-line"}>{campain?.etc}</Text>
                   </AccordionPanel>
                 </AccordionItem> */}
-                </Accordion>
-              </TabPanel>
-              <TabPanel>
-                <Stack
-                  alignItems={"start"}
-                  direction={{ base: "column", md: "row" }}
-                >
-                  <Text minW={"200px"} fontWeight={"bold"} fontSize={"lg"}>
-                    신청자 목록
-                  </Text>
-                  <Stack w={"100%"} spacing={2}>
-                    <Text fontWeight={"bold"} fontSize={"lg"}>
-                      총{" "}
-                      <span style={{ color: "#F56565" }}>
-                        {userList ? userList?.length : "0"}
-                      </span>
-                      명 / {campain?.targetCnt}명
+                  </Accordion>
+                </TabPanel>
+                <TabPanel>
+                  <Stack
+                    alignItems={"start"}
+                    direction={{ base: "column", md: "row" }}
+                  >
+                    <Text minW={"200px"} fontWeight={"bold"} fontSize={"lg"}>
+                      신청자 목록
                     </Text>
-                    <HStack w={"100%"} justifyContent={"space-between"} p={2}>
-                      <Text fontWeight={"bold"} fontSize={"md"}>
-                        신청자
+                    <Stack w={"100%"} spacing={2}>
+                      <Text fontWeight={"bold"} fontSize={"lg"}>
+                        총{" "}
+                        <span style={{ color: "#F56565" }}>
+                          {userList ? userList?.length : "0"}
+                        </span>
+                        명 / {campain?.targetCnt}명
                       </Text>
-                      <Text fontWeight={"bold"} fontSize={"md"}>
-                        신청날짜
-                      </Text>
-                    </HStack>
-                    <Divider />
-
-                    {userList?.map((value) => (
-                      <HStack
-                        w={"100%"}
-                        key={value.doc_id}
-                        alignItems={"center"}
-                        justifyContent={"space-between"}
-                      >
-                        <HStack>
-                          <Avatar src={value.image} />
-                          <Text>
-                            {(value.nickname
-                              ? value.nickname
-                              : value.name
-                            ).substring(0, 1) + "****"}
-                          </Text>
-                        </HStack>
-                        <Text>{value.createdAt.split("T")[0]}</Text>
+                      <HStack w={"100%"} justifyContent={"space-between"} p={2}>
+                        <Text fontWeight={"bold"} fontSize={"md"}>
+                          신청자
+                        </Text>
+                        <Text fontWeight={"bold"} fontSize={"md"}>
+                          신청날짜
+                        </Text>
                       </HStack>
-                    ))}
+                      <Divider />
+
+                      {userList?.map((value) => (
+                        <HStack
+                          w={"100%"}
+                          key={value.doc_id}
+                          alignItems={"center"}
+                          justifyContent={"space-between"}
+                        >
+                          <HStack>
+                            <Avatar src={value.image} />
+                            <Text>
+                              {(value.nickname
+                                ? value.nickname
+                                : value.name
+                              ).substring(0, 1) + "****"}
+                            </Text>
+                          </HStack>
+                          <Text>{value.createdAt.split("T")[0]}</Text>
+                        </HStack>
+                      ))}
+                    </Stack>
                   </Stack>
-                </Stack>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </Stack>
-        <Stack w={"50%"} minW={"334px"} display={{ base: "none", md: "block" }}>
-          <Box w={"100%"} pointerEvents={"none"}>
-            <Stack>
-              <Calendar
-                formatDay={(locale, date) => moment(date).format("DD")} // 날'일' 제외하고 숫자만 보이도록 설정
-                value={[
-                  campain?.startDate
-                    ? new Date(campain?.startDate)
-                    : new Date(),
-                  campain?.endDate ? new Date(campain?.endDate) : new Date(),
-                ]}
-                selectRange={true}
-                navigationLabel={null}
-                nextLabel={null}
-                prevLabel={null}
-                prev2Label={null}
-                next2Label={null}
-                showNeighboringMonth={false} //  이전, 이후 달의 날짜는 보이지 않도록 설정
-                style={{
-                  width: "100%",
-                  marginX: "auto",
-                  fontSize: "12px",
-                }}
-                calendarType="gregory"
-              />
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+          </Stack>
+          <Stack
+            w={"50%"}
+            minW={"334px"}
+            display={{ base: "none", md: "block" }}
+          >
+            <Box w={"100%"} pointerEvents={"none"}>
               <Stack>
-                <Card>
-                  <CardBody>
-                    <Stack>
-                      <HStack spacing={"6"}>
-                        <Text fontWeight={"bold"}>모집기간</Text>
-                        <HStack>
-                          <Text>{campain?.startDate}</Text>
-                          <Text>{"~"}</Text>
+                <Calendar
+                  formatDay={(locale, date) => moment(date).format("DD")} // 날'일' 제외하고 숫자만 보이도록 설정
+                  value={[
+                    campain?.startDate
+                      ? new Date(campain?.startDate)
+                      : new Date(),
+                    campain?.endDate ? new Date(campain?.endDate) : new Date(),
+                  ]}
+                  selectRange={true}
+                  navigationLabel={null}
+                  nextLabel={null}
+                  prevLabel={null}
+                  prev2Label={null}
+                  next2Label={null}
+                  showNeighboringMonth={false} //  이전, 이후 달의 날짜는 보이지 않도록 설정
+                  style={{
+                    width: "100%",
+                    marginX: "auto",
+                    fontSize: "12px",
+                  }}
+                  calendarType="gregory"
+                />
+                <Stack>
+                  <Card>
+                    <CardBody>
+                      <Stack>
+                        <HStack spacing={"6"}>
+                          <Text fontWeight={"bold"}>모집기간</Text>
+                          <HStack>
+                            <Text>{campain?.startDate}</Text>
+                            <Text>{"~"}</Text>
+                            <Text>{campain?.endDate}</Text>
+                          </HStack>
+                        </HStack>
+                        <HStack spacing={"6"}>
+                          <Text fontWeight={"bold"}>발표기간</Text>
                           <Text>{campain?.endDate}</Text>
                         </HStack>
-                      </HStack>
-                      <HStack spacing={"6"}>
-                        <Text fontWeight={"bold"}>발표기간</Text>
-                        <Text>{campain?.endDate}</Text>
-                      </HStack>
-                      <HStack spacing={"6"}>
-                        <Text fontWeight={"bold"}>리뷰기간</Text>
-                        <HStack>
-                          <Text>체험 후 3일 이내 작성이 원칙</Text>
-                          {/* <Text>{campain?.reviewStart}</Text>
+                        <HStack spacing={"6"}>
+                          <Text fontWeight={"bold"}>리뷰기간</Text>
+                          <HStack>
+                            <Text>체험 후 3일 이내 작성이 원칙</Text>
+                            {/* <Text>{campain?.reviewStart}</Text>
                           <Text>{"~"}</Text>
                           <Text>{campain?.reviewEnd}</Text> */}
+                          </HStack>
                         </HStack>
-                      </HStack>
-                    </Stack>
-                  </CardBody>
-                </Card>
+                      </Stack>
+                    </CardBody>
+                  </Card>
+                </Stack>
               </Stack>
-            </Stack>
-          </Box>
+            </Box>
 
-          <RegisterButton
-            mt={4}
-            cid={campain?.doc_id}
-            isDisabled={calculateDday(campain?.endDate) < 0}
-            onSubmit={(data) => {
-              createDoc("Tester", {
-                ...data,
-                cid: window.location.pathname.split("/").pop(),
-                step: 0,
-              });
-            }}
-          >
-            {calculateDday(campain?.endDate) < 0
-              ? "신청이 마감되었습니다."
-              : campain?.type + " 체험 신청하기"}
-          </RegisterButton>
-        </Stack>
-      </HStack>
-    </Container>
+            <RegisterButton
+              mt={4}
+              cid={campain?.doc_id}
+              isDisabled={calculateDday(campain?.endDate) < 0}
+              onSubmit={(data) => {
+                createDoc("Tester", {
+                  ...data,
+                  cid: window.location.pathname.split("/").pop(),
+                  step: 0,
+                });
+              }}
+            >
+              {calculateDday(campain?.endDate) < 0
+                ? "신청이 마감되었습니다."
+                : campain?.type + " 체험 신청하기"}
+            </RegisterButton>
+          </Stack>
+        </HStack>
+      </Container>
+      <Stack bgColor={"gray.100"} mb={8}>
+        <Container py={{ base: "8", md: "16" }}>
+          <Text>연관 체험단</Text>
+        </Container>
+      </Stack>
+    </Stack>
   );
 }
 

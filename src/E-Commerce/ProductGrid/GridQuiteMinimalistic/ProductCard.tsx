@@ -108,9 +108,6 @@ export const ProductCard = (props: Props) => {
               ? calculateDday(campain.endDate) + "일 남음"
               : Math.abs(calculateDday(campain.endDate)) + "일 지남"}
           </Tag>
-          {/* <Tag size={{ base: "sm", md: "md" }} colorScheme={"teal"}>
-            {campain.type}
-          </Tag> */}
         </HStack>
       </Stack>
       <Stack justifyContent="space-between">
