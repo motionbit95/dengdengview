@@ -60,7 +60,7 @@ export const SidebarWithCollapsable = ({ ...props }) => {
         <Stack spacing="8" divider={<StackDivider />}>
           <HStack spacing="3" justify="space-between">
             <HStack spacing="3">
-              <Avatar boxSize="10" src={props.userInfo?.image} />
+              {/* <Avatar boxSize="10" src={props.userInfo?.image} /> */}
               <Box>
                 <Text textStyle="sm" fontWeight="medium">
                   {props.userInfo?.name}

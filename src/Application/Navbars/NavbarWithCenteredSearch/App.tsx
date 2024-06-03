@@ -30,11 +30,15 @@ import { useState } from "react";
 import { SidebarWithCollapsable } from "../../Sidebars/SidebarWithCollapsable/App";
 import { signOut } from "firebase/auth";
 import { auth } from "../../../Firebase/Config";
+import { useNavigate } from "react-router-dom";
 
 export const NavbarWithCenteredSearch = ({ ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleTabChange = (value: string) => {
+    localStorage.setItem("top_menu", value);
     props.setTab(value);
+    // console.log(value);
+    if (window.location.pathname !== "/") window.location.replace("/");
   };
 
   const handleLogout = () => {

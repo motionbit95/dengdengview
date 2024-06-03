@@ -114,7 +114,7 @@ export const ProductCard = (props: Props) => {
           <HStack spacing={2}>
             <Tag
               size={{ base: "sm", md: "md" }}
-              colorScheme={calculateDday(campain.endDate) > 0 ? "red" : "gray"}
+              colorScheme={calculateDday(campain.endDate) > 0 ? "red" : "blue"}
             >
               {calculateDday(campain.endDate) > 0
                 ? calculateDday(campain.endDate) + "일 남음"

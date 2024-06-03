@@ -40,6 +40,7 @@ import moment from "moment";
 import { BsEyeFill } from "react-icons/bs";
 import {
   createDoc,
+  getCollection,
   getDocument,
   multiQuery,
   searchDoc,
@@ -59,6 +60,7 @@ import { AddressInput } from "../Component/MInput";
 import { auth } from "../Firebase/Config";
 import { where } from "firebase/firestore";
 import { HiReceiptTax } from "react-icons/hi";
+import { GridQuiteMinimalistic } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/App";
 
 function Detail(props) {
   const navigate = useNavigate();
@@ -69,6 +71,8 @@ function Detail(props) {
   const [isOpen, onToggle] = React.useState(false);
 
   const [userList, setUserList] = useState([]);
+
+  const [campains, setCampains] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -81,14 +85,29 @@ function Detail(props) {
         setCampain(data);
       }
     );
+
+    getCollection("Campain").then((data) => {
+      let tempList = [];
+      data.forEach((doc) => {
+        if (tempList.length < 4) {
+          tempList.push({ ...doc, doc_id: doc.id });
+        }
+      });
+      setCampains(tempList);
+    });
   }, []);
 
   useEffect(() => {
     if (campain?.doc_id) {
+      console.log(new Date().toISOString().slice(0, 10));
       updateDoc("Campain", campain?.doc_id, {
         ...campain,
         views: {
-          "2023-05-23": campain?.views + 1,
+          [new Date().toISOString().slice(0, 10)]: campain?.views[
+            new Date().toISOString().slice(0, 10)
+          ]
+            ? campain?.views[new Date().toISOString().slice(0, 10)] + 1
+            : 1,
         },
       });
 
@@ -169,7 +188,7 @@ function Detail(props) {
               <Tag
                 size={{ base: "sm", md: "md" }}
                 colorScheme={
-                  calculateDday(campain?.endDate) > 0 ? "red" : "gray"
+                  calculateDday(campain?.endDate) > 0 ? "red" : "blue"
                 }
               >
                 {calculateDday(campain?.endDate) > 0
@@ -556,10 +575,20 @@ function Detail(props) {
           </Stack>
         </HStack>
       </Container>
-      <Stack bgColor={"gray.100"} mb={8}>
-        <Container py={{ base: "8", md: "16" }}>
-          <Text>연관 체험단</Text>
+      <Stack bgColor={"gray.100"} mb={8} py={{ base: "4", md: "8" }}>
+        <Container>
+          <Text fontSize={{ base: "lg", md: "xl" }} fontWeight={"bold"}>
+            연관 체험단
+          </Text>
         </Container>
+        <>
+          {campains?.length > 0 && (
+            <GridQuiteMinimalistic
+              campains={campains}
+              ordertype={props.ordertype}
+            />
+          )}
+        </>
       </Stack>
     </Stack>
   );

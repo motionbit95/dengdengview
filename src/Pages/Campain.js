@@ -45,7 +45,7 @@ function Campain({ ...props }) {
 
       // 전체 캠페인 -> 발표일 기준 정렬
       getCollection("Campain").then((data) => {
-        console.log(JSON.stringify(data));
+        // console.log(JSON.stringify(data));
         let list = [];
         data.forEach((doc) => {
           if (!doc.name.includes(props.keyword)) {
@@ -245,10 +245,14 @@ function Campain({ ...props }) {
             ))}
         </Stack>
       ) : (
-        <GridQuiteMinimalistic
-          campains={campains}
-          orderType={props.orderType}
-        />
+        <>
+          {campains?.length > 0 && (
+            <GridQuiteMinimalistic
+              campains={campains}
+              ordertype={props.ordertype}
+            />
+          )}
+        </>
       )}
     </Stack>
   );

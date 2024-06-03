@@ -108,7 +108,7 @@ export const FormWithInlineLabels = (props: UserData) => {
         </Stack>
         <Divider />
         <Stack spacing="5" divider={<StackDivider />}>
-          <FormControl id="picture">
+          {/* <FormControl id="picture">
             <Stack
               direction={{ base: "column", md: "row" }}
               spacing={{ base: "1.5", md: "4" }}
@@ -140,7 +140,7 @@ export const FormWithInlineLabels = (props: UserData) => {
                 />
               </Stack>
             </Stack>
-          </FormControl>
+          </FormControl> */}
           <FormControl id="name">
             <Stack
               direction={{ base: "column", md: "row" }}
@@ -392,9 +392,16 @@ export const FormWithInlineLabels = (props: UserData) => {
             </Stack>
           </FormControl>
 
-          <Flex direction="row-reverse">
-            <Button onClick={submit}>수정</Button>
-          </Flex>
+          <Stack>
+            <Flex cursor={"pointer"}>
+              <Text fontWeight="bold" opacity={0.5}>
+                탈퇴하기
+              </Text>
+            </Flex>
+            <Flex direction="row-reverse">
+              <Button onClick={submit}>수정</Button>
+            </Flex>
+          </Stack>
         </Stack>
       </Stack>
     </Container>

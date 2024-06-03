@@ -1,11 +1,11 @@
 import { Box, Container, SimpleGrid, Text } from "@chakra-ui/react";
 import { ProductCard } from "./ProductCard";
-import { campains } from "./_data";
+// import { campains } from "./_data";
 import { useEffect, useState } from "react";
 import Campain from "../../../Component/MCampain";
 
 export const GridQuiteMinimalistic = (props: any) => {
-  const { campains, orderType } = props;
+  const { campains, ordertype } = props;
 
   const [campainList, setCampainList] = useState([]);
   // const [totalList, setTotalList] = useState([]);
@@ -13,23 +13,23 @@ export const GridQuiteMinimalistic = (props: any) => {
   // const [bestList, setBestList] = useState([]);
   // const [lastList, setLastList] = useState([]);
   useEffect(() => {
-    console.log("props", campains, orderType);
+    console.log("props", campains, ordertype);
 
     let tempList = campains;
 
-    if (orderType === 2 || orderType === 3) {
+    if (ordertype === 2 || ordertype === 3) {
       tempList = campains.filter((element: any) => {
         return element.type !== "이벤트";
       });
     }
 
-    if (!orderType || orderType === 0) {
+    if (!ordertype || ordertype === 0) {
       setCampainList(tempList);
-    } else if (orderType === 1) {
+    } else if (ordertype === 1) {
       tempList.sort((a: any, b: any) => b.createdAt - a.createdAt);
-    } else if (orderType === 2) {
+    } else if (ordertype === 2) {
       tempList.sort((a: any, b: any) => b.views - a.views);
-    } else if (orderType === 3) {
+    } else if (ordertype === 3) {
       tempList.sort((a: any, b: any) => b.endDate - a.endDate);
     }
 

@@ -28,9 +28,15 @@ import BlogCrawler from "../Component/BlogCrawler";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import { IoWarning } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 function Home(props) {
-  const [tab, setTab] = useState(props.tab);
+  const navigate = useNavigate();
+  const [tab, setTab] = useState(
+    localStorage.getItem("top_menu")
+    // ? localStorage.getItem("top_menu")
+    // : props.tab
+  );
   const { keyword } = props;
   const isMobile = useBreakpointValue({ base: true, md: false });
 
@@ -51,7 +57,8 @@ function Home(props) {
         <Tabs1
           onChange={(value) => {
             console.log(value);
-            setTab(value.toString());
+            window.location.replace("/");
+            // setTab(value.toString());
           }}
         />
       )}
@@ -80,89 +87,91 @@ function Home(props) {
             src={require("../Assets/img/banner_mokup.png")}
           />
         </Carousel> */}
-        <Container>
-          <Flex w={"full"} gap={4}>
-            <Stack
-              w={"100%"}
-              cursor={"pointer"}
-              direction={{ base: "column", md: "row" }}
-              borderRadius={"xl"}
-              bgColor={"#FFD60A"}
-              p={{ base: 4, md: 8 }}
-              align={"center"}
-              justify={"space-between"}
-              onClick={() => {
-                setPopupOpen(true);
-                setType("0");
-              }}
-            >
-              <Stack spacing={6}>
-                <Text
-                  fontFamily={"Cafe24Ssurround"}
-                  fontSize={"calc(0.5em + 1vw)"}
-                  fontWeight={"md"}
-                >
-                  댕댕뷰가 처음이신가요?
-                </Text>
-                <Text
-                  fontSize={{
-                    base: "calc(0.8em + 0.8vw)",
-                    lg: "calc(1.2em + 1.2vw)",
-                  }}
-                  fontWeight={"extrabold"}
-                  fontFamily={"Cafe24Ssurround"}
-                >
-                  신규 회원 가이드
-                  <br />
-                  보러가기
-                </Text>
+        {props.tab === "0" && (
+          <Container>
+            <Flex w={"full"} gap={4}>
+              <Stack
+                w={"100%"}
+                cursor={"pointer"}
+                direction={{ base: "column", md: "row" }}
+                borderRadius={"xl"}
+                bgColor={"#FFD60A"}
+                p={{ base: 4, md: 8 }}
+                align={"center"}
+                justify={"space-between"}
+                onClick={() => {
+                  setPopupOpen(true);
+                  setType("0");
+                }}
+              >
+                <Stack spacing={6}>
+                  <Text
+                    fontFamily={"Cafe24Ssurround"}
+                    fontSize={"calc(0.5em + 1vw)"}
+                    fontWeight={"md"}
+                  >
+                    댕댕뷰가 처음이신가요?
+                  </Text>
+                  <Text
+                    fontSize={{
+                      base: "calc(0.8em + 0.8vw)",
+                      lg: "calc(1.2em + 1.2vw)",
+                    }}
+                    fontWeight={"extrabold"}
+                    fontFamily={"Cafe24Ssurround"}
+                  >
+                    신규 회원 가이드
+                    <br />
+                    보러가기
+                  </Text>
+                </Stack>
+                <Box w={{ base: "50%", md: "40%" }}>
+                  <Image src={require("../Assets/img/bannerImage1.png")} />
+                </Box>
               </Stack>
-              <Box w={{ base: "50%", md: "40%" }}>
-                <Image src={require("../Assets/img/bannerImage1.png")} />
-              </Box>
-            </Stack>
-            <Stack
-              w={"100%"}
-              cursor={"pointer"}
-              direction={{ base: "column", md: "row" }}
-              borderRadius={"xl"}
-              bgColor={"#BF5AF2"}
-              p={{ base: 4, md: 8 }}
-              color={"white"}
-              align={"center"}
-              justify={"space-between"}
-              onClick={() => {
-                setPopupOpen(true);
-                setType("1");
-              }}
-            >
-              <Stack spacing={{ base: 3, md: 6 }}>
-                <Text
-                  fontFamily={"Cafe24Ssurround"}
-                  fontSize={"calc(0.5em + 1vw)"}
-                  fontWeight={"md"}
-                >
-                  체험을 완료하셨나요?
-                </Text>
-                <Text
-                  fontSize={{
-                    base: "calc(0.8em + 0.8vw)",
-                    lg: "calc(1.4em + 1.2vw)",
-                  }}
-                  fontWeight={"extrabold"}
-                  fontFamily={"Cafe24Ssurround"}
-                >
-                  리뷰 등록 방법
-                  <br />
-                  보러가기
-                </Text>
+              <Stack
+                w={"100%"}
+                cursor={"pointer"}
+                direction={{ base: "column", md: "row" }}
+                borderRadius={"xl"}
+                bgColor={"#BF5AF2"}
+                p={{ base: 4, md: 8 }}
+                color={"white"}
+                align={"center"}
+                justify={"space-between"}
+                onClick={() => {
+                  setPopupOpen(true);
+                  setType("1");
+                }}
+              >
+                <Stack spacing={{ base: 3, md: 6 }}>
+                  <Text
+                    fontFamily={"Cafe24Ssurround"}
+                    fontSize={"calc(0.5em + 1vw)"}
+                    fontWeight={"md"}
+                  >
+                    체험을 완료하셨나요?
+                  </Text>
+                  <Text
+                    fontSize={{
+                      base: "calc(0.8em + 0.8vw)",
+                      lg: "calc(1.4em + 1.2vw)",
+                    }}
+                    fontWeight={"extrabold"}
+                    fontFamily={"Cafe24Ssurround"}
+                  >
+                    리뷰 등록 방법
+                    <br />
+                    보러가기
+                  </Text>
+                </Stack>
+                <Box w={{ base: "50%", md: "40%" }}>
+                  <Image src={require("../Assets/img/bannerImage2.png")} />
+                </Box>
               </Stack>
-              <Box w={{ base: "50%", md: "40%" }}>
-                <Image src={require("../Assets/img/bannerImage2.png")} />
-              </Box>
-            </Stack>
-          </Flex>
-        </Container>
+            </Flex>
+          </Container>
+        )}
       </Box>
       <Box>
         <Container>
@@ -180,7 +189,7 @@ function Home(props) {
             </Text>
           </HStack>
         </Container>
-        <Campain tab={props.tab} keyword={keyword} orderType={0} />
+        <Campain tab={props.tab} keyword={keyword} ordertype={0} />
       </Box>
       <Box>
         <Container>
@@ -198,7 +207,7 @@ function Home(props) {
             </Text>
           </HStack>
         </Container>
-        <Campain tab={props.tab} keyword={keyword} orderType={1} />
+        <Campain tab={props.tab} keyword={keyword} ordertype={1} />
       </Box>
       <Box>
         <Container>
@@ -216,7 +225,7 @@ function Home(props) {
             </Text>
           </HStack>
         </Container>
-        <Campain tab={props.tab} keyword={keyword} orderType={2} />
+        <Campain tab={props.tab} keyword={keyword} ordertype={2} />
       </Box>
       <Box>
         <Container>
@@ -234,7 +243,7 @@ function Home(props) {
             </Text>
           </HStack>
         </Container>
-        <Campain tab={props.tab} keyword={keyword} orderType={3} />
+        <Campain tab={props.tab} keyword={keyword} ordertype={3} />
       </Box>
       <PopupModal
         isOpen={popupOpen}

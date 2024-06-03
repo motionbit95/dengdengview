@@ -136,7 +136,7 @@ function App() {
                 handleSearch={(e) => setKeyword(e.target.value)}
                 userInfo={userInfo}
                 setTab={setTab}
-                tab={tab}
+                tab={localStorage.getItem("top_menu") || tab}
               />
             )}
           <BrowserRouter>
