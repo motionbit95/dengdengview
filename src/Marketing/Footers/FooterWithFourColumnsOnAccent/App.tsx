@@ -101,8 +101,18 @@ export const FooterWithFourColumnsOnAccent = () => (
           fontWeight={"700"}
           textAlign={{ base: "center", md: "end" }}
         >
-          <Text>이용약관</Text>
-          <Text>개인정보처리방침</Text>
+          <Text
+            cursor={"pointer"}
+            onClick={() => (window.location.href = "/terms")}
+          >
+            이용약관
+          </Text>
+          <Text
+            cursor={"pointer"}
+            onClick={() => (window.location.href = "/privacy")}
+          >
+            개인정보처리방침
+          </Text>
         </Stack>
       </Stack>
       {/* <Divider borderColor="#CCCCCC" /> */}
