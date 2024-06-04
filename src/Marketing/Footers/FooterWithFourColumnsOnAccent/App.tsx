@@ -47,12 +47,7 @@ export const FooterWithFourColumnsOnAccent = () => (
             댕댕뷰
           </Text>
           <Text color="#57636C">강아지 고양이 체험단 & 이벤트</Text>
-          <Stack
-            color="#57636C"
-            fontSize={"sm"}
-            whiteSpace={"nowrap"}
-            spacing={{ base: 1, md: 0.5 }}
-          >
+          <Stack color="#57636C" fontSize={"sm"} whiteSpace={"nowrap"}>
             <Stack direction={{ base: "column", lg: "row" }}>
               <Text>제이에이치컴퍼니(댕댕뷰)</Text>
               <Text display={{ base: "none", lg: "block" }}>|</Text>

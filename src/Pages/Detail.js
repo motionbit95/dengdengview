@@ -37,7 +37,7 @@ import {
 import Calendar from "react-calendar";
 import "../Component/Calendar.css";
 import moment from "moment";
-import { BsEyeFill } from "react-icons/bs";
+import { BsEyeFill, BsInstagram } from "react-icons/bs";
 import {
   createDoc,
   getCollection,
@@ -61,6 +61,7 @@ import { auth } from "../Firebase/Config";
 import { where } from "firebase/firestore";
 import { HiReceiptTax } from "react-icons/hi";
 import { GridQuiteMinimalistic } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/App";
+import { chakra } from "@chakra-ui/react";
 
 function Detail(props) {
   const navigate = useNavigate();
@@ -221,19 +222,29 @@ function Detail(props) {
                 <CardBody>
                   <Stack>
                     <HStack spacing={"6"}>
-                      <Text fontWeight={"bold"}>모집기간</Text>
-                      <HStack>
-                        <Text>{campain?.startDate}</Text>
-                        <Text>{"~"}</Text>
+                      <Text fontWeight={"bold"} whiteSpace={"nowrap"}>
+                        모집기간
+                      </Text>
+                      <Stack
+                        direction={{ base: "column", sm: "row" }}
+                        spacing={{ base: 0, sm: 2 }}
+                      >
+                        <Text>
+                          {campain?.startDate} {"~"}
+                        </Text>
                         <Text>{campain?.endDate}</Text>
-                      </HStack>
+                      </Stack>
                     </HStack>
                     <HStack spacing={"6"}>
-                      <Text fontWeight={"bold"}>발표기간</Text>
+                      <Text fontWeight={"bold"} whiteSpace={"nowrap"}>
+                        발표기간
+                      </Text>
                       <Text>{campain?.endDate}</Text>
                     </HStack>
                     <HStack spacing={"6"}>
-                      <Text fontWeight={"bold"}>리뷰기간</Text>
+                      <Text fontWeight={"bold"} whiteSpace={"nowrap"}>
+                        리뷰기간
+                      </Text>
                       <HStack>
                         <Text>체험 후 3일 이내 작성이 원칙</Text>
                         {/* <Text>{campain?.reviewStart}</Text>
@@ -460,35 +471,45 @@ function Detail(props) {
                         </span>
                         명 / {campain?.targetCnt}명
                       </Text>
-                      <HStack w={"100%"} justifyContent={"space-between"} p={2}>
-                        <Text fontWeight={"bold"} fontSize={"md"}>
-                          신청자
-                        </Text>
-                        <Text fontWeight={"bold"} fontSize={"md"}>
-                          신청날짜
-                        </Text>
-                      </HStack>
-                      <Divider />
-
-                      {userList?.map((value) => (
+                      <Stack
+                        border={"1px solid #d9d9d9"}
+                        borderRadius={"lg"}
+                        p={2}
+                      >
                         <HStack
                           w={"100%"}
-                          key={value.doc_id}
-                          alignItems={"center"}
                           justifyContent={"space-between"}
+                          p={2}
                         >
-                          <HStack>
-                            <Avatar src={value.image} />
-                            <Text>
-                              {(value.nickname
-                                ? value.nickname
-                                : value.name
-                              ).substring(0, 1) + "****"}
-                            </Text>
-                          </HStack>
-                          <Text>{value.createdAt.split("T")[0]}</Text>
+                          <Text fontWeight={"bold"} fontSize={"md"}>
+                            신청자
+                          </Text>
+                          <Text fontWeight={"bold"} fontSize={"md"}>
+                            신청날짜
+                          </Text>
                         </HStack>
-                      ))}
+                        <Divider />
+
+                        {userList?.map((value) => (
+                          <HStack
+                            w={"100%"}
+                            key={value.doc_id}
+                            alignItems={"center"}
+                            justifyContent={"space-between"}
+                          >
+                            <HStack>
+                              <Avatar src={value.image} />
+                              <Text>
+                                {(value.nickname
+                                  ? value.nickname
+                                  : value.name
+                                ).substring(0, 1) + "****"}
+                              </Text>
+                            </HStack>
+                            <Text>{value.createdAt.split("T")[0]}</Text>
+                          </HStack>
+                        ))}
+                      </Stack>
                     </Stack>
                   </Stack>
                 </TabPanel>
@@ -496,7 +517,7 @@ function Detail(props) {
             </Tabs>
           </Stack>
           <Stack
-            w={"50%"}
+            w={"334px"}
             minW={"334px"}
             display={{ base: "none", md: "block" }}
           >
@@ -948,7 +969,10 @@ function RegisterButton(props) {
 
           <ModalFooter bgColor={"white"} justifyContent={"center"}>
             <Button
-              colorScheme="green"
+              bgColor={"rgba(22, 176, 112, 1)"}
+              _hover={{ bgColor: "rgba(22, 176, 112, 0.8)" }}
+              color={"white"}
+              leftIcon={<Naver />}
               size={"xl"}
               mr={3}
               onClick={() => {
@@ -971,7 +995,11 @@ function RegisterButton(props) {
               네이버 블로그 체험단 신청하기
             </Button>
             <Button
-              colorScheme="pink"
+              boxShadow={"0px 4px 4px 0px rgba(0, 0, 0, 0.25)"}
+              _hover={{ bgColor: "gray.50" }}
+              bgColor={"white"}
+              color={"black"}
+              leftIcon={<BsInstagram />}
               size={"xl"}
               mr={3}
               onClick={() => {
@@ -1011,3 +1039,27 @@ export const accordionPanelStyle = {
 };
 
 export default Detail;
+
+export const Naver = (props) => (
+  <chakra.svg
+    color="accent"
+    height="8"
+    width="auto"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M14.6817 4.5V12.1271L9.31831 4.5H3.5625V19.5H9.31831V12L14.6817 19.5H20.4375V4.5H14.6817Z"
+        fill="white"
+      />
+    </svg>
+  </chakra.svg>
+);

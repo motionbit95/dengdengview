@@ -13,6 +13,8 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
+  Radio,
+  RadioGroup,
   Select,
   Stack,
   StackDivider,
@@ -202,6 +204,7 @@ export const FormWithInlineLabels = (props: UserData) => {
                   <Radio value="여">여성</Radio>
                 </HStack>
               </RadioGroup> */}
+
               <RadioButtonGroup
                 defaultValue={gender}
                 onChange={(value: string) => {
@@ -406,7 +409,7 @@ export const FormWithInlineLabels = (props: UserData) => {
               </Text>
             </Flex>
             <Flex direction="row-reverse">
-              <Button onClick={submit}>수정</Button>
+              <Button onClick={submit}>수정하기</Button>
             </Flex>
           </Stack>
         </Stack>

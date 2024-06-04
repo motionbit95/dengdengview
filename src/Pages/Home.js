@@ -261,8 +261,12 @@ function Home(props) {
               // py={{ base: "16", lg: "0" }}
             >
               <Text fontSize={{ base: "xl", lg: "2xl" }}>광고주이신가요?</Text>
-              <Text fontSize={{ base: "4xl", lg: "5xl" }}>
-                광고 제휴 문의 바로가기
+              <Text
+                fontSize={{ base: "4xl", lg: "5xl" }}
+                whiteSpace={{ base: "pre-line", md: "nowrap" }}
+              >
+                {`광고 제휴 
+                문의 바로가기`}
               </Text>
             </Stack>
             <Box
