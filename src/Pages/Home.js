@@ -248,7 +248,13 @@ function Home(props) {
         </Container>
         <Campain tab={props.tab} keyword={keyword} ordertype={3} />
       </Box>
-      <Stack bgColor={"rgba(11, 197, 234, 1)"} mb={8}>
+
+      <Box
+        bgColor={"rgba(11, 197, 234, 1)"}
+        mb={8}
+        cursor={"pointer"}
+        onClick={() => (window.location.href = "/ads")}
+      >
         <Container>
           <HStack
             justify={"space-between"}
@@ -285,7 +291,7 @@ function Home(props) {
             </Box>
           </HStack>
         </Container>
-      </Stack>
+      </Box>
       <PopupModal
         isOpen={popupOpen}
         onClose={() => setPopupOpen(false)}

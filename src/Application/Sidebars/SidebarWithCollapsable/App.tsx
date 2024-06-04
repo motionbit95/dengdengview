@@ -78,7 +78,9 @@ export const SidebarWithCollapsable = ({ ...props }) => {
           </HStack>
           {!useBreakpointValue({ base: false, sm: true }) && (
             <Stack>
-              <Button>광고문의</Button>
+              <Button onClick={() => (window.location.href = "/ads")}>
+                광고문의
+              </Button>
             </Stack>
           )}
           <Stack spacing="1">
