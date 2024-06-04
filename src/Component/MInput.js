@@ -37,6 +37,7 @@ export function AddressInput(props) {
     <Stack w={"100%"}>
       <HStack w={"100%"}>
         <Input
+          fontSize={{ base: "sm", md: "md" }}
           size={props.size ? props.size : "md"}
           name="zonecode"
           placeholder="우편번호"
@@ -56,6 +57,7 @@ export function AddressInput(props) {
         </Button>
       </HStack>
       <Input
+        fontSize={{ base: "sm", md: "md" }}
         size={props.size ? props.size : "md"}
         name="street"
         placeholder="도로명주소"
@@ -68,6 +70,7 @@ export function AddressInput(props) {
       />
       <HStack>
         <Input
+          fontSize={{ base: "sm", md: "md" }}
           size={props.size ? props.size : "md"}
           name="address"
           placeholder="상세주소"

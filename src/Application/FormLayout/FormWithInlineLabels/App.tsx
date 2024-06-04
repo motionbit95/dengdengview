@@ -11,6 +11,7 @@ import {
   HStack,
   Icon,
   Input,
+  InputAddon,
   InputGroup,
   InputLeftAddon,
   Radio,
@@ -19,6 +20,7 @@ import {
   Stack,
   StackDivider,
   Text,
+  useBreakpointValue,
   useToast,
 } from "@chakra-ui/react";
 import { Dropzone } from "./Dropzone";
@@ -60,6 +62,7 @@ export const FormWithInlineLabels = (props: UserData) => {
   const [profileImage, setProfileImage] = useState("");
   const [gender, setGender] = useState("");
   const [formData, setFormData] = useState<any>({});
+  const isMobile = useBreakpointValue({ base: true, md: false });
 
   useEffect(() => {
     console.log(userInfo);
@@ -100,7 +103,7 @@ export const FormWithInlineLabels = (props: UserData) => {
           justify="space-between"
         >
           <Box>
-            <Text textStyle="3xl" fontWeight="medium">
+            <Text textStyle={{ base: "2xl", md: "3xl" }} fontWeight="medium">
               기본정보수정
             </Text>
           </Box>
@@ -165,6 +168,7 @@ export const FormWithInlineLabels = (props: UserData) => {
                 placeholder="실명 입력"
                 defaultValue={userInfo?.name}
                 isDisabled
+                fontSize={{ base: "sm", md: "md" }}
               />
             </Stack>
           </FormControl>
@@ -181,6 +185,7 @@ export const FormWithInlineLabels = (props: UserData) => {
                 placeholder="닉네임 입력"
                 defaultValue={userInfo?.nickname}
                 onChange={handleChange}
+                fontSize={{ base: "sm", md: "md" }}
               />
             </Stack>
           </FormControl>
@@ -225,6 +230,7 @@ export const FormWithInlineLabels = (props: UserData) => {
               <FormLabel variant="inline">출생연도</FormLabel>
               <Select
                 w={"50%"}
+                fontSize={{ base: "sm", md: "md" }}
                 defaultValue={new Date().getFullYear().toString()}
                 onChange={(e) => {
                   setFormData({ ...formData, birthyear: e.target.value });
@@ -263,6 +269,7 @@ export const FormWithInlineLabels = (props: UserData) => {
                   defaultValue={userInfo?.phone}
                   name="phone"
                   onChange={handleChange}
+                  fontSize={{ base: "sm", md: "md" }}
                 />
                 <Button>인증하기</Button>
                 {/* <FormHelperText>
@@ -290,6 +297,7 @@ export const FormWithInlineLabels = (props: UserData) => {
                   </Stack>
                 </FormLabel>
                 <Input
+                  fontSize={{ base: "sm", md: "md" }}
                   type="email"
                   maxW={{ md: "3xl" }}
                   placeholder="이메일 입력"
@@ -307,15 +315,30 @@ export const FormWithInlineLabels = (props: UserData) => {
                 justify="space-between"
               >
                 <FormLabel variant="inline">네이버 블로그 주소</FormLabel>
-                <InputGroup maxW={{ md: "3xl" }}>
-                  <InputLeftAddon>https://blog.naver.com/</InputLeftAddon>
-                  <Input
-                    defaultValue={userInfo?.blog}
-                    placeholder="네이버 아이디 입력"
-                    name="blog"
-                    onChange={handleChange}
-                  />
-                </InputGroup>
+                {isMobile ? (
+                  <InputGroup flexDirection={"column"} gap={1}>
+                    <InputAddon
+                      fontSize={"sm"}
+                      borderRadius={"lg"}
+                      border={"1px solid #d9d9d9"}
+                      px={3}
+                      overflow={"hidden"}
+                    >
+                      https://blog.naver.com/
+                    </InputAddon>
+                    <Input fontSize={"sm"} defaultValue={userInfo?.blog} />
+                  </InputGroup>
+                ) : (
+                  <InputGroup maxW={{ md: "3xl" }}>
+                    <InputLeftAddon>https://blog.naver.com/</InputLeftAddon>
+                    <Input
+                      defaultValue={userInfo?.blog}
+                      placeholder="네이버 아이디 입력"
+                      name="blog"
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                )}
               </Stack>
             </FormControl>
             <FormControl id="instagram">
@@ -325,15 +348,30 @@ export const FormWithInlineLabels = (props: UserData) => {
                 justify="space-between"
               >
                 <FormLabel variant="inline">인스타그램 주소</FormLabel>
-                <InputGroup maxW={{ md: "3xl" }}>
-                  <InputLeftAddon>https://www.instagram.com/</InputLeftAddon>
-                  <Input
-                    defaultValue={userInfo?.instagram}
-                    placeholder="인스타그램 아이디 입력"
-                    name="instagram"
-                    onChange={handleChange}
-                  />
-                </InputGroup>
+                {isMobile ? (
+                  <InputGroup flexDirection={"column"} gap={1}>
+                    <InputAddon
+                      fontSize={"sm"}
+                      borderRadius={"lg"}
+                      border={"1px solid #d9d9d9"}
+                      px={3}
+                      overflow={"hidden"}
+                    >
+                      https://www.instagram.com/
+                    </InputAddon>
+                    <Input fontSize={"sm"} defaultValue={userInfo?.instagram} />
+                  </InputGroup>
+                ) : (
+                  <InputGroup maxW={{ md: "3xl" }}>
+                    <InputLeftAddon>https://www.instagram.com/</InputLeftAddon>
+                    <Input
+                      defaultValue={userInfo?.instagram}
+                      placeholder="인스타그램 아이디 입력"
+                      name="instagram"
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                )}
               </Stack>
             </FormControl>
             <FormControl id="influence">
@@ -350,6 +388,7 @@ export const FormWithInlineLabels = (props: UserData) => {
                     placeholder="네이버 인플루언서 정보 등록"
                     name="influence"
                     onChange={handleChange}
+                    fontSize={{ base: "sm", md: "md" }}
                   />
                 </InputGroup>
               </Stack>
@@ -404,7 +443,11 @@ export const FormWithInlineLabels = (props: UserData) => {
 
           <Stack>
             <Flex cursor={"pointer"}>
-              <Text fontWeight="bold" opacity={0.5}>
+              <Text
+                fontWeight="bold"
+                opacity={0.5}
+                fontSize={{ base: "sm", md: "md" }}
+              >
                 탈퇴하기
               </Text>
             </Flex>

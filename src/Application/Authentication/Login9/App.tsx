@@ -7,6 +7,7 @@ import {
   FormLabel,
   HStack,
   Heading,
+  IconButton,
   Input,
   Link,
   Stack,
@@ -18,6 +19,7 @@ import { GoogleIcon } from "./ProviderIcons";
 import { NaverLogin } from "../../../Component/MButton";
 import React from "react";
 import { createUser } from "../../../Firebase/Auth";
+import { IoClose } from "react-icons/io5";
 
 export const SignUpForm = () => {
   const toast = useToast();
@@ -53,6 +55,20 @@ export const SignUpForm = () => {
 
   return (
     <Container py={{ base: "12", md: "24" }} h={"100vh"}>
+      <Box
+        w={"full"}
+        display={{ base: "flex", md: "none" }}
+        justifyContent={"end"}
+      >
+        <IconButton
+          size={"lg"}
+          icon={<IoClose />}
+          onClick={() => (window.location.href = "/")}
+          aria-label="closeButton"
+          bgColor={"transparent"}
+          color={"black"}
+        />
+      </Box>
       <Stack
         direction={{ base: "column", md: "row" }}
         align={"center"}

@@ -3,6 +3,7 @@ import {
   Box,
   HStack,
   Heading,
+  SimpleGrid,
   Stack,
   StackDivider,
   Text,
@@ -156,8 +157,9 @@ function Campain({ ...props }) {
           <Stack spacing={0}>
             <HStack w={"100%"} justifyContent={"space-between"}>
               <Text
-                fontSize={{ base: "lg", md: "xl" }}
+                fontSize={{ base: "xs", sm: "lg", md: "xl" }}
                 fontWeight={"bold"}
+                whiteSpace={"nowrap"}
                 color={
                   props.description === "신청한 체험단" ? "red.400" : "black"
                 }
@@ -167,8 +169,9 @@ function Campain({ ...props }) {
                 신청한 체험단
               </Text>
               <Text
-                fontSize={{ base: "lg", md: "xl" }}
+                fontSize={{ base: "xs", sm: "lg", md: "xl" }}
                 fontWeight={"bold"}
+                whiteSpace={"nowrap"}
                 color={
                   props.description === "선정된 체험단" ? "red.400" : "black"
                 }
@@ -178,8 +181,9 @@ function Campain({ ...props }) {
                 선정된 체험단
               </Text>
               <Text
-                fontSize={{ base: "lg", md: "xl" }}
+                fontSize={{ base: "xs", sm: "lg", md: "xl" }}
                 fontWeight={"bold"}
+                whiteSpace={"nowrap"}
                 color={
                   props.description === "리뷰한 체험단" ? "red.400" : "black"
                 }
@@ -191,7 +195,7 @@ function Campain({ ...props }) {
             </HStack>
             <HStack spacing={"4"} w={"100%"} justifyContent={"space-between"}>
               <Text
-                fontSize={"5xl"}
+                fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}
                 fontWeight={"bold"}
                 color={
                   props.description === "신청한 체험단" ? "red.400" : "black"
@@ -203,7 +207,7 @@ function Campain({ ...props }) {
               </Text>
               <Box h={"1px"} bg={"gray.300"} w={"full"}></Box>
               <Text
-                fontSize={"5xl"}
+                fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}
                 fontWeight={"bold"}
                 color={
                   props.description === "선정된 체험단" ? "red.400" : "black"
@@ -215,7 +219,7 @@ function Campain({ ...props }) {
               </Text>
               <Box h={"1px"} bg={"gray.300"} w={"full"}></Box>
               <Text
-                fontSize={"5xl"}
+                fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}
                 fontWeight={"bold"}
                 color={
                   props.description === "리뷰한 체험단" ? "red.400" : "black"
@@ -230,7 +234,10 @@ function Campain({ ...props }) {
         </Stack>
       )}
       {window.location.pathname === "/mypage" ? (
-        <Stack divider={<StackDivider />}>
+        <SimpleGrid
+          columns={{ base: 1, sm: 2, md: 3 }}
+          spacing={{ base: "4", md: "6" }}
+        >
           {props.description === "신청한 체험단" &&
             campains.map((campain) => (
               <Product key={campain.doc_id} campain={campain} />
@@ -243,7 +250,7 @@ function Campain({ ...props }) {
             campains2.map((campain) => (
               <Product key={campain.doc_id} campain={campain} />
             ))}
-        </Stack>
+        </SimpleGrid>
       ) : (
         <>
           {campains?.length > 0 && (

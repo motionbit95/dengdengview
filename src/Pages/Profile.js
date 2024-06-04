@@ -10,6 +10,7 @@ import {
   Button,
   IconButton,
   Box,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import Campain from "./Campain";
 import Mypage from "./Mypage";
@@ -133,7 +134,11 @@ function Profile(props) {
                   01. 위젯 링크 복사
                 </Text>
                 <Text>아래의 위젯 코드를 복사해주세요!</Text>
-                <HStack spacing={8}>
+                <SimpleGrid
+                  columns={{ base: 2, sm: 3, md: 5 }}
+                  columnGap={{ base: 4, md: 8 }}
+                  rowGap={4}
+                >
                   <Stack>
                     <Image
                       w={"100px"}
@@ -254,7 +259,7 @@ function Profile(props) {
                       코드복사
                     </Button>
                   </Stack>
-                </HStack>
+                </SimpleGrid>
               </Stack>
               <Stack
                 borderTop={"1px solid"}

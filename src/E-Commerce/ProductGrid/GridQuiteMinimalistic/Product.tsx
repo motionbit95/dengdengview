@@ -2,6 +2,7 @@ import {
   AspectRatio,
   Box,
   Button,
+  Center,
   FormControl,
   FormHelperText,
   FormLabel,
@@ -15,6 +16,7 @@ import {
   Tag,
   Text,
   Textarea,
+  useBreakpointValue,
   useColorModeValue,
   useDisclosure,
   useToast,
@@ -38,6 +40,7 @@ import { ClipboardInput } from "@ark-ui/react";
 import { BiClipboard, BiCopy } from "react-icons/bi";
 import { useState } from "react";
 import { addDoc } from "firebase/firestore";
+import { HiReceiptTax } from "react-icons/hi";
 
 interface Props {
   campain: Campain;
@@ -49,6 +52,8 @@ export const Product = ({ ...props }) => {
   const navigate = useNavigate();
   const toast = useToast();
   const [url, setUrl] = useState<string>("");
+  const [cnt, setCnt] = useState(0);
+  const isMobile = useBreakpointValue({ base: true, md: false });
 
   // 텍스트를 클립보드에 복사하는 함수
   function copyToClipboard(text: string) {
@@ -151,116 +156,207 @@ export const Product = ({ ...props }) => {
     }
   };
   return (
-    <HStack
-      // spacing="4"
-      justifyContent="space-between"
-    >
-      <HStack
-        _hover={{ opacity: 0.7, cursor: "pointer" }}
+    <Stack>
+      <Box
+        border={"1px solid #E2E8F0"}
+        borderRadius="lg"
+        overflow={"hidden"}
+        bgImage={`url(${process.env.REACT_APP_STORAGE}/campain%2F${campain.images?.[0]}?alt=media)`}
+        bgSize={"cover"}
+        bgPosition={"center"}
+        bgRepeat={"no-repeat"}
+        _hover={{ cursor: "pointer", opacity: 0.9 }}
         onClick={() => {
           navigate(`/campain/${campain.doc_id}`);
         }}
+        aspectRatio={`1`}
+        display={"flex"}
+        flexDirection={"column"}
+        justifyContent={"flex-end"}
       >
-        <Box position="relative" className="group" p={4}>
+        {/* <Box position="relative" className="group">
           <AspectRatio ratio={1} w={100} h={100}>
             <Image
-              src={campain.images?.[0]}
+              // src={campain.images?.[0]}
+              src={
+                process.env.REACT_APP_STORAGE +
+                "/campain" +
+                "%2F" +
+                campain.images?.[0] +
+                "?alt=media"
+              }
               alt={campain.name}
               draggable="false"
               fallback={<Skeleton />}
               borderRadius="lg"
             />
           </AspectRatio>
-          {/* <Tag size={"sm"} position="absolute" top="2" left="2">
-          #{campain.doc_id.substring(0, 8)}
-        </Tag> */}
-        </Box>
-        <Stack spacing="1">
-          <Stack justifyContent="space-between">
-            <Tag
-              colorScheme={"green"}
-              w={"fit-content"}
-              size={{ base: "sm", md: "md" }}
-            >
-              {campain.step === 0 ? "신청중" : "선정완료"}
-            </Tag>
-            <Text
-              textOverflow={"ellipsis"}
-              overflow="hidden"
-              wordBreak={"break-word"}
+        </Box> */}
+        <Stack p={4}>
+          {(campain.step === 1 || campain.step === 2) && (
+            <Button
+              isDisabled={campain.step === 2}
+              _disabled={{ opacity: 1, cursor: "not-allowed" }}
+              // colorScheme="black"
+              // variant={"outline"}
               style={{
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
+                // 기본 스타일
+                backgroundColor:
+                  campain.step === 2
+                    ? "rgba(241, 244, 248, 1)"
+                    : "rgba(11, 197, 234, 1)", // 배경색 변경
+                color: campain.step === 2 ? "#57636C" : "white", // 배경색 변경
               }}
-              color={useColorModeValue("black", "white")}
-              fontSize={{ base: "md", md: "lg" }}
-              fontWeight="semibold"
-              letterSpacing="wider"
-              textTransform="uppercase"
+              h={{ base: "3rem", md: "2rem" }}
+              onClick={(event) => {
+                event.stopPropagation();
+                if (window.confirm("사용등록 하시겠습니까?")) {
+                  updateDoc("Tester", campain.testerId, {
+                    step: 2,
+                    useDate: formattedDate(new Date()),
+                  });
+                }
+              }}
             >
-              {campain.name}
-            </Text>
-          </Stack>
-
-          {/* <Text opacity={0.5}>{campain?.endDate?.replaceAll("-", ".")}</Text> */}
+              <Stack
+                alignItems={"center"}
+                justifyContent={"center"}
+                direction={{ base: "row", md: "row" }}
+                spacing={2}
+              >
+                <MdCheck />
+                <Text>{campain.step === 1 ? "사용등록" : "사용완료"}</Text>
+              </Stack>
+            </Button>
+          )}
+          {campain.step !== 1 && (
+            <Button
+              isDisabled={campain.step === 3}
+              style={{
+                // 기본 스타일
+                backgroundColor:
+                  campain.step === 3
+                    ? "rgba(241, 244, 248, 1)"
+                    : "rgba(11, 197, 234, 1)", // 배경색 변경
+                color: campain.step === 3 ? "#57636C" : "white", // 배경색 변경
+              }}
+              // colorScheme="black"
+              // variant={"outline"}
+              h={{ base: "2.5rem", md: "2rem" }}
+              onClick={(event) => {
+                event.stopPropagation();
+                if (campain.step === 2) {
+                  // 리뷰 등록
+                  onOpen();
+                }
+                if (campain.step === 0) {
+                  // 신청 취소
+                  alert("신청취소입니다!");
+                }
+              }}
+            >
+              <Stack
+                alignItems={"center"}
+                justifyContent={"center"}
+                direction={{ base: "row", md: "row" }}
+                spacing={2}
+              >
+                {campain.step === 0 ? <ImCancelCircle /> : <MdReviews />}
+                <Text>
+                  {campain.step === 0
+                    ? "신청취소"
+                    : campain.step === 2
+                    ? "리뷰등록"
+                    : "리뷰완료"}
+                </Text>
+              </Stack>
+            </Button>
+          )}
         </Stack>
-      </HStack>
+      </Box>
       <Stack>
-        {(campain.step === 1 || campain.step === 2) && (
-          <Button
-            isDisabled={campain.step === 2}
-            colorScheme="black"
-            variant={"outline"}
-            h={{ base: "4rem", md: "2.5rem" }}
-            onClick={() => {
-              if (window.confirm("사용등록 하시겠습니까?")) {
-                updateDoc("Tester", campain.testerId, {
-                  step: 2,
-                  useDate: formattedDate(new Date()),
-                });
-              }
-            }}
-          >
-            <Stack
-              alignItems={"center"}
-              justifyContent={"center"}
-              direction={{ base: "column", md: "row" }}
-              spacing={2}
-            >
-              <MdCheck />
-              <Text>{campain.step === 1 ? "사용등록" : "사용완료"}</Text>
-            </Stack>
-          </Button>
+        {campain?.type !== "이벤트" && (
+          <Stack direction={{ base: "column", md: "row" }} spacing={2}>
+            <HStack zIndex={999} spacing={0}>
+              {campain?.mozip?.includes("0") && (
+                <Center
+                  w={{ base: "36px", md: "24px" }}
+                  h={{ base: "36px", md: "24px" }}
+                  // rounded={"full"}
+                  // bgColor={"#f5f5f5"}
+                  // border={"1px solid #d9d9d9"}
+                >
+                  <Image
+                    src={require("../../../Assets/img/style14.png")}
+                    w={{ base: "28px", md: "22px" }}
+                  />
+                </Center>
+              )}
+              {campain?.mozip?.includes("1") && (
+                <Center
+                  w={{ base: "36px", md: "24px" }}
+                  h={{ base: "36px", md: "24px" }}
+                  // rounded={"full"}
+                  // bgColor={"#f5f5f5"}
+                  // border={"1px solid #d9d9d9"}
+                >
+                  <Image
+                    src="https://cdn-icons-png.flaticon.com/512/174/174855.png"
+                    w={{ base: "24px", md: "18px" }}
+                  />
+                </Center>
+              )}
+              {campain?.mozip?.includes("2") && (
+                <Center
+                  w={{ base: "36px", md: "24px" }}
+                  h={{ base: "36px", md: "24px" }}
+                  // rounded={"full"}
+                  // bgColor={"#f5f5f5"}
+                  // border={"1px solid #d9d9d9"}
+                >
+                  <HiReceiptTax
+                    color="orange"
+                    size={isMobile ? "28px" : "20px"}
+                  />
+                  {/* <FiShoppingBag color="orange" size={isMobile ? "18px" : "24px"} /> */}
+                </Center>
+              )}
+            </HStack>
+            <HStack spacing={2}>
+              <Tag
+                size={{ base: "sm", md: "md" }}
+                colorScheme={
+                  calculateDday(campain.endDate) > 0 ? "red" : "blue"
+                }
+              >
+                {calculateDday(campain.endDate) > 0
+                  ? calculateDday(campain.endDate) + "일 남음"
+                  : Math.abs(calculateDday(campain.endDate)) + "일 지남"}
+              </Tag>
+            </HStack>
+          </Stack>
         )}
-        {campain.step !== 1 && (
-          <Button
-            isDisabled={campain.step === 3}
-            colorScheme="black"
-            variant={"outline"}
-            h={{ base: "4rem", md: "2.5rem" }}
-            onClick={() => {
-              if (campain.step === 2) {
-                onOpen();
-              }
-            }}
-          >
-            <Stack
-              alignItems={"center"}
-              justifyContent={"center"}
-              direction={{ base: "column", md: "row" }}
-              spacing={2}
-            >
-              {campain.step === 0 ? <ImCancelCircle /> : <MdReviews />}
-              <Text>
-                {campain.step === 0
-                  ? "신청취소"
-                  : campain.step === 2
-                  ? "리뷰등록"
-                  : "리뷰완료"}
-              </Text>
-            </Stack>
-          </Button>
+        <Text
+          textOverflow={"ellipsis"}
+          overflow="hidden"
+          wordBreak={"break-word"}
+          style={{
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+          }}
+          color={useColorModeValue("black", "white")}
+          fontSize={{ base: "xs", md: "sm" }}
+          fontWeight="semibold"
+          letterSpacing="wider"
+          textTransform="uppercase"
+        >
+          {campain.name}
+        </Text>
+        {campain?.type !== "이벤트" && (
+          <Text fontSize={"sm"} opacity={0.7}>
+            신청 {cnt} / {campain.targetCnt}명
+          </Text>
         )}
       </Stack>
       <>
@@ -358,6 +454,6 @@ export const Product = ({ ...props }) => {
           </ModalContent>
         </Modal>
       </>
-    </HStack>
+    </Stack>
   );
 };

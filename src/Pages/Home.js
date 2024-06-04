@@ -388,11 +388,14 @@ const PopupModal = (props) => {
               {step === 2 && <Step2 />}
               {step === 3 && <Step3 />}
               {step === 4 && <Step4 />}
-              <ButtonGroup justifyContent={"center"}>
+              <ButtonGroup justifyContent={"center"} mb={4}>
                 {step === 1 ? null : (
                   <Button
                     w={{ base: "50%", md: "20%" }}
                     onClick={handlePrevStep}
+                    bgColor={"white"}
+                    color={"gray.600"}
+                    boxShadow={"0px 4px 4px 0px rgba(0, 0, 0, 0.25)"}
                   >
                     이전단계
                   </Button>
@@ -401,6 +404,7 @@ const PopupModal = (props) => {
                   <Button
                     w={{ base: "50%", md: "20%" }}
                     onClick={props.onClose}
+                    boxShadow={"0px 4px 4px 0px rgba(0, 0, 0, 0.25)"}
                   >
                     완료
                   </Button>
@@ -408,6 +412,7 @@ const PopupModal = (props) => {
                   <Button
                     w={{ base: "50%", md: "20%" }}
                     onClick={handleNextStep}
+                    boxShadow={"0px 4px 4px 0px rgba(0, 0, 0, 0.25)"}
                   >
                     다음단계
                   </Button>

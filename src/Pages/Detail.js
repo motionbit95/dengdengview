@@ -24,6 +24,7 @@ import {
   Wrap,
   Center,
   Flex,
+  ButtonGroup,
 } from "@chakra-ui/react";
 import { calculateDday } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/_data";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
@@ -460,11 +461,18 @@ function Detail(props) {
                     alignItems={"start"}
                     direction={{ base: "column", md: "row" }}
                   >
-                    <Text minW={"200px"} fontWeight={"bold"} fontSize={"lg"}>
+                    <Text
+                      minW={"200px"}
+                      fontWeight={"bold"}
+                      fontSize={{ base: "md", md: "lg" }}
+                    >
                       신청자 목록
                     </Text>
                     <Stack w={"100%"} spacing={2}>
-                      <Text fontWeight={"bold"} fontSize={"lg"}>
+                      <Text
+                        fontWeight={"bold"}
+                        fontSize={{ base: "md", md: "lg" }}
+                      >
                         총{" "}
                         <span style={{ color: "#F56565" }}>
                           {userList ? userList?.length : "0"}
@@ -774,6 +782,7 @@ function RegisterButton(props) {
               w={"full"}
               direction={{ base: "column", md: "row" }}
               justifyContent={"space-around"}
+              spacing={{ base: "8", md: "0" }}
             >
               <Stack
                 maxW={"xl"}
@@ -782,11 +791,11 @@ function RegisterButton(props) {
                 divider={<StackDivider />}
               >
                 <Stack>
-                  <Text fontSize={"lg"} fontWeight={"bold"}>
+                  <Text fontSize={{ base: "md", md: "lg" }} fontWeight={"bold"}>
                     1. 이용약관 동의하기
                   </Text>
 
-                  <Text fontSize={"lg"} fontWeight={"bold"}>
+                  <Text fontSize={{ base: "md", md: "lg" }} fontWeight={"bold"}>
                     체험단 진행을 위한 약관을 신청과정에서 동의해주세요.
                   </Text>
                 </Stack>
@@ -800,6 +809,7 @@ function RegisterButton(props) {
                   >
                     <Checkbox value="0">
                       <Text
+                        fontSize={{ base: "sm", md: "md" }}
                         opacity={0.8}
                         fontWeight={checked.includes("0") ? "bold" : "normal"}
                       >
@@ -809,6 +819,7 @@ function RegisterButton(props) {
                     </Checkbox>
                     <Checkbox value="1">
                       <Text
+                        fontSize={{ base: "sm", md: "md" }}
                         opacity={0.8}
                         fontWeight={checked.includes("1") ? "bold" : "normal"}
                       >
@@ -822,6 +833,7 @@ function RegisterButton(props) {
                     </Checkbox>
                     <Checkbox value="2">
                       <Text
+                        fontSize={{ base: "sm", md: "md" }}
                         opacity={0.8}
                         fontWeight={checked.includes("2") ? "bold" : "normal"}
                       >
@@ -831,6 +843,7 @@ function RegisterButton(props) {
                     </Checkbox>
                     <Checkbox value="3">
                       <Text
+                        fontSize={{ base: "sm", md: "md" }}
                         opacity={0.8}
                         fontWeight={checked.includes("3") ? "bold" : "normal"}
                       >
@@ -840,6 +853,7 @@ function RegisterButton(props) {
                     </Checkbox>
                     <Checkbox value="4">
                       <Text
+                        fontSize={{ base: "sm", md: "md" }}
                         opacity={0.8}
                         fontWeight={checked.includes("4") ? "bold" : "normal"}
                       >
@@ -850,6 +864,7 @@ function RegisterButton(props) {
                     <Checkbox value="5">
                       <Text
                         whiteSpace={"pre-line"}
+                        fontSize={{ base: "sm", md: "md" }}
                         opacity={0.8}
                         fontWeight={checked.includes("5") ? "bold" : "normal"}
                       >
@@ -860,6 +875,7 @@ function RegisterButton(props) {
                     </Checkbox>
                     <Checkbox value="6">
                       <Text
+                        fontSize={{ base: "sm", md: "md" }}
                         opacity={0.8}
                         fontWeight={checked.includes("6") ? "bold" : "normal"}
                       >
@@ -869,6 +885,7 @@ function RegisterButton(props) {
                     </Checkbox>
                     <Checkbox value="7">
                       <Text
+                        fontSize={{ base: "sm", md: "md" }}
                         opacity={0.8}
                         fontWeight={checked.includes("7") ? "bold" : "normal"}
                       >
@@ -878,6 +895,7 @@ function RegisterButton(props) {
                     </Checkbox>
                     <Checkbox value="8">
                       <Text
+                        fontSize={{ base: "sm", md: "md" }}
                         opacity={0.8}
                         fontWeight={checked.includes("8") ? "bold" : "normal"}
                       >
@@ -905,12 +923,12 @@ function RegisterButton(props) {
                 w={{ base: "full", md: "50%" }}
                 spacing={{ base: "4", md: "6" }}
               >
-                <Text fontSize={"lg"} fontWeight={"bold"}>
+                <Text fontSize={{ base: "md", md: "lg" }} fontWeight={"bold"}>
                   2. 필수 작성 요소
                 </Text>
 
                 <Stack>
-                  <Text fontSize={"lg"} fontWeight={"bold"}>
+                  <Text fontSize={{ base: "md", md: "lg" }} fontWeight={"bold"}>
                     수령인(실명)
                   </Text>
                   <Input
@@ -924,7 +942,7 @@ function RegisterButton(props) {
                 </Stack>
 
                 <Stack>
-                  <Text fontSize={"lg"} fontWeight={"bold"}>
+                  <Text fontSize={{ base: "md", md: "lg" }} fontWeight={"bold"}>
                     배송지 등록
                   </Text>
                   <AddressInput
@@ -948,7 +966,7 @@ function RegisterButton(props) {
                 </Stack>
 
                 <Stack>
-                  <Text fontSize={"lg"} fontWeight={"bold"}>
+                  <Text fontSize={{ base: "md", md: "lg" }} fontWeight={"bold"}>
                     휴대폰 번호(번호만 입력)
                   </Text>
                   <Input
@@ -968,57 +986,63 @@ function RegisterButton(props) {
           </ModalBody>
 
           <ModalFooter bgColor={"white"} justifyContent={"center"}>
-            <Button
-              bgColor={"rgba(22, 176, 112, 1)"}
-              _hover={{ bgColor: "rgba(22, 176, 112, 0.8)" }}
-              color={"white"}
-              leftIcon={<Naver />}
-              size={"xl"}
-              mr={3}
-              onClick={() => {
-                if (handleSubmit()) {
-                  if (
-                    window.confirm("네이버 블로그 체험단을 신청하시겠습니까?")
-                  ) {
-                    props.onSubmit({
-                      ...formData,
-                      uid: uid,
-                      mozip_type: "naver",
-                    });
-                    onClose();
-                  } else {
-                    return;
+            <Stack flexDirection={{ base: "column", md: "row" }} gap={"2"}>
+              <Button
+                w={{ base: "full", md: "auto" }}
+                boxShadow={"0px 4px 4px 0px rgba(0, 0, 0, 0.25)"}
+                bgColor={"rgba(22, 176, 112, 1)"}
+                _hover={{ bgColor: "rgba(22, 176, 112, 0.8)" }}
+                color={"white"}
+                leftIcon={<Naver />}
+                size={"xl"}
+                onClick={() => {
+                  if (handleSubmit()) {
+                    if (
+                      window.confirm("네이버 블로그 체험단을 신청하시겠습니까?")
+                    ) {
+                      props.onSubmit({
+                        ...formData,
+                        uid: uid,
+                        mozip_type: "naver",
+                      });
+                      onClose();
+                    } else {
+                      return;
+                    }
                   }
-                }
-              }}
-            >
-              네이버 블로그 체험단 신청하기
-            </Button>
-            <Button
-              boxShadow={"0px 4px 4px 0px rgba(0, 0, 0, 0.25)"}
-              _hover={{ bgColor: "gray.50" }}
-              bgColor={"white"}
-              color={"black"}
-              leftIcon={<BsInstagram />}
-              size={"xl"}
-              mr={3}
-              onClick={() => {
-                if (handleSubmit()) {
-                  if (window.confirm("인스타그램 체험단을 신청하시겠습니까?")) {
-                    props.onSubmit({
-                      ...formData,
-                      uid: uid,
-                      mozip_type: "instagram",
-                    });
-                    onClose();
-                  } else {
-                    return;
+                }}
+              >
+                네이버 블로그 체험단 신청하기
+              </Button>
+              <Button
+                w={{ base: "full", md: "auto" }}
+                boxShadow={"0px 4px 4px 0px rgba(0, 0, 0, 0.25)"}
+                _hover={{ bgColor: "gray.50" }}
+                bgColor={"white"}
+                color={"black"}
+                m={0}
+                leftIcon={<BsInstagram />}
+                size={"xl"}
+                onClick={() => {
+                  if (handleSubmit()) {
+                    if (
+                      window.confirm("인스타그램 체험단을 신청하시겠습니까?")
+                    ) {
+                      props.onSubmit({
+                        ...formData,
+                        uid: uid,
+                        mozip_type: "instagram",
+                      });
+                      onClose();
+                    } else {
+                      return;
+                    }
                   }
-                }
-              }}
-            >
-              인스타그램 체험단 신청하기
-            </Button>
+                }}
+              >
+                인스타그램 체험단 신청하기
+              </Button>
+            </Stack>
           </ModalFooter>
         </ModalContent>
       </Modal>

@@ -9,6 +9,7 @@ import {
   FormLabel,
   Heading,
   HStack,
+  IconButton,
   Image,
   Input,
   Link,
@@ -21,6 +22,7 @@ import { NaverLogin } from "../../../Component/MButton";
 import { signInUser } from "../../../Firebase/Auth";
 import React from "react";
 import { debug } from "../../../Firebase/Util";
+import { IoClose } from "react-icons/io5";
 
 export const LoginWithEmailPasswordOrNaver = ({ ...props }) => {
   const toast = useToast();
@@ -52,6 +54,20 @@ export const LoginWithEmailPasswordOrNaver = ({ ...props }) => {
   return (
     <Box height={"100vh"}>
       <Container py={{ base: "12", md: "24" }} height={"full"}>
+        <Box
+          w={"full"}
+          display={{ base: "flex", md: "none" }}
+          justifyContent={"end"}
+        >
+          <IconButton
+            size={"lg"}
+            icon={<IoClose />}
+            onClick={() => (window.location.href = "/")}
+            aria-label="closeButton"
+            bgColor={"transparent"}
+            color={"black"}
+          />
+        </Box>
         <Stack
           direction={{ base: "column", md: "row" }}
           align={"center"}
