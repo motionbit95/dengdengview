@@ -67,7 +67,10 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
           <DrawerCloseButton />
           <SidebarWithCollapsable
             userInfo={props.userInfo}
-            setItem={(index: string) => {}}
+            setItem={(index: string) => {
+              props.setItem(index);
+              onClose();
+            }}
           />
         </DrawerContent>
       </Drawer>

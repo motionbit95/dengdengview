@@ -305,6 +305,11 @@ const PopupModal = (props) => {
   const type = props.type;
 
   const [step, setStep] = useState(1);
+  useEffect(() => {
+    if (props.isOpen) {
+      setStep(1);
+    }
+  }, [props.isOpen]);
 
   const handlePrevStep = () => {
     setStep(step - 1);
@@ -388,7 +393,7 @@ const PopupModal = (props) => {
               {step === 2 && <Step2 />}
               {step === 3 && <Step3 />}
               {step === 4 && <Step4 />}
-              <ButtonGroup justifyContent={"center"} mb={4}>
+              <ButtonGroup justifyContent={"center"} mb={8}>
                 {step === 1 ? null : (
                   <Button
                     w={{ base: "50%", md: "20%" }}

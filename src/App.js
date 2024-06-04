@@ -37,6 +37,7 @@ function App() {
   const [userInfo, setUserInfo] = React.useState(null);
   const [tab, setTab] = useState("0");
   const [keyword, setKeyword] = useState("");
+  const [item, setItem] = useState("");
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -137,6 +138,7 @@ function App() {
                 userInfo={userInfo}
                 setTab={setTab}
                 tab={localStorage.getItem("top_menu") || tab}
+                setItem={setItem}
               />
             )}
           <BrowserRouter>
@@ -157,7 +159,7 @@ function App() {
               <Route path="/campain/*" element={<Detail />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUpForm />} />
-              <Route path="/mypage/*" element={<Profile />} />
+              <Route path="/mypage/*" element={<Profile item={item} />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/ads" element={<Ads />} />

@@ -26,6 +26,13 @@ function Profile(props) {
     description: "신청한 체험단",
   });
 
+  useEffect(() => {
+    setBreadcrumb({
+      title: props.item.includes("체험단") ? "나의 체험단" : "내정보 수정",
+      description: props.item,
+    });
+  }, [props]);
+
   const [uid, setUid] = React.useState(null);
   const [userInfo, setUserInfo] = React.useState({});
 
@@ -139,7 +146,7 @@ function Profile(props) {
                   columnGap={{ base: 4, md: 8 }}
                   rowGap={4}
                 >
-                  <Stack>
+                  <Stack w={"100px"}>
                     <Image
                       w={"100px"}
                       h={"auto"}
@@ -149,8 +156,8 @@ function Profile(props) {
                       alt={"image"}
                     />
                     <Button
-                      size={"sm"}
                       w={"100px"}
+                      size={"sm"}
                       border={"1px solid rgba(217, 217, 217, 1)"}
                       bgColor={"white"}
                       color={"#57636C"}
@@ -163,7 +170,7 @@ function Profile(props) {
                       코드복사
                     </Button>
                   </Stack>
-                  <Stack>
+                  <Stack w={"100px"}>
                     <Image
                       w={"100px"}
                       h={"auto"}
@@ -187,7 +194,7 @@ function Profile(props) {
                       코드복사
                     </Button>
                   </Stack>
-                  <Stack>
+                  <Stack w={"100px"}>
                     <Image
                       w={"100px"}
                       h={"auto"}
@@ -211,7 +218,7 @@ function Profile(props) {
                       코드복사
                     </Button>
                   </Stack>
-                  <Stack>
+                  <Stack w={"100px"}>
                     <Image
                       w={"100px"}
                       h={"auto"}
@@ -235,7 +242,7 @@ function Profile(props) {
                       코드복사
                     </Button>
                   </Stack>
-                  <Stack>
+                  <Stack w={"100px"}>
                     <Image
                       w={"100px"}
                       h={"auto"}

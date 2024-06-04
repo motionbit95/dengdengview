@@ -192,9 +192,24 @@ export const Product = ({ ...props }) => {
             />
           </AspectRatio>
         </Box> */}
-        <Stack p={4}>
+        <Stack
+          p={{ base: 1, sm: 4 }}
+          spacing={{ base: 1, sm: 2 }}
+          sx={{
+            "@media (width: 768px)": {
+              padding: "4px",
+              gap: "4px",
+            },
+          }}
+        >
           {(campain.step === 1 || campain.step === 2) && (
             <Button
+              size={{ base: "2xs", sm: "md" }}
+              sx={{
+                "@media (width: 768px)": {
+                  height: "1.5rem",
+                },
+              }}
               isDisabled={campain.step === 2}
               _disabled={{ opacity: 1, cursor: "not-allowed" }}
               // colorScheme="black"
@@ -231,6 +246,12 @@ export const Product = ({ ...props }) => {
           )}
           {campain.step !== 1 && (
             <Button
+              size={{ base: "2xs", sm: "md" }}
+              sx={{
+                "@media (width: 768px)": {
+                  height: "1.5rem",
+                },
+              }}
               isDisabled={campain.step === 3}
               style={{
                 // 기본 스타일
@@ -276,7 +297,15 @@ export const Product = ({ ...props }) => {
       </Box>
       <Stack>
         {campain?.type !== "이벤트" && (
-          <Stack direction={{ base: "column", md: "row" }} spacing={2}>
+          <Stack
+            direction={{ base: "column", md: "row" }}
+            sx={{
+              "@media (width: 768px)": {
+                flexDirection: "column",
+              },
+            }}
+            spacing={2}
+          >
             <HStack zIndex={999} spacing={0}>
               {campain?.mozip?.includes("0") && (
                 <Center

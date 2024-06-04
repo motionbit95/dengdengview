@@ -235,7 +235,7 @@ function Campain({ ...props }) {
       )}
       {window.location.pathname === "/mypage" ? (
         <SimpleGrid
-          columns={{ base: 1, sm: 2, md: 3 }}
+          columns={{ base: 2, md: 3 }}
           spacing={{ base: "4", md: "6" }}
         >
           {props.description === "신청한 체험단" &&
