@@ -12,7 +12,7 @@ export const Tabs1 = (props: any) => {
     <Stack
       spacing="16"
       position={"sticky"}
-      top="72px"
+      top="80px"
       zIndex="1111"
       overflowX="scroll"
       sx={{

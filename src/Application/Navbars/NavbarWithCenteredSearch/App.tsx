@@ -74,7 +74,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
         </DrawerContent>
       </Drawer>
       <Box borderBottomWidth="1px" bg="bg.surface">
-        <Container py="4">
+        <Container h={"80px"} alignContent={"center"}>
           <HStack justify="space-between">
             <IconButton
               onClick={onOpen}
@@ -84,13 +84,19 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
               display={{ base: "inline-flex", md: "none" }}
             />
             <HStack spacing={20}>
-              <Box onClick={() => (window.location.href = "/")} minW={"100px"}>
-                {/* <Logo /> */}
-                {/* <Image
-                  w={20}
-                  src={require("../../../Assets/img/LogoText.png")}
-                /> */}
+              <Box
+                display={"flex"}
+                onClick={() => (window.location.href = "/")}
+                minW={"100px"}
+                alignItems={"center"}
+                gap={1}
+              >
+                <Image
+                  w={16}
+                  src={require("../../../Assets/img/DangDangLogo2.png")}
+                />
                 <Text
+                  whiteSpace={"nowrap"}
                   fontSize={{ base: "2xl", md: "3xl" }}
                   fontFamily={"Cafe24Ssurround"}
                   // color={"#23E9AE"}
