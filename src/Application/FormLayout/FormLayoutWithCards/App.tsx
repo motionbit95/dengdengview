@@ -127,7 +127,6 @@ export const FormLayoutWithCards = ({ ...props }) => {
           </Box>
           <ProfileCard
             onChange={(value: any) => {
-              // console.log(value);
               handleChange(value);
             }}
             campain={campain}

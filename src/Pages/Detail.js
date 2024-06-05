@@ -103,7 +103,7 @@ function Detail(props) {
       let tempList = [];
       data.forEach((doc) => {
         if (tempList.length < 4) {
-          tempList.push({ ...doc, doc_id: doc.id });
+          tempList.push({ ...doc, doc_id: doc.doc_id });
         }
       });
       setCampains(tempList);
@@ -116,6 +116,7 @@ function Detail(props) {
       updateDoc("Campain", campain?.doc_id, {
         ...campain,
         views: {
+          ...campain.views,
           [new Date().toISOString().slice(0, 10)]: campain?.views[
             new Date().toISOString().slice(0, 10)
           ]
@@ -160,6 +161,7 @@ function Detail(props) {
   return (
     <Stack spacing={4}>
       <Container
+        minW={"280px"}
         maxW={{ base: "container.sm", md: "full", lg: "container.xl" }}
         px={{ base: "4", sm: "8" }}
         py={{ base: "4", sm: "8" }}
@@ -623,21 +625,33 @@ function Detail(props) {
                     <CardBody>
                       <Stack>
                         <HStack spacing={"6"}>
-                          <Text fontWeight={"bold"}>모집기간</Text>
+                          <Text fontWeight={"bold"} whiteSpace={"nowrap"}>
+                            모집기간
+                          </Text>
                           <HStack>
-                            <Text>{campain?.startDate}</Text>
+                            <Text whiteSpace={"nowrap"}>
+                              {campain?.startDate}
+                            </Text>
                             <Text>{"~"}</Text>
-                            <Text>{campain?.endDate}</Text>
+                            <Text whiteSpace={"nowrap"}>
+                              {campain?.endDate}
+                            </Text>
                           </HStack>
                         </HStack>
                         <HStack spacing={"6"}>
-                          <Text fontWeight={"bold"}>발표기간</Text>
-                          <Text>{campain?.endDate}</Text>
+                          <Text whiteSpace={"nowrap"} fontWeight={"bold"}>
+                            발표기간
+                          </Text>
+                          <Text whiteSpace={"nowrap"}>{campain?.endDate}</Text>
                         </HStack>
                         <HStack spacing={"6"}>
-                          <Text fontWeight={"bold"}>리뷰기간</Text>
+                          <Text whiteSpace={"nowrap"} fontWeight={"bold"}>
+                            리뷰기간
+                          </Text>
                           <HStack>
-                            <Text>체험 후 3일 이내 작성이 원칙</Text>
+                            <Text whiteSpace={"nowrap"}>
+                              체험 후 3일 이내 작성이 원칙
+                            </Text>
                             {/* <Text>{campain?.reviewStart}</Text>
                           <Text>{"~"}</Text>
                           <Text>{campain?.reviewEnd}</Text> */}

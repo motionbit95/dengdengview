@@ -33,7 +33,10 @@ export const ProductCard = (props: Props) => {
       spacing="2"
       _hover={{ opacity: 0.7, cursor: "pointer" }}
       onClick={() => {
+        console.log(campain);
         navigate(`/campain/${campain.doc_id}`);
+        window.location.reload();
+        window.scrollTo(0, 0);
       }}
     >
       <Box
@@ -141,22 +144,25 @@ export const ProductCard = (props: Props) => {
         >
           {campain.name}
         </Text>
-        <Text
-          textOverflow={"ellipsis"}
-          overflow="hidden"
-          wordBreak={"break-word"}
-          style={{
-            display: "-webkit-box",
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical",
-          }}
-          color={useColorModeValue("black", "white")}
-          fontSize="xs"
-          letterSpacing="wider"
-          textTransform="uppercase"
-        >
-          {campain.product}
-        </Text>
+        {campain.product.split("\n").map((product, index) => (
+          <Text
+            textOverflow={"ellipsis"}
+            overflow="hidden"
+            wordBreak={"break-word"}
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+            }}
+            // color={useColorModeValue("black", "white")}
+            fontSize="xs"
+            letterSpacing="wider"
+            textTransform="uppercase"
+            color={"#57636C"}
+          >
+            {product}
+          </Text>
+        ))}
       </Stack>
       {campain?.type !== "이벤트" && (
         <Text fontSize={"sm"} opacity={0.7}>

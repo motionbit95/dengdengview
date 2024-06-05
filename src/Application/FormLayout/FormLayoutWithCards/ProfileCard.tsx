@@ -112,7 +112,9 @@ export const ProfileCard = ({ ...props }) => {
           <Textarea
             fontSize={"sm"}
             defaultValue={campain?.product}
-            onChange={(e) => props.onChange({ product: e.target.value })}
+            onChange={(e) => {
+              props.onChange({ product: e.target.value });
+            }}
             rows={3}
             resize="none"
           />

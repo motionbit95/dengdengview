@@ -37,7 +37,6 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
   const handleTabChange = (value: string) => {
     localStorage.setItem("top_menu", value);
     props.setTab(value);
-    // console.log(value);
     if (window.location.pathname !== "/") window.location.replace("/");
   };
 
@@ -111,15 +110,15 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                     p={0}
                     fontWeight={"bold"}
                     onClick={() => handleTabChange("0")}
-                    colorScheme={props.tab === "0" ? "cyan" : "gray"}
+                    // colorScheme={props.tab === "0" ? "cyan" : "gray"}
                   >
-                    네이버블로그
+                    블로그
                   </Button>
                   <Button
                     p={0}
                     fontWeight={"bold"}
                     onClick={() => handleTabChange("1")}
-                    colorScheme={props.tab === "1" ? "cyan" : "gray"}
+                    // colorScheme={props.tab === "1" ? "cyan" : "gray"}
                   >
                     인스타그램
                   </Button>
@@ -127,7 +126,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                     p={0}
                     fontWeight={"bold"}
                     onClick={() => handleTabChange("2")}
-                    colorScheme={props.tab === "2" ? "cyan" : "gray"}
+                    // colorScheme={props.tab === "2" ? "cyan" : "gray"}
                   >
                     구매평 체험단
                   </Button>
@@ -135,7 +134,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                     p={0}
                     fontWeight={"bold"}
                     onClick={() => handleTabChange("3")}
-                    colorScheme={props.tab === "3" ? "cyan" : "gray"}
+                    // colorScheme={props.tab === "3" ? "cyan" : "gray"}
                   >
                     인플루언서
                   </Button>

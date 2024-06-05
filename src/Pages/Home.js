@@ -54,6 +54,14 @@ function Home(props) {
   const handleClick = (order) => {
     window.location.replace("/view?order=" + order);
   };
+
+  useEffect(() => {
+    setTab(tab);
+  }, [tab]);
+
+  useEffect(() => {
+    setTab(props.tab);
+  }, [props.tab]);
   return (
     <Stack>
       {useBreakpointValue({ base: true, md: false }) && (
@@ -62,6 +70,10 @@ function Home(props) {
             console.log(value);
             window.location.replace("/");
             // setTab(value.toString());
+          }}
+          setTab={(value) => {
+            console.log(value);
+            setTab(value.toString());
           }}
         />
       )}
@@ -90,7 +102,7 @@ function Home(props) {
             src={require("../Assets/img/banner_mokup.png")}
           />
         </Carousel> */}
-        {props.tab === "0" && (
+        {tab === "0" && (
           <Container>
             <Flex w={"full"} gap={4}>
               <Stack

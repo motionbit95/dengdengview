@@ -73,7 +73,7 @@ function App() {
 
   useEffect(() => {
     if (tab) {
-      console.log(tab);
+      setTab(localStorage.getItem("top_menu") || tab);
     }
   }, [tab]);
 

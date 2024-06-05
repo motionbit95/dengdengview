@@ -72,6 +72,7 @@ function ModifierButton(campain: any) {
               onSave={(data: any) => {
                 updateDoc("Campain", campain.campain.doc_id, data).then(() => {
                   onClose();
+                  window.location.reload();
                 });
               }}
             />
