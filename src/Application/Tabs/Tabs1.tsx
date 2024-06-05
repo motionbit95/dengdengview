@@ -23,14 +23,15 @@ export const Tabs1 = (props: any) => (
         onChange={props.onChange}
       >
         <TabList
+          // fontSize={"sm"}
           justifyContent={"center"}
           w={"full"}
           // maxW={"container.lg"}
         >
-          <Tab>전체 체험단</Tab>
-          <Tab>인플루언서</Tab>
-          {/* <Tab>선정확률</Tab> */}
+          <Tab>네이버블로그</Tab>
+          <Tab>인스타그램</Tab>
           <Tab>구매평 체험단</Tab>
+          <Tab>인플루언서</Tab>
         </TabList>
         <TabIndicator />
       </Tabs>

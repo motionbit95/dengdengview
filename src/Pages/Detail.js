@@ -25,6 +25,7 @@ import {
   Center,
   Flex,
   ButtonGroup,
+  IconButton,
 } from "@chakra-ui/react";
 import { calculateDday } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/_data";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
@@ -63,6 +64,7 @@ import { where } from "firebase/firestore";
 import { HiReceiptTax } from "react-icons/hi";
 import { GridQuiteMinimalistic } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/App";
 import { chakra } from "@chakra-ui/react";
+import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
 function Detail(props) {
   const navigate = useNavigate();
@@ -75,6 +77,15 @@ function Detail(props) {
   const [userList, setUserList] = useState([]);
 
   const [campains, setCampains] = useState([]);
+
+  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleImageClick = (imageUrl) => {
+    // console.log("이미지링크 이건디 : ", imageUrl);
+    setSelectedImageUrl(imageUrl);
+    setOpenModal(true);
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -125,6 +136,26 @@ function Detail(props) {
       });
     }
   }, [campain]);
+
+  const scrollLeft = () => {
+    const element = document.getElementById("container");
+    const currentScroll = element.scrollLeft;
+    const targetScroll = currentScroll - 316;
+    element.scrollTo({
+      left: targetScroll,
+      behavior: "smooth", // 스무스한 스크롤을 위한 옵션
+    });
+  };
+
+  const scrollRight = () => {
+    const element = document.getElementById("container");
+    const currentScroll = element.scrollLeft;
+    const targetScroll = currentScroll + 316;
+    element.scrollTo({
+      left: targetScroll,
+      behavior: "smooth", // 스무스한 스크롤을 위한 옵션
+    });
+  };
 
   return (
     <Stack spacing={4}>
@@ -276,12 +307,22 @@ function Detail(props) {
             <Box
               w={"full"}
               // h={300}
-              overflowX={"scroll"}
+              // overflowX={"scroll"}
               display={{ base: "none", md: "block" }}
+              position={"relative"}
             >
-              <HStack spacing={4} className="scroll">
+              <HStack spacing={4} className="scroll" id="container">
                 {campain?.images?.map((value, index) => (
                   <Image
+                    onClick={() =>
+                      handleImageClick(
+                        process.env.REACT_APP_STORAGE +
+                          "/campain" +
+                          "%2F" +
+                          value +
+                          "?alt=media"
+                      )
+                    }
                     key={index}
                     borderRadius={"xl"}
                     w={300}
@@ -295,6 +336,30 @@ function Detail(props) {
                     }
                   />
                 ))}
+                <IconButton
+                  position={"absolute"}
+                  onClick={() => scrollLeft()}
+                  top={"48%"}
+                  left={-4}
+                  variant={"ghost"}
+                  color={"black"}
+                  bgColor={"gray.100"}
+                  borderRadius={"full"}
+                  size={"sm"}
+                  icon={<BiChevronLeft />}
+                />
+                <IconButton
+                  position={"absolute"}
+                  onClick={() => scrollRight()}
+                  top={"48%"}
+                  right={-6}
+                  variant={"ghost"}
+                  color={"black"}
+                  bgColor={"gray.100"}
+                  borderRadius={"full"}
+                  size={"sm"}
+                  icon={<BiChevronRight />}
+                />
               </HStack>
             </Box>
             <Stack
@@ -619,6 +684,30 @@ function Detail(props) {
           )}
         </>
       </Stack>
+      <Modal isOpen={openModal} onClose={() => setOpenModal(false)}>
+        <ModalOverlay />
+        <ModalCloseButton />
+        <ModalContent borderRadius="2xl" maxW={"50vw"} overflow={"hidden"}>
+          {/* <ModalHeader /> */}
+          <ModalCloseButton bgColor={"gray.50"} />
+          <ModalBody p={0}>
+            {selectedImageUrl && (
+              <Image
+                src={selectedImageUrl}
+                objectFit="cover"
+                w="full"
+                h="full"
+                alt=""
+              />
+            )}
+          </ModalBody>
+          {/* <ModalFooter>
+            <Button w={"full"} onClose={() => setOpenModal(false)}>
+              이미지 닫기
+            </Button>
+          </ModalFooter> */}
+        </ModalContent>
+      </Modal>
     </Stack>
   );
 }

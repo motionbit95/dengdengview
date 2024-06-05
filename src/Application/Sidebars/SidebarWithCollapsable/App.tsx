@@ -32,6 +32,7 @@ import { CampainCollaspe } from "./CampainCollaspe";
 import { BsMegaphone, BsPatchQuestion } from "react-icons/bs";
 import { signOut } from "firebase/auth";
 import { auth } from "../../../Firebase/Config";
+import { IoPerson } from "react-icons/io5";
 
 export const SidebarWithCollapsable = ({ ...props }) => {
   console.log(props.userInfo);
@@ -84,12 +85,24 @@ export const SidebarWithCollapsable = ({ ...props }) => {
             </Stack>
           )}
           <Stack spacing="1">
-            <CampainCollaspe
-              setItem={(index: string) => props.setItem(index)}
-            />
-            <DocumentCollapse
-              setItem={(index: string) => props.setItem(index)}
-            />
+            {window.location.pathname === "/" ? (
+              <SidebarButton
+                onClick={() => (window.location.href = "/mypage")}
+                leftIcon={<IoPerson />}
+              >
+                마이페이지
+              </SidebarButton>
+            ) : (
+              <Stack>
+                <CampainCollaspe
+                  setItem={(index: string) => props.setItem(index)}
+                />
+                <DocumentCollapse
+                  setItem={(index: string) => props.setItem(index)}
+                />
+              </Stack>
+            )}
+
             <SidebarButton
               onClick={handleLogout}
               color={"gray.400"}

@@ -136,6 +136,7 @@ export async function fetchDocuments(
     // doc.data() is never undefined for query doc snapshots
     _list.push({ ...doc.data(), doc_id: doc.id });
   });
+  console.log(querySnapshot.docs.length - 1);
   _lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
 
   return {

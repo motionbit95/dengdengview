@@ -25,7 +25,11 @@ import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import { IoArrowDown } from "react-icons/io5";
 import { Naver } from "./Logo";
 import React from "react";
-import { deleteDocument, updateDoc } from "../../../Firebase/Database";
+import {
+  deleteDocument,
+  tableCount,
+  updateDoc,
+} from "../../../Firebase/Database";
 // import { members } from "./data";
 import {
   Modal,
@@ -117,40 +121,43 @@ export const TesterTable = (props: any) => {
         </Tr>
       </Thead>
       <Tbody fontSize={"sm"}>
-        {members.map((campain: any) => (
-          <Tr key={campain.id}>
-            <Td>{campain.name}</Td>
-            <Td>{campain.createdAt.split("T")[0]}</Td>
-            <Td>
-              {campain.startDate} ~ {campain.endDate}
-            </Td>
+        {members.map(
+          (campain: any, index: number) =>
+            index >= props.page * tableCount - tableCount &&
+            index < props.page * tableCount && (
+              <Tr key={campain.id}>
+                <Td>{campain.name}</Td>
+                <Td>{campain.createdAt.split("T")[0]}</Td>
+                <Td>
+                  {campain.startDate} ~ {campain.endDate}
+                </Td>
 
-            <Td>{campain.openDate}</Td>
-            {/* <Td>
+                <Td>{campain.openDate}</Td>
+                {/* <Td>
               {campain.reviewStart} ~ {campain.reviewEnd}
             </Td> */}
-            <Td>{campain.targetCnt}</Td>
-            <Td>{campain.type}</Td>
-            {/* <Td>{campain.views}</Td> */}
-            <Td>
-              <HStack spacing="1">
-                <ConfirmBox
-                  colorScheme="gray"
-                  variant="ghost"
-                  aria-label="Delete member"
-                  onConfirm={() => {
-                    deleteDocument("Campain", campain.doc_id).then(() => {
-                      window.location.reload();
-                    });
-                  }}
-                  title="삭제"
-                  discription="체험단를 삭제하시겠습니까?"
-                  buttonText="삭제"
-                >
-                  <FiTrash2 />
-                </ConfirmBox>
-                <ModifierButton campain={campain} />
-                {/* <IconButton
+                <Td>{campain.targetCnt}</Td>
+                <Td>{campain.type}</Td>
+                {/* <Td>{campain.views}</Td> */}
+                <Td>
+                  <HStack spacing="1">
+                    <ConfirmBox
+                      colorScheme="gray"
+                      variant="ghost"
+                      aria-label="Delete member"
+                      onConfirm={() => {
+                        deleteDocument("Campain", campain.doc_id).then(() => {
+                          window.location.reload();
+                        });
+                      }}
+                      title="삭제"
+                      discription="체험단를 삭제하시겠습니까?"
+                      buttonText="삭제"
+                    >
+                      <FiTrash2 />
+                    </ConfirmBox>
+                    <ModifierButton campain={campain} />
+                    {/* <IconButton
                   onClick={() => {
                     if (uid === "") {
                       setUid(campain.id);
@@ -165,10 +172,11 @@ export const TesterTable = (props: any) => {
                   variant="tertiary"
                   aria-label="Edit member"
                 /> */}
-              </HStack>
-            </Td>
-          </Tr>
-        ))}
+                  </HStack>
+                </Td>
+              </Tr>
+            )
+        )}
       </Tbody>
     </Table>
   );

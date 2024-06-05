@@ -442,7 +442,7 @@ const PopupModal = (props) => {
                     >
                       <Stack>
                         <Text
-                          fontSize={"xl"}
+                          fontSize={{ base: "xl", md: "2xl" }}
                           fontWeight={"bold"}
                           textDecoration={"underline"}
                           sx={{
@@ -453,7 +453,10 @@ const PopupModal = (props) => {
                         >
                           {content2.title}
                         </Text>
-                        <Text fontSize={"xs"} color={"#57636C"}>
+                        <Text
+                          fontSize={{ base: "xs", md: "sm" }}
+                          color={"#57636C"}
+                        >
                           {content2.discription}
                         </Text>
                       </Stack>
@@ -494,7 +497,7 @@ const Step1 = () => {
           <Stack>
             <Box>
               <Text
-                fontSize={"xl"}
+                fontSize={{ base: "xl", md: "2xl" }}
                 fontWeight={"bold"}
                 textDecoration={"underline"}
                 sx={{
@@ -506,7 +509,7 @@ const Step1 = () => {
                 회원가입
               </Text>
             </Box>
-            <Text fontSize={"xs"} color={"#57636C"}>
+            <Text fontSize={{ base: "xs", md: "sm" }} color={"#57636C"}>
               댕댕뷰 회원가입 후, 이메일 혹은 네이버 아이디로 간편하게
               로그인해주세요!
             </Text>
@@ -532,7 +535,7 @@ const Step1 = () => {
         <Flex align={"start"} gap={3} w={{ base: "100%", md: "50%" }}>
           <Stack>
             <Text
-              fontSize={"xl"}
+              fontSize={{ base: "xl", md: "2xl" }}
               fontWeight={"bold"}
               textDecoration={"underline"}
               sx={{
@@ -543,11 +546,11 @@ const Step1 = () => {
             >
               내정보 입력하기
             </Text>
-            <Text fontSize={"xs"} color={"#57636C"}>
+            <Text fontSize={{ base: "xs", md: "sm" }} color={"#57636C"}>
               {`마이페이지 -> 내정보 수정 -> 기본정보 수정에서 회원
       정보를 입력해주세요!`}
             </Text>
-            <Text fontSize={"xs"} color={"#57636C"}>
+            <Text fontSize={{ base: "xs", md: "sm" }} color={"#57636C"}>
               {`성별, 출생연도, 전화번호, 주소 SNS 주소 및 인플루언서 등록, 마케팅 수신 동의가 작성이 안되어있을 시 캠페인 신청이 불가할 수 있어요!`}
             </Text>
           </Stack>
@@ -579,7 +582,7 @@ const Step2 = () => {
         <Flex align={"start"} gap={3} w={{ base: "100%", md: "50%" }}>
           <Stack>
             <Text
-              fontSize={"xl"}
+              fontSize={{ base: "xl", md: "2xl" }}
               fontWeight={"bold"}
               textDecoration={"underline"}
               sx={{
@@ -590,7 +593,7 @@ const Step2 = () => {
             >
               캠페인을 선택하세요!
             </Text>
-            <Text fontSize={"xs"} color={"#57636C"}>
+            <Text fontSize={{ base: "xs", md: "sm" }} color={"#57636C"}>
               블로그,인스타,구매평,인플루언서 페이지에서 원하는 캠페인을 확인후
               신청해주세요
             </Text>
@@ -616,7 +619,7 @@ const Step2 = () => {
         <Flex align={"start"} gap={3} w={{ base: "100%", md: "50%" }}>
           <Stack>
             <Text
-              fontSize={"xl"}
+              fontSize={{ base: "xl", md: "2xl" }}
               fontWeight={"bold"}
               textDecoration={"underline"}
               sx={{
@@ -627,7 +630,7 @@ const Step2 = () => {
             >
               캠페인을 신청하세요!
             </Text>
-            <Text fontSize={"xs"} color={"#57636C"}>
+            <Text fontSize={{ base: "xs", md: "sm" }} color={"#57636C"}>
               {`원하는 캠페인을 클릭해 필수키워드,캠페인 미션, 추가 안내사항을 필독해주시고 고지되어 있는 기간을 고려해 캠페인을 신청해주세요!`}
             </Text>
           </Stack>
@@ -652,7 +655,7 @@ const Step2 = () => {
         <Flex align={"start"} gap={3} w={{ base: "100%", md: "50%" }}>
           <Stack>
             <Text
-              fontSize={"xl"}
+              fontSize={{ base: "xl", md: "2xl" }}
               fontWeight={"bold"}
               textDecoration={"underline"}
               sx={{
@@ -663,7 +666,11 @@ const Step2 = () => {
             >
               캠페인 신청 확인
             </Text>
-            <Text fontSize={"xs"} color={"#57636C"} whiteSpace={"pre-line"}>
+            <Text
+              fontSize={{ base: "xs", md: "sm" }}
+              color={"#57636C"}
+              whiteSpace={"pre-line"}
+            >
               {`마이페이지 - 나의 체험단 에서 신청한 캠페인을 확인!
           * 체험이 어려우실 경우엔 발표일전에 꼭 취소버튼을 클릭 해주세요!`}
             </Text>
@@ -696,7 +703,7 @@ const Step3 = () => {
         <Flex align={"start"} gap={3} w={{ base: "100%", md: "50%" }}>
           <Stack>
             <Text
-              fontSize={"xl"}
+              fontSize={{ base: "xl", md: "2xl" }}
               fontWeight={"bold"}
               textDecoration={"underline"}
               sx={{
@@ -707,7 +714,7 @@ const Step3 = () => {
             >
               캠페인에 선정되었어요!
             </Text>
-            <Text fontSize={"xs"} color={"#57636C"}>
+            <Text fontSize={{ base: "xs", md: "sm" }} color={"#57636C"}>
               캠페인에 당첨되면 댕댕뷰에서 카카오톡 으로 알림톡이 발송됩니다.
             </Text>
           </Stack>
@@ -733,7 +740,7 @@ const Step3 = () => {
         <Flex align={"start"} gap={3} w={{ base: "100%", md: "50%" }}>
           <Stack>
             <Text
-              fontSize={"xl"}
+              fontSize={{ base: "xl", md: "2xl" }}
               fontWeight={"bold"}
               textDecoration={"underline"}
               sx={{
@@ -744,7 +751,7 @@ const Step3 = () => {
             >
               선정된 캠페인 확인
             </Text>
-            <Text fontSize={"xs"} color={"#57636C"}>
+            <Text fontSize={{ base: "xs", md: "sm" }} color={"#57636C"}>
               {`마이페이지-선정된캠페인에서 당첨된 캠페인을 확인하실 수 있습니다.`}
             </Text>
           </Stack>
@@ -776,7 +783,7 @@ const Step4 = () => {
         <Flex align={"start"} gap={3} w={{ base: "100%", md: "50%" }}>
           <Stack>
             <Text
-              fontSize={"xl"}
+              fontSize={{ base: "xl", md: "2xl" }}
               fontWeight={"bold"}
               textDecoration={"underline"}
               sx={{
@@ -787,7 +794,7 @@ const Step4 = () => {
             >
               콘텐츠를 작성해 주세요.
             </Text>
-            <Text fontSize={"xs"} color={"#57636C"}>
+            <Text fontSize={{ base: "xs", md: "sm" }} color={"#57636C"}>
               콘텐츠 작성 후 캠페인 미션과 제목 필수키워드가 캠페인에서 안내된
               내용에 따라 잘 적용이 되었는지 한번 더 확인후 리뷰를 등록해주세요
             </Text>
@@ -826,7 +833,7 @@ const Step4 = () => {
           <Text fontSize={"sm"} fontWeight={"bold"}>
             캠페인 취소
           </Text>
-          <Stack fontSize={"xs"} color={"#57636C"}>
+          <Stack fontSize={{ base: "xs", md: "sm" }} color={"#57636C"}>
             <Text>∙ 캠페인 신청하실때 신중하게 신청해 주세요.</Text>
             <Text>
               ∙ 리뷰 기간 중 캠페인 취소 시 패널티가 부과됩니다. (신청 기간중
@@ -838,7 +845,7 @@ const Step4 = () => {
           <Text fontSize={"sm"} fontWeight={"bold"}>
             기간 내 리뷰등록
           </Text>
-          <Text fontSize={"xs"} color={"#57636C"}>
+          <Text fontSize={{ base: "xs", md: "sm" }} color={"#57636C"}>
             ∙ 기간내 리뷰를 등록하지 않은 회원에게는 패널티가 부과 됩니다. (다른
             캠페인 선정 시 불리하게 적용됩니다.)
           </Text>
@@ -847,7 +854,7 @@ const Step4 = () => {
           <Text fontSize={"sm"} fontWeight={"bold"}>
             체험 후 리뷰미등록
           </Text>
-          <Text fontSize={"xs"} color={"#57636C"}>
+          <Text fontSize={{ base: "xs", md: "sm" }} color={"#57636C"}>
             ∙ 해당 상품의 상품 가격 환불 및 블랙리스트 회원으로 등록
           </Text>
         </Stack>

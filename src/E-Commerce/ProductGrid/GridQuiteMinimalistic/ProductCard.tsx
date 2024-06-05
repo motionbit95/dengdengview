@@ -123,7 +123,7 @@ export const ProductCard = (props: Props) => {
           </HStack>
         </Stack>
       )}
-      <Stack justifyContent="space-between">
+      <Stack spacing={"2px"}>
         <Text
           textOverflow={"ellipsis"}
           overflow="hidden"
@@ -140,6 +140,22 @@ export const ProductCard = (props: Props) => {
           textTransform="uppercase"
         >
           {campain.name}
+        </Text>
+        <Text
+          textOverflow={"ellipsis"}
+          overflow="hidden"
+          wordBreak={"break-word"}
+          style={{
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+          }}
+          color={useColorModeValue("black", "white")}
+          fontSize="xs"
+          letterSpacing="wider"
+          textTransform="uppercase"
+        >
+          {campain.product}
         </Text>
       </Stack>
       {campain?.type !== "이벤트" && (

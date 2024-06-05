@@ -100,27 +100,44 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                 </Text>
               </Box>
               {useBreakpointValue({ base: false, md: true }) && (
-                <ButtonGroup variant={"ghost"} colorScheme="gray" size={"lg"}>
+                <ButtonGroup
+                  variant={"ghost"}
+                  colorScheme="gray"
+                  size={"lg"}
+                  justifyContent={"space-between"}
+                  spacing={6}
+                >
                   <Button
+                    p={0}
                     fontWeight={"bold"}
                     onClick={() => handleTabChange("0")}
                     colorScheme={props.tab === "0" ? "cyan" : "gray"}
                   >
-                    전체 체험단
+                    네이버블로그
                   </Button>
                   <Button
+                    p={0}
                     fontWeight={"bold"}
                     onClick={() => handleTabChange("1")}
                     colorScheme={props.tab === "1" ? "cyan" : "gray"}
                   >
-                    인플루언서
+                    인스타그램
                   </Button>
                   <Button
+                    p={0}
                     fontWeight={"bold"}
                     onClick={() => handleTabChange("2")}
                     colorScheme={props.tab === "2" ? "cyan" : "gray"}
                   >
                     구매평 체험단
+                  </Button>
+                  <Button
+                    p={0}
+                    fontWeight={"bold"}
+                    onClick={() => handleTabChange("3")}
+                    colorScheme={props.tab === "3" ? "cyan" : "gray"}
+                  >
+                    인플루언서
                   </Button>
                 </ButtonGroup>
               )}

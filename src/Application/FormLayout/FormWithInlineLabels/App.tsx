@@ -381,8 +381,8 @@ export const FormWithInlineLabels = (props: UserData) => {
                 justify="space-between"
               >
                 <FormLabel variant="inline">네이버 인플루언서 등록</FormLabel>
-                <InputGroup maxW={{ md: "3xl" }}>
-                  {/* <InputLeftAddon>https://www.instagram.com/</InputLeftAddon> */}
+                {/* <InputGroup maxW={{ md: "3xl" }}>
+                   <InputLeftAddon>https://www.instagram.com/</InputLeftAddon>
                   <Input
                     defaultValue={userInfo?.influence}
                     placeholder="네이버 인플루언서 정보 등록"
@@ -390,7 +390,46 @@ export const FormWithInlineLabels = (props: UserData) => {
                     onChange={handleChange}
                     fontSize={{ base: "sm", md: "md" }}
                   />
-                </InputGroup>
+                </InputGroup> */}
+                <Stack w={"full"} maxW={{ md: "3xl" }} spacing={0}>
+                  {isMobile ? (
+                    <InputGroup flexDirection={"column"} gap={1}>
+                      <InputAddon
+                        fontSize={"sm"}
+                        borderRadius={"lg"}
+                        border={"1px solid #d9d9d9"}
+                        px={3}
+                        overflow={"hidden"}
+                      >
+                        https://in.naver/
+                      </InputAddon>
+                      <Input
+                        fontSize={"sm"}
+                        defaultValue={userInfo?.influence}
+                      />
+                    </InputGroup>
+                  ) : (
+                    <InputGroup maxW={{ md: "3xl" }}>
+                      <InputLeftAddon>https://in.naver/</InputLeftAddon>
+                      <Input
+                        defaultValue={userInfo?.influence}
+                        placeholder="네이버 인플루언서 정보 등록"
+                        name="influence"
+                        onChange={handleChange}
+                        fontSize={{ base: "sm", md: "md" }}
+                      />
+                    </InputGroup>
+                  )}
+                  <FormHelperText
+                    color="fg.muted"
+                    fontSize={{ base: "xs", md: "sm" }}
+                  >
+                    <Text>
+                      https://in.naver 로 시작되는 본인 소유의 네이버 인플루언서
+                      홈 주소를 오타 없이 입력해 주세요.
+                    </Text>
+                  </FormHelperText>
+                </Stack>
               </Stack>
             </FormControl>
           </Stack>

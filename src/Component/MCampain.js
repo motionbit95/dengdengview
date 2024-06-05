@@ -26,13 +26,17 @@ function Campain(props) {
     });
 
     // 전체 유저 정보를 받아옵니다.
-    fetchDocuments("Campain", "openDate", lastVisible, "initial").then(
-      (data) => {
-        console.log(data);
-        setmembers(data.list);
-        setLastVisible(data.lastVisible);
-      }
-    );
+    // fetchDocuments("Campain", "openDate", lastVisible, "initial").then(
+    //   (data) => {
+    //     console.log(data);
+    //     setmembers(data.list);
+    //     setLastVisible(data.lastVisible);
+    //   }
+    // );
+
+    getCollection("Campain").then((data) => {
+      setmembers(data);
+    });
   }, []);
   return (
     <Box as="section" p={{ base: "4", md: "8" }}>
@@ -42,34 +46,38 @@ function Campain(props) {
             setIsRegister(!isRegister);
           }}
           isNextDisabled={
-            members.length < tableCount ||
-            (page - 1) * tableCount + members.length >= totalCount
+            page === Math.ceil(totalCount / tableCount)
+            // members.length < tableCount ||
+            // (page - 1) * tableCount + members.length >= totalCount
           }
           isPrevDisabled={page === 1}
           members={members}
-          onPrev={() =>
-            fetchDocuments(
-              "Campain",
-              "createdAt",
-              lastVisible,
-              "previous"
-            ).then((data) => {
-              console.log(data);
-              setPage(page - 1);
-              setmembers(data.list);
-              setLastVisible(data.lastVisible);
-            })
+          onPrev={
+            () => setPage(page - 1)
+            // fetchDocuments(
+            //   "Campain",
+            //   "createdAt",
+            //   lastVisible,
+            //   "previous"
+            // ).then((data) => {
+            //   console.log(data);
+            //   setPage(page - 1);
+            //   setmembers(data.list);
+            //   setLastVisible(data.lastVisible);
+            // })
           }
           onNext={() => {
-            fetchDocuments("Campain", "openDate", lastVisible, "next").then(
-              (data) => {
-                console.log(data);
-                setPage(page + 1);
-                setmembers(data.list);
-                setLastVisible(data.lastVisible);
-              }
-            );
+            setPage(page + 1);
+            // fetchDocuments("Campain", "openDate", lastVisible, "next").then(
+            //   (data) => {
+            //     console.log(data);
+            //     setPage(page + 1);
+            //     setmembers(data.list);
+            //     setLastVisible(data.lastVisible);
+            //   }
+            // );
           }}
+          page={page}
         />
       ) : (
         <Stack>
