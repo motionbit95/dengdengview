@@ -40,7 +40,7 @@ export const GridQuiteMinimalistic = (props: any) => {
     // );
     // setCampainList(campains.sort((a: any, b: any) => b.views - a.views));
     // setCampainList(campains.sort((a: any, b: any) => b.endDate - a.endDate));
-  }, []);
+  }, [props.campains, props.ordertype]);
   return (
     <Container>
       <Box

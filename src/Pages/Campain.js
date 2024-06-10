@@ -31,11 +31,7 @@ function Campain({ ...props }) {
   const [uid, setUid] = useState(null);
 
   useEffect(() => {
-    console.log("최종적으로 여기서 바뀜", props.keyword);
-  }, [props.keyword]);
-
-  useEffect(() => {
-    console.log("최종적으로 여기서 바뀜", props.tab);
+    console.log("최종적으로 여기서 바뀜", props.tab, props.keyword);
     if (props.tab) {
       // let property = "createdAt";
       // if (props.tab === 1) {
@@ -52,7 +48,7 @@ function Campain({ ...props }) {
           if (!doc.name.includes(props.keyword)) {
             return;
           }
-          // console.log(doc);
+          console.log(doc);
           // doc.data() is never undefined for query doc snapshots
           if (props.tab === "0") {
             list.push(doc);
@@ -96,9 +92,9 @@ function Campain({ ...props }) {
   useEffect(() => {
     if (window.location.pathname === "/") {
       console.log("tab", props.tab);
-      getCollection("Campain").then((data) => {
-        setCampains(data);
-      });
+      // getCollection("Campain").then((data) => {
+      //   setCampains(data);
+      // });
     } else if (window.location.pathname === "/mypage") {
       let step = [];
       let step1 = [];
@@ -145,7 +141,7 @@ function Campain({ ...props }) {
     <Stack
       // flex={"1"}
       w={"100%"}
-      minH={"100vh"}
+      // minH={"100vh"}
       spacing={"8"}
       pb={{ base: "12", md: "24" }}
       {...props}
