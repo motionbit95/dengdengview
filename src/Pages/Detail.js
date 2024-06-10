@@ -701,7 +701,12 @@ function Detail(props) {
       <Modal isOpen={openModal} onClose={() => setOpenModal(false)}>
         <ModalOverlay />
         <ModalCloseButton />
-        <ModalContent borderRadius="2xl" maxW={"50vw"} overflow={"hidden"}>
+        <ModalContent
+          minW={"lg"}
+          maxH={"80vh"}
+          borderRadius="2xl"
+          overflow={"hidden"}
+        >
           {/* <ModalHeader /> */}
           <ModalCloseButton bgColor={"gray.50"} />
           <ModalBody p={0}>

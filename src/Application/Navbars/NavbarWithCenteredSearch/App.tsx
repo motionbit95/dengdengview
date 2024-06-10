@@ -91,10 +91,10 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                 alignItems={"center"}
                 gap={1}
               >
-                <Image
+                {/* <Image
                   w={16}
                   src={require("../../../Assets/img/DangDangLogo2.png")}
-                />
+                /> */}
                 <Text
                   whiteSpace={"nowrap"}
                   fontSize={{ base: "2xl", md: "3xl" }}
