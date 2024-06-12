@@ -97,7 +97,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                 /> */}
                 <Text
                   whiteSpace={"nowrap"}
-                  fontSize={{ base: "2xl", md: "3xl" }}
+                  fontSize={{ base: "2xl", md: "4xl" }}
                   fontFamily={"Cafe24Ssurround"}
                   // color={"#23E9AE"}
                 >
@@ -117,6 +117,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                     fontWeight={"bold"}
                     onClick={() => handleTabChange("0")}
                     // colorScheme={props.tab === "0" ? "cyan" : "gray"}
+                    fontSize={{ base: "md", md: "xl" }}
                   >
                     블로그
                   </Button>
@@ -125,6 +126,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                     fontWeight={"bold"}
                     onClick={() => handleTabChange("1")}
                     // colorScheme={props.tab === "1" ? "cyan" : "gray"}
+                    fontSize={{ base: "md", md: "xl" }}
                   >
                     인스타그램
                   </Button>
@@ -133,6 +135,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                     fontWeight={"bold"}
                     onClick={() => handleTabChange("2")}
                     // colorScheme={props.tab === "2" ? "cyan" : "gray"}
+                    fontSize={{ base: "md", md: "xl" }}
                   >
                     구매평 체험단
                   </Button>
@@ -141,6 +144,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                     fontWeight={"bold"}
                     onClick={() => handleTabChange("3")}
                     // colorScheme={props.tab === "3" ? "cyan" : "gray"}
+                    fontSize={{ base: "md", md: "xl" }}
                   >
                     인플루언서
                   </Button>
