@@ -1,4 +1,12 @@
-import { Avatar, Button, HStack, Stack, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Button,
+  HStack,
+  Heading,
+  Stack,
+  Text,
+  border,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { PageHeader2 } from "../Application/PageHeader/PageHeader2";
 import { getDocument, searchDoc } from "../Firebase/Database";
@@ -17,6 +25,7 @@ import {
 } from "@chakra-ui/react";
 import {
   BsChatDots,
+  BsCheckCircle,
   BsClipboard2Check,
   BsFile,
   BsHeart,
@@ -42,12 +51,18 @@ function ReviewDetail(props) {
       let letter = 0;
       let picture = 0;
       data.forEach((doc) => {
-        like = like + 0;
+        let isBanner = false;
+        doc.imageList.map((item) => {
+          if (item.includes("image.png")) {
+            isBanner = true;
+          }
+        });
+        if (isBanner) {
+          like = like + 1;
+        }
+        // like = like + 0;
         comment = comment + parseInt(doc.commentCnt ? doc.commentCnt : 0);
-        letter =
-          doc.contentList?.length > 1
-            ? letter + doc.contentList.join().length
-            : 0;
+        letter = letter + doc.contentList.join().length;
         picture = picture + doc.imageList.length;
 
         setTotalCount({
@@ -68,154 +83,195 @@ function ReviewDetail(props) {
       });
     });
   }, []);
+
+  const isBanner = (list) => {
+    let isBanner = false;
+    list.map((item) => {
+      if (item.includes("image.png")) {
+        isBanner = true;
+      }
+    });
+    return isBanner;
+  };
+
   return (
     <Stack>
-      <PageHeader2 title="리뷰분석" />
-
-      <Stack
-        border={"2px"}
-        borderColor={"red.500"}
-        borderRadius={"xl"}
-        m={4}
-        overflow={"hidden"}
-      >
-        <HStack bgColor={"#EE3466"} p={2}>
-          <BiUser color={"white"} size={"24px"} />
-          <Text color={"white"} fontWeight={"bold"} fontSize={"xl"}>
-            총 인원 : {reviewList.length}명
-          </Text>
-        </HStack>
-        <HStack w={"100%"} justifyContent={"space-around"} p={2}>
-          <Stack>
-            <HStack>
-              <Text fontWeight={"bold"}>총 공감 수</Text>
-              <AiOutlineHeart opacity={0.5} size={"18px"} />
-            </HStack>
-            <HStack>
-              <Text fontWeight={"bold"} fontSize={"lg"} color={"red.500"}>
-                {totalCount.like}
-              </Text>
-              <Text fontWeight={"bold"} fontSize={"lg"}>
-                개
-              </Text>
-            </HStack>
-          </Stack>
-          <Stack>
-            <HStack>
-              <Text fontWeight={"bold"}>총 댓글 수</Text>
-              <BsChatDots opacity={0.5} size={"18px"} />
-            </HStack>
-            <HStack>
-              <Text fontWeight={"bold"} fontSize={"lg"} color={"red.500"}>
-                {totalCount.comment}
-              </Text>
-              <Text fontWeight={"bold"} fontSize={"lg"}>
-                개
-              </Text>
-            </HStack>
-          </Stack>
-          <Stack>
-            <HStack>
-              <Text fontWeight={"bold"}> 총 글자 수</Text>
-              <BsClipboard2Check opacity={0.5} size={"18px"} />
-            </HStack>
-            <HStack>
-              <Text fontWeight={"bold"} fontSize={"lg"} color={"red.500"}>
-                {totalCount.letter.toLocaleString()}
-              </Text>
-              <Text fontWeight={"bold"} fontSize={"lg"}>
-                개
-              </Text>
-            </HStack>
-          </Stack>
-          <Stack>
-            <HStack>
-              <Text fontWeight={"bold"}> 총 사진 수</Text>
-              <AiOutlinePicture opacity={0.5} size={"18px"} />
-            </HStack>
-            <HStack>
-              <Text fontWeight={"bold"} fontSize={"lg"} color={"red.500"}>
-                {totalCount.picture}
-              </Text>
-              <Text fontWeight={"bold"} fontSize={"lg"}>
-                개
-              </Text>
-            </HStack>
-          </Stack>
-        </HStack>
+      {/* <PageHeader2
+        title="리뷰 분석"
+        discription={`총 ${reviewList.length}개의 리뷰가 있습니다.`}
+      /> */}
+      <Stack py={2}>
+        <Heading size={"sm"}>리뷰 분석</Heading>
+        <Text opacity={0.5}>{reviewList.length}개의 리뷰가 있습니다</Text>
       </Stack>
 
-      <TableContainer>
-        <Table variant="striped" colorScheme="gray">
-          <Tbody>
-            {reviewList.map((review) => (
-              <Tr>
-                <Td>
-                  <HStack>
-                    {/* <Avatar size={"sm"} src={review.image} /> */}
-                    <Text>{review.name}</Text>
-                  </HStack>
-                </Td>
-                <Td>
-                  <Button
-                    colorScheme="green"
-                    onClick={() => window.open(review.url)}
-                    leftIcon={<BiLink />}
-                  >
-                    리뷰보기
-                  </Button>
-                </Td>
-                <Td>
-                  <HStack>
-                    <AiOutlineHeart size={"24px"} />
-                    <Text fontSize={"md"} fontWeight={"bold"}>
-                      공감 수
-                    </Text>
-                    <Text fontSize={"md"} fontWeight={"bold"} color={"red.500"}>
-                      0
-                    </Text>
-                  </HStack>
-                </Td>
-                <Td>
-                  <HStack>
-                    <BsChatDots size={"24px"} />
-                    <Text fontSize={"md"} fontWeight={"bold"}>
-                      댓글 수
-                    </Text>
-                    <Text fontSize={"md"} fontWeight={"bold"} color={"red.500"}>
-                      {review.commentCnt ? review.commentCnt : 0}
-                    </Text>
-                  </HStack>
-                </Td>
+      <Stack>
+        <Stack
+          border={"2px"}
+          borderColor={"#00B5D8"}
+          borderRadius={"xl"}
+          overflow={"hidden"}
+        >
+          <HStack bgColor={"#00B5D8"} p={2}>
+            <BiUser color={"white"} size={"24px"} />
+            <Text color={"white"} fontWeight={"bold"} fontSize={"xl"}>
+              총 인원 : {reviewList.length}명
+            </Text>
+          </HStack>
+          <HStack w={"100%"} justifyContent={"space-around"} p={2}>
+            <Stack>
+              <HStack>
+                <Text fontWeight={"bold"}>베너 등록 완료</Text>
+                <BsCheckCircle opacity={0.5} size={"18px"} />
+              </HStack>
+              <HStack>
+                <Text fontWeight={"bold"} fontSize={"lg"} color={"#00B5D8"}>
+                  {totalCount.like}
+                </Text>
+                <Text fontWeight={"bold"} fontSize={"lg"}>
+                  개
+                </Text>
+              </HStack>
+            </Stack>
+            <Stack>
+              <HStack>
+                <Text fontWeight={"bold"}>총 댓글 수</Text>
+                <BsChatDots opacity={0.5} size={"18px"} />
+              </HStack>
+              <HStack>
+                <Text fontWeight={"bold"} fontSize={"lg"} color={"#00B5D8"}>
+                  {totalCount.comment}
+                </Text>
+                <Text fontWeight={"bold"} fontSize={"lg"}>
+                  개
+                </Text>
+              </HStack>
+            </Stack>
+            <Stack>
+              <HStack>
+                <Text fontWeight={"bold"}> 총 글자 수</Text>
+                <BsClipboard2Check opacity={0.5} size={"18px"} />
+              </HStack>
+              <HStack>
+                <Text fontWeight={"bold"} fontSize={"lg"} color={"#00B5D8"}>
+                  {totalCount.letter.toLocaleString()}
+                </Text>
+                <Text fontWeight={"bold"} fontSize={"lg"}>
+                  개
+                </Text>
+              </HStack>
+            </Stack>
+            <Stack>
+              <HStack>
+                <Text fontWeight={"bold"}> 총 사진 수</Text>
+                <AiOutlinePicture opacity={0.5} size={"18px"} />
+              </HStack>
+              <HStack>
+                <Text fontWeight={"bold"} fontSize={"lg"} color={"#00B5D8"}>
+                  {totalCount.picture}
+                </Text>
+                <Text fontWeight={"bold"} fontSize={"lg"}>
+                  개
+                </Text>
+              </HStack>
+            </Stack>
+          </HStack>
+        </Stack>
 
-                <Td>
-                  <HStack>
-                    <BsClipboard2Check size={"24px"} />
-                    <Text fontSize={"md"} fontWeight={"bold"}>
-                      글자 수
-                    </Text>
-                    <Text fontSize={"md"} fontWeight={"bold"} color={"red.500"}>
-                      {review.contentList.join(" ").length.toLocaleString()}
-                    </Text>
-                  </HStack>
-                </Td>
+        <TableContainer
+          p={{ base: 0, md: 4 }}
+          border={"1px solid #d9d9d9"}
+          borderRadius={"md"}
+        >
+          <Table variant="striped" colorScheme="gray">
+            <Tbody>
+              {reviewList.map((review) => (
+                <Tr>
+                  <Td>
+                    <HStack>
+                      {/* <Avatar size={"sm"} src={review.image} /> */}
+                      <Text>{review.name}</Text>
+                    </HStack>
+                  </Td>
+                  <Td>
+                    <Button
+                      colorScheme="green"
+                      onClick={() => window.open(review.url)}
+                      leftIcon={<BiLink />}
+                    >
+                      리뷰보기
+                    </Button>
+                  </Td>
+                  <Td>
+                    <HStack>
+                      <BsCheckCircle size={"24px"} />
+                      <Text fontSize={"md"} fontWeight={"bold"}>
+                        배너 등록
+                      </Text>
+                      <Text
+                        fontSize={"md"}
+                        fontWeight={"bold"}
+                        color={
+                          isBanner(review?.imageList) ? "#00B5D8" : "gray.500"
+                        }
+                      >
+                        {isBanner(review?.imageList) ? "완료" : "미완료"}
+                      </Text>
+                    </HStack>
+                  </Td>
+                  <Td>
+                    <HStack>
+                      <BsChatDots size={"24px"} />
+                      <Text fontSize={"md"} fontWeight={"bold"}>
+                        댓글 수
+                      </Text>
+                      <Text
+                        fontSize={"md"}
+                        fontWeight={"bold"}
+                        color={"#00B5D8"}
+                      >
+                        {review.commentCnt ? review.commentCnt : 0}
+                      </Text>
+                    </HStack>
+                  </Td>
 
-                <Td>
-                  <HStack>
-                    <AiOutlinePicture size={"24px"} />
-                    <Text fontSize={"md"} fontWeight={"bold"}>
-                      사진 수
-                    </Text>
-                    <Text fontSize={"md"} fontWeight={"bold"} color={"red.500"}>
-                      {review.imageList.length}
-                    </Text>
-                  </HStack>
-                </Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
+                  <Td>
+                    <HStack>
+                      <BsClipboard2Check size={"24px"} />
+                      <Text fontSize={"md"} fontWeight={"bold"}>
+                        글자 수
+                      </Text>
+                      <Text
+                        fontSize={"md"}
+                        fontWeight={"bold"}
+                        color={"#00B5D8"}
+                      >
+                        {review.contentList.join(" ").length.toLocaleString()}
+                      </Text>
+                    </HStack>
+                  </Td>
+
+                  <Td>
+                    <HStack>
+                      <AiOutlinePicture size={"24px"} />
+                      <Text fontSize={"md"} fontWeight={"bold"}>
+                        사진 수
+                      </Text>
+                      <Text
+                        fontSize={"md"}
+                        fontWeight={"bold"}
+                        color={"#00B5D8"}
+                      >
+                        {review.imageList.length}
+                      </Text>
+                    </HStack>
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </Stack>
     </Stack>
   );
 }

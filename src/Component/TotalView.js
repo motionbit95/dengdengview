@@ -145,6 +145,7 @@ function TotalView(props) {
             {window.location.pathname.includes("/admin") && (
               <HStack mx={4}>
                 <Button
+                  variant={"unstyle"}
                   onClick={() =>
                     copyToClipboard(
                       window.location.href.replaceAll(
@@ -157,6 +158,7 @@ function TotalView(props) {
                   링크 생성하기
                 </Button>
                 <Button
+                  variant={"unstyle"}
                   onClick={() => window.location.replace("/admin/dashboard")}
                 >
                   다른 캠페인 선택하기
@@ -492,7 +494,7 @@ export function LineChart() {
   };
   return (
     <Stack>
-      <Tabs onChange={setDiffDate} defaultIndex={4}>
+      <Tabs variant={"soft-rounded"} onChange={setDiffDate} defaultIndex={4}>
         <TabList>
           <Tab value={0}>전체</Tab>
           <Tab value={1}>1년</Tab>

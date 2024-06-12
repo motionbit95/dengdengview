@@ -291,11 +291,17 @@ app.get("/keywordstool", function (req, res) {
   var hash = hmac.finalize();
   hash.toString(CryptoJS.enc.Base64);
 
+  const data = req.query.hintKeywords.split(",");
+
+  const newData = data.map((el) => {
+    return el.replaceAll(" ", "");
+  });
+
   const request = require("request");
   const options = {
-    url:
-      "https://api.naver.com/keywordstool?hintKeywords=" +
-      encodeURIComponent(req.query.hintKeywords),
+    url: `https://api.naver.com/keywordstool?hintKeywords=${encodeURIComponent(
+      newData.join(",")
+    )}`,
     headers: {
       "X-Timestamp": timestamp,
       "X-API-KEY": accessKey,

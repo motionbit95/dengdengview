@@ -50,6 +50,21 @@ export const PersonalInfoCard = ({ ...props }) => {
         px={{ base: "4", md: "6" }}
         py={{ base: "5", md: "6" }}
       >
+        <FormControl id="name" isRequired>
+          <FormLabel>업체명</FormLabel>
+          <Input
+            name="companyName"
+            onChange={(e) => props.onChange({ name: e.target.value })}
+            placeholder="업체명을 입력해주세요."
+            defaultValue={campain?.companyName}
+          />
+        </FormControl>
+        <FormControl id="name" isRequired>
+          <FormLabel>모집차수</FormLabel>
+          <Select>
+            <option value="1">1차</option>
+          </Select>
+        </FormControl>
         <FormControl id="mozip" isRequired>
           <FormLabel>모집부분</FormLabel>
           <CheckboxGroup

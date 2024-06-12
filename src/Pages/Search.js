@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   Box,
   Center,
+  Flex,
   HStack,
   Heading,
   Image,
@@ -20,6 +21,28 @@ import { getCollection, searchDoc } from "../Firebase/Database";
 import { where } from "firebase/firestore";
 import { faker } from "@faker-js/faker";
 import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+} from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler // Filler를 등록합니다.
+);
 
 function Search(props) {
   const [searchByKeyword, setSearchByKeyword] = useState();
@@ -54,9 +77,11 @@ function Search(props) {
   }, []);
   return (
     <Stack>
-      <PageHeader2 title="검색점유율" discription={`네이버 키워드 노출 현황`} />
+      {/* <PageHeader2 title="검색점유율" discription={`네이버 키워드 노출 현황`} /> */}
       {searchByKeyword && (
         <Stack mx={{ base: 4, md: 8 }}>
+          <Heading size="sm">검색점유율</Heading>
+          <Text opacity={0.5}>네이버 키워드 노출 현황</Text>
           <Wrap>
             {Object.entries(searchByKeyword)?.map(([key, value]) => (
               <Tag
@@ -70,16 +95,22 @@ function Search(props) {
               </Tag>
             ))}
           </Wrap>
-          <Text px={{ base: 4, md: 8 }}>
+          <Text>
             총 <strong>{totalCnt}건</strong>의 리뷰가 검색 노출되었습니다.
           </Text>
           <Box mt={8}>
             {Object.entries(searchByKeyword)?.map(([key, value]) => (
-              <Box key={key} mb={4} borderTop={"3px solid black"} py={4}>
+              <Box
+                h={"100%"}
+                key={key}
+                mb={4}
+                borderTop={"3px solid black"}
+                py={4}
+              >
                 <Text fontSize="xl" fontWeight="bold" mb={2}>
                   {key}
                 </Text>
-                <HStack>
+                <HStack h={"100%"}>
                   {value.map(
                     (obj, index) =>
                       index < 3 && (
@@ -96,7 +127,7 @@ function Search(props) {
                           <Image
                             src={obj.url}
                             maxW={"200px"}
-                            aspectRatio={"2/3"}
+                            aspectRatio={"9/16"}
                             border={"1px solid #d9d9d9"}
                             borderRadius={"xl"}
                             objectFit={"cover"}
@@ -123,15 +154,29 @@ export function LineChart(value) {
   const [diffDate, setDiffDate] = useState(4);
   const options = {
     responsive: true,
-
+    maintainAspectRatio: false,
     scales: {
       x: {
         ticks: {
           maxTicksLimit: 3, // x 축 틱의 최대 수
+          font: {
+            size: 12,
+          },
+        },
+      },
+      y: {
+        ticks: {
+          maxTicksLimit: 1,
+          font: {
+            size: 12,
+          },
         },
       },
     },
     plugins: {
+      legend: {
+        display: false,
+      },
       tooltip: {
         callbacks: {
           label: function (context) {
@@ -215,18 +260,22 @@ export function LineChart(value) {
     labels,
     datasets: [
       {
+        lineTension: 0,
         label: "노출수",
         data: resultData,
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-        tension: 0.4, // 곡선의 길이 설정
+        fill: true,
+        backgroundColor: "rgba(14,156,255,0.2)", // 채우기 색상 설정
+        borderColor: "rgba(14,156,255,1)", // 라인 색상 설정
+        borderCapStyle: "butt",
+        tension: 0.1, // 곡선의 길이 설정
         borderWidth: 2, // 라인 그래프의 굵기 설정
-        pointRadius: 0, // 데이터 포인트 점 크기 설정
+        pointRadius: 3, // 데이터 포인트 점 크기 설정
+        pointBackgroundColor: "white",
       },
     ],
   };
   return (
-    <Stack>
+    <Stack style={{ maxWidth: "400px", width: "100%", height: "400px" }}>
       <Line options={options} data={data} />
     </Stack>
   );

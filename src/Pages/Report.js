@@ -275,7 +275,7 @@ const ReportMain = (props) => {
         let originArray = JSON.parse(data.data).keywordList;
 
         let newArray = originArray.filter((keyword) => {
-          return keywords.includes(keyword.relKeyword);
+          return keywords?.includes(keyword.relKeyword);
         });
         // let newArray = originArray.slice(0, 20);
         // console.log(newArray);

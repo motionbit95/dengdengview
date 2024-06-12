@@ -1,15 +1,19 @@
 import {
   Box,
   Button,
+  Card,
   Center,
   Circle,
   Container,
   Flex,
   FormControl,
   FormLabel,
+  Heading,
   Input,
+  Select,
   Stack,
   Text,
+  VStack,
   useColorModeValue as mode,
   useBreakpointValue,
 } from "@chakra-ui/react";
@@ -43,7 +47,7 @@ import { FaThumbsUp } from "react-icons/fa";
 import { BsCommand, BsHandThumbsUp } from "react-icons/bs";
 import { AiFillPicture } from "react-icons/ai";
 import { adminLogout } from "../../../Firebase/Auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dashboard from "../../../Component/MDashboard";
 import User from "../../../Component/MUser";
 import Campain from "../../../Component/MCampain";
@@ -58,7 +62,7 @@ import Keyword from "../../../Pages/Keyword";
 import { Advertise } from "../../Tables/AdTable/App";
 import RegisterSearch from "../../../Component/RegisterSearch";
 import RegisterReview from "../../../Component/RegisterReview";
-import { createDoc } from "../../../Firebase/Database";
+import { createDoc, getCollection } from "../../../Firebase/Database";
 import { updateDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
@@ -72,7 +76,16 @@ export const ShellWithGroupedMenu = () => {
   const [name, setName] = useState("");
   const [cid, setCid] = useState("");
 
+  const [reviewCampain, setReviewCampain] = useState("");
+  const [campains, setCampains] = useState([]);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getCollection("Campain").then((data: any) => {
+      setCampains(data);
+    });
+  }, []);
 
   const handleSubmit = async () => {
     if (window.confirm("리뷰를 등록하시겠습니까?")) {
@@ -354,33 +367,57 @@ export const ShellWithGroupedMenu = () => {
             {menu === 6 && <RegisterReview />}
 
             {menu === 7 && (
-              <Container maxW="lg">
-                <Stack p={{ base: "4", lg: "6" }}>
-                  <FormControl>
-                    <FormLabel>체험단 ID</FormLabel>
-                    <Input
+              <Center minH={"100%"}>
+                <Container>
+                  <VStack spacing={{ base: "4", lg: "6" }}>
+                    <Heading size="sm">
+                      [크롤링] 네이버 블로그 리뷰 등록
+                    </Heading>
+                    <Card>
+                      <Stack p={{ base: "4", lg: "6" }} minW={"md"}>
+                        <FormControl isRequired>
+                          <FormLabel>체험단 선택</FormLabel>
+                          <Select
+                            value={reviewCampain}
+                            onChange={(e) => setReviewCampain(e.target.value)}
+                          >
+                            <option value="">
+                              리뷰 등록할 체험단을 선택하세요.
+                            </option>
+                            {campains?.map((campain: any) => {
+                              return (
+                                <option value={campain.doc_id} key={campain.id}>
+                                  {campain.name}
+                                </option>
+                              );
+                            })}
+                          </Select>
+                          {/* <Input
                       onChange={(e) => setCid(e.target.value)}
                       placeholder="체험단 ID를 입력하세요."
-                    />
-                  </FormControl>
-                  <FormControl>
-                    <FormLabel>이름</FormLabel>
-                    <Input
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="리뷰 작성자를 입력해주세요."
-                    />
-                  </FormControl>
-                  <FormControl>
-                    <FormLabel>리뷰 URL</FormLabel>
-                    <Input
-                      onChange={(e) => setUrl(e.target.value)}
-                      placeholder="https://blog.naver.com/블로그아이디/포스팅번호"
-                    />
-                  </FormControl>
+                    /> */}
+                        </FormControl>
+                        <FormControl isRequired>
+                          <FormLabel>이름</FormLabel>
+                          <Input
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="리뷰 작성자를 입력해주세요."
+                          />
+                        </FormControl>
+                        <FormControl isRequired>
+                          <FormLabel>리뷰 URL</FormLabel>
+                          <Input
+                            onChange={(e) => setUrl(e.target.value)}
+                            placeholder="https://blog.naver.com/블로그아이디/포스팅번호"
+                          />
+                        </FormControl>
 
-                  <Button onClick={handleSubmit}>등록하기</Button>
-                </Stack>
-              </Container>
+                        <Button onClick={handleSubmit}>등록하기</Button>
+                      </Stack>
+                    </Card>
+                  </VStack>
+                </Container>
+              </Center>
             )}
 
             {menu === 11 && <TotalView />}

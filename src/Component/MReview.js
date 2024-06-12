@@ -53,7 +53,9 @@ function Review(props) {
         {reviewList?.map((review) => (
           <Stack
             borderRadius={"lg"}
-            borderColor={"green.500"}
+            borderColor={
+              review.reviewType === "instagram" ? "red.500" : "green.500"
+            }
             borderWidth={"2px"}
             shadow={"md"}
             key={review.doc_id}
@@ -76,7 +78,7 @@ function Review(props) {
               <Text>{review.commentCnt}개</Text>
             </HStack> */}
             <Stack height={"full"} justifyContent={"space-between"}>
-              <Stack>
+              <Stack height={"full"} justifyContent={"space-between"}>
                 <Text fontSize={"lg"} fontWeight={"bold"} noOfLines={1}>
                   {review.titleList
                     ?.toString()
@@ -123,7 +125,9 @@ function Review(props) {
             </Text> */}
               <Button
                 leftIcon={<BiLink />}
-                colorScheme="green"
+                colorScheme={
+                  review.reviewType === "instagram" ? "red" : "green"
+                }
                 onClick={() => {
                   window.open(review.url);
                 }}

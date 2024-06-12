@@ -19,6 +19,29 @@ import { MdRestore } from "react-icons/md";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+// 사용할 색상 리스트
+const colorList = [
+  "#E53E3E46",
+  "#DD6B2046",
+  "#D69E2E46",
+  "#38A16946",
+  "#31979546",
+  "#3182CE46",
+  "#00B5D846",
+  "#805AD546",
+  "#D53F8C46",
+];
+
+const generateAlternatingColors = (numColors) => {
+  const alternatingColors = [];
+  for (let i = 0; i < numColors; i++) {
+    const colorIndex = i % colorList.length; // 색상 리스트 내의 인덱스를 계산하여 반복합니다.
+    alternatingColors.push(colorList[colorIndex]);
+  }
+
+  return alternatingColors;
+};
+
 function Keyword(props) {
   const [keywords, setKeywords] = useState([]);
   const [result, setResult] = useState([]);
@@ -27,10 +50,10 @@ function Keyword(props) {
     console.log(window.location.pathname.split("/").pop());
     let cid = window.location.pathname.split("/").pop();
 
-    if (keywords.length === 0) {
+    if (keywords?.length === 0) {
       getDocument("Campain", cid).then(async (data) => {
         let keywordList = [];
-        if (data.keywords) {
+        if (data?.keywords) {
           data.keywords?.forEach((keyword) => {
             keywordList.push(keyword);
             setKeywords(keywordList);
@@ -52,14 +75,11 @@ function Keyword(props) {
   }, []);
 
   useEffect(() => {
-    // keywords.forEach((keyword) => {
-    // console.log("keywords", keywords, keywords.join(","));
-    // if (result.length > 0) return;
-    if (keywords.length === 0) return;
+    if (keywords?.length === 0) return;
     fetch(
       process.env.REACT_APP_SERVER_URL +
         "/keywordstool?hintKeywords=" +
-        keywords.join(",")
+        keywords?.join(",")
     )
       .then(async (response) => {
         // console.log(response);
@@ -71,7 +91,7 @@ function Keyword(props) {
         if (data.length === 0) return;
 
         let newArray = originArray.filter((keyword) => {
-          return keywords.includes(keyword.relKeyword);
+          return keywords?.includes(keyword.relKeyword);
         });
         // let newArray = originArray.slice(0, 20);
         // console.log(newArray);
@@ -103,67 +123,38 @@ function Keyword(props) {
 
   const data = {
     labels: result.map((keyword) => {
-      if (keywords.includes(keyword.relKeyword)) {
+      if (keywords?.includes(keyword.relKeyword)) {
         return keyword.relKeyword;
       }
     }),
     datasets: [
       {
-        label: "# of Votes",
+        // label: "클릭수",
         data: result.map((keyword) => {
-          if (keywords.includes(keyword.relKeyword)) {
-            return keyword.monthlyMobileQcCnt;
+          if (keywords?.includes(keyword.relKeyword)) {
+            console.log(keyword);
+            return keyword.monthlyMobileQcCnt + keyword.monthlyPcQcCnt;
           }
         }),
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-        ],
+        backgroundColor: generateAlternatingColors(result.length),
+        borderColor: "white", // 투명도 없는 버전
         borderWidth: 1,
       },
     ],
   };
 
   return (
-    <Stack>
+    <Stack spacing={{ base: "4", md: "8" }}>
       <HStack alignItems={"flex-end"}>
         <PageHeader2 title="유입키워드" />
-        <IconButton
+        {/* <IconButton
           mb={1}
           onClick={() => window.location.reload()}
           size={"sm"}
           icon={<MdRestore />}
-        />
+        /> */}
       </HStack>
       <Stack mx={{ base: "4", md: "8" }}>
-        {/* <Wrap>
-          {keywords.map(
-            (keyword, index) =>
-              index < 20 && (
-                <Tag
-                  key={keyword}
-                  rounded="full"
-                  size="lg"
-                  variant="solid"
-                  colorScheme="cyan"
-                >
-                  {keyword}
-                </Tag>
-              )
-          )}
-        </Wrap> */}
         <HStack w={"full"} alignItems={"flex-start"} spacing={10}>
           <Stack
             w={"50%"}
@@ -177,14 +168,8 @@ function Keyword(props) {
               키워드 그래프
             </Text>
             <Wrap>
-              {keywords.map((keyword, index) => (
-                <Tag
-                  key={keyword}
-                  rounded="full"
-                  size="lg"
-                  variant="solid"
-                  colorScheme="cyan"
-                >
+              {keywords?.map((keyword, index) => (
+                <Tag key={keyword} rounded="full" size="lg" colorScheme="blue">
                   {keyword}
                 </Tag>
               ))}

@@ -15,6 +15,10 @@ import {
   Input,
   Button,
   Textarea,
+  Heading,
+  VStack,
+  Container,
+  Card,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { SelectModal } from "./TesterUser";
@@ -82,100 +86,109 @@ function RegisterReview(props) {
       imageList: imageList,
       uid: localStorage.getItem("uid"),
       titleList: [title],
+      reviewType: "instagram",
     });
 
     alert("리뷰를 등록하였습니다.");
   };
   return (
-    <Stack p={{ base: "4", md: "6" }}>
-      <Text fontSize={"xl"} fontWeight={"bold"} mb={4}>
-        리뷰 등록
-      </Text>
-      <Stack>
-        <FormControl isRequired>
-          <FormLabel fontSize={"md"}>체험단 선택</FormLabel>
-          <Select
-            value={cid}
-            onChange={(e) => setSelectedCampain(e.target.value)}
-          >
-            <option value="">리뷰 등록할 체험단을 선택하세요.</option>
-            {campains.map((campain) => {
-              return (
-                <option value={campain.doc_id} key={campain.id}>
-                  {campain.name}
-                </option>
-              );
-            })}
-          </Select>{" "}
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel fontSize={"md"}>리뷰 작성자 입력</FormLabel>
-          <Input
-            value={writer}
-            placeholder="리뷰 작성자를 입력하세요."
-            onChange={(e) => setWriter(e.target.value)}
-          />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel fontSize={"md"}>리뷰 작성 날짜</FormLabel>
-          <SingleDatepicker
-            name="date-input"
-            configs={{
-              dateFormat: "yyyy/MM/dd",
-              dayNames: ["일", "월", "화", "수", "목", "금", "토"], // length of 7
-              monthNames:
-                "1월,2월,3월,4월,5월,6월,7월,8월,9월,10월,11월,12월".split(","), // length of 12
-              firstDayOfWeek: 0, // default is 0, the dayNames[0], which is Sunday if you don't specify your own dayNames,
-            }}
-            propsConfigs={propsConfigs}
-            date={date}
-            onDateChange={(date) => {
-              setDate(date);
-            }}
-          />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel fontSize={"md"}>댓글 건수</FormLabel>
-          <NumberInput
-            defaultValue={count}
-            onChange={(value) => setCount(value)}
-          >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel fontSize={"md"}>리뷰 제목 입력</FormLabel>
-          <Textarea
-            minW={"lg"}
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel fontSize={"md"}>리뷰 내용 입력</FormLabel>
-          <Textarea
-            minW={"lg"}
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
-        </FormControl>
+    <Container>
+      <Center>
+        <Stack spacing={{ base: "6", md: "8" }} minW={"lg"}>
+          <Heading size={"sm"}>[수동] 리뷰 등록</Heading>
+          <Card p={{ base: "4", md: "6" }}>
+            <Stack>
+              <FormControl isRequired>
+                <FormLabel fontSize={"md"}>체험단 선택</FormLabel>
+                <Select
+                  value={cid}
+                  onChange={(e) => setSelectedCampain(e.target.value)}
+                >
+                  <option value="">리뷰 등록할 체험단을 선택하세요.</option>
+                  {campains.map((campain) => {
+                    return (
+                      <option value={campain.doc_id} key={campain.id}>
+                        {campain.name}
+                      </option>
+                    );
+                  })}
+                </Select>{" "}
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel fontSize={"md"}>리뷰 작성자 입력</FormLabel>
+                <Input
+                  value={writer}
+                  placeholder="리뷰 작성자를 입력하세요."
+                  onChange={(e) => setWriter(e.target.value)}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel fontSize={"md"}>리뷰 작성 날짜</FormLabel>
+                <SingleDatepicker
+                  name="date-input"
+                  configs={{
+                    dateFormat: "yyyy/MM/dd",
+                    dayNames: ["일", "월", "화", "수", "목", "금", "토"], // length of 7
+                    monthNames:
+                      "1월,2월,3월,4월,5월,6월,7월,8월,9월,10월,11월,12월".split(
+                        ","
+                      ), // length of 12
+                    firstDayOfWeek: 0, // default is 0, the dayNames[0], which is Sunday if you don't specify your own dayNames,
+                  }}
+                  propsConfigs={propsConfigs}
+                  date={date}
+                  onDateChange={(date) => {
+                    setDate(date);
+                  }}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel fontSize={"md"}>댓글 건수</FormLabel>
+                <NumberInput
+                  defaultValue={count}
+                  onChange={(value) => setCount(value)}
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel fontSize={"md"}>리뷰 제목 입력</FormLabel>
+                <Textarea
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel fontSize={"md"}>리뷰 내용 입력</FormLabel>
+                <Textarea
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                />
+              </FormControl>
 
-        <FormControl isRequired>
-          <FormLabel fontSize={"md"}>링크 입력</FormLabel>
-          <Input value={url} onChange={(e) => setUrl(e.target.value)} />
-        </FormControl>
+              <FormControl isRequired>
+                <FormLabel fontSize={"md"}>링크 입력</FormLabel>
+                <Input value={url} onChange={(e) => setUrl(e.target.value)} />
+              </FormControl>
 
-        <FormControl isRequired>
-          <FormLabel fontSize={"md"}>리뷰 이미지 등록</FormLabel>
-          <ListCampainImages onChange={(images) => setImageList(images)} />
-        </FormControl>
-      </Stack>
-      <Button onClick={handleSubmit}>등록</Button>
-    </Stack>
+              <FormControl isRequired>
+                <FormLabel fontSize={"md"}>리뷰 이미지 등록</FormLabel>
+                <ListCampainImages
+                  onChange={(images) => setImageList(images)}
+                />
+              </FormControl>
+              <Button w={"full"} onClick={handleSubmit}>
+                등록
+              </Button>
+            </Stack>
+          </Card>
+        </Stack>
+      </Center>
+    </Container>
   );
 }
 

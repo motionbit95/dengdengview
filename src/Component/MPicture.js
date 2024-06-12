@@ -79,9 +79,11 @@ function Picture(props) {
                     shadow={"md"}
                     cursor={"pointer"}
                     src={
-                      encodeURIComponent(
-                        image.split("/").pop().split("?")[0]
-                      ) === "image.png"
+                      image.includes("dangdangview.appspot.com")
+                        ? image
+                        : encodeURIComponent(
+                            image.split("/").pop().split("?")[0]
+                          ) === "image.png"
                         ? "https://firebasestorage.googleapis.com/v0/b/dangdangview.appspot.com/o/dangdang_banner.png?alt=media"
                         : bucketAddress +
                           "/downloads%2F" +
