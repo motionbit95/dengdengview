@@ -63,6 +63,11 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
         setIsLogin(false);
       }
     });
+
+    // console.log(localStorage.getItem("naver_id"));
+    // if (localStorage.getItem("naver_id")) {
+    //   setIsLogin(true);
+    // }
   }, []);
 
   return (
@@ -189,7 +194,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
               </ButtonGroup>
               {useBreakpointValue({ base: false, md: true }) && (
                 <ButtonGroup justifyContent={"flex-end"}>
-                  {!isLogin && (
+                  {!isLogin && !localStorage.getItem("naver_id") && (
                     <>
                       <Button
                         variant={"tertiary"}
@@ -239,7 +244,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                     // name={props.userInfo?.name}
                   />
                 )} */}
-                  {isLogin && (
+                  {(isLogin || localStorage.getItem("naver_id")) && (
                     <>
                       <Button
                         variant={"tertiary"}

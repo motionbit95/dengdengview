@@ -15,6 +15,10 @@ export const NaverLogin = (props) => {
   const btnRef = React.useRef(null);
 
   useEffect(() => {
+    console.log(
+      process.env.REACT_APP_NAVER_CLIENT_ID,
+      process.env.REACT_APP_NAVER_CALLBACK_URL
+    );
     const initializeNaverLogin = () => {
       const naverLogin = new naver.LoginWithNaverId({
         clientId: process.env.REACT_APP_NAVER_CLIENT_ID,
@@ -56,7 +60,9 @@ export const NaverLogin = (props) => {
               });
 
               localStorage.setItem("naver_id", naverLogin.user.id);
-              navigate("/");
+              // navigate("/");
+
+              window.location.replace("/");
             }
           });
         }
