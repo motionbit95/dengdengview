@@ -5,7 +5,9 @@ export const debug = (...args) => {
 };
 
 export const trError = (errorCode) => {
-  let errorMessage = "";
+  let errorMessage = "로그인에 실패하였습니다.";
+
+  console.log(errorCode);
 
   switch (errorCode) {
     case "auth/email-already-exists":
@@ -21,9 +23,11 @@ export const trError = (errorCode) => {
       errorMessage = "회원가입이 되어있지 않은 이메일 주소입니다.";
       break;
     default:
-      errorMessage = errorCode;
+      errorMessage = "로그인에 실패하였습니다.";
       break;
   }
+
+  return errorMessage;
 };
 
 // 현재 페이지를 계산하는 함수

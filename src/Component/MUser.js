@@ -15,15 +15,29 @@ function User(props) {
   const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
-    getCollection("User").then((data) => {
-      setTotalCount(data.length);
-    });
-    // 전체 유저 정보를 받아옵니다.
-    fetchDocuments("User", "createdAt", lastVisible, "initial").then((data) => {
-      console.log(data);
-      setmembers(data.list);
-      setLastVisible(data.lastVisible);
-    });
+    const getUsers = async () => {
+      console.log("get users");
+      try {
+        const response = await fetch("http://localhost:8001/auth/list", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setmembers(data);
+        console.log(data);
+      } catch (error) {
+        console.error("Failed to fetch:", error.message);
+      }
+    };
+
+    getUsers();
   }, []);
   return (
     <Box as="section" p={{ base: "4", md: "8" }}>

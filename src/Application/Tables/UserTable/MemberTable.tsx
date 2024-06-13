@@ -28,12 +28,41 @@ export const MemberTable = (props: any) => {
   const [uid, setUid] = React.useState("");
 
   const updateUser = (member: any) => {
-    console.log(member);
-
     if (window.confirm("유저 정보를 수정하시겠습니까?")) {
-      updateDoc("User", member.id, member).then(() => {});
-    } else {
-      window.location.reload();
+      fetch(process.env.REACT_APP_SERVER_URL + "/auth/update/" + member.id, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(member),
+      })
+        .then(async (res) => {
+          console.log(res);
+
+          // window.location.reload();
+        })
+        .catch((error) => {
+          console.error("Failed to fetch:", error.message);
+        });
+    }
+  };
+
+  const deleteUser = (member: any) => {
+    if (window.confirm("유저 정보를 삭제하시겠습니까?")) {
+      fetch(process.env.REACT_APP_SERVER_URL + "/auth/delete/" + member.id, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then(async (res) => {
+          console.log(res);
+
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.error("Failed to fetch:", error.message);
+        });
     }
   };
 
@@ -89,15 +118,17 @@ export const MemberTable = (props: any) => {
                       <Text fontWeight="medium">{member.name}</Text>
                       {member.channel === "naver" && <Naver />}
                     </HStack>
-                    <Text color="fg.default">
-                      {member.doc_id.substring(0, 8)}
-                    </Text>
+                    <Text color="fg.default">{member.id.substring(0, 8)}</Text>
                   </Stack>
                 </HStack>
               )}
             </Td>
             <Td>
-              <Text color="fg.muted">{member.createdAt.split("T")[0]}</Text>
+              <Text color="fg.muted">
+                {new Date(
+                  member.createdAt._seconds * 1000
+                ).toLocaleDateString()}
+              </Text>
             </Td>
             <Td>
               {uid === member.id ? (
@@ -247,6 +278,7 @@ export const MemberTable = (props: any) => {
             <Td>
               <HStack spacing="1">
                 <IconButton
+                  onClick={() => deleteUser(member)}
                   icon={<FiTrash2 />}
                   variant="tertiary"
                   aria-label="Delete member"

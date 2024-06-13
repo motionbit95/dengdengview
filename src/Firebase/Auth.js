@@ -70,7 +70,7 @@ export const signInUser = async (data) => {
     })
     .catch(async (error) => {
       response.code = "error";
-      response.message = trError(error.message);
+      response.message = trError(error.code);
     });
 
   return response;

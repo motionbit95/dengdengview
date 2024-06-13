@@ -26,7 +26,7 @@ import {
 } from "@chakra-ui/react";
 import { FiBell, FiMenu, FiSearch } from "react-icons/fi";
 import { Logo } from "./Logo";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SidebarWithCollapsable } from "../../Sidebars/SidebarWithCollapsable/App";
 import { signOut } from "firebase/auth";
 import { auth } from "../../../Firebase/Config";
@@ -51,6 +51,19 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
     sessionStorage.clear();
     window.location.href = "/login";
   };
+
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsLogin(true);
+      }
+      if (!user) {
+        setIsLogin(false);
+      }
+    });
+  }, []);
 
   return (
     <Box
@@ -176,7 +189,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
               </ButtonGroup>
               {useBreakpointValue({ base: false, md: true }) && (
                 <ButtonGroup justifyContent={"flex-end"}>
-                  {!props.userInfo && (
+                  {!isLogin && (
                     <>
                       <Button
                         variant={"tertiary"}
@@ -226,7 +239,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                     // name={props.userInfo?.name}
                   />
                 )} */}
-                  {props.userInfo && (
+                  {isLogin && (
                     <>
                       <Button
                         variant={"tertiary"}

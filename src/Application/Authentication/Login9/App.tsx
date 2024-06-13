@@ -3,9 +3,6 @@ import {
   Button,
   Container,
   FormControl,
-  FormHelperText,
-  FormLabel,
-  HStack,
   Heading,
   IconButton,
   Input,
@@ -14,11 +11,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { Logo } from "./Logo";
-import { GoogleIcon } from "./ProviderIcons";
-import { NaverLogin } from "../../../Component/MButton";
 import React from "react";
-import { createUser } from "../../../Firebase/Auth";
 import { IoClose } from "react-icons/io5";
 
 export const SignUpForm = () => {
@@ -35,22 +28,55 @@ export const SignUpForm = () => {
   };
 
   const addUser = () => {
-    console.log(formData);
+    fetch(process.env.REACT_APP_SERVER_URL + "/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(async (res) => {
+        console.log(res);
+        return await res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        toast({
+          title: data.message,
+          status: data.code,
+          duration: 2000,
+          isClosable: true,
+        });
 
-    // 회원을 생성합니다.
-    createUser(formData).then((response: any) => {
-      console.log(response);
-      toast({
-        title: response.message,
-        status: response.code,
-        duration: 2000,
-        isClosable: true,
+        console.log("계정 생성 완료", data.id);
+
+        fetch(process.env.REACT_APP_SERVER_URL + "/auth/add/" + data.id, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...formData,
+            id: data.id,
+            createdAt: new Date(),
+            channel: "password",
+          }),
+        })
+          .then(async (res) => {
+            console.log(res);
+            return await res.json();
+          })
+          .then(async (data) => {
+            console.log(data);
+            window.location.href = "/login";
+          })
+          .catch(async (error) => {
+            console.error("Failed to fetch:", error.message);
+          });
+      })
+      .catch((error) => {
+        console.error("Failed to fetch:", error.message);
       });
-
-      if (response.code === "success") {
-        window.location.href = "/login";
-      }
-    });
   };
 
   return (

@@ -34,6 +34,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { IoWarning } from "react-icons/io5";
 import { updateDoc } from "../../../Firebase/Database";
 import { CheckboxCard } from "../../FormElements/CheckboxCardGroup/CheckboxCardGroup";
+import { auth } from "../../../Firebase/Config";
+import PhoneAuth from "../../../Component/PhoneAuth";
+import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
 
 interface UserData {
   userInfo: {
@@ -64,13 +68,77 @@ export const FormWithInlineLabels = (props: UserData) => {
   const [formData, setFormData] = useState<any>({});
   const isMobile = useBreakpointValue({ base: true, md: false });
 
-  useEffect(() => {
-    console.log(userInfo);
-    setFormData(userInfo);
+  const [isEditPhoneNumber, setIsEditPhoneNumber] = useState(false);
 
-    setProfileImage(userInfo?.image);
-    setGender(userInfo?.gender);
-  }, [userInfo]);
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   console.log(userInfo);
+  //   setFormData(userInfo);
+
+  //   setProfileImage(userInfo?.image);
+  //   setGender(userInfo?.gender);
+  // }, [userInfo]);
+
+  const deleteUser = async () => {
+    if (window.confirm("탈퇴하시겠습니까?")) {
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          fetch(process.env.REACT_APP_SERVER_URL + "/auth/delete/" + user.uid, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then(async (res) => {
+              console.log(res);
+            })
+            .catch((error) => {
+              console.error("Failed to fetch:", error.message);
+            });
+
+          fetch(process.env.REACT_APP_SERVER_URL + "/auth/delete/" + user.uid, {
+            method: "DELETE",
+          })
+            .then(async (res) => {
+              console.log(res);
+            })
+            .then(async (data) => {
+              console.log("data", data);
+
+              signOut(auth).catch((error) => {
+                console.log(error);
+              });
+              navigate("/login");
+            })
+            .catch((error) => {
+              console.error("Failed to fetch:", error.message);
+            });
+        }
+      });
+    }
+  };
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        fetch(process.env.REACT_APP_SERVER_URL + "/auth/get/" + user.uid)
+          .then(async (res) => {
+            console.log(res);
+            return await res.json();
+          })
+          .then(async (data) => {
+            console.log("data", data);
+            // setFormData(data);
+            // setProfileImage(data?.image);
+            // setGender(data?.gender);
+          })
+          .catch(async (error) => {
+            console.error("Failed to fetch:", error.message);
+          });
+      }
+    });
+  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -83,14 +151,31 @@ export const FormWithInlineLabels = (props: UserData) => {
 
   const submit = () => {
     console.log(formData);
-    updateDoc("User", userInfo?.id, formData).then(() => {
-      toast({
-        title: "프로필이 수정 되었습니다.",
-        status: "success",
-        duration: 2000,
-        isClosable: true,
-      });
-    });
+    if (window.confirm("유저 정보를 수정하시겠습니까?")) {
+      fetch(process.env.REACT_APP_SERVER_URL + "/auth/update/" + userInfo?.id, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+        .then(async (res) => {
+          console.log(res);
+
+          // window.location.reload();
+        })
+        .catch((error) => {
+          console.error("Failed to fetch:", error.message);
+        });
+    }
+    // updateDoc("User", userInfo?.id, formData).then(() => {
+    //   toast({
+    //     title: "프로필이 수정 되었습니다.",
+    //     status: "success",
+    //     duration: 2000,
+    //     isClosable: true,
+    //   });
+    // });
     // console.log(formData);
   };
 
@@ -113,39 +198,6 @@ export const FormWithInlineLabels = (props: UserData) => {
         </Stack>
         <Divider />
         <Stack spacing="5" divider={<StackDivider />}>
-          {/* <FormControl id="picture">
-            <Stack
-              direction={{ base: "column", md: "row" }}
-              spacing={{ base: "1.5", md: "4" }}
-              justify="space-between"
-            >
-              <FormLabel variant="inline">프로필 사진</FormLabel>
-              <Stack
-                spacing={{ base: "3", md: "5" }}
-                direction={{ base: "column", sm: "row" }}
-                width="full"
-                maxW={{ md: "3xl" }}
-              >
-                <Avatar
-                  size={"2xl"}
-                  src={profileImage}
-                  // alt="profile"  // 이미지일 경우 아래 사용
-                  // fallback={<Skeleton />}
-                  // aspectRatio={1}
-                  // rounded={"full"}
-                  // objectFit="cover"
-                  // flex="1"
-                />
-                <Dropzone
-                  width="full"
-                  setUrl={(data: string) => {
-                    setProfileImage(data);
-                    setFormData({ ...formData, image: data });
-                  }}
-                />
-              </Stack>
-            </Stack>
-          </FormControl> */}
           <FormControl id="name">
             <Stack
               direction={{ base: "column", md: "row" }}
@@ -211,7 +263,8 @@ export const FormWithInlineLabels = (props: UserData) => {
               </RadioGroup> */}
 
               <RadioButtonGroup
-                defaultValue={gender}
+                defaultValue={userInfo?.gender}
+                value={formData?.gender ? formData?.gender : userInfo?.gender}
                 onChange={(value: string) => {
                   setFormData({ ...formData, gender: value });
                 }}
@@ -231,7 +284,12 @@ export const FormWithInlineLabels = (props: UserData) => {
               <Select
                 w={"50%"}
                 fontSize={{ base: "sm", md: "md" }}
-                defaultValue={new Date().getFullYear().toString()}
+                defaultValue={userInfo?.birthyear}
+                value={
+                  formData?.birthyear
+                    ? formData?.birthyear
+                    : userInfo?.birthyear
+                }
                 onChange={(e) => {
                   setFormData({ ...formData, birthyear: e.target.value });
                 }}
@@ -262,16 +320,33 @@ export const FormWithInlineLabels = (props: UserData) => {
                 maxW={{ md: "3xl" }}
                 spacing={2}
               >
-                <Input
-                  maxW={{ md: "3xl" }}
-                  type="tel"
-                  placeholder="전화번호 입력"
-                  defaultValue={userInfo?.phone}
-                  name="phone"
-                  onChange={handleChange}
-                  fontSize={{ base: "sm", md: "md" }}
-                />
-                <Button>인증하기</Button>
+                {!isEditPhoneNumber && (
+                  <>
+                    <Input
+                      maxW={{ md: "3xl" }}
+                      type="tel"
+                      isDisabled={true}
+                      _disabled={{ bgColor: "gray.50" }}
+                      placeholder="전화번호 입력"
+                      defaultValue={userInfo?.phone}
+                      // value={formData?.phone}
+                      name="phone"
+                      onChange={handleChange}
+                      fontSize={{ base: "sm", md: "md" }}
+                    />
+                    <Button onClick={() => setIsEditPhoneNumber(true)}>
+                      변경하기
+                    </Button>
+                  </>
+                )}
+                {isEditPhoneNumber && (
+                  <PhoneAuth
+                    setPhoneVerify={(uid: string) => {
+                      console.log(uid);
+                      setIsEditPhoneNumber(false);
+                    }}
+                  />
+                )}
                 {/* <FormHelperText>
                 일부 체험단 신청 시 휴대폰 인증이 필요합니다.
               </FormHelperText> */}
@@ -481,7 +556,7 @@ export const FormWithInlineLabels = (props: UserData) => {
           </FormControl>
 
           <Stack>
-            <Flex cursor={"pointer"}>
+            <Flex cursor={"pointer"} onClick={deleteUser}>
               <Text
                 fontWeight="bold"
                 opacity={0.5}
