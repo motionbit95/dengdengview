@@ -1,4 +1,4 @@
-import { Box, Container, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, Container, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import { ProductCard } from "./ProductCard";
 // import { campains } from "./_data";
 import { useEffect, useState } from "react";
@@ -55,7 +55,10 @@ export const GridQuiteMinimalistic = (props: any) => {
             gap={{ base: "8", lg: "12" }}
           >
             {campainList?.slice(0, 8).map((campain: any) => (
-              <ProductCard key={campain.doc_id} campain={campain} />
+              <Stack>
+                {/* <Text>{campain.id}</Text> */}
+                <ProductCard key={campain.id} campain={campain} />
+              </Stack>
             ))}
           </SimpleGrid>
         ) : (

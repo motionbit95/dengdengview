@@ -31,46 +31,48 @@ function Campain({ ...props }) {
   const [uid, setUid] = useState(null);
 
   useEffect(() => {
-    console.log("최종적으로 여기서 바뀜", props.tab, props.keyword);
-    if (props.tab) {
-      // let property = "createdAt";
-      // if (props.tab === 1) {
-      //   property = "views";
-      // } else if (props.tab === 2) {
-      //   property = "endDate";
-      // }
+    console.log(
+      "최종적으로 여기서 바뀜",
+      props.tab,
+      props.keyword,
+      props.ordertype
+    );
 
-      // 전체 캠페인 -> 발표일 기준 정렬
-      getCollection("Campain").then((data) => {
-        // console.log(JSON.stringify(data));
-        let list = [];
-        data.forEach((doc) => {
-          if (!doc.name.includes(props.keyword)) {
-            return;
-          }
-          console.log(doc);
-          // doc.data() is never undefined for query doc snapshots
-          if (props.tab === "0") {
-            list.push(doc);
-
-            setCampains(list);
-          } else if (props.tab === "1") {
-            if (doc.mozip.includes("3")) {
-              list.push(doc);
-
-              setCampains(list);
-            }
-          } else if (props.tab === "2") {
-            if (doc.mozip.includes("2")) {
-              list.push(doc);
-
-              setCampains(list);
-            }
-          }
-        });
-      });
+    let order = "createdAt";
+    if (props.ordertype && props.ordertype === 0) {
+      order = "createdAt";
+    } else if (props.ordertype && props.ordertype === 1) {
+      order = "totalviews";
+    } else if (props.ordertype && props.ordertype === 2) {
+      order = "endDate";
+    } else if (props.ordertype && props.ordertype === 3) {
+      order = "createdAt";
     }
-  }, [props.tab, props.keyword]);
+
+    fetch(process.env.REACT_APP_SERVER_URL + "/campain/list/" + order)
+      .then((res) => {
+        console.log("res", res);
+        return res.json();
+      })
+      .then((data) => {
+        console.log("data", data);
+        let tempList = data;
+        if (props.tab === "0") {
+          tempList = data.filter((element) => element.mozip.includes("0"));
+        } else if (props.tab === "1") {
+          tempList = data.filter((element) => element.mozip.includes("1"));
+        } else if (props.tab === "2") {
+          tempList = data.filter((element) => element.mozip.includes("2"));
+        } else if (props.tab === "3") {
+          tempList = data.filter((element) => element.mozip.includes("3"));
+        }
+        console.log("tempList", tempList);
+        setCampains(tempList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [props.tab, props.keyword, props.ordertype]);
 
   useEffect(() => {
     let uid;
@@ -91,10 +93,6 @@ function Campain({ ...props }) {
 
   useEffect(() => {
     if (window.location.pathname === "/") {
-      console.log("tab", props.tab);
-      // getCollection("Campain").then((data) => {
-      //   setCampains(data);
-      // });
     } else if (window.location.pathname === "/mypage") {
       let step = [];
       let step1 = [];

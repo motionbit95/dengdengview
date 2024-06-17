@@ -34,7 +34,7 @@ export const ProductCard = (props: Props) => {
       _hover={{ opacity: 0.7, cursor: "pointer" }}
       onClick={() => {
         console.log(campain);
-        navigate(`/campain/${campain.doc_id}`);
+        navigate(`/campain/${campain.id}`);
         window.location.reload();
         window.scrollTo(0, 0);
       }}
@@ -63,9 +63,6 @@ export const ProductCard = (props: Props) => {
             borderRadius={{ base: "md", md: "xl" }}
           />
         </AspectRatio>
-        {/* <Tag size={"sm"} position="absolute" top="2" left="2">
-          #{campain.doc_id.substring(0, 8)}
-        </Tag> */}
       </Box>
       {campain?.type !== "이벤트" && (
         <Stack direction={{ base: "column", md: "row" }} spacing={2}>
@@ -144,25 +141,24 @@ export const ProductCard = (props: Props) => {
         >
           {campain.name}
         </Text>
-        {campain.product.split("\n").map((product, index) => (
-          <Text
-            textOverflow={"ellipsis"}
-            overflow="hidden"
-            wordBreak={"break-word"}
-            style={{
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-            }}
-            // color={useColorModeValue("black", "white")}
-            fontSize="xs"
-            letterSpacing="wider"
-            textTransform="uppercase"
-            color={"#57636C"}
-          >
-            {product}
-          </Text>
-        ))}
+        <Text
+          textOverflow={"ellipsis"}
+          overflow="hidden"
+          wordBreak={"break-word"}
+          whiteSpace={"pre-wrap"}
+          style={{
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+          }}
+          // color={useColorModeValue("black", "white")}
+          fontSize="xs"
+          letterSpacing="wider"
+          textTransform="uppercase"
+          color={"#57636C"}
+        >
+          {campain.product}
+        </Text>
       </Stack>
       {campain?.type !== "이벤트" && (
         <Text fontSize={"sm"} opacity={0.7}>

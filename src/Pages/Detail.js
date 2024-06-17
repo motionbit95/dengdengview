@@ -9,7 +9,6 @@ import {
   Tag,
   Box,
   Container,
-  TagLeftIcon,
   Card,
   CardBody,
   useDisclosure,
@@ -23,8 +22,6 @@ import {
   WrapItem,
   Wrap,
   Center,
-  Flex,
-  ButtonGroup,
   IconButton,
 } from "@chakra-ui/react";
 import { calculateDday } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/_data";
@@ -39,10 +36,9 @@ import {
 import Calendar from "react-calendar";
 import "../Component/Calendar.css";
 import moment from "moment";
-import { BsEyeFill, BsInstagram } from "react-icons/bs";
+import { BsInstagram } from "react-icons/bs";
 import {
   createDoc,
-  getCollection,
   getDocument,
   multiQuery,
   searchDoc,
@@ -71,43 +67,71 @@ function Detail(props) {
   const location = useLocation();
   // const campain = location.state;
   const [campain, setCampain] = useState(null);
-
   const [isOpen, onToggle] = React.useState(false);
-
   const [userList, setUserList] = useState([]);
-
   const [campains, setCampains] = useState([]);
 
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
 
   const handleImageClick = (imageUrl) => {
-    // console.log("이미지링크 이건디 : ", imageUrl);
     setSelectedImageUrl(imageUrl);
     setOpenModal(true);
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    // 조회수 업데이트
+    let cid = window.location.pathname.split("/").pop();
 
-    console.log(window.location.pathname.split("/").pop());
-
-    getDocument("Campain", window.location.pathname.split("/").pop()).then(
-      (data) => {
+    fetch(process.env.REACT_APP_SERVER_URL + "/campain/get/" + cid)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
         setCampain(data);
-      }
-    );
 
-    getCollection("Campain").then((data) => {
-      let tempList = [];
-      data.forEach((doc) => {
-        if (tempList.length < 4) {
-          tempList.push({ ...doc, doc_id: doc.doc_id });
-        }
+        //조회수 업데이트
+        fetch(process.env.REACT_APP_SERVER_URL + "/campain/update/" + cid, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            views: {
+              ...data?.views,
+              [new Date().toISOString().slice(0, 10)]: data?.views[
+                new Date().toISOString().slice(0, 10)
+              ]
+                ? data?.views[new Date().toISOString().slice(0, 10)] + 1
+                : 1,
+            },
+            updatedAt: new Date().toISOString(),
+            totalviews: data?.totalviews ? data?.totalviews + 1 : 1,
+          }),
+        })
+          .then((res) => {
+            return res.text();
+          })
+          .then((data) => {
+            console.log("update!!", data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      setCampains(tempList);
-    });
+
+    fetch(process.env.REACT_APP_SERVER_URL + "/campain/list/" + "createdAt")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        let temp = data.filter((item) => item.id !== cid);
+        setCampains(temp.slice(0, 4));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   useEffect(() => {
