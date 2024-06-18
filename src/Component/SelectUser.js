@@ -69,60 +69,90 @@ export function SelectModal(props) {
 function SelectUser(props) {
   const [campain, setCampain] = useState({});
   const [userList, setUserList] = useState([]);
+  const [cid, setCid] = useState("");
   useEffect(() => {
     if (window.location.pathname.replaceAll("/admin/dashboard", "")) {
       let cid = window.location.pathname.replaceAll("/admin/dashboard/", "");
-      console.log(cid);
-      getDocument("Campain", cid).then(async (data) => {
-        setCampain(data);
-      });
+      setCid(cid);
+      // getDocument("Campain", cid).then(async (data) => {
+      //   setCampain(data);
+      // });
+      fetch(process.env.REACT_APP_SERVER_URL + "/campain/get/" + cid)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setCampain(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, []);
 
   useEffect(() => {
-    if (campain?.doc_id) {
-      let userList = [];
-      console.log(campain?.doc_id);
-      searchDoc("Tester", where("cid", "==", campain?.doc_id)).then((data) => {
-        data.forEach((doc) => {
-          if (doc.step > 0) {
-            getDocument("User", doc.uid).then((user) => {
-              userList.push({ ...user, ...doc });
-              setUserList(userList);
-            });
-          }
-        });
-      });
-    }
-  }, [campain]);
-
-  const sendKakao = () => {
-    if (userList.length == 0) {
-      alert("선정된 회원이 존재하지 않습니다.");
-      return;
-    }
-    console.log(userList);
-    let receiver = {};
-    userList.forEach((user, i) => {
-      receiver = { ...receiver, ["receiver_" + i + 1]: user.phone };
-    });
-
-    console.log(receiver);
-
-    console.log(process.env.REACT_APP_SERVER_URL + "/alimtalk/send");
-    fetch(process.env.REACT_APP_SERVER_URL + "/alimtalk/send", {
+    console.log(cid);
+    fetch(process.env.REACT_APP_SERVER_URL + "/tester/search", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ...receiver,
-        /*** 필수값입니다 ***/
-        senderkey: "a5a471eb7434d96c3025fad1069eb0e52ad19af1",
-        tpl_code: "TS_8890",
-        sender: "01065807727",
-        subject_1: "체험단 선정 확인",
-        message_1: `안녕하세요. 댕댕뷰입니다.
+        conditions: [{ field: "cid", operator: "==", value: cid }],
+        conditions: [{ field: "step", operator: ">", value: 0 }],
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        let tempUser = [];
+        data.forEach((doc) => {
+          fetch(process.env.REACT_APP_SERVER_URL + "/auth/get/" + doc.uid)
+            .then(async (res) => {
+              return await res.json();
+            })
+            .then(async (user) => {
+              console.log(user);
+              tempUser.push({ ...user, ...doc });
+              if (tempUser.length === data.length) {
+                setUserList(tempUser);
+              }
+            })
+            .catch(async (err) => {
+              console.log(err);
+            });
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [cid]);
+
+  const sendAligo = () => {
+    if (userList.length == 0) {
+      alert("선정된 회원이 존재하지 않습니다.");
+      return;
+    }
+
+    // let tempuser = [
+    //   { name: "박수정", phone: "01091789973" },
+    //   { name: "박진영", phone: "01051917145" },
+    // ];
+
+    userList.forEach((user) => {
+      fetch(process.env.REACT_APP_SERVER_URL + "/alimtalk/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          recvname_1: user.name,
+          receiver_1: user.phone,
+          /*** 필수값입니다 ***/
+          senderkey: "a5a471eb7434d96c3025fad1069eb0e52ad19af1",
+          tpl_code: "TT_1336",
+          sender: "01065807727",
+          subject_1: "체험단 선정 확인",
+          message_1: `안녕하세요. 댕댕뷰입니다.
 
 신청하신 캠페인 당첨되신 것을 축하드립니다!
 
@@ -133,7 +163,7 @@ function SelectUser(props) {
 통보없이 자동취소 됩니다]
 
 [캠페인명]
-${campain}
+${campain.name}
 
 [필수]
 알림톡을 받으신후 댕댕뷰 홈페이지
@@ -143,35 +173,54 @@ ${campain}
 [문의]
 캠페인 문의사항은 댕댕뷰 카카오 채널
 1:1문의하기 로 문의 해주세요`,
-        /*** 필수값입니다 ***/
-        // senddate: "예약일", // YYYYMMDDHHMMSS
-        recvname: "",
-        // button: "당첨 확인(바로가기 클릭)", // JSON string
-        failover: "N", // Y or N
-        // fsubject: "실패시 대체문자 제목",
-        // fmessage: "실패시 대체문자 내용",
-        button_1: {
-          button: [
-            {
-              name: "당첨 확인(바로가기 클릭)",
-              linkType: "WL",
-              linkTypeName: "웹링크",
-              linkPc: "http://댕댕뷰.com/mypage",
-              linkMo: "http://댕댕뷰.com/mypage",
-            },
-          ],
-        },
-      }),
-    })
-      .then((data) => data.json())
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+          /*** 필수값입니다 ***/
+          failover: "Y", // Y or N
+          fsubject: "체험단 선정 확인",
+          fmessage: `안녕하세요. 댕댕뷰입니다.
+
+신청하신 캠페인 당첨되신 것을 축하드립니다!
+
+[필수-금일 자정(24시)까지 
+당첨확인을 클릭해주세요]
+
+[시간내 당첨자확인 미클릭시
+통보없이 자동취소 됩니다]
+
+[캠페인명]
+${campain.name}
+
+[필수]
+알림톡을 받으신후 댕댕뷰 홈페이지
+마이페이지에서 금일 자정(24시까지)
+당첨자 확인 클릭 꼭 해주세요!
+
+[문의]
+캠페인 문의사항은 댕댕뷰 카카오 채널
+1:1문의하기 로 문의 해주세요`,
+          button_1: {
+            button: [
+              {
+                name: "당첨 확인(바로가기 클릭)",
+                linkType: "WL",
+                linkTypeName: "웹링크",
+                linkPc: "https://댕댕뷰.com",
+                linkMo: "https://댕댕뷰.com",
+              },
+            ],
+          },
+        }),
+      })
+        .then((data) => data.json())
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    });
   };
+
   return (
     <Stack alignItems={"start"}>
       <HStack w={"full"} justifyContent={"space-between"}>
         <PageHeader2 title="선정자 목록" discription={campain?.name} />
-        <Button mr={{ base: "0", md: "4" }} onClick={sendKakao}>
+        <Button mr={{ base: "0", md: "4" }} onClick={sendAligo}>
           알림톡 전송
         </Button>
       </HStack>

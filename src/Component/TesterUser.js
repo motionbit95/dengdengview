@@ -114,7 +114,7 @@ function TesterUser(props) {
             })
             .then(async (user) => {
               console.log(user);
-              tempUser.push(user);
+              tempUser.push({ ...user, ...doc });
               if (tempUser.length === data.length) {
                 console.log("업데이트!!!");
                 setUserList(tempUser);
