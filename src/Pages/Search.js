@@ -1,25 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
-  Center,
-  Flex,
   HStack,
   Heading,
   Image,
   Stack,
-  Tab,
-  TabList,
-  Tabs,
   Tag,
   Text,
-  VStack,
   Wrap,
 } from "@chakra-ui/react";
-import { Naver } from "../Application/Tables/CampainTable/Logo";
-import { PageHeader2 } from "../Application/PageHeader/PageHeader2";
-import { getCollection, searchDoc } from "../Firebase/Database";
+import { searchDoc } from "../Firebase/Database";
 import { where } from "firebase/firestore";
-import { faker } from "@faker-js/faker";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -153,7 +144,7 @@ function Search(props) {
 
 export function LineChart(value) {
   console.log(value);
-  const [diffDate, setDiffDate] = useState(4);
+  const diffDate = 4;
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -233,7 +224,7 @@ export function LineChart(value) {
   const labels = getDatesArray(ninetyDaysAgo, today);
 
   // x 축에 표시될 날짜 배열 생성 (일주일에 한 번씩)
-  const xAxisDatesArray = labels.filter((date, index) => index % 10 === 0);
+  // const xAxisDatesArray = labels.filter((date, index) => index % 10 === 0);
 
   // // 날짜 범위 내의 객체 배열 생성
   // const objectArray = [

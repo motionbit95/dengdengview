@@ -7,7 +7,7 @@ export const debug = (...args) => {
 export const trError = (errorCode) => {
   let errorMessage = "로그인에 실패하였습니다.";
 
-  console.log(errorCode);
+  // console.log(errorCode);
 
   switch (errorCode) {
     case "auth/email-already-exists":
@@ -74,7 +74,7 @@ export function convertDate(timestamp) {
 
   // 변환된 날짜를 포맷팅하여 출력
   var formattedDate = formatDate(date);
-  console.log(formattedDate); // yyyy-mm-dd 형식으로 출력
+  // console.log(formattedDate); // yyyy-mm-dd 형식으로 출력
 
   return formattedDate;
 }
@@ -82,8 +82,6 @@ export function convertDate(timestamp) {
 // 30일간의 총 조회수를 계산하는 함수
 export function calculateTotalViews(views, startDate, endDate) {
   let totalViews = 0;
-
-  if (!views) return 0;
 
   console.log(views, startDate, endDate);
 
@@ -94,6 +92,7 @@ export function calculateTotalViews(views, startDate, endDate) {
     }
   }
 
+  console.log("=>", totalViews);
   return totalViews;
 }
 
@@ -126,12 +125,12 @@ export const getViewsArray = (views, pastDays) => {
     if (views?.hasOwnProperty(date)) {
       return views[date];
     } else {
-      console.log(`Date ${date} has no views, setting to 0`);
+      // console.log(`Date ${date} has no views, setting to 0`);
       return 0;
     }
   });
 
-  console.log(pastDays, "일 동안의 조회수 배열:", viewsArrayLastDays);
+  // console.log(pastDays, "일 동안의 조회수 배열:", viewsArrayLastDays);
 
   return viewsArrayLastDays;
 };

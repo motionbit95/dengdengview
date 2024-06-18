@@ -4,7 +4,6 @@ import {
   Button,
   Icon,
   Box,
-  Circle,
   Accordion,
   AccordionItem,
   AccordionButton,
@@ -18,11 +17,9 @@ import {
   Tr,
   Td,
   StackDivider,
-  AspectRatio,
   Image,
   useBreakpointValue,
   Container,
-  VStack,
   AccordionIcon,
   Flex,
   Center,
@@ -33,7 +30,6 @@ import {
   BsCalendarCheck,
   BsCheck2Square,
 } from "react-icons/bs";
-import { colorScheme } from "../App";
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { getCollection, getDocument, searchDoc } from "../Firebase/Database";
@@ -45,12 +41,15 @@ import { calculateTotalViews, getViewsArray } from "../Firebase/Util";
 
 const Report = () => {
   const navigate = useNavigate();
+  const [campainList, setCampainList] = useState([]);
   const [campain, setCampain] = useState({});
   const [testerCnt, setTesterCnt] = useState({
     register: 0,
     selecter: 0,
     complete: 0,
     reviewer: 0,
+    totalviews: 0,
+    total30views: 0,
   });
   useEffect(() => {
     console.log(window.location.pathname.split("/").pop());
@@ -61,29 +60,83 @@ const Report = () => {
       }
     );
 
-    getCollection("Tester").then((data) => {
-      let totalCnt = { register: 0, selecter: 0, complete: 0, reviewer: 0 };
-      data.forEach((doc) => {
-        if (doc.step > 0) {
-          totalCnt.register = totalCnt.register + 1;
-        }
+    fetch(
+      process.env.REACT_APP_SERVER_URL +
+        "/campain/get/" +
+        window.location.pathname.split("/").pop()
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        fetch(process.env.REACT_APP_SERVER_URL + "/campain/search", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            conditions: [
+              { field: "company", operator: "==", value: data.company },
+            ],
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setCampainList(data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-        if (doc.step > 1) {
-          totalCnt.selecter = totalCnt.selecter + 1;
-        }
+  const calculateAnalysis = () => {
+    // 오늘의 날짜
+    const today = new Date();
+    // 30일 전 날짜 계산
+    const past30Days = new Date();
+    past30Days.setDate(today.getDate() - 30);
 
-        if (doc.step > 2) {
-          totalCnt.complete = totalCnt.complete + 1;
-        }
+    let totalAnalysis = {
+      register: 0,
+      selecter: 0,
+      complete: 0,
+      reviewer: 0,
+      totalviews: 0,
+      total30views: 0,
+    };
+    campainList.forEach((element) => {
+      totalAnalysis.totalviews += parseInt(element.totalviews);
+      totalAnalysis.total30views += calculateTotalViews(
+        element?.views,
+        past30Days,
+        today
+      );
 
-        if (doc.step > 3) {
-          totalCnt.reviewer = totalCnt.reviewer + 1;
-        }
-
-        setTesterCnt(totalCnt);
+      setTesterCnt({
+        register: totalAnalysis.register
+          ? totalAnalysis.register + element.analysis?.register
+          : element.analysis?.register,
+        selecter: totalAnalysis.selecter
+          ? totalAnalysis.selecter + element.analysis?.selecter
+          : element.analysis?.selecter,
+        complete: totalAnalysis.complete
+          ? totalAnalysis.complete + element.analysis?.complete
+          : element.analysis?.complete,
+        reviewer: totalAnalysis.reviewer
+          ? totalAnalysis.reviewer + element.analysis?.reviewer
+          : element.analysis?.reviewer,
+        totalviews: totalAnalysis.totalviews,
+        total30views: totalAnalysis.total30views,
       });
     });
-  }, []);
+  };
+
+  useEffect(() => {
+    calculateAnalysis();
+  }, [campainList]);
+
   return (
     <>
       <Flex
@@ -106,7 +159,12 @@ const Report = () => {
       </Flex>
       <Stack align="center" background="#f5f5f5" spacing={8}>
         <ReportMain campain={campain} testerCnt={testerCnt} />
-        <ReportCampain campain={campain} testerCnt={testerCnt} />
+        <ReportCampain
+          campain={campain}
+          testerCnt={testerCnt}
+          campainList={campainList}
+          updateAnalysis={calculateAnalysis}
+        />
         <ReportNotification />
       </Stack>
     </>
@@ -337,7 +395,7 @@ const ReportMain = (props) => {
                   </Text>
                   <HStack>
                     <Text fontWeight="bold" color="cyan.500">
-                      {calculateTotalViews(campain?.views, past30Days, today)}
+                      {props.testerCnt.total30views}
                     </Text>
                     <Text>회</Text>
                   </HStack>
@@ -348,7 +406,7 @@ const ReportMain = (props) => {
                   </Text>
                   <HStack>
                     <Text fontWeight="bold" color="cyan.500">
-                      {campain?.totalviews}
+                      {props.testerCnt.totalviews}
                     </Text>
                     <Text>회</Text>
                   </HStack>
@@ -646,128 +704,6 @@ const ReportMain = (props) => {
 
 const ReportCampain = (props) => {
   const [reportCampains, setReportCampains] = useState([]);
-  useEffect(() => {
-    setReportCampains([props.campain]);
-
-    console.log("setTesterCnt", props.testerCnt);
-  }, [props.campain]);
-
-  // const reportCampains = [
-  //   {
-  //     id: 1,
-  //     title: "OOO 체험단",
-  //     startDate: "2024.04.01",
-  //     endDate: "2024.05.01",
-  //     state: "신청",
-  //     state1: "마감",
-  //     campains: "123",
-  //     campains1: "56",
-  //     tester: "45",
-  //     campains2: "36",
-  //     LastThirtyDaysView: "5653",
-  //     totalView: "32103",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "OOO 체험단",
-  //     startDate: "2024.04.01",
-  //     endDate: "2024.05.01",
-  //     state: "신청",
-  //     state1: "마감",
-  //     campains: "123",
-  //     campains1: "56",
-  //     tester: "45",
-  //     campains2: "36",
-  //     LastThirtyDaysView: "5653",
-  //     totalView: "32103",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "OOO 체험단",
-  //     startDate: "2024.04.01",
-  //     endDate: "2024.05.01",
-  //     state: "신청",
-  //     state1: "마감",
-  //     campains: "123",
-  //     campains1: "56",
-  //     tester: "45",
-  //     campains2: "36",
-  //     LastThirtyDaysView: "5653",
-  //     totalView: "32103",
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "OOO 체험단",
-  //     startDate: "2024.04.01",
-  //     endDate: "2024.05.01",
-  //     state: "신청",
-  //     state1: "마감",
-  //     campains: "123",
-  //     campains1: "56",
-  //     tester: "45",
-  //     campains2: "36",
-  //     LastThirtyDaysView: "5653",
-  //     totalView: "32103",
-  //   },
-  //   {
-  //     id: 5,
-  //     title: "OOO 체험단",
-  //     startDate: "2024.04.01",
-  //     endDate: "2024.05.01",
-  //     state: "신청",
-  //     state1: "마감",
-  //     campains: "123",
-  //     campains1: "56",
-  //     tester: "45",
-  //     campains2: "36",
-  //     LastThirtyDaysView: "5653",
-  //     totalView: "32103",
-  //   },
-  //   {
-  //     id: 6,
-  //     title: "OOO 체험단",
-  //     startDate: "2024.04.01",
-  //     endDate: "2024.05.01",
-  //     state: "신청",
-  //     state1: "마감",
-  //     campains: "123",
-  //     campains1: "56",
-  //     tester: "45",
-  //     campains2: "36",
-  //     LastThirtyDaysView: "5653",
-  //     totalView: "32103",
-  //   },
-  //   {
-  //     id: 7,
-  //     title: "OOO 체험단",
-  //     startDate: "2024.04.01",
-  //     endDate: "2024.05.01",
-  //     state: "신청",
-  //     state1: "마감",
-  //     campains: "123",
-  //     campains1: "56",
-  //     tester: "45",
-  //     campains2: "36",
-  //     LastThirtyDaysView: "5653",
-  //     totalView: "32103",
-  //   },
-  //   {
-  //     id: 8,
-  //     title: "OOO 체험단",
-  //     startDate: "2024.04.01",
-  //     endDate: "2024.05.01",
-  //     state: "신청",
-  //     state1: "마감",
-  //     campains: "123",
-  //     campains1: "56",
-  //     tester: "45",
-  //     campains2: "36",
-  //     LastThirtyDaysView: "5653",
-  //     totalView: "32103",
-  //   },
-  // ];
-
-  const ismobile = useBreakpointValue({ base: true, md: false });
 
   // 오늘의 날짜
   const today = new Date();
@@ -780,6 +716,49 @@ const ReportCampain = (props) => {
   useEffect(() => {
     setCampain(props.campain);
   }, [props.campain]);
+
+  useEffect(() => {
+    console.log(props.campainList);
+    let tempList = props.campainList;
+    props.campainList?.map((element, index) => {
+      let cid = element.id;
+      let analysis = {};
+      fetch(process.env.REACT_APP_SERVER_URL + "/tester/search", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          conditions: [{ field: "cid", operator: "==", value: cid }],
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          data.forEach((element) => {
+            if (element.step >= 0) {
+              analysis.register = analysis.register ? analysis.register + 1 : 1;
+            }
+            if (element.step >= 1) {
+              analysis.selecter = analysis.selecter ? analysis.selecter + 1 : 1;
+            }
+            if (element.step >= 2) {
+              analysis.complete = analysis.complete ? analysis.complete + 1 : 1;
+            }
+            if (element.step >= 3) {
+              analysis.reviewer = analysis.reviewer ? analysis.reviewer + 1 : 1;
+            }
+            // console.log("=>", analysis);
+
+            tempList[index].analysis = analysis;
+            setReportCampains(tempList);
+            props.updateAnalysis();
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+  }, [props.campainList]);
 
   return (
     <Stack
@@ -925,11 +904,7 @@ const ReportCampain = (props) => {
                       </Text>
                       <HStack spacing={0}>
                         <Text color="cyan.500">
-                          {calculateTotalViews(
-                            campain?.views,
-                            past30Days,
-                            today
-                          )}
+                          {props.testerCnt.total30views}
                         </Text>
                         <Text>회</Text>
                       </HStack>
@@ -942,7 +917,9 @@ const ReportCampain = (props) => {
                         총 조회 수
                       </Text>
                       <HStack spacing={0}>
-                        <Text color="cyan.500"> {campain?.totalviews}</Text>
+                        <Text color="cyan.500">
+                          {props.testerCnt.totalviews}
+                        </Text>
                         <Text>회</Text>
                       </HStack>
                     </Stack>
@@ -1009,7 +986,9 @@ const ReportCampain = (props) => {
                         </Text>
                         <HStack spacing={0}>
                           <Text color="cyan.500">
-                            {props.testerCnt.register}
+                            {item.analysis?.register
+                              ? item.analysis?.register
+                              : "0"}
                           </Text>
                           <Text>명</Text>
                         </HStack>
@@ -1023,7 +1002,9 @@ const ReportCampain = (props) => {
                         </Text>
                         <HStack spacing={0}>
                           <Text color="cyan.500">
-                            {props.testerCnt.selecter}
+                            {item.analysis?.selecter
+                              ? item.analysis?.selecter
+                              : "0"}
                           </Text>
                           <Text>명</Text>
                         </HStack>
@@ -1037,7 +1018,9 @@ const ReportCampain = (props) => {
                         </Text>
                         <HStack spacing={0}>
                           <Text color="cyan.500">
-                            {props.testerCnt.complete}
+                            {item.analysis?.complete
+                              ? item.analysis?.complete
+                              : "0"}
                           </Text>
                           <Text>명</Text>
                         </HStack>
@@ -1051,7 +1034,9 @@ const ReportCampain = (props) => {
                         </Text>
                         <HStack spacing={0}>
                           <Text color="cyan.500">
-                            {props.testerCnt.reviewer}
+                            {item.analysis?.reviewer
+                              ? item.analysis?.reviewer
+                              : "0"}
                           </Text>
                           <Text>명</Text>
                         </HStack>

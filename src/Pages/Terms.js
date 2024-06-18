@@ -1,6 +1,4 @@
-import React from "react";
 import { Text, Container } from "@chakra-ui/react";
-import { PageHeader1 } from "../Application/PageHeader/PageHeader1";
 
 function Terms(props) {
   return (

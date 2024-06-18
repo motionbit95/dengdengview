@@ -1,8 +1,5 @@
 import { Container, Stack, Text } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import Campain from "./Campain";
-import { getCollection, searchDoc } from "../Firebase/Database";
-import { orderBy } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { GridQuiteMinimalistic } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/App";
 
 const ViewMoreCampain = (props, keyword) => {
@@ -13,12 +10,14 @@ const ViewMoreCampain = (props, keyword) => {
     const order = params.get("order");
     setPage(order);
 
-    // if (order === "진행중인 체험단") {
-    console.log("모든 체험단을 가지고 옴");
-    getCollection("Campain").then((data) => {
-      setCampains(data);
-    });
-    // }
+    fetch(process.env.REACT_APP_SERVER_URL + "/campain/list/totalviews")
+      .then((res) => res.json())
+      .then((data) => {
+        setCampains(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
   return (
     <Container py={{ base: "12", md: "24" }}>
