@@ -67,6 +67,7 @@ const Report = () => {
     )
       .then((res) => res.json())
       .then((data) => {
+        console.log("=>", data.company);
         fetch(process.env.REACT_APP_SERVER_URL + "/campain/search", {
           method: "POST",
           headers: {
@@ -80,6 +81,7 @@ const Report = () => {
         })
           .then((res) => res.json())
           .then((data) => {
+            console.log("=>", data);
             setCampainList(data);
           })
           .catch((err) => {
@@ -117,16 +119,16 @@ const Report = () => {
       setTesterCnt({
         register: totalAnalysis.register
           ? totalAnalysis.register + element.analysis?.register
-          : element.analysis?.register,
+          : 0,
         selecter: totalAnalysis.selecter
           ? totalAnalysis.selecter + element.analysis?.selecter
-          : element.analysis?.selecter,
+          : 0,
         complete: totalAnalysis.complete
           ? totalAnalysis.complete + element.analysis?.complete
-          : element.analysis?.complete,
+          : 0,
         reviewer: totalAnalysis.reviewer
           ? totalAnalysis.reviewer + element.analysis?.reviewer
-          : element.analysis?.reviewer,
+          : 0,
         totalviews: totalAnalysis.totalviews,
         total30views: totalAnalysis.total30views,
       });
@@ -309,7 +311,7 @@ const ReportMain = (props) => {
             </Text>
             <Button
               size="lg"
-              onClick={() => navigate("/campain/" + props.campain.doc_id)}
+              onClick={() => navigate("/campain/" + props.campain.id)}
             >
               모집글 보기
             </Button>
@@ -703,7 +705,7 @@ const ReportMain = (props) => {
 };
 
 const ReportCampain = (props) => {
-  const [reportCampains, setReportCampains] = useState([]);
+  const [reportCampains, setReportCampains] = useState(props?.campainList);
 
   // 오늘의 날짜
   const today = new Date();
@@ -718,8 +720,8 @@ const ReportCampain = (props) => {
   }, [props.campain]);
 
   useEffect(() => {
-    console.log(props.campainList);
     let tempList = props.campainList;
+    setReportCampains(tempList);
     props.campainList?.map((element, index) => {
       let cid = element.id;
       let analysis = {};
@@ -735,6 +737,7 @@ const ReportCampain = (props) => {
         .then((res) => res.json())
         .then((data) => {
           data.forEach((element) => {
+            console.log("=> test");
             if (element.step >= 0) {
               analysis.register = analysis.register ? analysis.register + 1 : 1;
             }
@@ -750,6 +753,8 @@ const ReportCampain = (props) => {
             // console.log("=>", analysis);
 
             tempList[index].analysis = analysis;
+
+            console.log("=>", tempList, cid);
             setReportCampains(tempList);
             props.updateAnalysis();
           });
@@ -816,7 +821,11 @@ const ReportCampain = (props) => {
                         fontWeight="bold"
                         color="rgba(0, 0, 0, 0.5)"
                       >
-                        {props.campain.startDate}~{props.campain.endDate}
+                        {props.campainList[0]?.startDate}~
+                        {
+                          props.campainList[props.campainList.length - 1]
+                            ?.endDate
+                        }
                       </Text>
                     </Stack>
                   </HStack>
@@ -926,7 +935,7 @@ const ReportCampain = (props) => {
                   </HStack>
                 </Td>
               </Tr>
-              {reportCampains.map((item) => (
+              {reportCampains.map((item, index) => (
                 <Tr>
                   <Td w={{ base: "full", lg: "50%" }}>
                     <HStack spacing={4}>
@@ -947,9 +956,10 @@ const ReportCampain = (props) => {
                             fontSize={{ base: "md", lg: "lg" }}
                             whiteSpace={"pre-wrap"}
                           >
-                            {calculateDday(item.endDate) < 0
+                            {index + 1}차
+                            {/* {calculateDday(item.endDate) < 0
                               ? "신청\n마감"
-                              : "신청중"}
+                              : "신청중"} */}
                             {/* {item.state} */}
                           </Text>
                         </Stack>

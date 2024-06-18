@@ -92,7 +92,7 @@ export function calculateTotalViews(views, startDate, endDate) {
     }
   }
 
-  console.log("=>", totalViews);
+  // console.log("=>", totalViews);
   return totalViews;
 }
 
