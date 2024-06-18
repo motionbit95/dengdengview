@@ -107,12 +107,12 @@ export const TesterTable = (props: any) => {
               </HStack>
             </HStack>
           </Th>
-          <Th minW={"100px"}>
+          {/* <Th minW={"100px"}>
             <HStack spacing="1">
               <Text>생성일</Text>
               <Icon as={IoArrowDown} color="fg.muted" boxSize="4" />
             </HStack>
-          </Th>
+          </Th> */}
           <Th minW={"100px"}>모집일정</Th>
           <Th minW={"100px"}>발표일</Th>
           {/* <Th minW={"100px"}>리뷰일정</Th> */}
@@ -129,7 +129,7 @@ export const TesterTable = (props: any) => {
             index < props.page * tableCount && (
               <Tr key={campain.id}>
                 <Td>{campain.name}</Td>
-                <Td>{convertDate(campain.createdAt)}</Td>
+                {/* <Td>{convertDate(campain.createdAt)}</Td> */}
                 <Td>
                   {campain.startDate} ~ {campain.endDate}
                 </Td>

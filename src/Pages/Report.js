@@ -41,6 +41,7 @@ import { useNavigate } from "react-router-dom";
 import { Line } from "react-chartjs-2";
 import { where } from "firebase/firestore";
 import { calculateDday } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/_data";
+import { calculateTotalViews, getViewsArray } from "../Firebase/Util";
 
 const Report = () => {
   const navigate = useNavigate();
@@ -114,120 +115,6 @@ const Report = () => {
 
 export default Report;
 
-export function LineChart(value) {
-  console.log(value);
-  const [diffDate, setDiffDate] = useState(4);
-  const options = {
-    responsive: true,
-
-    scales: {
-      x: {
-        ticks: {
-          maxTicksLimit: 3, // x 축 틱의 최대 수
-        },
-      },
-    },
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: function (context) {
-            return "조회수: " + context.parsed.y;
-          },
-        },
-      },
-    },
-  };
-
-  // 90일 동안의 날짜 배열 생성
-  function getDatesArray(startDate, endDate) {
-    const datesArray = [];
-    const currentDate = new Date(startDate);
-    while (currentDate <= endDate) {
-      datesArray.push(new Date(currentDate).toISOString().split("T")[0]);
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-    return datesArray;
-  }
-
-  // 오늘 날짜 구하기
-  const today = new Date();
-
-  // 90일 전 날짜 구하기
-  const ninetyDaysAgo = new Date();
-  let subDays = 365;
-  switch (diffDate) {
-    case 0:
-      subDays = 365;
-      break;
-    case 1:
-      subDays = 365;
-      break;
-    case 2:
-      subDays = 180;
-      break;
-    case 3:
-      subDays = 90;
-      break;
-    case 4:
-      subDays = 30;
-      break;
-    default:
-      break;
-  }
-
-  // console.log(subDays);
-  ninetyDaysAgo.setDate(today.getDate() - subDays);
-
-  // 배열 생성
-  const labels = getDatesArray(ninetyDaysAgo, today);
-
-  // x 축에 표시될 날짜 배열 생성 (일주일에 한 번씩)
-  const xAxisDatesArray = labels.filter((date, index) => index % 10 === 0);
-
-  // // 날짜 범위 내의 객체 배열 생성
-  // const objectArray = [
-  //   { date: "2024-05-10", count: 20 },
-  //   { date: "2024-05-11", count: 30 },
-  //   { date: "2024-05-12", count: 40 },
-  //   // 이하 생략...
-  // ];
-
-  // 날짜 범위 내의 객체 배열 생성
-  const objectArray = value.value;
-
-  // console.log(objectArray);
-
-  // 날짜 배열에 해당하는 데이터 생성
-  const resultData = getDatesArray(ninetyDaysAgo, today).map((date) => {
-    const dateString = date;
-    // console.log(dateString);
-    const matchedObject = objectArray.find((obj) => obj.date === dateString);
-    return matchedObject ? parseInt(matchedObject.count) : 0;
-  });
-
-  // console.log(resultData);
-
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "조회수",
-        data: resultData,
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-        tension: 0.4, // 곡선의 길이 설정
-        borderWidth: 2, // 라인 그래프의 굵기 설정
-        pointRadius: 0, // 데이터 포인트 점 크기 설정
-      },
-    ],
-  };
-  return (
-    <VStack w={"100%"} h={"100%"}>
-      <Line options={options} data={data} />
-    </VStack>
-  );
-}
-
 const ReportMain = (props) => {
   const navigate = useNavigate();
 
@@ -263,6 +150,7 @@ const ReportMain = (props) => {
   useEffect(() => {
     // keywords.forEach((keyword) => {
     // console.log("keywords", keywords, keywords.join(","));
+    console.log("keywords", keywords.join(","));
     fetch(
       process.env.REACT_APP_SERVER_URL +
         "/keywordstool?hintKeywords=" +
@@ -330,6 +218,19 @@ const ReportMain = (props) => {
       console.log(groupedObjectsByName);
     });
   }, []);
+
+  // 오늘의 날짜
+  const today = new Date();
+  // 30일 전 날짜 계산
+  const past30Days = new Date();
+  past30Days.setDate(today.getDate() - 30);
+
+  const [campain, setCampain] = useState({});
+
+  useEffect(() => {
+    setCampain(props.campain);
+  }, [props.campain]);
+
   return (
     <Stack
       w={"100%"}
@@ -436,7 +337,7 @@ const ReportMain = (props) => {
                   </Text>
                   <HStack>
                     <Text fontWeight="bold" color="cyan.500">
-                      {0}
+                      {calculateTotalViews(campain?.views, past30Days, today)}
                     </Text>
                     <Text>회</Text>
                   </HStack>
@@ -447,7 +348,7 @@ const ReportMain = (props) => {
                   </Text>
                   <HStack>
                     <Text fontWeight="bold" color="cyan.500">
-                      {0}
+                      {campain?.totalviews}
                     </Text>
                     <Text>회</Text>
                   </HStack>
@@ -465,25 +366,9 @@ const ReportMain = (props) => {
                   borderRadius="xl"
                   border={"1px solid #D9D9D9"}
                   overflow={"hidden"}
-                  h={200}
+                  p={4}
                 >
-                  <Stack
-                    w={"full"}
-                    h={"full"}
-                    // bgColor={"gray"}
-                    align={"center"}
-                    justify={"center"}
-                  >
-                    <LineChart
-                      value={[
-                        { date: "2024-05-01", count: "2" },
-                        { date: "2024-05-02", count: "10" },
-                        { date: "2024-05-03", count: "3" },
-                        { date: "2024-05-04", count: "5" },
-                        { date: "2024-05-05", count: "10" },
-                      ]}
-                    />
-                  </Stack>
+                  <LineChart views={campain?.views} diffDate={4} />
                 </Box>
               </Stack>
               <Stack spacing={3} flex="1" alignSelf="stretch">
@@ -496,25 +381,9 @@ const ReportMain = (props) => {
                   borderRadius="xl"
                   border={"1px solid #D9D9D9"}
                   overflow={"hidden"}
-                  h={200}
+                  p={4}
                 >
-                  <Stack
-                    w={"full"}
-                    h={"full"}
-                    // bgColor={"gray"}
-                    align={"center"}
-                    justify={"center"}
-                  >
-                    <LineChart
-                      value={[
-                        { date: "2024-05-01", count: "2" },
-                        { date: "2024-05-02", count: "10" },
-                        { date: "2024-05-03", count: "3" },
-                        { date: "2024-05-04", count: "5" },
-                        { date: "2024-05-05", count: "10" },
-                      ]}
-                    />
-                  </Stack>
+                  <LineChart views={campain?.views} diffDate={0} />
                 </Box>
               </Stack>
             </Stack>
@@ -524,10 +393,15 @@ const ReportMain = (props) => {
               height={12}
               // alignSelf="stretch"
 
-              onClick={() =>
-                navigate(
-                  `/report/detail/` + window.location.pathname.split("/").pop()
-                )
+              onClick={
+                () =>
+                  window.open(
+                    `/report/detail/` +
+                      window.location.pathname.split("/").pop()
+                  )
+                // navigate(
+                //   `/report/detail/` + window.location.pathname.split("/").pop()
+                // )
               }
             >
               종합 상세 리포트 보기
@@ -894,6 +768,19 @@ const ReportCampain = (props) => {
   // ];
 
   const ismobile = useBreakpointValue({ base: true, md: false });
+
+  // 오늘의 날짜
+  const today = new Date();
+  // 30일 전 날짜 계산
+  const past30Days = new Date();
+  past30Days.setDate(today.getDate() - 30);
+
+  const [campain, setCampain] = useState({});
+
+  useEffect(() => {
+    setCampain(props.campain);
+  }, [props.campain]);
+
   return (
     <Stack
       w={"100%"}
@@ -1037,7 +924,13 @@ const ReportCampain = (props) => {
                         최근 30일 조회
                       </Text>
                       <HStack spacing={0}>
-                        <Text color="cyan.500">{0}</Text>
+                        <Text color="cyan.500">
+                          {calculateTotalViews(
+                            campain?.views,
+                            past30Days,
+                            today
+                          )}
+                        </Text>
                         <Text>회</Text>
                       </HStack>
                     </Stack>
@@ -1049,7 +942,7 @@ const ReportCampain = (props) => {
                         총 조회 수
                       </Text>
                       <HStack spacing={0}>
-                        <Text color="cyan.500">{0}</Text>
+                        <Text color="cyan.500"> {campain?.totalviews}</Text>
                         <Text>회</Text>
                       </HStack>
                     </Stack>
@@ -1180,11 +1073,11 @@ const ReportCampain = (props) => {
                         </Text>
                         <HStack spacing={0}>
                           <Text color="cyan.500">
-                            {0}
-                            {/* {item.LastThirtyDaysView.toString().replace(
-                              /\B(?=(\d{3})+(?!\d))/g,
-                              ","
-                            )} */}
+                            {calculateTotalViews(
+                              item?.views,
+                              past30Days,
+                              today
+                            )}
                           </Text>
                           <Text>회</Text>
                         </HStack>
@@ -1197,12 +1090,7 @@ const ReportCampain = (props) => {
                           총 조회 수
                         </Text>
                         <HStack spacing={0}>
-                          <Text color="cyan.500">
-                            {0}
-                            {/* {item.totalView
-                              .toString()
-                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")} */}
-                          </Text>
+                          <Text color="cyan.500">{item?.totalviews}</Text>
                           <Text>회</Text>
                         </HStack>
                       </Stack>
@@ -1408,3 +1296,144 @@ const ReportNotification = () => {
     </Stack>
   );
 };
+
+export function LineChart({ views, diffDate }) {
+  // const [diffDate, setDiffDate] = useState(diffDate);
+  const options = {
+    responsive: true,
+    scales: {
+      x: {
+        ticks: {
+          maxTicksLimit: 5, // x 축 틱의 최대 수
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        position: "top",
+        display: false,
+      },
+      tooltip: {
+        padding: 20,
+        caretPadding: 10,
+        font: {
+          family: "'Noto Sans KR', sans-serif",
+          color: "#000",
+        },
+        titleMarginBottom: 10,
+        titleSpacing: 10,
+        bodySpacing: 10,
+        filter: (item) => item.parsed.y !== null,
+        // 툴팁에 보여질 데이터를 필터링해줌. 위 코드는 null 인 값은 보이지 않게 함
+        usePointStyle: false, //true 로 하면 다른 모양으로 스타일을 설정할 수 있는데, 플러그인 등록
+        callbacks: {
+          // 툴팁에 표시되는 내용 콜백함수
+          // context.parsed.y 은 y 축 값, context.dataset.label는 표시되는 label
+          label: (context) => {
+            if (context.parsed.y === 0) {
+              return " " + context.dataset.label + " -건";
+            }
+            return " " + context.dataset.label + " " + context.parsed.y + "건";
+          },
+        },
+      },
+      scales: {
+        //https://www.chartjs.org/docs/latest/axes/styling.html - [scaleId] 가 x 또는 y
+        x: {
+          type: "time",
+          time: {
+            unit: "week", // 주 단위로 표시
+            stepSize: 1, // 간격 설정
+            displayFormats: {
+              week: "YYYY-MM-DD", // 주의 형식 설정
+            },
+          },
+        },
+        y: {
+          // ... x축과 옵션이 동일함. Y축에 대한 옵션
+        },
+      },
+
+      // title: {
+      //   display: true,
+      //   text: "Chart.js Line Chart",
+      // },
+    },
+  };
+
+  function getDatesArray(startDate, endDate) {
+    const datesArray = [];
+    const currentDate = new Date(startDate);
+
+    while (currentDate <= endDate) {
+      const year = currentDate.getFullYear();
+      const month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
+      const day = ("0" + currentDate.getDate()).slice(-2);
+      const formattedDate = `${year}-${month}-${day}`;
+      datesArray.push(formattedDate);
+
+      // 현재 날짜에 1일씩 더함
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return datesArray;
+  }
+
+  // 오늘 날짜 구하기
+  const today = new Date();
+
+  // 90일 전 날짜 구하기
+  const ninetyDaysAgo = new Date();
+  let subDays = 365;
+  switch (diffDate) {
+    case 0:
+      subDays = 365;
+      break;
+    case 1:
+      subDays = 365;
+      break;
+    case 2:
+      subDays = 180;
+      break;
+    case 3:
+      subDays = 90;
+      break;
+    case 4:
+      subDays = 30;
+      break;
+    default:
+      break;
+  }
+
+  console.log(subDays);
+  ninetyDaysAgo.setDate(today.getDate() - subDays);
+
+  // 배열 생성
+  const labels = getDatesArray(ninetyDaysAgo, today);
+
+  // x 축에 표시될 날짜 배열 생성 (일주일에 한 번씩)
+  const xAxisDatesArray = labels.filter((date, index) => index % 10 === 0);
+
+  // 데이터 정렬 및 변환
+  // getViewsArray(views, 30);
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "조회수",
+        data: getViewsArray(views, subDays),
+        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        tension: 0.4, // 곡선의 길이 설정
+        borderWidth: 2, // 라인 그래프의 굵기 설정
+        pointRadius: 0, // 데이터 포인트 점 크기 설정
+      },
+    ],
+  };
+  return (
+    <Stack>
+      <Line options={options} data={data} height={"100px"} />
+    </Stack>
+  );
+}

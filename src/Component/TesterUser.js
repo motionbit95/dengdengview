@@ -91,6 +91,7 @@ function TesterUser(props) {
 
   useEffect(() => {
     console.log(cid);
+    let campainId = cid.split("/").pop();
     fetch(process.env.REACT_APP_SERVER_URL + "/tester/search", {
       method: "POST",
       headers: {
@@ -98,7 +99,7 @@ function TesterUser(props) {
       },
       body: JSON.stringify({
         conditions: [
-          { field: "cid", operator: "==", value: cid },
+          { field: "cid", operator: "==", value: campainId },
           // { field: "step", operator: "==", value: 1 },
         ],
       }),

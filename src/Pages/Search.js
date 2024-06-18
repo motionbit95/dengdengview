@@ -110,34 +110,36 @@ function Search(props) {
                 <Text fontSize="xl" fontWeight="bold" mb={2}>
                   {key}
                 </Text>
-                <HStack h={"100%"}>
-                  {value.map(
-                    (obj, index) =>
-                      index < 3 && (
-                        <Stack spacing={1} p={4}>
-                          <Text>
-                            <strong key={index} style={{ color: "red" }}>
-                              {obj.count}건
-                            </strong>{" "}
-                            노출
-                          </Text>
-                          <Text opacity={0.5} fontSize="sm">
-                            {obj.date}
-                          </Text>
-                          <Image
-                            src={obj.url}
-                            maxW={"200px"}
-                            aspectRatio={"9/16"}
-                            border={"1px solid #d9d9d9"}
-                            borderRadius={"xl"}
-                            objectFit={"cover"}
-                          />
-                        </Stack>
-                        // <Text key={index} ml={4}>
-                        //   {JSON.stringify(obj)}
-                        // </Text>
-                      )
-                  )}
+                <HStack h={"100%"} justifyContent={"space-between"}>
+                  <HStack>
+                    {value.map(
+                      (obj, index) =>
+                        index < 3 && (
+                          <Stack spacing={1} p={4}>
+                            <Text>
+                              <strong key={index} style={{ color: "red" }}>
+                                {obj.count}건
+                              </strong>{" "}
+                              노출
+                            </Text>
+                            <Text opacity={0.5} fontSize="sm">
+                              {obj.date}
+                            </Text>
+                            <Image
+                              src={obj.url}
+                              maxW={"200px"}
+                              aspectRatio={"9/16"}
+                              border={"1px solid #d9d9d9"}
+                              borderRadius={"xl"}
+                              objectFit={"cover"}
+                            />
+                          </Stack>
+                          // <Text key={index} ml={4}>
+                          //   {JSON.stringify(obj)}
+                          // </Text>
+                        )
+                    )}
+                  </HStack>
                   <LineChart value={value} />
                 </HStack>
               </Box>

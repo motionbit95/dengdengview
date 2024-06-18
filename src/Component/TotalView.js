@@ -49,6 +49,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
+import { calculateTotalViews, getViewsArray } from "../Firebase/Util";
 
 ChartJS.register(
   CategoryScale,
@@ -66,6 +67,13 @@ function TotalView(props) {
   const [selectTester, setSelectTester] = useState([]);
   const [completeTester, setCompleteTester] = useState([]);
   const [reviewTester, setReviewTester] = useState([]);
+
+  // 오늘의 날짜
+  const today = new Date();
+  // 30일 전 날짜 계산
+  const past30Days = new Date();
+  past30Days.setDate(today.getDate() - 30);
+
   useEffect(() => {
     const cid = window.location.pathname.split("/").pop();
     getDocument("Campain", cid).then((data) => {
@@ -313,14 +321,20 @@ function TotalView(props) {
                     </Stack>
                     <Stack alignItems={"around"}>
                       <Center h={10}>
-                        <Text fontWeight={"bold"} color={"red.500"}>
-                          0
-                        </Text>
+                        {campain?.views && (
+                          <Text fontWeight={"bold"} color={"red.500"}>
+                            {calculateTotalViews(
+                              campain?.views,
+                              past30Days,
+                              today
+                            )}
+                          </Text>
+                        )}
                         <Text w={"full"}>회</Text>
                       </Center>
                       <Center h={10}>
                         <Text fontWeight={"bold"} color={"red.500"}>
-                          0
+                          {campain?.totalviews}
                         </Text>
                         <Text w={"full"}>회</Text>
                       </Center>
@@ -349,7 +363,7 @@ function TotalView(props) {
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
-                <LineChart />
+                <LineChart views={campain?.views} />
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
@@ -359,7 +373,7 @@ function TotalView(props) {
   );
 }
 
-export function LineChart() {
+export function LineChart({ views }) {
   const [diffDate, setDiffDate] = useState(4);
   const options = {
     responsive: true,
@@ -476,14 +490,15 @@ export function LineChart() {
   // x 축에 표시될 날짜 배열 생성 (일주일에 한 번씩)
   const xAxisDatesArray = labels.filter((date, index) => index % 10 === 0);
 
+  // 데이터 정렬 및 변환
+  // getViewsArray(views, 30);
+
   const data = {
     labels,
     datasets: [
       {
         label: "조회수",
-        data: getDatesArray(ninetyDaysAgo, today).map(() =>
-          faker.datatype.number({ min: 0, max: 1000 })
-        ),
+        data: getViewsArray(views, subDays),
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         tension: 0.4, // 곡선의 길이 설정

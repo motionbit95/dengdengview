@@ -78,3 +78,60 @@ export function convertDate(timestamp) {
 
   return formattedDate;
 }
+
+// 30일간의 총 조회수를 계산하는 함수
+export function calculateTotalViews(views, startDate, endDate) {
+  let totalViews = 0;
+
+  if (!views) return 0;
+
+  console.log(views, startDate, endDate);
+
+  for (const [dateStr, count] of Object.entries(views)) {
+    const date = new Date(dateStr);
+    if (date >= startDate && date <= endDate) {
+      totalViews += count;
+    }
+  }
+
+  return totalViews;
+}
+
+// 특정 기간 동안의 모든 날짜를 배열로 생성하는 함수
+function getAllDatesInRange(startDate, endDate) {
+  const dates = [];
+  const currentDate = new Date(startDate);
+
+  while (currentDate <= endDate) {
+    dates.push(new Date(currentDate).toISOString().split("T")[0]);
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return dates;
+}
+
+export const getViewsArray = (views, pastDays) => {
+  // 오늘 날짜
+  const today = new Date();
+
+  // pastDays 전 날짜 계산
+  const _pastDays = new Date(today);
+  _pastDays.setDate(today.getDate() - pastDays);
+
+  // 30일 동안의 모든 날짜 배열 생성
+  const datesLastDays = getAllDatesInRange(_pastDays, today);
+
+  // 조회수 데이터를 배열로 변환하고 없는 날짜는 0으로 채우기
+  const viewsArrayLastDays = datesLastDays.map((date) => {
+    if (views?.hasOwnProperty(date)) {
+      return views[date];
+    } else {
+      console.log(`Date ${date} has no views, setting to 0`);
+      return 0;
+    }
+  });
+
+  console.log(pastDays, "일 동안의 조회수 배열:", viewsArrayLastDays);
+
+  return viewsArrayLastDays;
+};
