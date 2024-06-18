@@ -143,7 +143,7 @@ ${campain}
                   "] " +
                   member.street +
                   " " +
-                  member.address}
+                  (member.address ? member.address : "")}
               </Text>
             </Td>
             <Td>

@@ -58,3 +58,23 @@ export function formattedDateTime(date) {
 export function isExist(property, object) {
   return property in object;
 }
+// 날짜를 yyyy-mm-dd 형식의 문자열로 변환하는 함수
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 +1 필요
+  const day = date.getDate().toString().padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+// Firebase Firestore의 Timestamp를 변환하는 예제
+export function convertDate(timestamp) {
+  // Timestamp 객체를 JavaScript Date 객체로 변환
+  // 타임스탬프 데이터를 Date 객체로 변환
+  const date = new Date(timestamp._seconds * 1000);
+
+  // 변환된 날짜를 포맷팅하여 출력
+  var formattedDate = formatDate(date);
+  console.log(formattedDate); // yyyy-mm-dd 형식으로 출력
+
+  return formattedDate;
+}

@@ -17,7 +17,7 @@ import { AiOutlineInstagram } from "react-icons/ai";
 import { Naver } from "../../../Application/Tables/UserTable/Logo";
 import { FiShoppingBag } from "react-icons/fi";
 import { HiReceiptTax } from "react-icons/hi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   campain: Campain;
@@ -28,6 +28,30 @@ export const ProductCard = (props: Props) => {
   const isMobile = useBreakpointValue({ base: true, md: false });
   const navigate = useNavigate();
   const [cnt, setCnt] = useState(0);
+
+  useEffect(() => {
+    fetch(process.env.REACT_APP_SERVER_URL + "/tester/search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        conditions: [{ field: "cid", operator: "==", value: campain.id }],
+      }),
+    })
+      .then(async (res) => {
+        return await res.json();
+      })
+      .then(async (data) => {
+        console.log(data);
+
+        setCnt(data.length);
+      })
+      .catch(async (err) => {
+        console.log(err);
+      });
+  }, [campain]);
+
   return (
     <Stack
       spacing="2"

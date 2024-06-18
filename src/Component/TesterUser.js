@@ -69,30 +69,69 @@ export function SelectModal(props) {
 function TesterUser(props) {
   const [campain, setCampain] = useState({});
   const [userList, setUserList] = useState([]);
+  const [cid, setCid] = useState("");
   useEffect(() => {
     if (window.location.pathname.replaceAll("/admin/dashboard", "")) {
       let cid = window.location.pathname.replaceAll("/admin/dashboard/", "");
-      console.log(cid);
-      getDocument("Campain", cid).then(async (data) => {
-        setCampain(data);
-      });
+      setCid(cid);
+      // getDocument("Campain", cid).then(async (data) => {
+      //   setCampain(data);
+      // });
+      fetch(process.env.REACT_APP_SERVER_URL + "/campain/get/" + cid)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setCampain(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, []);
 
   useEffect(() => {
-    if (campain?.doc_id) {
-      let userList = [];
-      console.log(campain?.doc_id);
-      searchDoc("Tester", where("cid", "==", campain?.doc_id)).then((data) => {
+    console.log(cid);
+    fetch(process.env.REACT_APP_SERVER_URL + "/tester/search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        conditions: [
+          { field: "cid", operator: "==", value: cid },
+          // { field: "step", operator: "==", value: 1 },
+        ],
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        let tempUser = [];
         data.forEach((doc) => {
-          getDocument("User", doc.uid).then((user) => {
-            userList.push({ ...user, ...doc });
-            setUserList(userList);
-          });
+          fetch(process.env.REACT_APP_SERVER_URL + "/auth/get/" + doc.uid)
+            .then(async (res) => {
+              return await res.json();
+            })
+            .then(async (user) => {
+              console.log(user);
+              tempUser.push(user);
+              if (tempUser.length === data.length) {
+                console.log("업데이트!!!");
+                setUserList(tempUser);
+              }
+              // setUserList(tempUser);
+              // setUserList(data);
+            })
+            .catch(async (err) => {
+              console.log(err);
+            });
         });
+        // setUserList(data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    }
-  }, [campain]);
+  }, [cid]);
   return (
     <Stack alignItems={"start"}>
       <PageHeader2 title="신청자 목록" discription={campain?.name} />

@@ -42,6 +42,7 @@ import {
 } from "@chakra-ui/react";
 import { FormLayoutWithCards } from "../../FormLayout/FormLayoutWithCards/App";
 import ConfirmBox from "../../../Component/ConfirmBox";
+import { convertDate } from "../../../Firebase/Util";
 
 function ModifierButton(campain: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -128,7 +129,7 @@ export const TesterTable = (props: any) => {
             index < props.page * tableCount && (
               <Tr key={campain.id}>
                 <Td>{campain.name}</Td>
-                <Td>{campain.createdAt.split("T")[0]}</Td>
+                <Td>{convertDate(campain.createdAt)}</Td>
                 <Td>
                   {campain.startDate} ~ {campain.endDate}
                 </Td>

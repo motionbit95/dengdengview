@@ -24,7 +24,7 @@ import {
 import { Campain, calculateDday, campains } from "./_data";
 import { useNavigate } from "react-router-dom";
 import { ImCancelCircle } from "react-icons/im";
-import { MdCheck, MdReviews } from "react-icons/md";
+import { MdCancel, MdCheck, MdReviews } from "react-icons/md";
 import { createDoc, updateDoc } from "../../../Firebase/Database";
 import { formattedDate } from "../../../Firebase/Util";
 import {
@@ -38,7 +38,7 @@ import {
 } from "@chakra-ui/react";
 import { ClipboardInput } from "@ark-ui/react";
 import { BiClipboard, BiCopy } from "react-icons/bi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addDoc } from "firebase/firestore";
 import { HiReceiptTax } from "react-icons/hi";
 
@@ -54,6 +54,29 @@ export const Product = ({ ...props }) => {
   const [url, setUrl] = useState<string>("");
   const [cnt, setCnt] = useState(0);
   const isMobile = useBreakpointValue({ base: true, md: false });
+
+  useEffect(() => {
+    fetch(process.env.REACT_APP_SERVER_URL + "/tester/search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        conditions: [{ field: "cid", operator: "==", value: campain.id }],
+      }),
+    })
+      .then(async (res) => {
+        return await res.json();
+      })
+      .then(async (data) => {
+        console.log(data);
+
+        setCnt(data.length);
+      })
+      .catch(async (err) => {
+        console.log(err);
+      });
+  }, [campain]);
 
   // 텍스트를 클립보드에 복사하는 함수
   function copyToClipboard(text: string) {
@@ -167,7 +190,7 @@ export const Product = ({ ...props }) => {
         bgRepeat={"no-repeat"}
         _hover={{ cursor: "pointer", opacity: 0.9 }}
         onClick={() => {
-          navigate(`/campain/${campain.doc_id}`);
+          navigate(`/campain/${campain.id}`);
         }}
         aspectRatio={`1`}
         display={"flex"}
@@ -226,10 +249,36 @@ export const Product = ({ ...props }) => {
               onClick={(event) => {
                 event.stopPropagation();
                 if (window.confirm("사용등록 하시겠습니까?")) {
-                  updateDoc("Tester", campain.testerId, {
-                    step: 2,
-                    useDate: formattedDate(new Date()),
-                  });
+                  console.log("사용등록", campain);
+                  fetch(
+                    process.env.REACT_APP_SERVER_URL +
+                      "/tester/update/" +
+                      campain.tid,
+                    {
+                      method: "PUT",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({
+                        step: 2,
+                        // useDate: formattedDate(new Date()),
+                      }),
+                    }
+                  )
+                    .then((res) => {
+                      return res.text();
+                    })
+                    .then((data) => {
+                      console.log(data);
+                      window.location.reload();
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                  // updateDoc("Tester", campain.testerId, {
+                  //   step: 2,
+                  //   useDate: formattedDate(new Date()),
+                  // });
                 }
               }}
             >
@@ -252,7 +301,7 @@ export const Product = ({ ...props }) => {
                   height: "1.5rem",
                 },
               }}
-              isDisabled={campain.step === 3}
+              isDisabled={campain.step === 3 || campain.step === -1}
               style={{
                 // 기본 스타일
                 backgroundColor:
@@ -271,8 +320,23 @@ export const Product = ({ ...props }) => {
                   onOpen();
                 }
                 if (campain.step === 0) {
-                  // 신청 취소
-                  alert("신청취소입니다!");
+                  if (window.confirm("신청을 취소하시겠습니까?")) {
+                    fetch(
+                      process.env.REACT_APP_SERVER_URL +
+                        "/tester/delete/" +
+                        campain.tid
+                    )
+                      .then(async (res) => {
+                        return await res.text();
+                      })
+                      .then(async (data) => {
+                        console.log(data);
+                        window.location.reload();
+                      })
+                      .catch(async (err) => {
+                        console.log(err);
+                      });
+                  }
                 }
               }}
             >
@@ -282,12 +346,20 @@ export const Product = ({ ...props }) => {
                 direction={{ base: "row", md: "row" }}
                 spacing={2}
               >
-                {campain.step === 0 ? <ImCancelCircle /> : <MdReviews />}
+                {campain.step === 0 ? (
+                  <ImCancelCircle />
+                ) : campain.step === -1 ? (
+                  <MdCancel />
+                ) : (
+                  <MdReviews />
+                )}
                 <Text>
                   {campain.step === 0
                     ? "신청취소"
                     : campain.step === 2
                     ? "리뷰등록"
+                    : campain.step === -1
+                    ? "취소완료"
                     : "리뷰완료"}
                 </Text>
               </Stack>

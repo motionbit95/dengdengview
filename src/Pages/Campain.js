@@ -49,30 +49,96 @@ function Campain({ ...props }) {
       order = "createdAt";
     }
 
-    fetch(process.env.REACT_APP_SERVER_URL + "/campain/list/" + order)
-      .then((res) => {
-        console.log("res", res);
-        return res.json();
+    if (window.location.pathname === "/") {
+      fetch(process.env.REACT_APP_SERVER_URL + "/campain/list/" + order)
+        .then((res) => {
+          console.log("res", res);
+          return res.json();
+        })
+        .then((data) => {
+          console.log("data", data);
+          let tempList = data;
+          if (props.tab === "0") {
+            tempList = data.filter((element) => element.mozip.includes("0"));
+          } else if (props.tab === "1") {
+            tempList = data.filter((element) => element.mozip.includes("1"));
+          } else if (props.tab === "2") {
+            tempList = data.filter((element) => element.mozip.includes("2"));
+          } else if (props.tab === "3") {
+            tempList = data.filter((element) => element.mozip.includes("3"));
+          }
+          console.log("tempList", tempList);
+          setCampains(tempList);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else if (window.location.pathname === "/mypage") {
+      console.log("uid", uid);
+      fetch(process.env.REACT_APP_SERVER_URL + "/tester/search", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          conditions: [{ field: "uid", operator: "==", value: uid }],
+        }),
       })
-      .then((data) => {
-        console.log("data", data);
-        let tempList = data;
-        if (props.tab === "0") {
-          tempList = data.filter((element) => element.mozip.includes("0"));
-        } else if (props.tab === "1") {
-          tempList = data.filter((element) => element.mozip.includes("1"));
-        } else if (props.tab === "2") {
-          tempList = data.filter((element) => element.mozip.includes("2"));
-        } else if (props.tab === "3") {
-          tempList = data.filter((element) => element.mozip.includes("3"));
-        }
-        console.log("tempList", tempList);
-        setCampains(tempList);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [props.tab, props.keyword, props.ordertype]);
+        .then((res) => {
+          console.log("res", res);
+          return res.json();
+        })
+        .then((data) => {
+          console.log("data", data);
+          let step = [];
+          let step1 = [];
+          let step2 = [];
+          data.forEach((element) => {
+            fetch(
+              process.env.REACT_APP_SERVER_URL + "/campain/get/" + element.cid
+            )
+              .then((res) => {
+                return res.json();
+              })
+              .then((data) => {
+                if (element.step === -1 || element.step === 0) {
+                  step.push({
+                    ...data,
+                    step: element.step,
+                    id: element.cid,
+                    tid: element.id,
+                  });
+                  setCampains(step);
+                }
+                if (element.step === 1) {
+                  step1.push({
+                    ...data,
+                    step: element.step,
+                    id: element.cid,
+                    tid: element.id,
+                  });
+                  setCampains1(step1);
+                }
+                if (element.step >= 2) {
+                  step2.push({
+                    ...data,
+                    step: element.step,
+                    id: element.cid,
+                    tid: element.id,
+                  });
+                  setCampains2(step2);
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [props.tab, props.keyword, props.ordertype, uid]);
 
   useEffect(() => {
     let uid;
@@ -91,50 +157,6 @@ function Campain({ ...props }) {
     }
   }, []);
 
-  useEffect(() => {
-    if (window.location.pathname === "/") {
-    } else if (window.location.pathname === "/mypage") {
-      let step = [];
-      let step1 = [];
-      let step2 = [];
-      searchDoc("Tester", where("uid", "==", uid)).then(async (data) => {
-        data.forEach((doc) => {
-          getDocument("Campain", doc.cid).then(async (data) => {
-            if (doc.step === 0) {
-              step.push({
-                ...data,
-                uid: doc.uid,
-                cid: doc.cid,
-                testerId: doc.doc_id,
-                step: doc.step,
-              });
-              setCampains(step);
-            } else if (doc.step === 1 || doc.step === 2) {
-              step1.push({
-                ...data,
-                uid: doc.uid,
-                cid: doc.cid,
-                testerId: doc.doc_id,
-                step: doc.step,
-              });
-              setCampains1(step1);
-            } else if (doc.step === 3) {
-              step2.push({
-                ...data,
-                uid: doc.uid,
-                cid: doc.cid,
-                testerId: doc.doc_id,
-                step: doc.step,
-              });
-              setCampains2(step2);
-            }
-          });
-        });
-      });
-
-      console.log("uid", step, step1, step2);
-    }
-  }, [uid]);
   return (
     <Stack
       // flex={"1"}
@@ -233,16 +255,16 @@ function Campain({ ...props }) {
           spacing={{ base: "4", md: "6" }}
         >
           {props.description === "신청한 체험단" &&
-            campains.map((campain) => (
-              <Product key={campain.doc_id} campain={campain} />
+            campains.map((campain, index) => (
+              <Product key={index} campain={campain} />
             ))}
           {props.description === "선정된 체험단" &&
-            campains1.map((campain) => (
-              <Product key={campain.doc_id} campain={campain} />
+            campains1.map((campain, index) => (
+              <Product key={index} campain={campain} />
             ))}
           {props.description === "리뷰한 체험단" &&
-            campains2.map((campain) => (
-              <Product key={campain.doc_id} campain={campain} />
+            campains2.map((campain, index) => (
+              <Product key={index} campain={campain} />
             ))}
         </SimpleGrid>
       ) : (

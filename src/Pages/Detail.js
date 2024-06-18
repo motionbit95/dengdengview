@@ -61,6 +61,7 @@ import { HiReceiptTax } from "react-icons/hi";
 import { GridQuiteMinimalistic } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/App";
 import { chakra } from "@chakra-ui/react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
+import { convertDate } from "../Firebase/Util";
 
 function Detail(props) {
   const navigate = useNavigate();
@@ -132,6 +133,40 @@ function Detail(props) {
       .catch((err) => {
         console.log(err);
       });
+
+    fetch(process.env.REACT_APP_SERVER_URL + "/tester/search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        conditions: [{ field: "cid", operator: "==", value: cid }],
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        let tempUser = [];
+        // console.log("data ===> ", data);
+        data.forEach((element) => {
+          // console.log("element ===> ", element.uid);
+          fetch(process.env.REACT_APP_SERVER_URL + "/auth/get/" + element.uid)
+            .then(async (res) => res.json())
+            .then(async (user) => {
+              tempUser.push({ ...user, ...element });
+              // setUserList((prev) => [...prev, { ...user, ...element }]);
+              if (tempUser.length === data.length) {
+                console.log("updateUserList!!!");
+                setUserList(tempUser);
+              }
+            })
+            .catch(async (err) => {
+              console.log(err);
+            });
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   useEffect(() => {
@@ -147,17 +182,6 @@ function Detail(props) {
             ? campain?.views[new Date().toISOString().slice(0, 10)] + 1
             : 1,
         },
-      });
-
-      let userList = [];
-      searchDoc("Tester", where("cid", "==", campain?.doc_id)).then((data) => {
-        data.forEach((doc) => {
-          console.log(doc);
-          getDocument("User", doc.uid).then((user) => {
-            userList.push({ ...user, ...doc });
-            setUserList(userList);
-          });
-        });
       });
     }
   }, [campain]);
@@ -574,38 +598,44 @@ function Detail(props) {
                         border={"1px solid #d9d9d9"}
                         borderRadius={"lg"}
                         p={2}
+                        textAlign={"center"}
                       >
                         <HStack
                           w={"100%"}
                           justifyContent={"space-between"}
                           p={2}
                         >
-                          <Text fontWeight={"bold"} fontSize={"md"}>
+                          <Text w={"100%"} fontWeight={"bold"} fontSize={"md"}>
                             신청자
                           </Text>
-                          <Text fontWeight={"bold"} fontSize={"md"}>
+                          <Text w={"100%"} fontWeight={"bold"} fontSize={"md"}>
                             신청날짜
                           </Text>
                         </HStack>
                         <Divider />
 
-                        {userList?.map((value) => (
+                        {userList?.map((value, index) => (
                           <HStack
                             w={"100%"}
-                            key={value.doc_id}
+                            key={index}
                             alignItems={"center"}
                             justifyContent={"space-between"}
                           >
-                            <HStack>
-                              <Avatar src={value.image} />
-                              <Text>
+                            <HStack
+                              w={"100%"}
+                              justifyContent={"space-between"}
+                              p={2}
+                            >
+                              <Text w={"100%"}>
                                 {(value.nickname
                                   ? value.nickname
                                   : value.name
-                                ).substring(0, 1) + "****"}
+                                ).substring(0, 1) + "**"}
                               </Text>
                             </HStack>
-                            <Text>{value.createdAt.split("T")[0]}</Text>
+                            <Text w={"100%"}>
+                              {convertDate(value.createdAt)}
+                            </Text>
                           </HStack>
                         ))}
                       </Stack>
