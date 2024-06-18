@@ -32,7 +32,6 @@ import Report from "./Pages/Report";
 import ViewMoreCampain from "./Pages/ViewMoreCampain";
 import { Box, Button, IconButton, Image, Text, VStack } from "@chakra-ui/react";
 import { Kakao } from "./Marketing/Footers/FooterWithFourColumnsOnAccent/Logo";
-import Influencer from "./Component/Influencer";
 
 function App() {
   const [userInfo, setUserInfo] = React.useState(null);
