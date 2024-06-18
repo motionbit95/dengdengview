@@ -21,6 +21,7 @@ import {
 import { orderBy, where } from "firebase/firestore";
 import { auth } from "../Firebase/Config";
 import { Product } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/Product";
+import { fi } from "@faker-js/faker";
 
 function Campain({ ...props }) {
   const [page, setPage] = useState(1);
@@ -56,7 +57,6 @@ function Campain({ ...props }) {
           return res.json();
         })
         .then((data) => {
-          console.log("data", data);
           let tempList = data;
           if (props.tab === "0") {
             tempList = data.filter((element) => element.mozip.includes("0"));
@@ -68,7 +68,9 @@ function Campain({ ...props }) {
             tempList = data.filter((element) => element.mozip.includes("3"));
           }
           console.log("tempList", tempList);
-          setCampains(tempList);
+          setCampains(
+            tempList.filter((element) => element.name.includes(props.keyword))
+          );
         })
         .catch((error) => {
           console.log(error);

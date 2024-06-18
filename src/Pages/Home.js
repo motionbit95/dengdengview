@@ -32,6 +32,8 @@ import { Carousel } from "react-responsive-carousel";
 import { IoWarning } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { StepsWithAccent } from "../Component/Stepbar";
+import Influencer from "../Component/Influencer";
+import { auth } from "../Firebase/Config";
 
 function Home(props) {
   const navigate = useNavigate();
@@ -45,6 +47,7 @@ function Home(props) {
 
   const [popupOpen, setPopupOpen] = useState(false);
   const [type, setType] = useState(0);
+  const [isInfluencer, setIsInfluencer] = useState(false);
 
   const handleClick = (order) => {
     window.location.replace("/view?order=" + order);
@@ -57,6 +60,38 @@ function Home(props) {
   useEffect(() => {
     setTab(props.tab);
   }, [props.tab]);
+
+  useEffect(() => {
+    //유저 정보 가지고 오기
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log(user.uid);
+
+        fetch(process.env.REACT_APP_SERVER_URL + "/auth/get/" + user.uid, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            // if (data.is_influencer) {
+            //   setIsInfluencer(true);
+            // }
+            if (data.influence) {
+              setIsInfluencer(true);
+            } else {
+              setIsInfluencer(false);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+  }, [props.tab]);
+
   return (
     <Stack>
       {useBreakpointValue({ base: true, md: false }) && (
@@ -72,8 +107,12 @@ function Home(props) {
           }}
         />
       )}
-      <Box py={{ base: "4", md: "8" }}>
-        {/* <Carousel
+      {(props.tab === "3" || tab === "3") && !isInfluencer ? (
+        <Influencer />
+      ) : (
+        <Stack>
+          <Box py={{ base: "4", md: "8" }}>
+            {/* <Carousel
           duration={2000}
           showArrows={true}
           centerMode={true}
@@ -97,213 +136,217 @@ function Home(props) {
             src={require("../Assets/img/banner_mokup.png")}
           />
         </Carousel> */}
-        {/* {tab === "0" && ( */}
-        <Container>
-          <Flex w={"full"} gap={4}>
-            <Stack
-              w={"100%"}
-              cursor={"pointer"}
-              direction={{ base: "column", md: "row" }}
-              borderRadius={"xl"}
-              bgColor={"#FFD60A"}
-              p={{ base: 4, md: 8 }}
-              align={"center"}
-              justify={"space-between"}
-              onClick={() => {
-                setPopupOpen(true);
-                setType("0");
-              }}
-            >
-              <Stack spacing={6}>
-                <Text
-                  fontFamily={"Cafe24Ssurround"}
-                  fontSize={"calc(0.5em + 1vw)"}
-                  fontWeight={"md"}
-                >
-                  댕댕뷰가 처음이신가요?
-                </Text>
-                <Text
-                  fontSize={{
-                    base: "calc(0.8em + 0.8vw)",
-                    lg: "calc(1.2em + 1.2vw)",
+            {/* {tab === "0" && ( */}
+            <Container>
+              <Flex w={"full"} gap={4}>
+                <Stack
+                  w={"100%"}
+                  cursor={"pointer"}
+                  direction={{ base: "column", md: "row" }}
+                  borderRadius={"xl"}
+                  bgColor={"#FFD60A"}
+                  p={{ base: 4, md: 8 }}
+                  align={"center"}
+                  justify={"space-between"}
+                  onClick={() => {
+                    setPopupOpen(true);
+                    setType("0");
                   }}
-                  fontWeight={"extrabold"}
-                  fontFamily={"Cafe24Ssurround"}
                 >
-                  신규 회원 가이드
-                  <br />
-                  보러가기
-                </Text>
-              </Stack>
-              <Box w={{ base: "50%", md: "40%" }}>
-                <Image src={require("../Assets/img/bannerImage1.png")} />
-              </Box>
-            </Stack>
-            <Stack
-              w={"100%"}
-              cursor={"pointer"}
-              direction={{ base: "column", md: "row" }}
-              borderRadius={"xl"}
-              bgColor={"#BF5AF2"}
-              p={{ base: 4, md: 8 }}
-              color={"white"}
-              align={"center"}
-              justify={"space-between"}
-              onClick={() => {
-                setPopupOpen(true);
-                setType("1");
-              }}
-            >
-              <Stack spacing={{ base: 3, md: 6 }}>
-                <Text
-                  fontFamily={"Cafe24Ssurround"}
-                  fontSize={"calc(0.5em + 1vw)"}
-                  fontWeight={"md"}
-                >
-                  체험을 완료하셨나요?
-                </Text>
-                <Text
-                  fontSize={{
-                    base: "calc(0.8em + 0.8vw)",
-                    lg: "calc(1.4em + 1.2vw)",
+                  <Stack spacing={6}>
+                    <Text
+                      fontFamily={"Cafe24Ssurround"}
+                      fontSize={"calc(0.5em + 1vw)"}
+                      fontWeight={"md"}
+                    >
+                      댕댕뷰가 처음이신가요?
+                    </Text>
+                    <Text
+                      fontSize={{
+                        base: "calc(0.8em + 0.8vw)",
+                        lg: "calc(1.2em + 1.2vw)",
+                      }}
+                      fontWeight={"extrabold"}
+                      fontFamily={"Cafe24Ssurround"}
+                    >
+                      신규 회원 가이드
+                      <br />
+                      보러가기
+                    </Text>
+                  </Stack>
+                  <Box w={{ base: "50%", md: "40%" }}>
+                    <Image src={require("../Assets/img/bannerImage1.png")} />
+                  </Box>
+                </Stack>
+                <Stack
+                  w={"100%"}
+                  cursor={"pointer"}
+                  direction={{ base: "column", md: "row" }}
+                  borderRadius={"xl"}
+                  bgColor={"#BF5AF2"}
+                  p={{ base: 4, md: 8 }}
+                  color={"white"}
+                  align={"center"}
+                  justify={"space-between"}
+                  onClick={() => {
+                    setPopupOpen(true);
+                    setType("1");
                   }}
-                  fontWeight={"extrabold"}
-                  fontFamily={"Cafe24Ssurround"}
                 >
-                  리뷰 등록 방법
-                  <br />
-                  보러가기
+                  <Stack spacing={{ base: 3, md: 6 }}>
+                    <Text
+                      fontFamily={"Cafe24Ssurround"}
+                      fontSize={"calc(0.5em + 1vw)"}
+                      fontWeight={"md"}
+                    >
+                      체험을 완료하셨나요?
+                    </Text>
+                    <Text
+                      fontSize={{
+                        base: "calc(0.8em + 0.8vw)",
+                        lg: "calc(1.4em + 1.2vw)",
+                      }}
+                      fontWeight={"extrabold"}
+                      fontFamily={"Cafe24Ssurround"}
+                    >
+                      리뷰 등록 방법
+                      <br />
+                      보러가기
+                    </Text>
+                  </Stack>
+                  <Box w={{ base: "50%", md: "40%" }}>
+                    <Image src={require("../Assets/img/bannerImage2.png")} />
+                  </Box>
+                </Stack>
+              </Flex>
+            </Container>
+            {/* )} */}
+          </Box>
+          <Box>
+            <Container>
+              <HStack py={4} justifyContent={"space-between"}>
+                <Text fontSize={"2xl"} fontWeight={"bold"}>
+                  진행중인 체험단
                 </Text>
-              </Stack>
-              <Box w={{ base: "50%", md: "40%" }}>
-                <Image src={require("../Assets/img/bannerImage2.png")} />
-              </Box>
-            </Stack>
-          </Flex>
-        </Container>
-        {/* )} */}
-      </Box>
-      <Box>
-        <Container>
-          <HStack py={4} justifyContent={"space-between"}>
-            <Text fontSize={"2xl"} fontWeight={"bold"}>
-              진행중인 체험단
-            </Text>
-            <Text
-              cursor={"pointer"}
-              fontSize={"md"}
-              fontWeight={"bold"}
-              onClick={() => handleClick("진행중인 체험단")}
-            >
-              더보기
-            </Text>
-          </HStack>
-        </Container>
-        <Campain tab={props.tab} keyword={keyword} ordertype={0} />
-      </Box>
-      <Box>
-        <Container>
-          <HStack py={4} justifyContent={"space-between"}>
-            <Text fontSize={"2xl"} fontWeight={"bold"}>
-              인기 체험단
-            </Text>
-            <Text
-              cursor={"pointer"}
-              fontSize={"md"}
-              fontWeight={"bold"}
-              onClick={() => handleClick("인기 체험단")}
-            >
-              더보기
-            </Text>
-          </HStack>
-        </Container>
-        <Campain tab={props.tab} keyword={keyword} ordertype={1} />
-      </Box>
-      <Box>
-        <Container>
-          <HStack py={4} justifyContent={"space-between"}>
-            <Text fontSize={"2xl"} fontWeight={"bold"}>
-              마감임박 체험단
-            </Text>
-            <Text
-              cursor={"pointer"}
-              fontSize={"md"}
-              fontWeight={"bold"}
-              onClick={() => handleClick("마감임박 체험단")}
-            >
-              더보기
-            </Text>
-          </HStack>
-        </Container>
-        <Campain tab={props.tab} keyword={keyword} ordertype={2} />
-      </Box>
-      <Box>
-        <Container>
-          <HStack py={4} justifyContent={"space-between"}>
-            <Text fontSize={"2xl"} fontWeight={"bold"}>
-              신규 체험단
-            </Text>
-            <Text
-              cursor={"pointer"}
-              fontSize={"md"}
-              fontWeight={"bold"}
-              onClick={() => handleClick("신규 체험단")}
-            >
-              더보기
-            </Text>
-          </HStack>
-        </Container>
-        <Campain tab={props.tab} keyword={keyword} ordertype={3} />
-      </Box>
+                <Text
+                  cursor={"pointer"}
+                  fontSize={"md"}
+                  fontWeight={"bold"}
+                  onClick={() => handleClick("진행중인 체험단")}
+                >
+                  더보기
+                </Text>
+              </HStack>
+            </Container>
+            <Campain tab={props.tab} keyword={keyword} ordertype={0} />
+          </Box>
+          <Box>
+            <Container>
+              <HStack py={4} justifyContent={"space-between"}>
+                <Text fontSize={"2xl"} fontWeight={"bold"}>
+                  인기 체험단
+                </Text>
+                <Text
+                  cursor={"pointer"}
+                  fontSize={"md"}
+                  fontWeight={"bold"}
+                  onClick={() => handleClick("인기 체험단")}
+                >
+                  더보기
+                </Text>
+              </HStack>
+            </Container>
+            <Campain tab={props.tab} keyword={keyword} ordertype={1} />
+          </Box>
+          <Box>
+            <Container>
+              <HStack py={4} justifyContent={"space-between"}>
+                <Text fontSize={"2xl"} fontWeight={"bold"}>
+                  마감임박 체험단
+                </Text>
+                <Text
+                  cursor={"pointer"}
+                  fontSize={"md"}
+                  fontWeight={"bold"}
+                  onClick={() => handleClick("마감임박 체험단")}
+                >
+                  더보기
+                </Text>
+              </HStack>
+            </Container>
+            <Campain tab={props.tab} keyword={keyword} ordertype={2} />
+          </Box>
+          <Box>
+            <Container>
+              <HStack py={4} justifyContent={"space-between"}>
+                <Text fontSize={"2xl"} fontWeight={"bold"}>
+                  신규 체험단
+                </Text>
+                <Text
+                  cursor={"pointer"}
+                  fontSize={"md"}
+                  fontWeight={"bold"}
+                  onClick={() => handleClick("신규 체험단")}
+                >
+                  더보기
+                </Text>
+              </HStack>
+            </Container>
+            <Campain tab={props.tab} keyword={keyword} ordertype={3} />
+          </Box>
 
-      <Box
-        bgColor={"rgba(11, 197, 234, 1)"}
-        mb={8}
-        cursor={"pointer"}
-        onClick={() => (window.location.href = "/ads")}
-      >
-        <Container>
-          <HStack
-            justify={"space-between"}
-            align={"center"}
-            py={{ base: "8", md: "12" }}
-            position={"relative"}
+          <Box
+            bgColor={"rgba(11, 197, 234, 1)"}
+            mb={8}
+            cursor={"pointer"}
+            onClick={() => (window.location.href = "/ads")}
           >
-            <Stack
-              color={"white"}
-              // py={{ base: "16", lg: "0" }}
-            >
-              <Text fontSize={{ base: "xl", lg: "2xl" }}>광고주이신가요?</Text>
-              <Text
-                fontSize={{ base: "4xl", lg: "5xl" }}
-                whiteSpace={{ base: "pre-line", md: "nowrap" }}
+            <Container>
+              <HStack
+                justify={"space-between"}
+                align={"center"}
+                py={{ base: "8", md: "12" }}
+                position={"relative"}
               >
-                {`광고 제휴 
+                <Stack
+                  color={"white"}
+                  // py={{ base: "16", lg: "0" }}
+                >
+                  <Text fontSize={{ base: "xl", lg: "2xl" }}>
+                    광고주이신가요?
+                  </Text>
+                  <Text
+                    fontSize={{ base: "4xl", lg: "5xl" }}
+                    whiteSpace={{ base: "pre-line", md: "nowrap" }}
+                  >
+                    {`광고 제휴 
                 문의 바로가기`}
-              </Text>
-            </Stack>
-            <Box
-              position={"absolute"}
-              bottom={0}
-              right={0}
-              w={"50%"}
-              display={{ base: "none", md: "flex" }}
-              justifyContent={"center"}
-              alignContent={"center"}
-            >
-              <Image
-                w={{ base: "50%", md: "60%" }}
-                src={require("../Assets/img/bottomBannerImage.png")}
-              />
-            </Box>
-          </HStack>
-        </Container>
-      </Box>
-      <PopupModal
-        isOpen={popupOpen}
-        onClose={() => setPopupOpen(false)}
-        type={type}
-      />
+                  </Text>
+                </Stack>
+                <Box
+                  position={"absolute"}
+                  bottom={0}
+                  right={0}
+                  w={"50%"}
+                  display={{ base: "none", md: "flex" }}
+                  justifyContent={"center"}
+                  alignContent={"center"}
+                >
+                  <Image
+                    w={{ base: "50%", md: "60%" }}
+                    src={require("../Assets/img/bottomBannerImage.png")}
+                  />
+                </Box>
+              </HStack>
+            </Container>
+          </Box>
+          <PopupModal
+            isOpen={popupOpen}
+            onClose={() => setPopupOpen(false)}
+            type={type}
+          />
+        </Stack>
+      )}
     </Stack>
   );
 }

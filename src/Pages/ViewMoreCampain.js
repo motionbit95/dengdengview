@@ -2,7 +2,7 @@ import { Container, Stack, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { GridQuiteMinimalistic } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/App";
 
-const ViewMoreCampain = (props, keyword) => {
+const ViewMoreCampain = ({ keyword, ...props }) => {
   const [page, setPage] = useState("");
   const [campains, setCampains] = useState();
   useEffect(() => {
@@ -19,6 +19,7 @@ const ViewMoreCampain = (props, keyword) => {
         console.log(err);
       });
   }, []);
+
   return (
     <Container py={{ base: "12", md: "24" }}>
       <Stack spacing={4}>

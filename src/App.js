@@ -163,7 +163,10 @@ function App() {
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/ads" element={<Ads />} />
-              <Route path="/view" element={<ViewMoreCampain />} />
+              <Route
+                path="/view"
+                element={<ViewMoreCampain tab={tab} keyword={keyword} />}
+              />
 
               <Route path="/report/*" element={<Report />} />
               <Route path="/report/detail/*" element={<AdminDashboard />} />

@@ -10,8 +10,11 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { MdAdd, MdKeyboardArrowRight } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../Firebase/Config";
 
 const Influencer = () => {
+  const navigate = useNavigate();
   return (
     <Container pt={{ base: "16", md: "24" }} pb={6}>
       <Stack align={"center"} spacing={8}>
@@ -154,6 +157,10 @@ const Influencer = () => {
               rightIcon={<MdKeyboardArrowRight />}
               px={{ base: 8, md: 16 }}
               size={"lg"}
+              onClick={() => {
+                if (auth.currentUser) navigate("/mypage");
+                else navigate("/login");
+              }}
             >
               인플루언서 신청하러 가기
             </Button>
