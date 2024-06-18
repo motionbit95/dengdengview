@@ -734,8 +734,7 @@ const Step3 = () => {
           shadow={"2xl"}
           p={2}
         >
-          {/* <Image src={require("../Assets/guide/guide2-3.png")} /> */}
-          <Box h={"300px"} />
+          <Image src={require("../Assets/guide/guide3-1.jpeg")} />
         </Box>
       </Stack>
       <Stack
