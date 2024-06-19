@@ -71,22 +71,20 @@ function SelectUser(props) {
   const [userList, setUserList] = useState([]);
   const [cid, setCid] = useState("");
   useEffect(() => {
-    if (window.location.pathname.replaceAll("/admin/dashboard", "")) {
-      let cid = window.location.pathname.split("/").pop(); //window.location.pathname.replaceAll("/admin/dashboard/", "");
-      setCid(cid);
-      // getDocument("Campain", cid).then(async (data) => {
-      //   setCampain(data);
-      // });
-      fetch(process.env.REACT_APP_SERVER_URL + "/campain/get/" + cid)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setCampain(data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    let cid = props.cid; //window.location.pathname.replaceAll("/admin/dashboard/", "");
+    setCid(cid);
+    // getDocument("Campain", cid).then(async (data) => {
+    //   setCampain(data);
+    // });
+    fetch(process.env.REACT_APP_SERVER_URL + "/campain/get/" + cid)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setCampain(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   useEffect(() => {

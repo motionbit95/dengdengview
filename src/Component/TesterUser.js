@@ -71,7 +71,8 @@ function TesterUser(props) {
   const [userList, setUserList] = useState([]);
   const [cid, setCid] = useState("");
   useEffect(() => {
-    let cid = window.location.pathname.split("/").pop(); //window.location.pathname.replaceAll("/admin/dashboard/", "");
+    let cid = props.cid; //window.location.pathname.replaceAll("/admin/dashboard/", "");
+    console.log(cid);
     if (cid) {
       setCid(cid);
       // getDocument("Campain", cid).then(async (data) => {

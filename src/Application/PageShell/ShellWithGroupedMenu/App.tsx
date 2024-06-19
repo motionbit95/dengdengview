@@ -74,7 +74,7 @@ export const ShellWithGroupedMenu = () => {
 
   const [url, setUrl] = useState("");
   const [name, setName] = useState("");
-  const [cid, setCid] = useState("");
+  const [cid, setCid] = useState<any>("");
 
   const [reviewCampain, setReviewCampain] = useState("");
   const [campains, setCampains] = useState([]);
@@ -86,6 +86,10 @@ export const ShellWithGroupedMenu = () => {
       setCampains(data);
     });
   }, []);
+
+  useEffect(() => {
+    setCid(window.location.pathname.split("/").pop());
+  }, [menu]);
 
   const handleSubmit = async () => {
     if (window.confirm("리뷰를 등록하시겠습니까?")) {
@@ -420,14 +424,14 @@ export const ShellWithGroupedMenu = () => {
               </Center>
             )}
 
-            {menu === 11 && <TotalView />}
-            {menu === 12 && <TesterUser />}
-            {menu === 13 && <SelectUser />}
-            {menu === 14 && <Review />}
-            {menu === 15 && <ReviewDetail />}
-            {menu === 16 && <Picture />}
-            {menu === 17 && <Search />}
-            {menu === 18 && <Keyword />}
+            {menu === 11 && <TotalView cid={cid} />}
+            {menu === 12 && <TesterUser cid={cid} />}
+            {menu === 13 && <SelectUser cid={cid} />}
+            {menu === 14 && <Review cid={cid} />}
+            {menu === 15 && <ReviewDetail cid={cid} />}
+            {menu === 16 && <Picture cid={cid} />}
+            {menu === 17 && <Search cid={cid} />}
+            {menu === 18 && <Keyword cid={cid} />}
           </Box>
         </Box>
       </Flex>

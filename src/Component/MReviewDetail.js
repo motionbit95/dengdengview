@@ -43,8 +43,9 @@ function ReviewDetail(props) {
     picture: 0,
   });
   useEffect(() => {
-    let cid = window.location.pathname.split("/").pop(); //window.location.pathname.replaceAll("/admin/dashboard/", "");
-    searchDoc("Review", where("cid", "==", cid)).then((data) => {
+    let cid = props.cid; //window.location.pathname.replaceAll("/admin/dashboard/", "");
+    console.log(cid);
+    searchDoc("Review", where("cid", "==", cid)).then(async (data) => {
       let reviewList = [];
       let like = 0;
       let comment = 0;

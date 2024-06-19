@@ -18,9 +18,9 @@ import { bucketAddress } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/_
 function Review(props) {
   const [reviewList, setReviewList] = useState([]);
   useEffect(() => {
-    let cid = window.location.pathname.split("/").pop(); //window.location.pathname.replaceAll("/admin/dashboard/", "");
+    let cid = props.cid; //window.location.pathname.replaceAll("/admin/dashboard/", "");
     console.log(cid);
-    searchDoc("Review", where("cid", "==", cid)).then((data) => {
+    searchDoc("Review", where("cid", "==", cid)).then(async (data) => {
       let reviewList = [];
       data.forEach((doc) => {
         console.log(doc);

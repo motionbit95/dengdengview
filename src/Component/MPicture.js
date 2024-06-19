@@ -27,9 +27,9 @@ function Picture(props) {
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
 
   useEffect(() => {
-    let cid = window.location.pathname.split("/").pop(); //window.location.pathname.replaceAll("/admin/dashboard/", "");
+    let cid = props.cid; //window.location.pathname.replaceAll("/admin/dashboard/", "");
     console.log(cid);
-    searchDoc("Review", where("cid", "==", cid)).then((data) => {
+    searchDoc("Review", where("cid", "==", cid)).then(async (data) => {
       let reviewList = [];
       let totalPicture = 0;
       data.forEach((doc) => {
