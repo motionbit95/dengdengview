@@ -43,7 +43,7 @@ function ReviewDetail(props) {
     picture: 0,
   });
   useEffect(() => {
-    let cid = window.location.pathname.replaceAll("/admin/dashboard/", "");
+    let cid = window.location.pathname.split("/").pop(); //window.location.pathname.replaceAll("/admin/dashboard/", "");
     searchDoc("Review", where("cid", "==", cid)).then((data) => {
       let reviewList = [];
       let like = 0;
@@ -121,7 +121,7 @@ function ReviewDetail(props) {
           <HStack w={"100%"} justifyContent={"space-around"} p={2}>
             <Stack>
               <HStack>
-                <Text fontWeight={"bold"}>베너 등록 완료</Text>
+                <Text fontWeight={"bold"}>배너 등록 완료</Text>
                 <BsCheckCircle opacity={0.5} size={"18px"} />
               </HStack>
               <HStack>

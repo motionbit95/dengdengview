@@ -116,19 +116,19 @@ const Report = () => {
         today
       );
 
+      console.log("=> !!", element.analysis);
+      if (element.analysis) {
+        totalAnalysis.register += element.analysis?.register;
+        totalAnalysis.selecter += element.analysis?.selecter;
+        totalAnalysis.complete += element.analysis?.complete;
+        totalAnalysis.reviewer += element.analysis?.reviewer;
+      }
+
       setTesterCnt({
-        register: totalAnalysis.register
-          ? totalAnalysis.register + element.analysis?.register
-          : 0,
-        selecter: totalAnalysis.selecter
-          ? totalAnalysis.selecter + element.analysis?.selecter
-          : 0,
-        complete: totalAnalysis.complete
-          ? totalAnalysis.complete + element.analysis?.complete
-          : 0,
-        reviewer: totalAnalysis.reviewer
-          ? totalAnalysis.reviewer + element.analysis?.reviewer
-          : 0,
+        register: totalAnalysis.register,
+        selecter: totalAnalysis.selecter,
+        complete: totalAnalysis.complete,
+        reviewer: totalAnalysis.reviewer,
         totalviews: totalAnalysis.totalviews,
         total30views: totalAnalysis.total30views,
       });
@@ -187,7 +187,7 @@ const ReportMain = (props) => {
 
     getDocument("Campain", cid).then((data) => {
       let keywordList = [];
-      if (data.keywords) {
+      if (data?.keywords) {
         data.keywords?.forEach((keyword) => {
           keywordList.push(keyword);
           setKeywords(keywordList);
@@ -210,29 +210,30 @@ const ReportMain = (props) => {
   useEffect(() => {
     // keywords.forEach((keyword) => {
     // console.log("keywords", keywords, keywords.join(","));
-    console.log("keywords", keywords.join(","));
-    fetch(
-      process.env.REACT_APP_SERVER_URL +
-        "/keywordstool?hintKeywords=" +
-        keywords.join(",")
-    )
-      .then(async (response) => {
-        return response.json();
-      })
-      .then(async (data) => {
-        let originArray = JSON.parse(data.data).keywordList;
 
-        let newArray = originArray.filter((keyword) => {
-          return keywords?.includes(keyword.relKeyword);
+    if (keywords?.length > 0) {
+      fetch(
+        process.env.REACT_APP_SERVER_URL +
+          "/keywordstool?hintKeywords=" +
+          keywords.join(",")
+      )
+        .then(async (response) => {
+          return response.json();
+        })
+        .then(async (data) => {
+          let originArray = JSON.parse(data.data).keywordList;
+
+          let newArray = originArray.filter((keyword) => {
+            return keywords?.includes(keyword.relKeyword);
+          });
+          // let newArray = originArray.slice(0, 20);
+          // console.log(newArray);
+          newArray.sort((a, b) => b.monthlyMobileQcCnt - a.monthlyMobileQcCnt);
+          setRank(newArray);
+          // console.log(newArray);
+          setResult(originArray);
         });
-        // let newArray = originArray.slice(0, 20);
-        // console.log(newArray);
-        newArray.sort((a, b) => b.monthlyMobileQcCnt - a.monthlyMobileQcCnt);
-        setRank(newArray);
-        // console.log(newArray);
-        setResult(originArray);
-      });
-    // });
+    }
   }, [keywords]);
 
   useEffect(() => {
@@ -307,7 +308,7 @@ const ReportMain = (props) => {
           [경기 수원]
         </Text> */}
             <Text fontWeight="bold" fontSize={{ base: "2xl", md: "4xl" }}>
-              {props.campain.name}
+              {props.campain?.name}
             </Text>
             <Button
               size="lg"
@@ -334,7 +335,7 @@ const ReportMain = (props) => {
                 전체 체험단 현황
               </Text>
               <Text fontWeight="bold" fontSize={{ base: "md", md: "lg" }}>
-                {props.campain.startDate}~{props.campain.endDate}
+                {props.campain?.startDate}~{props.campain?.endDate}
               </Text>
             </Stack>
             <Stack
@@ -575,6 +576,16 @@ const ReportMain = (props) => {
                       size="lg"
                       variant={"secondary"}
                       h={{ base: "12", md: "full" }}
+                      onClick={
+                        () =>
+                          window.open(
+                            `/report/detail/` +
+                              window.location.pathname.split("/").pop()
+                          )
+                        // navigate(
+                        //   `/report/detail/` + window.location.pathname.split("/").pop()
+                        // )
+                      }
                     >
                       더보기
                     </Button>
@@ -715,6 +726,8 @@ const ReportCampain = (props) => {
 
   const [campain, setCampain] = useState({});
 
+  const [totalCnt, setTotalCnt] = useState({});
+
   useEffect(() => {
     setCampain(props.campain);
   }, [props.campain]);
@@ -724,7 +737,12 @@ const ReportCampain = (props) => {
     setReportCampains(tempList);
     props.campainList?.map((element, index) => {
       let cid = element.id;
-      let analysis = {};
+      let analysis = {
+        register: 0,
+        selecter: 0,
+        complete: 0,
+        reviewer: 0,
+      };
       fetch(process.env.REACT_APP_SERVER_URL + "/tester/search", {
         method: "POST",
         headers: {
@@ -737,7 +755,6 @@ const ReportCampain = (props) => {
         .then((res) => res.json())
         .then((data) => {
           data.forEach((element) => {
-            console.log("=> test");
             if (element.step >= 0) {
               analysis.register = analysis.register ? analysis.register + 1 : 1;
             }
@@ -760,10 +777,14 @@ const ReportCampain = (props) => {
           });
         })
         .catch((error) => {
-          console.log(error);
+          console.log("신청자가 없음", error);
         });
     });
   }, [props.campainList]);
+
+  useEffect(() => {
+    console.log("=> debug ", reportCampains, props.testerCnt);
+  }, [reportCampains]);
 
   return (
     <Stack
@@ -1144,7 +1165,7 @@ const ReportNotification = () => {
               >
                 <Text>
                   ・ 각 회차별 세부 지표를 누르시면 당첨자 / 후기보기 / 리뷰분석
-                  / 리뷰사진 / 검색점유율 / 유입키워드 / 모짐글보기를 확인하실
+                  / 리뷰사진 / 검색점유율 / 유입키워드 / 모집글보기를 확인하실
                   수 있습니다.
                 </Text>
                 <Text>

@@ -18,7 +18,7 @@ import { bucketAddress } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/_
 function Review(props) {
   const [reviewList, setReviewList] = useState([]);
   useEffect(() => {
-    let cid = window.location.pathname.replaceAll("/admin/dashboard/", "");
+    let cid = window.location.pathname.split("/").pop(); //window.location.pathname.replaceAll("/admin/dashboard/", "");
     console.log(cid);
     searchDoc("Review", where("cid", "==", cid)).then((data) => {
       let reviewList = [];
@@ -98,22 +98,24 @@ function Review(props) {
                       ) +
                       "?alt=media"}
                 </Text> */}
-                <Image
-                  aspectRatio={"4/3"}
-                  objectFit={"cover"}
-                  w={"full"}
-                  alt=""
-                  src={
-                    review.imageList[0]?.includes("firebase")
-                      ? review.imageList[0]
-                      : bucketAddress +
-                        "/downloads%2F" +
-                        encodeURIComponent(
-                          review.imageList[0]?.split("/").pop().split("?")[0]
-                        ) +
-                        "?alt=media"
-                  }
-                />
+                {review.imageList.length > 0 && (
+                  <Image
+                    aspectRatio={"4/3"}
+                    objectFit={"cover"}
+                    w={"full"}
+                    alt=""
+                    src={
+                      review.imageList[0]?.includes("firebase")
+                        ? review.imageList[0]
+                        : bucketAddress +
+                          "/downloads%2F" +
+                          encodeURIComponent(
+                            review.imageList[0]?.split("/").pop().split("?")[0]
+                          ) +
+                          "?alt=media"
+                    }
+                  />
+                )}
               </Stack>
               {/* <Text>
               {bucketAddress +

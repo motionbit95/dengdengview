@@ -72,7 +72,7 @@ function SelectUser(props) {
   const [cid, setCid] = useState("");
   useEffect(() => {
     if (window.location.pathname.replaceAll("/admin/dashboard", "")) {
-      let cid = window.location.pathname.replaceAll("/admin/dashboard/", "");
+      let cid = window.location.pathname.split("/").pop(); //window.location.pathname.replaceAll("/admin/dashboard/", "");
       setCid(cid);
       // getDocument("Campain", cid).then(async (data) => {
       //   setCampain(data);
