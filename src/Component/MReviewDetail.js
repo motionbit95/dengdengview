@@ -51,7 +51,7 @@ function ReviewDetail(props) {
       let comment = 0;
       let letter = 0;
       let picture = 0;
-      data.forEach((doc) => {
+      data.forEach(async (doc) => {
         let isBanner = false;
         doc.imageList.map((item) => {
           if (item.includes("image.png")) {

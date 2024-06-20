@@ -119,9 +119,13 @@ export const FormWithInlineLabels = (props: UserData) => {
     }
   };
 
+  const [uid, setUid] = useState<string>("");
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
+        console.log("uid", user.uid);
+        setUid(user.uid);
         fetch(process.env.REACT_APP_SERVER_URL + "/auth/get/" + user.uid)
           .then(async (res) => {
             console.log(res);
@@ -150,9 +154,9 @@ export const FormWithInlineLabels = (props: UserData) => {
   // }, [formData]);
 
   const submit = () => {
-    console.log(formData);
+    console.log(formData, uid);
     if (window.confirm("유저 정보를 수정하시겠습니까?")) {
-      fetch(process.env.REACT_APP_SERVER_URL + "/auth/update/" + userInfo?.id, {
+      fetch(process.env.REACT_APP_SERVER_URL + "/auth/update/" + uid, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
