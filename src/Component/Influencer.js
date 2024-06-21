@@ -24,16 +24,9 @@ const Influencer = () => {
     >
       <Stack align={"center"} spacing={8}>
         <Stack w={"full"} borderRadius={"xl"}>
-          <Stack
-            pt={40}
-            pb={24}
-            spacing={3}
-            bgColor={"#FFB800"}
-            position={"relative"}
-          >
+          <Stack pb={24} spacing={3} bgColor={"#FFB800"} position={"relative"}>
             <Box
-              position={"absolute"}
-              top={8}
+              pt={8}
               w={"full"}
               alignContent={"center"}
               justifyContent={"center"}
@@ -41,7 +34,7 @@ const Influencer = () => {
             >
               <Box w={"110px"}>
                 <Image
-                  src={require("../Assets/img/DangDangLogo2.png")}
+                  src={require("../Assets/img/influencer1.png")}
                   w={"full"}
                   h={"full"}
                 />
@@ -193,15 +186,15 @@ const Influencer = () => {
             </Stack>
             <Box
               position={"absolute"}
-              bottom={-8}
+              bottom={-12}
               w={"full"}
               alignContent={"center"}
               justifyContent={"center"}
               display={"flex"}
             >
-              <Box w={"130px"}>
+              <Box w={"200px"}>
                 <Image
-                  src={require("../Assets/img/DangDangLogo2.png")}
+                  src={require("../Assets/img/influencer2.png")}
                   w={"full"}
                   h={"full"}
                 />
