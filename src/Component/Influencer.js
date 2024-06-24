@@ -18,7 +18,7 @@ const Influencer = () => {
   const navigate = useNavigate();
   return (
     <Container
-      fontFamily={"Cafe24Ssurround"}
+      fontFamily={"yg-jalnan"}
       minH={"calc(100vh - 81px)"}
       alignContent={"center"}
     >
