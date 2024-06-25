@@ -34,8 +34,6 @@ export const GridQuiteMinimalistic = (props: any) => {
       tempList.sort((a: any, b: any) => {
         return b.totalviews - a.totalviews;
       });
-
-      console.log("인기체험단", tempList);
     } else if (ordertype === 2) {
       tempList.sort((a: any, b: any) => b.endDate - a.endDate);
     } else if (ordertype === 3) {

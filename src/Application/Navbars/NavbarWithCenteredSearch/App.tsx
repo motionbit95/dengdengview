@@ -35,9 +35,9 @@ import { useNavigate } from "react-router-dom";
 export const NavbarWithCenteredSearch = ({ ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleTabChange = (value: string) => {
-    localStorage.setItem("top_menu", value);
     props.setTab(value);
-    if (window.location.pathname !== "/") window.location.replace("/");
+    localStorage.setItem("top_menu", value);
+    if (window.location.pathname !== "/") window.location.href = "/";
   };
 
   const handleLogout = () => {

@@ -35,7 +35,7 @@ import { Kakao } from "./Marketing/Footers/FooterWithFourColumnsOnAccent/Logo";
 
 function App() {
   const [userInfo, setUserInfo] = React.useState(null);
-  const [tab, setTab] = useState("0");
+  const [tab, setTab] = useState("-1");
   const [keyword, setKeyword] = useState("");
   const [item, setItem] = useState("");
   useEffect(() => {

@@ -55,7 +55,8 @@ function Campain({ ...props }) {
           } else if (props.tab === "3") {
             tempList = data.filter((element) => element.mozip.includes("3"));
           }
-          console.log("tempList", tempList);
+
+          console.log("tempList", props.tab, tempList);
           setCampains(
             tempList.filter((element) => element.name.includes(props.keyword))
           );
