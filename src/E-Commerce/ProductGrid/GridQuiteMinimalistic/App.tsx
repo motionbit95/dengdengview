@@ -24,14 +24,22 @@ export const GridQuiteMinimalistic = (props: any) => {
       });
     }
 
+    tempList = tempList.filter((element: any) => {
+      return calculateDday(element.endDate) > 0;
+    });
+
     if (!ordertype || ordertype === 0) {
-      setCampainList(tempList);
+      // setCampainList(tempList);
     } else if (ordertype === 1) {
-      tempList.sort((a: any, b: any) => b.createdAt - a.createdAt);
+      tempList.sort((a: any, b: any) => {
+        return b.totalviews - a.totalviews;
+      });
+
+      console.log("인기체험단", tempList);
     } else if (ordertype === 2) {
-      tempList.sort((a: any, b: any) => b.views - a.views);
-    } else if (ordertype === 3) {
       tempList.sort((a: any, b: any) => b.endDate - a.endDate);
+    } else if (ordertype === 3) {
+      tempList.sort((a: any, b: any) => b.createdAt - a.createdAt);
     }
 
     setCampainList(tempList);
@@ -55,15 +63,12 @@ export const GridQuiteMinimalistic = (props: any) => {
             columns={{ base: 2, sm: 3, lg: 4 }}
             gap={{ base: "8", lg: "12" }}
           >
-            {campainList?.slice(0, 8).map(
-              (campain: any, i: number) =>
-                calculateDday(campain.endDate) > 0 && (
-                  <Stack>
-                    {/* <Text>{campain.id}</Text> */}
-                    <ProductCard key={i} campain={campain} />
-                  </Stack>
-                )
-            )}
+            {campainList?.slice(0, 8).map((campain: any, i: number) => (
+              <Stack>
+                {/* <Text>{campain.id}</Text> */}
+                <ProductCard key={i} campain={campain} />
+              </Stack>
+            ))}
           </SimpleGrid>
         ) : (
           <SimpleGrid

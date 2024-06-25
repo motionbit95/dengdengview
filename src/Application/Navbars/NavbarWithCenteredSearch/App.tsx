@@ -105,7 +105,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
               <Box
                 display={"flex"}
                 onClick={() => {
-                  handleTabChange("0");
+                  handleTabChange("-1");
                   window.location.href = "/";
                 }}
                 minW={"100px"}
@@ -136,36 +136,56 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                   <Button
                     p={0}
                     fontWeight={"bold"}
-                    onClick={() => handleTabChange("0")}
-                    // colorScheme={props.tab === "0" ? "cyan" : "gray"}
+                    onClick={() => {
+                      handleTabChange("0");
+                      window.location.href = "/#instagram";
+                    }}
                     fontSize={{ base: "md", md: "xl" }}
+                    borderBottom={"4px solid"}
+                    borderColor={props.tab === "0" ? "#23E9AE" : "white"}
+                    borderRadius={0}
                   >
                     블로그
                   </Button>
                   <Button
                     p={0}
                     fontWeight={"bold"}
-                    onClick={() => handleTabChange("1")}
-                    // colorScheme={props.tab === "1" ? "cyan" : "gray"}
+                    onClick={() => {
+                      handleTabChange("1");
+                      window.location.href = "/#instagram";
+                    }}
                     fontSize={{ base: "md", md: "xl" }}
+                    borderBottom={"4px solid"}
+                    borderColor={props.tab === "1" ? "#23E9AE" : "white"}
+                    borderRadius={0}
                   >
                     인스타그램
                   </Button>
                   <Button
                     p={0}
                     fontWeight={"bold"}
-                    onClick={() => handleTabChange("2")}
-                    // colorScheme={props.tab === "2" ? "cyan" : "gray"}
+                    onClick={() => {
+                      handleTabChange("2");
+                      window.location.href = "/#instagram";
+                    }}
                     fontSize={{ base: "md", md: "xl" }}
+                    borderBottom={"4px solid"}
+                    borderColor={props.tab === "2" ? "#23E9AE" : "white"}
+                    borderRadius={0}
                   >
                     구매평 체험단
                   </Button>
                   <Button
                     p={0}
                     fontWeight={"bold"}
-                    onClick={() => handleTabChange("3")}
-                    // colorScheme={props.tab === "3" ? "cyan" : "gray"}
+                    onClick={() => {
+                      handleTabChange("3");
+                      window.location.href = "/#instagram";
+                    }}
                     fontSize={{ base: "md", md: "xl" }}
+                    borderBottom={"4px solid"}
+                    borderColor={props.tab === "3" ? "#23E9AE" : "white"}
+                    borderRadius={0}
                   >
                     인플루언서
                   </Button>

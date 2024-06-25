@@ -62,6 +62,10 @@ function Home(props) {
   }, [props.tab]);
 
   useEffect(() => {
+    console.log(window.location.pathname);
+  }, [window.location.pathname]);
+
+  useEffect(() => {
     //유저 정보 가지고 오기
     auth.onAuthStateChanged((user) => {
       if (user) {

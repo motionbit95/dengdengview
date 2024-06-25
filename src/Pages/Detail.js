@@ -100,7 +100,7 @@ function Detail(props) {
                 : 1,
             },
             updatedAt: new Date().toISOString(),
-            totalviews: data?.totalviews ? data?.totalviews + 1 : 1,
+            totalviews: data?.totalviews ? parseInt(data?.totalviews) + 1 : 1,
           }),
         })
           .then((res) => {
@@ -213,10 +213,6 @@ function Detail(props) {
           divider={<StackDivider display={{ base: "none", md: "block" }} />}
         >
           <Stack w={"full"}>
-            {/* <Tag w={"fit-content"} size={{ base: "sm", md: "md" }}>
-            {"#"}
-            {location.pathname.split("/").pop()?.substring(0, 8)}
-          </Tag> */}
             <HStack zIndex={999} spacing={0}>
               {campain?.mozip?.includes("0") && (
                 <Center
@@ -360,11 +356,13 @@ function Detail(props) {
                   <Image
                     onClick={() =>
                       handleImageClick(
-                        process.env.REACT_APP_STORAGE +
-                          "/campain" +
-                          "%2F" +
-                          value +
-                          "?alt=media"
+                        value?.includes("firebase")
+                          ? value
+                          : process.env.REACT_APP_STORAGE +
+                              "/campain" +
+                              "%2F" +
+                              value +
+                              "?alt=media"
                       )
                     }
                     key={index}
@@ -372,11 +370,13 @@ function Detail(props) {
                     w={300}
                     aspectRatio={1}
                     src={
-                      process.env.REACT_APP_STORAGE +
-                      "/campain" +
-                      "%2F" +
-                      value +
-                      "?alt=media"
+                      value?.includes("firebase")
+                        ? value
+                        : process.env.REACT_APP_STORAGE +
+                          "/campain" +
+                          "%2F" +
+                          value +
+                          "?alt=media"
                     }
                   />
                 ))}
