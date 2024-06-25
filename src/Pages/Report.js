@@ -32,7 +32,7 @@ import {
 } from "react-icons/bs";
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { getCollection, getDocument, searchDoc } from "../Firebase/Database";
+import { getDocument, searchDoc } from "../Firebase/Database";
 import { useNavigate } from "react-router-dom";
 import { Line } from "react-chartjs-2";
 import { where } from "firebase/firestore";
@@ -235,17 +235,6 @@ const ReportMain = (props) => {
         });
     }
   }, [keywords]);
-
-  useEffect(() => {
-    const cid = window.location.pathname.split("/").pop();
-    getCollection("Tester").then((data) => {
-      data.forEach((doc) => {
-        if (doc.cid === cid) {
-          console.log(doc);
-        }
-      });
-    });
-  }, []);
 
   const [searchByKeyword, setSearchByKeyword] = useState();
   const [totalCnt, setTotalCnt] = useState(0);

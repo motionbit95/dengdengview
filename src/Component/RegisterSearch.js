@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { SelectModal } from "./TesterUser";
-import { createDoc, getCollection } from "../Firebase/Database";
+import { createDoc } from "../Firebase/Database";
 import { SingleDatepicker } from "chakra-dayzed-datepicker";
 import { formattedDate } from "../Firebase/Util";
 import { Dropzone } from "../Application/FormLayout/FormLayoutWithCards/Dropzone";
@@ -33,9 +33,14 @@ function RegisterSearch(props) {
   const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
-    getCollection("Campain").then((data) => {
-      setCampains(data);
-    });
+    fetch(process.env.REACT_APP_SERVER_URL + "/campain/list")
+      .then((res) => res.json())
+      .then((data) => {
+        setCampains(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   const handleSubmit = () => {

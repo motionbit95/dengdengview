@@ -48,11 +48,13 @@ export const createDoc = async (collectionName, data) => {
 };
 
 export const getCollection = async (collectionName) => {
+  console.log(collectionName);
   const q = query(collection(db, collectionName));
   const querySnapshot = await getDocs(q);
 
   const docList = [];
   querySnapshot.forEach((doc) => {
+    console.log(doc.id, " => ", doc.data());
     // doc.data() is never undefined for query doc snapshots
     docList.push({ ...doc.data(), doc_id: doc.id });
   });

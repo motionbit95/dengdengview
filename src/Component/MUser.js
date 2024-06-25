@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { Box } from "@chakra-ui/react";
-import {
-  fetchDocuments,
-  getCollection,
-  tableCount,
-} from "../Firebase/Database";
+import { fetchDocuments, tableCount } from "../Firebase/Database";
 import { UserTable } from "../Application/Tables/UserTable/App";
 
 function User(props) {
@@ -18,12 +14,15 @@ function User(props) {
     const getUsers = async () => {
       console.log("get users");
       try {
-        const response = await fetch("http://localhost:8001/auth/list", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          process.env.REACT_APP_SERVER_URL + "/auth/list",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

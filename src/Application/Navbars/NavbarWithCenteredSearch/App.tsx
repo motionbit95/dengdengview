@@ -104,7 +104,10 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
             <HStack spacing={20}>
               <Box
                 display={"flex"}
-                onClick={() => (window.location.href = "/")}
+                onClick={() => {
+                  handleTabChange("0");
+                  window.location.href = "/";
+                }}
                 minW={"100px"}
                 alignItems={"center"}
                 gap={1}

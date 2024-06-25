@@ -1,42 +1,26 @@
 import React, { useEffect, useState } from "react";
 
 import { Box, HStack, Heading, IconButton, Stack } from "@chakra-ui/react";
-import {
-  createDoc,
-  fetchDocuments,
-  getCollection,
-  tableCount,
-} from "../Firebase/Database";
-import { UserTable } from "../Application/Tables/UserTable/App";
+import { tableCount } from "../Firebase/Database";
 import { CampainTable } from "../Application/Tables/CampainTable/App";
 import { FormLayoutWithCards } from "../Application/FormLayout/FormLayoutWithCards/App";
-import { FiChevronLeft, FiChevronRight, FiChevronsLeft } from "react-icons/fi";
-import { serverTimestamp } from "firebase/firestore";
-import { formattedDate, formattedDateTime } from "../Firebase/Util";
+import { FiChevronLeft } from "react-icons/fi";
 
 function Campain(props) {
   const [isRegister, setIsRegister] = useState(false);
   const [page, setPage] = useState(1);
   const [members, setmembers] = useState([]);
-  const [lastVisible, setLastVisible] = useState();
   const [totalCount, setTotalCount] = useState(0);
   useEffect(() => {
-    getCollection("Campain").then((data) => {
-      setTotalCount(data.length);
-    });
-
-    // 전체 유저 정보를 받아옵니다.
-    // fetchDocuments("Campain", "openDate", lastVisible, "initial").then(
-    //   (data) => {
-    //     console.log(data);
-    //     setmembers(data.list);
-    //     setLastVisible(data.lastVisible);
-    //   }
-    // );
-
-    getCollection("Campain").then((data) => {
-      setmembers(data);
-    });
+    fetch(process.env.REACT_APP_SERVER_URL + "/campain/list/totalviews")
+      .then((res) => res.json())
+      .then((data) => {
+        setmembers(data);
+        setTotalCount(data.length);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
   return (
     <Box as="section" p={{ base: "4", md: "8" }}>

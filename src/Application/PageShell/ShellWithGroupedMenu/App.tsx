@@ -62,8 +62,7 @@ import Keyword from "../../../Pages/Keyword";
 import { Advertise } from "../../Tables/AdTable/App";
 import RegisterSearch from "../../../Component/RegisterSearch";
 import RegisterReview from "../../../Component/RegisterReview";
-import { createDoc, getCollection } from "../../../Firebase/Database";
-import { updateDoc } from "firebase/firestore";
+import { createDoc } from "../../../Firebase/Database";
 import { useNavigate } from "react-router-dom";
 
 export const ShellWithGroupedMenu = () => {
@@ -82,9 +81,14 @@ export const ShellWithGroupedMenu = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getCollection("Campain").then((data: any) => {
-      setCampains(data);
-    });
+    fetch(process.env.REACT_APP_SERVER_URL + "/campain/list/totalviews")
+      .then((res) => res.json())
+      .then((data) => {
+        setCampains(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   useEffect(() => {

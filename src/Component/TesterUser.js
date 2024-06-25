@@ -1,25 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  Button,
-  FormControl,
-  FormLabel,
-  Select,
-  HStack,
-  Stack,
-  Text,
-  Divider,
-  Avatar,
-} from "@chakra-ui/react";
-import { getCollection, getDocument, searchDoc } from "../Firebase/Database";
-import { where } from "firebase/firestore";
+import { Button, FormControl, Select, Stack } from "@chakra-ui/react";
 import { PageHeader2 } from "../Application/PageHeader/PageHeader2";
 import { RegisterTable } from "../Application/Tables/TesterTable/App";
 
@@ -28,9 +8,14 @@ export function SelectModal(props) {
   const [selectedCampain, setSelectedCampain] = useState("");
 
   useEffect(() => {
-    getCollection("Campain").then((data) => {
-      setCampains(data);
-    });
+    fetch(process.env.REACT_APP_SERVER_URL + "/campain/list/totalviews")
+      .then((res) => res.json())
+      .then((data) => {
+        setCampains(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
@@ -44,7 +29,7 @@ export function SelectModal(props) {
           <option value="">리포트 할 체험단를 선택하세요.</option>
           {campains.map((campain) => {
             return (
-              <option value={campain.doc_id} key={campain.id}>
+              <option value={campain.id} key={campain.id}>
                 {campain.name}
               </option>
             );

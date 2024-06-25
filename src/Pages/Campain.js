@@ -5,23 +5,11 @@ import {
   Heading,
   SimpleGrid,
   Stack,
-  StackDivider,
   Text,
 } from "@chakra-ui/react";
 import { GridQuiteMinimalistic } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/App";
-import { PageHeader1 } from "../Application/PageHeader/PageHeader1";
-import {
-  fetchDocuments,
-  getCollection,
-  getDoc,
-  getDocument,
-  multiQuery,
-  searchDoc,
-} from "../Firebase/Database";
-import { orderBy, where } from "firebase/firestore";
 import { auth } from "../Firebase/Config";
 import { Product } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/Product";
-import { fi } from "@faker-js/faker";
 
 function Campain({ ...props }) {
   const [page, setPage] = useState(1);
