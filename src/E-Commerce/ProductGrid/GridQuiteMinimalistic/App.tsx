@@ -3,6 +3,7 @@ import { ProductCard } from "./ProductCard";
 // import { campains } from "./_data";
 import { useEffect, useState } from "react";
 import Campain from "../../../Component/MCampain";
+import { calculateDday } from "./_data";
 
 export const GridQuiteMinimalistic = (props: any) => {
   const { campains, ordertype } = props;
@@ -54,21 +55,27 @@ export const GridQuiteMinimalistic = (props: any) => {
             columns={{ base: 2, sm: 3, lg: 4 }}
             gap={{ base: "8", lg: "12" }}
           >
-            {campainList?.slice(0, 8).map((campain: any) => (
-              <Stack>
-                {/* <Text>{campain.id}</Text> */}
-                <ProductCard key={campain.id} campain={campain} />
-              </Stack>
-            ))}
+            {campainList?.slice(0, 8).map(
+              (campain: any, i: number) =>
+                calculateDday(campain.endDate) > 0 && (
+                  <Stack>
+                    {/* <Text>{campain.id}</Text> */}
+                    <ProductCard key={i} campain={campain} />
+                  </Stack>
+                )
+            )}
           </SimpleGrid>
         ) : (
           <SimpleGrid
             columns={{ base: 2, sm: 3, lg: 4 }}
             gap={{ base: "8", lg: "12" }}
           >
-            {campainList?.map((campain: any) => (
-              <ProductCard key={campain.doc_id} campain={campain} />
-            ))}
+            {campainList?.map(
+              (campain: any, i: number) =>
+                calculateDday(campain.endDate) > 0 && (
+                  <ProductCard key={i} campain={campain} />
+                )
+            )}
           </SimpleGrid>
         )}
       </Box>

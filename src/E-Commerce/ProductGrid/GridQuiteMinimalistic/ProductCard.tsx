@@ -75,11 +75,13 @@ export const ProductCard = (props: Props) => {
         <AspectRatio ratio={1}>
           <Image
             src={
-              process.env.REACT_APP_STORAGE +
-              "/campain" +
-              "%2F" +
-              campain.images?.[0] +
-              "?alt=media"
+              campain.images?.[0]?.includes("firebase")
+                ? campain.images?.[0]
+                : process.env.REACT_APP_STORAGE +
+                  "/campain" +
+                  "%2F" +
+                  campain.images?.[0] +
+                  "?alt=media"
             }
             alt={campain.name}
             draggable="false"

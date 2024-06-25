@@ -197,24 +197,6 @@ export const Product = ({ ...props }) => {
         flexDirection={"column"}
         justifyContent={"flex-end"}
       >
-        {/* <Box position="relative" className="group">
-          <AspectRatio ratio={1} w={100} h={100}>
-            <Image
-              // src={campain.images?.[0]}
-              src={
-                process.env.REACT_APP_STORAGE +
-                "/campain" +
-                "%2F" +
-                campain.images?.[0] +
-                "?alt=media"
-              }
-              alt={campain.name}
-              draggable="false"
-              fallback={<Skeleton />}
-              borderRadius="lg"
-            />
-          </AspectRatio>
-        </Box> */}
         <Stack
           p={{ base: 1, sm: 4 }}
           spacing={{ base: 1, sm: 2 }}

@@ -184,6 +184,7 @@ export const PersonalInfoCard = ({ ...props }) => {
             placeholder="선택"
             defaultValue={campain?.type}
           >
+            <option value="이벤트">이벤트</option>
             <option value="배송">배송</option>
             <option value="방문">방문</option>
           </Select>
