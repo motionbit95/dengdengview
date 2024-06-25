@@ -3,11 +3,7 @@ import {
   Button,
   Center,
   Divider,
-  FormControl,
-  FormLabel,
   HStack,
-  Select,
-  SimpleGrid,
   Stack,
   Tab,
   TabList,
@@ -25,11 +21,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { SelectModal } from "./TesterUser";
 import { PageHeader2 } from "../Application/PageHeader/PageHeader2";
-import { getDocument, searchDoc } from "../Firebase/Database";
-import { getDoc, where } from "firebase/firestore";
-import { Grid, GridItem } from "@chakra-ui/react";
 import { BiCalendarCheck, BiCalendarEvent } from "react-icons/bi";
-import { IoOpen } from "react-icons/io5";
 import { MdReviews } from "react-icons/md";
 import { HiUserAdd } from "react-icons/hi";
 import {
@@ -48,7 +40,6 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
 import { calculateTotalViews, getViewsArray } from "../Firebase/Util";
 
 ChartJS.register(
@@ -76,26 +67,44 @@ function TotalView(props) {
 
   useEffect(() => {
     const cid = window.location.pathname.split("/").pop();
-    getDocument("Campain", cid).then((data) => {
-      setCampain(data);
-      searchDoc("Tester", where("cid", "==", cid)).then((data) => {
-        setTesters(data);
+    console.log(cid);
+    fetch(process.env.REACT_APP_SERVER_URL + "/campain/get/" + cid)
+      .then((res) => res.json())
+      .then((data) => {
+        setCampain(data);
+        fetch(process.env.REACT_APP_SERVER_URL + "/tester/search", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            conditions: [{ field: "cid", operator: "==", value: cid }],
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setTesters(data);
+            data.forEach((tester) => {
+              if (tester.step > 0) {
+                setSelectTester((prev) => [...prev, tester]);
+              }
 
-        data.forEach((tester) => {
-          if (tester.step > 0) {
-            setSelectTester((prev) => [...prev, tester]);
-          }
+              if (tester.step > 1) {
+                setCompleteTester((prev) => [...prev, tester]);
+              }
 
-          if (tester.step > 1) {
-            setCompleteTester((prev) => [...prev, tester]);
-          }
-
-          if (tester.step > 2) {
-            setReviewTester((prev) => [...prev, tester]);
-          }
-        });
+              if (tester.step > 2) {
+                setReviewTester((prev) => [...prev, tester]);
+              }
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    });
   }, []);
 
   const toast = useToast();

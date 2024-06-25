@@ -18,7 +18,6 @@ import {
   Td,
   StackDivider,
   Image,
-  useBreakpointValue,
   Container,
   AccordionIcon,
   Flex,
@@ -32,11 +31,8 @@ import {
 } from "react-icons/bs";
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { getDocument, searchDoc } from "../Firebase/Database";
 import { useNavigate } from "react-router-dom";
 import { Line } from "react-chartjs-2";
-import { where } from "firebase/firestore";
-import { calculateDday } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/_data";
 import { calculateTotalViews, getViewsArray } from "../Firebase/Util";
 
 const Report = () => {
@@ -52,19 +48,9 @@ const Report = () => {
     total30views: 0,
   });
   useEffect(() => {
-    console.log(window.location.pathname.split("/").pop());
+    const cid = window.location.pathname.split("/").pop();
 
-    getDocument("Campain", window.location.pathname.split("/").pop()).then(
-      (data) => {
-        setCampain(data);
-      }
-    );
-
-    fetch(
-      process.env.REACT_APP_SERVER_URL +
-        "/campain/get/" +
-        window.location.pathname.split("/").pop()
-    )
+    fetch(process.env.REACT_APP_SERVER_URL + "/campain/get/" + cid)
       .then((res) => res.json())
       .then((data) => {
         console.log("=>", data.company);
@@ -182,35 +168,25 @@ const ReportMain = (props) => {
   const [result, setResult] = useState([]);
   const [rank, setRank] = useState([]);
   useEffect(() => {
-    console.log(window.location.pathname.split("/").pop());
     let cid = window.location.pathname.split("/").pop();
 
-    getDocument("Campain", cid).then((data) => {
-      let keywordList = [];
-      if (data?.keywords) {
-        data.keywords?.forEach((keyword) => {
-          keywordList.push(keyword);
-          setKeywords(keywordList);
-        });
-      }
-    });
-
-    // fetch("http://localhost:3001/keywordstool?hintKeywords=" + "프로바이오틱스")
-    //   .then(async (response) => {
-    //     console.log(response);
-    //   })
-    //   .then(async (data) => {
-    //     console.log(data);
-    //   })
-    //   .catch(async (error) => {
-    //     console.log(error);
-    //   });
+    fetch(process.env.REACT_APP_SERVER_URL + "/campain/get/" + cid)
+      .then((res) => res.json())
+      .then((data) => {
+        let keywordList = [];
+        if (data?.keywords) {
+          data.keywords?.forEach((keyword) => {
+            keywordList.push(keyword);
+            setKeywords(keywordList);
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   useEffect(() => {
-    // keywords.forEach((keyword) => {
-    // console.log("keywords", keywords, keywords.join(","));
-
     if (keywords?.length > 0) {
       fetch(
         process.env.REACT_APP_SERVER_URL +
@@ -252,21 +228,33 @@ const ReportMain = (props) => {
   }
 
   useEffect(() => {
-    searchDoc(
-      "Search",
-      where("campain", "==", window.location.pathname.split("/").pop())
-    ).then((data) => {
-      let totalCnt = 0;
-      data.forEach((doc) => {
-        totalCnt += parseInt(doc.count);
-      });
-      setTotalCnt(totalCnt);
-      // 'name' 속성을 기준으로 객체를 그룹화
-      const groupedObjectsByName = groupObjectsByProperty(data, "keyword");
-      setSearchByKeyword(groupedObjectsByName);
+    const cid = window.location.pathname.split("/").pop();
+    fetch(process.env.REACT_APP_SERVER_URL + "/campain/search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        conditions: [{ field: "id", operator: "==", value: cid }],
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        let totalCnt = 0;
+        data.forEach((doc) => {
+          totalCnt += parseInt(doc.count);
+        });
+        setTotalCnt(totalCnt);
+        // 'name' 속성을 기준으로 객체를 그룹화
+        const groupedObjectsByName = groupObjectsByProperty(data, "keyword");
+        setSearchByKeyword(groupedObjectsByName);
 
-      console.log(groupedObjectsByName);
-    });
+        console.log(groupedObjectsByName);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   // 오늘의 날짜

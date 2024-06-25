@@ -12,10 +12,8 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { PageHeader2 } from "../Application/PageHeader/PageHeader2";
-import { getDocument } from "../Firebase/Database";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2"; // 원하는 차트 종류를 가져오세요.
-import { MdRestore } from "react-icons/md";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -51,15 +49,20 @@ function Keyword(props) {
     let cid = window.location.pathname.split("/").pop();
 
     if (keywords?.length === 0) {
-      getDocument("Campain", cid).then(async (data) => {
-        let keywordList = [];
-        if (data?.keywords) {
-          data.keywords?.forEach((keyword) => {
-            keywordList.push(keyword);
-            setKeywords(keywordList);
-          });
-        }
-      });
+      fetch(process.env.REACT_APP_SERVER_URL + "/campain/get/" + cid)
+        .then((res) => res.json())
+        .then((data) => {
+          let keywordList = [];
+          if (data?.keywords) {
+            data.keywords?.forEach((keyword) => {
+              keywordList.push(keyword);
+              setKeywords(keywordList);
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
 
     // fetch("http://localhost:3001/keywordstool?hintKeywords=" + "프로바이오틱스")

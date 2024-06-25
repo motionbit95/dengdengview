@@ -75,11 +75,8 @@ function SelectUser(props) {
   const [userList, setUserList] = useState([]);
   const [cid, setCid] = useState("");
   useEffect(() => {
-    let cid = props.cid; //window.location.pathname.replaceAll("/admin/dashboard/", "");
+    let cid = props.cid;
     setCid(cid);
-    // getDocument("Campain", cid).then(async (data) => {
-    //   setCampain(data);
-    // });
     fetch(process.env.REACT_APP_SERVER_URL + "/campain/get/" + cid)
       .then((res) => res.json())
       .then((data) => {

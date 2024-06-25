@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getDocument, searchDoc } from "../Firebase/Database";
-import { where } from "firebase/firestore";
 import {
-  Avatar,
   Button,
   Divider,
   HStack,
@@ -12,7 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { PageHeader2 } from "../Application/PageHeader/PageHeader2";
-import { BiComment, BiLink } from "react-icons/bi";
+import { BiLink } from "react-icons/bi";
 import { bucketAddress } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/_data";
 
 function Review(props) {
@@ -20,22 +17,23 @@ function Review(props) {
   useEffect(() => {
     let cid = window.location.pathname.split("/").pop(); //props.cid; //window.location.pathname.replaceAll("/admin/dashboard/", "");
     console.log(cid);
-    searchDoc("Review", where("cid", "==", cid)).then(async (data) => {
-      let reviewList = [];
-      data.forEach((doc) => {
-        console.log(doc);
-        if (doc.uid) {
-          getDocument("User", doc.uid).then((user) => {
-            reviewList.push({ ...doc, ...user });
-            console.log({ ...doc, ...user });
-            setReviewList(reviewList);
-          });
-        } else {
+    fetch(process.env.REACT_APP_SERVER_URL + "/review/search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        conditions: [{ field: "cid", operator: "==", value: cid }],
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        let reviewList = [];
+        data.forEach((doc) => {
           reviewList.push({ ...doc });
           setReviewList(reviewList);
-        }
+        });
       });
-    });
   }, []);
   return (
     <Stack>

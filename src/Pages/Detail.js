@@ -37,13 +37,7 @@ import Calendar from "react-calendar";
 import "../Component/Calendar.css";
 import moment from "moment";
 import { BsInstagram } from "react-icons/bs";
-import {
-  createDoc,
-  getDocument,
-  multiQuery,
-  searchDoc,
-  updateDoc,
-} from "../Firebase/Database";
+import { createDoc, multiQuery, updateDoc } from "../Firebase/Database";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import {
   Modal,

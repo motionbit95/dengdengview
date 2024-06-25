@@ -33,7 +33,7 @@ function RegisterSearch(props) {
   const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_SERVER_URL + "/campain/list")
+    fetch(process.env.REACT_APP_SERVER_URL + "/campain/list/totalviews")
       .then((res) => res.json())
       .then((data) => {
         setCampains(data);
@@ -92,9 +92,9 @@ function RegisterSearch(props) {
                 <option value="">
                   검색점유율을 등록할 체험단을 선택하세요.
                 </option>
-                {campains.map((campain) => {
+                {campains?.map((campain) => {
                   return (
-                    <option value={campain.doc_id} key={campain.id}>
+                    <option value={campain.id} key={campain.id}>
                       {campain.name}
                     </option>
                   );

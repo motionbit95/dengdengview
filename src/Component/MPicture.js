@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { getDocument, searchDoc } from "../Firebase/Database";
-import { where } from "firebase/firestore";
 import {
   Button,
   Image,
@@ -13,11 +11,9 @@ import {
   ModalOverlay,
   SimpleGrid,
   Stack,
-  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import { PageHeader2 } from "../Application/PageHeader/PageHeader2";
-import { BiComment, BiLink } from "react-icons/bi";
 import { bucketAddress } from "../E-Commerce/ProductGrid/GridQuiteMinimalistic/_data";
 
 function Picture(props) {
@@ -27,18 +23,28 @@ function Picture(props) {
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
 
   useEffect(() => {
-    let cid = props.cid; //window.location.pathname.replaceAll("/admin/dashboard/", "");
+    let cid = window.location.pathname.split("/").pop(); //props.cid; //window.location.pathname.replaceAll("/admin/dashboard/", "");
     console.log(cid);
-    searchDoc("Review", where("cid", "==", cid)).then(async (data) => {
-      let reviewList = [];
-      let totalPicture = 0;
-      data.forEach((doc) => {
-        reviewList.push({ ...doc });
+    fetch(process.env.REACT_APP_SERVER_URL + "/review/search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        conditions: [{ field: "cid", operator: "==", value: cid }],
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        let reviewList = [];
+        let totalPicture = 0;
+        data.forEach((doc) => {
+          reviewList.push({ ...doc });
+          totalPicture += doc.imageList.length;
+          setTotalPicture(totalPicture);
+        });
         setReviewList(reviewList);
-        totalPicture += doc.imageList.length;
-        setTotalPicture(totalPicture);
       });
-    });
   }, []);
 
   const handleImageClick = (imageUrl) => {

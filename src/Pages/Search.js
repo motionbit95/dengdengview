@@ -9,8 +9,6 @@ import {
   Text,
   Wrap,
 } from "@chakra-ui/react";
-import { searchDoc } from "../Firebase/Database";
-import { where } from "firebase/firestore";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -52,19 +50,27 @@ function Search(props) {
   }
 
   useEffect(() => {
-    searchDoc(
-      "Search",
-      where("campain", "==", window.location.pathname.split("/").pop())
-    ).then((data) => {
-      let totalCnt = 0;
-      data.forEach((doc) => {
-        totalCnt += parseInt(doc.count);
+    let cid = window.location.pathname.split("/").pop();
+    fetch(process.env.REACT_APP_SERVER_URL + "/keyword/search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        conditions: [{ field: "campain", operator: "==", value: cid }],
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setTotalCnt(data.length);
+        // 'name' 속성을 기준으로 객체를 그룹화
+        const groupedObjectsByName = groupObjectsByProperty(data, "keyword");
+        setSearchByKeyword(groupedObjectsByName);
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      setTotalCnt(totalCnt);
-      // 'name' 속성을 기준으로 객체를 그룹화
-      const groupedObjectsByName = groupObjectsByProperty(data, "keyword");
-      setSearchByKeyword(groupedObjectsByName);
-    });
   }, []);
   return (
     <Stack>

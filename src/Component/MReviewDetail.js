@@ -1,38 +1,10 @@
-import {
-  Avatar,
-  Button,
-  HStack,
-  Heading,
-  Stack,
-  Text,
-  border,
-} from "@chakra-ui/react";
+import { Button, HStack, Heading, Stack, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { PageHeader2 } from "../Application/PageHeader/PageHeader2";
-import { getDocument, searchDoc } from "../Firebase/Database";
-import { where } from "firebase/firestore";
 
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer,
-} from "@chakra-ui/react";
-import {
-  BsChatDots,
-  BsCheckCircle,
-  BsClipboard2Check,
-  BsFile,
-  BsHeart,
-  BsLink,
-} from "react-icons/bs";
+import { Table, Tbody, Tr, Td, TableContainer } from "@chakra-ui/react";
+import { BsChatDots, BsCheckCircle, BsClipboard2Check } from "react-icons/bs";
 import { BiLink, BiUser } from "react-icons/bi";
-import { AiOutlineHeart, AiOutlinePicture } from "react-icons/ai";
+import { AiOutlinePicture } from "react-icons/ai";
 
 function ReviewDetail(props) {
   const [reviewList, setReviewList] = useState([]);
@@ -43,46 +15,61 @@ function ReviewDetail(props) {
     picture: 0,
   });
   useEffect(() => {
-    let cid = props.cid; //window.location.pathname.replaceAll("/admin/dashboard/", "");
+    let cid = window.location.pathname.split("/").pop(); //window.location.pathname.replaceAll("/admin/dashboard/", "");
     console.log(cid);
-    searchDoc("Review", where("cid", "==", cid)).then(async (data) => {
-      let reviewList = [];
-      let like = 0;
-      let comment = 0;
-      let letter = 0;
-      let picture = 0;
-      data.forEach(async (doc) => {
-        let isBanner = false;
-        doc.imageList.map((item) => {
-          if (item.includes("image.png")) {
-            isBanner = true;
+    fetch(process.env.REACT_APP_SERVER_URL + "/review/search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        conditions: [{ field: "cid", operator: "==", value: cid }],
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        let reviewList = [];
+        let like = 0;
+        let comment = 0;
+        let letter = 0;
+        let picture = 0;
+        data.forEach(async (doc) => {
+          let isBanner = false;
+          doc.imageList.map((item) => {
+            if (item.includes("image.png")) {
+              isBanner = true;
+            }
+          });
+          if (isBanner) {
+            like = like + 1;
+          }
+          // like = like + 0;
+          comment = comment + parseInt(doc.commentCnt ? doc.commentCnt : 0);
+          letter = letter + doc.contentList.join().length;
+          picture = picture + doc.imageList.length;
+
+          setTotalCount({
+            like: like,
+            comment: comment,
+            letter: letter,
+            picture: picture,
+          });
+          if (doc.uid) {
+            fetch(process.env.REACT_APP_SERVER_URL + "/auth/get/" + doc.uid)
+              .then((res) => res.json())
+              .then((data) => {
+                reviewList.push({ ...doc, ...data });
+                setReviewList(reviewList);
+              });
+          } else {
+            reviewList.push({ ...doc });
+            setReviewList(reviewList);
           }
         });
-        if (isBanner) {
-          like = like + 1;
-        }
-        // like = like + 0;
-        comment = comment + parseInt(doc.commentCnt ? doc.commentCnt : 0);
-        letter = letter + doc.contentList.join().length;
-        picture = picture + doc.imageList.length;
-
-        setTotalCount({
-          like: like,
-          comment: comment,
-          letter: letter,
-          picture: picture,
-        });
-        if (doc.uid) {
-          getDocument("User", doc.uid).then((user) => {
-            reviewList.push({ ...doc, ...user });
-            setReviewList(reviewList);
-          });
-        } else {
-          reviewList.push({ ...doc });
-          setReviewList(reviewList);
-        }
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    });
   }, []);
 
   const isBanner = (list) => {

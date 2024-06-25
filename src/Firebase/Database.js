@@ -47,29 +47,29 @@ export const createDoc = async (collectionName, data) => {
   }
 };
 
-export const getCollection = async (collectionName) => {
-  console.log(collectionName);
-  const q = query(collection(db, collectionName));
-  const querySnapshot = await getDocs(q);
+// export const getCollection = async (collectionName) => {
+//   console.log(collectionName);
+//   const q = query(collection(db, collectionName));
+//   const querySnapshot = await getDocs(q);
 
-  const docList = [];
-  querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data());
-    // doc.data() is never undefined for query doc snapshots
-    docList.push({ ...doc.data(), doc_id: doc.id });
-  });
-  return docList;
-};
+//   const docList = [];
+//   querySnapshot.forEach((doc) => {
+//     console.log(doc.id, " => ", doc.data());
+//     // doc.data() is never undefined for query doc snapshots
+//     docList.push({ ...doc.data(), doc_id: doc.id });
+//   });
+//   return docList;
+// };
 
-export const getDocument = async (collectionName, docId) => {
-  const docRef = doc(db, collectionName, docId);
-  const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) {
-    return docSnap.data();
-  } else {
-    return null;
-  }
-};
+// export const getDocument = async (collectionName, docId) => {
+//   const docRef = doc(db, collectionName, docId);
+//   const docSnap = await getDoc(docRef);
+//   if (docSnap.exists()) {
+//     return docSnap.data();
+//   } else {
+//     return null;
+//   }
+// };
 
 export const searchDoc = async (collectionName, condition) => {
   console.log(collectionName, condition);
