@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { Box, HStack, Heading, IconButton, Stack } from "@chakra-ui/react";
-import { tableCount } from "../Firebase/Database";
+import { createDoc, tableCount } from "../Firebase/Database";
 import { CampainTable } from "../Application/Tables/CampainTable/App";
 import { FormLayoutWithCards } from "../Application/FormLayout/FormLayoutWithCards/App";
 import { FiChevronLeft } from "react-icons/fi";
@@ -78,10 +78,28 @@ function Campain(props) {
             onCancel={() => setIsRegister(!isRegister)}
             onSave={(data) => {
               console.log(data);
-              // createDoc("Campain", { ...data, views: 0 }).then(() => {
-              //   setIsRegister(!isRegister);
-              //   window.location.reload();
-              // });
+              fetch(process.env.REACT_APP_SERVER_URL + "/campain/add", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  ...data,
+                  views: {},
+                  totalviews: 0,
+                }),
+              })
+                .then((res) => {
+                  res.json();
+                  // setIsRegister(!isRegister);
+                })
+                .then((data) => {
+                  console.log(data);
+                  window.location.reload();
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             }}
           />
         </Stack>

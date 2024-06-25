@@ -53,10 +53,10 @@ export const PersonalInfoCard = ({ ...props }) => {
         <FormControl id="name" isRequired>
           <FormLabel>업체명</FormLabel>
           <Input
-            name="companyName"
-            onChange={(e) => props.onChange({ name: e.target.value })}
+            name="company"
+            onChange={(e) => props.onChange({ company: e.target.value })}
             placeholder="업체명을 입력해주세요."
-            defaultValue={campain?.companyName}
+            defaultValue={campain?.company}
           />
         </FormControl>
         <FormControl id="name" isRequired>

@@ -148,7 +148,7 @@ export const TesterTable = (props: any) => {
                       variant="ghost"
                       aria-label="Delete member"
                       onConfirm={() => {
-                        deleteDocument("Campain", campain.doc_id).then(() => {
+                        deleteDocument("Campain", campain.id).then(() => {
                           window.location.reload();
                         });
                       }}

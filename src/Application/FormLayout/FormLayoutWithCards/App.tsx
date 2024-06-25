@@ -36,6 +36,11 @@ export const FormLayoutWithCards = ({ ...props }) => {
   };
 
   const confirmData = () => {
+    if (!isExist("company", formData)) {
+      alert("업체명을 입력하세요.");
+      return;
+    }
+
     if (!isExist("name", formData)) {
       alert("체험단명을 입력하세요.");
       return;
@@ -153,12 +158,13 @@ export const FormLayoutWithCards = ({ ...props }) => {
             }}
             isOpen={isOpen}
             onConfirm={() => {
+              console.log(formData);
               props.onSave(formData);
             }}
             onClose={() => setIsOpen(false)}
             title={"확인"}
             buttonText={"저장"}
-            discription={"체험단를 저장하시겠습니까?"}
+            discription={"체험단을 저장하시겠습니까?"}
           >
             저장
           </ConfirmBox>

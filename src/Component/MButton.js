@@ -53,7 +53,14 @@ export const NaverLogin = (props) => {
                     id: naverLogin.user.id,
                     channel: "naver",
                     email: naverLogin.user.email ? naverLogin.user.email : "",
-                    name: naverLogin.user.name ? naverLogin.user.name : "",
+                    // name: naverLogin.user.name ? naverLogin.user.name : "",
+                    phone: naverLogin.user.phone ? naverLogin.user.phone : "",
+                    gender: naverLogin.user.gender
+                      ? naverLogin.user.gender
+                      : "",
+                    birthyear: naverLogin.user.birthyear
+                      ? naverLogin.user.birthyear
+                      : "",
                     createdAt: new Date().toISOString(),
                   });
                 }
