@@ -101,7 +101,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
               icon={<FiMenu />}
               display={{ base: "inline-flex", md: "none" }}
             />
-            <HStack spacing={20}>
+            <HStack gap={8}>
               <Box
                 display={"flex"}
                 onClick={() => {
@@ -112,24 +112,27 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                 alignItems={"center"}
                 gap={1}
               >
-                {/* <Image
-                  w={16}
-                  src={require("../../../Assets/img/DangDangLogo2.png")}
-                /> */}
-                <Text
+                <Box h={"50px"} w={"210px"}>
+                  <Image
+                    objectFit={"cover"}
+                    h={"100%"}
+                    src={require("../../../Assets/img/LogoDangDang.png")}
+                  />
+                </Box>
+                {/* <Text
                   whiteSpace={"nowrap"}
                   fontSize={{ base: "2xl", md: "4xl" }}
                   fontFamily={"Cafe24Ssurround"}
                   // color={"#23E9AE"}
                 >
                   댕댕뷰
-                </Text>
+                </Text> */}
               </Box>
               {useBreakpointValue({ base: false, md: true }) && (
                 <ButtonGroup
                   variant={"ghost"}
                   colorScheme="gray"
-                  size={"lg"}
+                  size={"md"}
                   justifyContent={"space-between"}
                   spacing={6}
                 >
@@ -140,7 +143,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                       handleTabChange("0");
                       window.location.href = "/#instagram";
                     }}
-                    fontSize={{ base: "md", md: "xl" }}
+                    fontSize={"md"}
                     borderBottom={"4px solid"}
                     borderColor={props.tab === "0" ? "#23E9AE" : "white"}
                     borderRadius={0}
@@ -154,7 +157,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                       handleTabChange("1");
                       window.location.href = "/#instagram";
                     }}
-                    fontSize={{ base: "md", md: "xl" }}
+                    fontSize={"md"}
                     borderBottom={"4px solid"}
                     borderColor={props.tab === "1" ? "#23E9AE" : "white"}
                     borderRadius={0}
@@ -168,12 +171,12 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                       handleTabChange("2");
                       window.location.href = "/#instagram";
                     }}
-                    fontSize={{ base: "md", md: "xl" }}
+                    fontSize={"md"}
                     borderBottom={"4px solid"}
                     borderColor={props.tab === "2" ? "#23E9AE" : "white"}
                     borderRadius={0}
                   >
-                    구매평 체험단
+                    구매평
                   </Button>
                   <Button
                     p={0}
@@ -182,7 +185,7 @@ export const NavbarWithCenteredSearch = ({ ...props }) => {
                       handleTabChange("3");
                       window.location.href = "/#instagram";
                     }}
-                    fontSize={{ base: "md", md: "xl" }}
+                    fontSize={"md"}
                     borderBottom={"4px solid"}
                     borderColor={props.tab === "3" ? "#23E9AE" : "white"}
                     borderRadius={0}

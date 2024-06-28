@@ -102,7 +102,6 @@ export const SidebarWithCollapsable = ({ ...props }) => {
                 />
               </Stack>
             )}
-
             <SidebarButton
               onClick={handleLogout}
               color={"gray.400"}
