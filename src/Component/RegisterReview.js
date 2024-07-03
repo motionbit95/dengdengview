@@ -106,12 +106,15 @@ function RegisterReview(props) {
                 <FormLabel fontSize={"md"}>체험단 선택</FormLabel>
                 <Select
                   value={cid}
-                  onChange={(e) => setSelectedCampain(e.target.value)}
+                  onChange={(e) => {
+                    console.log(e.target.value);
+                    setSelectedCampain(e.target.value);
+                  }}
                 >
                   <option value="">리뷰 등록할 체험단을 선택하세요.</option>
                   {campains.map((campain) => {
                     return (
-                      <option value={campain.doc_id} key={campain.id}>
+                      <option value={campain.id} key={campain.id}>
                         {campain.name}
                       </option>
                     );
