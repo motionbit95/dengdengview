@@ -164,9 +164,9 @@ function Detail(props) {
   }, []);
 
   useEffect(() => {
-    if (campain?.doc_id) {
+    if (campain?.id) {
       console.log(new Date().toISOString().slice(0, 10));
-      updateDoc("Campain", campain?.doc_id, {
+      updateDoc("Campain", campain?.id, {
         ...campain,
         views: {
           ...campain.views,
@@ -328,7 +328,7 @@ function Detail(props) {
                 </CardBody>
               </Card>
               <RegisterButton
-                cid={campain?.doc_id}
+                cid={campain?.id}
                 isDisabled={calculateDday(campain?.endDate) < 0}
                 onSubmit={(data) =>
                   createDoc("Tester", {
@@ -714,7 +714,7 @@ function Detail(props) {
 
             <RegisterButton
               mt={4}
-              cid={campain?.doc_id}
+              cid={campain?.id}
               isDisabled={calculateDday(campain?.endDate) < 0}
               onSubmit={(data) => {
                 createDoc("Tester", {

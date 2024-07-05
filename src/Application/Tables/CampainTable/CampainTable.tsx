@@ -71,7 +71,7 @@ function ModifierButton(campain: any) {
               campain={campain}
               onCancel={onClose}
               onSave={(data: any) => {
-                updateDoc("Campain", campain.campain.doc_id, data).then(() => {
+                updateDoc("Campain", campain.campain.id, data).then(() => {
                   onClose();
                   window.location.reload();
                 });
