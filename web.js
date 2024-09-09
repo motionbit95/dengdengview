@@ -672,7 +672,7 @@ const kakaoCancel = (req, res) => {
     });
 };
 
-app.post("/alimtalk/send", (req, res) => {
+app.post("/aligo/send", (req, res) => {
   console.log(req.body);
   alimtalkSend(req, res);
 });
